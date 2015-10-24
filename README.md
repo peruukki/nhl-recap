@@ -1,13 +1,38 @@
-# Brunch with React
+# nhl-scores
 
-1. Install [Brunch](http://brunch.io/)
+A web app showing the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
 
-        npm install -g brunch
+## Main libraries used
 
-2. Create a new project with this skeleton
+- [Brunch](http://brunch.io/) and npm scripts as build tools
+- [React.js](http://facebook.github.io/react/) as the UI library
 
-        brunch new gh:ryansobol/brunch-with-react APPNAME
+## Running the app
 
-3. Start the web server
+To run the app and re-build on file changes:
+```
+npm start
+```
 
-        npm start
+The script doesn’t lint the JavaScript because I couldn’t get the
+[ESLint Brunch plugin](https://github.com/spyl94/eslint-brunch) to use the
+[ESLint React plugin](https://github.com/yannickcr/eslint-plugin-react).
+
+## Linting JavaScript
+
+One-time lint run:
+```
+npm run lint
+```
+
+Lint on file changes:
+```
+npm run lint-watch
+```
+
+## Building
+
+Build the app to the `public` directory:
+```
+npm run build
+```

@@ -1,9 +1,4 @@
-var React = require('react');
+const React = require('react');
+const ScorePanel = require('ScorePanel');
 
-var HelloWorld = React.createClass({
-  render: function() {
-    return <h2>Hello world</h2>;
-  }
-});
-
-React.render(<HelloWorld />, document.getElementById('content'));
+React.render(<ScorePanel />, document.getElementById('app'));

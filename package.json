@@ -1,15 +1,25 @@
 {
-  "name": "",
+  "name": "nhl-scores",
   "version": "0.1.0",
-  "author": "",
-  "license": "",
+  "description": "Check the latest NHL scores.",
+  "keywords": [
+    "NHL",
+    "scores",
+    "react"
+  ],
+  "author": "Harri Lehtola <peruukki@hotmail.com>",
+  "license": "MIT",
   "scripts": {
+    "build": "brunch build --production",
     "lint": "eslint app/*.js{,x}",
     "lint-watch": "esw -w app/*.js{,x}",
-    "start": "brunch watch --server"
+    "start": "brunch watch --server",
+    "test": "npm run lint"
   },
   "dependencies": {
-    "react": "latest"
+    "es6-promise": "^3.0.2",
+    "react": "^0.14.0",
+    "whatwg-fetch": "^0.10.0"
   },
   "overrides": {
     "react": {
