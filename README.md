@@ -2,6 +2,9 @@
 
 A web app showing the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
 
+The app is not very impressive (yet?), but it’s available at
+[GitHub pages](http://peruukki.github.io/nhl-scores/) nonetheless.
+
 ## Main libraries used
 
 - [Brunch](http://brunch.io/) and npm scripts as build tools
