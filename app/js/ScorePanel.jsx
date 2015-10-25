@@ -1,5 +1,5 @@
 const React = require('react');
-const ScoreList = require('ScoreList');
+const ScoreList = require('./ScoreList');
 
 require('es6-promise');
 require('whatwg-fetch');

@@ -1,5 +1,5 @@
 const React = require('react');
-const GameScore = require('GameScore');
+const GameScore = require('./GameScore');
 
 const ScoreList = React.createClass({
   propTypes: {
