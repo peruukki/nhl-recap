@@ -1,9 +1,9 @@
-# nhl-scores
+# nhl-recap
 
 A web app showing the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
 
 The app is not very impressive (yet?), but it’s available at
-[GitHub pages](http://peruukki.github.io/nhl-scores/) nonetheless.
+[GitHub pages](http://peruukki.github.io/nhl-recap/) nonetheless.
 
 ## Main libraries used
 
