@@ -17,7 +17,7 @@
     "build": "rm -rf public; brunch build --production",
     "clean-dist": "rm -rf dist/*",
     "clone-dist": "rm -rf dist; git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
-    "commit-dist": "cd dist && git commit . -m \"Version $npm_package_version\"",
+    "commit-dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
     "copy-to-dist": "cp -r public/* dist",
     "publish": "npm run build && npm run clone-dist && npm run clean-dist && npm run copy-to-dist && npm run commit-dist && npm run publish-ready",
     "publish-ready": "echo 'Publish with these commands: cd dist && git push origin gh-pages'",
