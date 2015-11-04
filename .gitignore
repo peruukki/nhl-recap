@@ -1,6 +1,9 @@
 # Build directory
-public
+public/
+
+# Deployment directory
+dist/
 
 # Node
-node_modules
+node_modules/
 npm-debug.log

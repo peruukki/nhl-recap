@@ -39,3 +39,11 @@ Build the app to the `public` directory:
 ```
 npm run build
 ```
+
+## Publishing the app on GitHub pages
+
+The `publish` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
+and create a commit, ready to be pushed:
+```
+npm run publish
+```
