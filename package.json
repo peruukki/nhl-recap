@@ -31,7 +31,8 @@
     "brunch": "^1.8.5",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
-    "eslint-watch": "^2.1.2"
+    "eslint-watch": "^2.1.2",
+    "sass-brunch": "^1.9.1"
   },
   "private": true
 }
