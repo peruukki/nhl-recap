@@ -1,7 +1,47 @@
 $background-color: #f8f8f8;
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: sans-serif;
+  font-size: 1.6rem;
   text-align: center;
   background-color: $background-color;
+}
+
+.game {
+  margin-bottom: 0.5em;
+}
+
+.teamPanel {
+  display: inline-block;
+  width: 45%;
+
+  &.away {
+    text-align: right;
+
+    .teamScore {
+      margin-left: 0.5em;
+    }
+  }
+
+  &.home {
+    text-align: left;
+
+    .teamScore {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+.teamScore {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.delimiter {
+  display: inline-block;
+  width: 1.5em;
 }

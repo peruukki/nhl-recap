@@ -10,7 +10,15 @@ const GameScore = React.createClass({
     const homeTeam = this.props.teams[1];
     return (
       <div className="game">
-        {awayTeam} {this.props.scores[awayTeam]} – {this.props.scores[homeTeam]} {homeTeam}
+        <div className="teamPanel away">
+          <span className="teamName">{awayTeam}</span>
+          <span className="teamScore">{this.props.scores[awayTeam]}</span>
+        </div>
+        <div className="delimiter">–</div>
+        <div className="teamPanel home">
+          <span className="teamScore">{this.props.scores[homeTeam]}</span>
+          <span className="teamName">{homeTeam}</span>
+        </div>
       </div>);
   }
 });
