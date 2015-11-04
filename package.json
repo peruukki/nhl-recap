@@ -11,8 +11,8 @@
   "license": "MIT",
   "scripts": {
     "build": "brunch build --production",
-    "lint": "eslint app/js/*.js{,x}",
-    "lint-watch": "esw -w app/js/*.js{,x}",
+    "lint": "eslint *.js app/js/*.js{,x}",
+    "lint-watch": "esw -w *.js app/js/*.js{,x}",
     "start": "brunch watch --server",
     "test": "npm run lint"
   },

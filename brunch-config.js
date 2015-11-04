@@ -17,4 +17,4 @@ module.exports.config = {
       pattern: /\.(js|jsx)$/
     }
   }
-}
+};
