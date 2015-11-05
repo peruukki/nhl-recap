@@ -39,6 +39,7 @@
   "devDependencies": {
     "babel-brunch": "^5.1.2",
     "brunch": "^1.8.5",
+    "digest-brunch": "^1.5.1",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
     "eslint-watch": "^2.1.2",
