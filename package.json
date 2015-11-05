@@ -15,8 +15,8 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf public; brunch build --production",
-    "clean-dist": "rm -rf dist/*",
-    "clone-dist": "rm -rf dist; git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
+    "clean-dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
+    "clone-dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
     "commit-dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
     "copy-to-dist": "cp -r public/* dist",
     "publish": "npm run build && npm run clone-dist && npm run clean-dist && npm run copy-to-dist && npm run commit-dist && npm run publish-ready",
