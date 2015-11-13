@@ -8,7 +8,7 @@ const ScoreList = React.createClass({
   render() {
     const games = this.props.scores ? this.props.scores.map(game =>
       <GameScore
-        key={game.teams[0]}
+        key={game.teams.away}
         scores={game.scores}
         teams={game.teams}
       />

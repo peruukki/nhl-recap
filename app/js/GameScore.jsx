@@ -3,11 +3,11 @@ const React = require('react');
 const GameScore = React.createClass({
   propTypes: {
     scores: React.PropTypes.object.isRequired,
-    teams: React.PropTypes.array.isRequired
+    teams: React.PropTypes.object.isRequired
   },
   render() {
-    const awayTeam = this.props.teams[0];
-    const homeTeam = this.props.teams[1];
+    const awayTeam = this.props.teams.away;
+    const homeTeam = this.props.teams.home;
     return (
       <div className="game">
         <div className="teamPanel away">
