@@ -12,7 +12,7 @@ body {
 }
 
 .game {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 .teamPanel {
@@ -43,5 +43,14 @@ body {
 
 .delimiter {
   display: inline-block;
-  width: 1.5em;
+  width: 2em;
+  height: 1em;
+  position: relative;
+
+  .period {
+    font-size: 1.1rem;
+    position: absolute;
+    top: 0.4em;
+    left: 0.8em;
+  }
 }
