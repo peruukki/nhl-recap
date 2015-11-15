@@ -47,3 +47,7 @@ and create a commit, ready to be pushed:
 ```
 npm run publish
 ```
+
+## License
+
+[MIT](LICENSE)
