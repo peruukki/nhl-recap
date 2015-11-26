@@ -9,7 +9,7 @@ const ScorePanel = React.createClass({
     return { scores: null, status: 'Fetching latest scores...' };
   },
   componentDidMount() {
-    fetch('https://nhlscoreapi-peruukki.rhcloud.com/api/scores/latest')
+    fetch('https://nhl-score-api.herokuapp.com/api/scores/latest')
       .then(this.throwOnHTTPErrorStatus)
       .then(res => res.json())
       .then(res => {
