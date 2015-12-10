@@ -7,19 +7,20 @@ The app is not very impressive (yet?), but it’s available at
 
 ## Main libraries used
 
-- [Brunch](http://brunch.io/) and npm scripts as build tools
+- npm scripts as build tools
 - [React.js](http://facebook.github.io/react/) as the UI library
 
 ## Running the app
 
 To run the app and re-build on file changes:
 ```
-npm start
+npm run watch
 ```
 
-The script doesn’t lint the JavaScript because I couldn’t get the
-[ESLint Brunch plugin](https://github.com/spyl94/eslint-brunch) to use the
-[ESLint React plugin](https://github.com/yannickcr/eslint-plugin-react).
+To run the app without watching for file changes:
+```
+npm start
+```
 
 ## Linting JavaScript
 

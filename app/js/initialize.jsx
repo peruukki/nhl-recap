@@ -1,4 +1,5 @@
 const React = require('react');
+const ReactDOM = require('react-dom');
 const ScorePanel = require('./ScorePanel');
 
-React.render(<ScorePanel />, document.getElementById('app'));
+ReactDOM.render(<ScorePanel />, document.getElementById('app'));

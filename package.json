@@ -13,38 +13,51 @@
     "url": "git+https://github.com/peruukki/nhl-recap.git"
   },
   "license": "MIT",
+  "config": {
+    "browserify_args": "app/js/initialize.jsx -t [ babelify reactify ] -g uglifyify --extension=.jsx"
+  },
   "scripts": {
-    "build": "rm -rf public; brunch build --production",
+    "assets": "cp app/assets/* public",
+    "assets-watch": "watch 'cp app/assets/* public' app/assets --verbose",
+    "build": "rm -rf public; mkdir public; npm run assets && npm run css && npm run js",
     "clean-dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
     "clone-dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
     "commit-dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
     "copy-to-dist": "cp -r public/* dist",
+    "css": "node-sass app/sass/app.scss public/app.css --output-style compressed",
+    "css-watch": "node-sass app/sass/app.scss public/app.css --output-style compressed -w",
+    "js": "browserify $npm_package_config_browserify_args | uglifyjs -c -o public/app.js",
+    "js-watch": "watchify $npm_package_config_browserify_args -o public/app.js -v",
     "publish": "npm run build && npm run clone-dist && npm run clean-dist && npm run copy-to-dist && npm run commit-dist && npm run publish-ready",
     "publish-ready": "echo 'Publish with these commands: cd dist && git push origin gh-pages'",
     "lint": "eslint *.js app/js/*.js{,x}",
     "lint-watch": "esw -w *.js app/js/*.js{,x}",
-    "start": "brunch watch --server",
-    "test": "npm run lint"
+    "server": "http-server public -p 8000 -o",
+    "start": "npm run build && npm run server",
+    "test": "npm run lint",
+    "watch": "npm run assets-watch & npm run css-watch & npm run js-watch & npm start"
   },
   "dependencies": {
     "es6-promise": "^3.0.2",
-    "react": "^0.14.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
     "whatwg-fetch": "^0.10.0"
   },
-  "overrides": {
-    "react": {
-      "main": "dist/react.js"
-    }
-  },
   "devDependencies": {
-    "babel-brunch": "^5.1.2",
-    "brunch": "^1.8.5",
-    "digest-brunch": "^1.5.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
     "eslint-watch": "^2.1.2",
-    "sass-brunch": "^1.9.1",
-    "uglify-js-brunch": "^1.7.8"
+    "http-server": "^0.8.5",
+    "node-sass": "^3.4.2",
+    "reactify": "^1.1.1",
+    "uglify-js": "^2.6.1",
+    "uglifyify": "^3.0.1",
+    "watch": "^0.16.0",
+    "watchify": "^3.6.1"
   },
   "private": true
 }
