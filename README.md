@@ -14,11 +14,6 @@ The app is not very impressive (yet?), but it’s available at
 
 To run the app and re-build on file changes:
 ```
-npm run watch
-```
-
-To run the app without watching for file changes:
-```
 npm start
 ```
 
