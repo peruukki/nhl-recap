@@ -18,7 +18,7 @@
   },
   "scripts": {
     "assets": "cp app/assets/* public",
-    "assets-watch": "watch 'cp app/assets/* public' app/assets --verbose",
+    "assets-watch": "watch 'cp app/assets/* public' app/assets",
     "build": "rm -rf public; mkdir public; npm run assets && npm run css && npm run js",
     "clean-dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
     "clone-dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
