@@ -14,13 +14,13 @@
   },
   "license": "MIT",
   "config": {
-    "browserify_args": "app/js/initialize.jsx -t [ babelify reactify ] -g uglifyify --extension=.jsx",
+    "browserify_args": "app/js/app.jsx -t [ babelify reactify ] --extension=.jsx",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
     "assets": "cp app/assets/* public",
     "assets-watch": "watch 'cp app/assets/* public' app/assets",
-    "browserify": "browserify $npm_package_config_browserify_args | uglifyjs -c -o public/app.js",
+    "browserify": "browserify $npm_package_config_browserify_args -- -g uglifyify | uglifyjs -c -o public/app.js",
     "prewatch": "npm run clean-build",
     "build": "npm run assets && parallelshell 'npm run css' 'npm run js'",
     "prebuild-watch": "npm run clean-build",
