@@ -5,7 +5,7 @@
   "keywords": [
     "NHL",
     "scores",
-    "react"
+    "cyclejs"
   ],
   "author": "Harri Lehtola <peruukki@hotmail.com>",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "config": {
-    "browserify_args": "app/js/app.jsx -t [ babelify reactify ] --extension=.jsx",
+    "browserify_args": "app/js/app.js -t [ babelify ]",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
@@ -48,24 +48,21 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "es6-promise": "^3.0.2",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "whatwg-fetch": "^0.10.0"
+    "@cycle/core": "^5.0.1",
+    "@cycle/dom": "^7.1.1",
+    "@cycle/http": "^6.1.0",
+    "rx": "^4.0.7"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
     "eslint": "^1.7.3",
-    "eslint-plugin-react": "^3.6.3",
     "eslint-watch": "^2.1.2",
     "hashmark": "^3.1.0",
     "http-server": "^0.8.5",
     "node-sass": "^3.4.2",
     "parallelshell": "^2.0.0",
-    "reactify": "^1.1.1",
     "replaceinfiles": "^1.1.3",
     "uglify-js": "^2.6.1",
     "uglifyify": "^3.0.1",

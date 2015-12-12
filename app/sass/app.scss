@@ -15,14 +15,14 @@ body {
   margin-bottom: 1em;
 }
 
-.teamPanel {
+.team-panel {
   display: inline-block;
   width: 30%;
 
   &.away {
     text-align: right;
 
-    .teamScore {
+    .team-score {
       margin-left: 0.5em;
     }
   }
@@ -30,13 +30,13 @@ body {
   &.home {
     text-align: left;
 
-    .teamScore {
+    .team-score {
       margin-right: 0.5em;
     }
   }
 }
 
-.teamScore {
+.team-score {
   font-size: larger;
   font-weight: bold;
 }
