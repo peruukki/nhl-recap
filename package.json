@@ -21,7 +21,7 @@
     "assets": "cp app/assets/* public",
     "assets-watch": "watch 'cp app/assets/* public' app/assets",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/app.js",
-    "prewatch": "npm run clean-build",
+    "prebuild": "npm run clean-build",
     "build": "npm run assets && parallelshell 'npm run css' 'npm run js'",
     "prebuild-watch": "npm run clean-build",
     "build-watch": "parallelshell 'npm run assets-watch' 'npm run css-watch' 'npm run js-watch'",
