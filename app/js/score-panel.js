@@ -1,6 +1,8 @@
 import {h} from '@cycle/dom';
 import Rx from 'rx';
 
+import gameScore from './game-score';
+
 export default function ScorePanel(responses) {
   const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
   const request$ = Rx.Observable.just(url);
@@ -13,7 +15,7 @@ export default function ScorePanel(responses) {
     .map(state =>
       h('div.scorePanel', [
         state.scores ?
-          h('score-list', {scores: JSON.parse(state.scores)}) :
+          renderScoreList(JSON.parse(state.scores)) :
           h('div.status', [state.status])
       ])
     );
@@ -22,4 +24,10 @@ export default function ScorePanel(responses) {
     DOM: vtree$,
     HTTP: request$
   };
+}
+
+function renderScoreList(scores) {
+  return h('div.score-list', scores ?
+    scores.map(game => gameScore(game.teams, game.scores)) :
+    []);
 }

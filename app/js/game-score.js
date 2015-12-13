@@ -1,24 +1,17 @@
 import {h} from '@cycle/dom';
 
-export default function gameScore(responses) {
-  const vtree$ = responses.props.getAll()
-    .map(props => {
-      return h('div.game', [
-        h('div.team-panel.away', [
-          h('span.team-name', props.teams.away),
-          h('span.team-score', [props.scores[props.teams.away]])
-        ]),
-        h('div.delimiter', getDelimiter(props.scores)),
-        h('div.team-panel.home', [
-          h('span.team-score', [props.scores[props.teams.home]]),
-          h('span.team-name', props.teams.home)
-        ])
-      ]);
-    });
-
-  return {
-    DOM: vtree$
-  };
+export default function gameScore(teams, scores) {
+  return h('div.game', [
+    h('div.team-panel.away', [
+      h('span.team-name', teams.away),
+      h('span.team-score', [scores[teams.away]])
+    ]),
+    h('div.delimiter', getDelimiter(scores)),
+    h('div.team-panel.home', [
+      h('span.team-score', [scores[teams.home]]),
+      h('span.team-name', teams.home)
+    ])
+  ]);
 }
 
 function getDelimiter(scores) {
