@@ -13,7 +13,7 @@ export default function ScorePanel(responses) {
     .catch(err => Rx.Observable.just({status: `Failed to fetch latest scores: ${err.message}.`}))
     .startWith({status: 'Fetching latest scores...'})
     .map(state =>
-      h('div.scorePanel', [
+      h('div.score-panel', [
         state.scores ?
           renderScoreList(JSON.parse(state.scores)) :
           h('div.status', [state.status])
