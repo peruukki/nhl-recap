@@ -26,6 +26,12 @@ Lint on file changes:
 npm run lint-watch
 ```
 
+## Testing
+
+```
+npm test
+```
+
 ## Building
 
 Build the app to the `public` directory:
