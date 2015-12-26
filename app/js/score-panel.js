@@ -3,7 +3,7 @@ import Rx from 'rx';
 
 import gameScore from './game-score';
 
-export default function ScorePanel(responses) {
+export default function scorePanel(responses) {
   const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
   const request$ = Rx.Observable.just(url);
   const vtree$ = responses.HTTP
