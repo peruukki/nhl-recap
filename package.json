@@ -41,7 +41,7 @@
     "publish": "npm run build && npm run clone-dist && npm run clean-dist && npm run copy-to-dist && npm run commit-dist && npm run publish-ready",
     "publish-ready": "echo 'Publish with these commands: cd dist && git push origin gh-pages'",
     "lint": "eslint *.js app/js/*.js{,x} test/*.js",
-    "lint-watch": "esw -w *.js app/js/*.js{,x}",
+    "lint-watch": "esw -w *.js app/js/*.js{,x} test/*.js",
     "sass": "node-sass app/sass/app.scss public/app.css --output-style compressed",
     "server": "http-server public -p 8000 -o",
     "spec": "mocha --compilers js:babel-register",
@@ -52,6 +52,7 @@
     "@cycle/core": "^5.0.1",
     "@cycle/dom": "^7.1.1",
     "@cycle/http": "^6.1.0",
+    "lodash": "^3.10.1",
     "rx": "^4.0.7"
   },
   "devDependencies": {
