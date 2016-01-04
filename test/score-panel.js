@@ -18,7 +18,7 @@ describe('scorePanel', () => {
   it('should initially show a message about fetching latest scores', (done) => {
     const requests = run(Rx.Observable.empty());
     requests.DOM.subscribe(vtree => {
-      assert.deepEqual(vtree, expectedStatusMessageVtree('Fetching latest scores...'));
+      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Fetching latest scores...'));
       done();
     });
   });
@@ -37,8 +37,7 @@ describe('scorePanel', () => {
 
     const requests = run(Rx.Observable.just(nhlScoreApiUrl));
     requests.DOM.skip(1).subscribe(vtree => {
-      const scorePanelNode = vtree.children[0];
-      const gameScoreNodes = scorePanelNode.children;
+      const gameScoreNodes = getScoreListNode(vtree).children;
       assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game', 'game']);
       done();
     });
@@ -50,7 +49,7 @@ describe('scorePanel', () => {
 
     const requests = run(Rx.Observable.just(nhlScoreApiUrl));
     requests.DOM.skip(1).subscribe(vtree => {
-      assert.deepEqual(vtree, expectedStatusMessageVtree('Failed to fetch latest scores: Not Found.'));
+      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Failed to fetch latest scores: Not Found.'));
       done();
     });
   });
@@ -62,8 +61,14 @@ function run(httpRequest$) {
   return scorePanel({ HTTP: driver(httpRequest$) });
 }
 
-function expectedStatusMessageVtree(message) {
-  return h('div.score-panel', [
-    h('div.status', message)
-  ]);
+function expectedStatusVtree(message) {
+  return h('div.status', message);
+}
+
+function getStatusNode(vtree) {
+  return vtree.children[1];
+}
+
+function getScoreListNode(vtree) {
+  return vtree.children[1];
 }

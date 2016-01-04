@@ -3,24 +3,17 @@
     "goals": [
       {
         "team": "STL",
-        "min": 7,
-        "sec": 35,
-        "scorer": "Vladimir Tarasenko",
-        "goalCount": 22,
-        "period": "3"
-      },
-      {
-        "team": "STL",
-        "min": 12,
-        "sec": 50,
+        "min": 2,
+        "sec": 5,
         "scorer": "Robby Fabbri",
         "goalCount": 7,
-        "period": "3"
+        "period": "OT"
       }
     ],
     "scores": {
-      "STL": 2,
-      "BOS": 0
+      "STL": 1,
+      "BOS": 0,
+      "overtime": true
     },
     "teams": {
       "away": "STL",
@@ -63,16 +56,17 @@
       },
       {
         "team": "NYR",
-        "min": 19,
+        "min": 2,
         "sec": 37,
         "scorer": "Mats Zuccarello",
         "goalCount": 15,
-        "period": "3"
+        "period": "OT"
       }
     ],
     "scores": {
       "ANA": 2,
-      "NYR": 3
+      "NYR": 3,
+      "overtime": true
     },
     "teams": {
       "away": "ANA",

@@ -11,8 +11,15 @@ body {
   background-color: $background-color;
 }
 
+.clock,
 .game {
   margin-bottom: 1em;
+}
+
+.period,
+.time {
+  height: 1em;
+  margin: 0.25em 0;
 }
 
 .team-panel {
