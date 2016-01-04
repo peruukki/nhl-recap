@@ -1,33 +1,48 @@
 import Rx from 'rx';
 import _ from 'lodash';
 
-export default function periodClock(durationInMinutes, endTime) {
-  return Rx.Observable.create(observer => {
-    // Push initial time
-    observer.onNext({ minute: durationInMinutes, second: 0 });
+export default function periodClock(durationInMinutes, endTime, interval, scheduler) {
+  const elements = generateSequence(durationInMinutes, endTime);
+  return Rx.Observable.interval(interval, scheduler)
+    .takeWhile(index => index < elements.length)
+    .map(index => elements[index]);
+}
 
-    const lastMinute = (endTime && endTime.minute) || -1;
-    const lastSecond = (endTime && endTime.second) || -1;
+function generateSequence(durationInMinutes, endTime) {
+  const lastMinute = (endTime && endTime.minute) || -1;
+  const lastSecond = (endTime && endTime.second) || -1;
 
-    // Advance clock by second for all minutes but the last one
-    _.forEach(minuteRange(durationInMinutes, lastMinute), (minute) => {
-      _.forEach(secondRange(minute, lastMinute, lastSecond), (second) => {
-        observer.onNext({ minute, second });
-      });
-    });
+  // Advance clock by second for all minutes but the last one
+  const secondElements = generateSecondElements(durationInMinutes, lastMinute, lastSecond);
 
-    if (lastMinute < 1) {
-      // Advance clock by tenth of a second for the last minute
-      const minute = 0;
-      _.forEach(secondRange(minute, lastMinute, lastSecond), (second) => {
-        _.forEach(_.range(9, -1, -1), (tenthOfASecond) => {
-          observer.onNext({ minute, second, tenthOfASecond });
-        });
-      });
-    }
+  // Advance clock by tenth of a second for the last minute
+  const tenthOfASecondElements = (lastMinute < 1) ?
+    generateTenthOfASecondElements(lastMinute, lastSecond) :
+    [];
 
-    observer.onCompleted();
-  });
+  const firstElement = { minute: durationInMinutes, second: 0 };
+  return [firstElement].concat(secondElements, tenthOfASecondElements);
+}
+
+function generateSecondElements(durationInMinutes, lastMinute, lastSecond) {
+  return _.flatten(
+    minuteRange(durationInMinutes, lastMinute)
+      .map(minute =>
+        secondRange(minute, lastMinute, lastSecond)
+          .map(second => ({ minute, second }))
+      )
+  );
+}
+
+function generateTenthOfASecondElements(lastMinute, lastSecond) {
+  const minute = 0;
+  return _.flatten(
+    secondRange(minute, lastMinute, lastSecond)
+      .map(second =>
+        _.range(9, -1, -1)
+          .map(tenthOfASecond => ({ minute, second, tenthOfASecond }))
+      )
+  );
 }
 
 function minuteRange(firstMinute, lastMinute) {
