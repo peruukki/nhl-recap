@@ -17,9 +17,6 @@ const period = 1;
 
 describe('periodClock', () => {
 
-  const firstElement = (minute) => onNext(scheduleTime + scheduleInterval, { period, minute, second: 0 });
-  const completedElement = (elementIndex) => onCompleted(scheduleTime + (elementIndex + 1) * scheduleInterval);
-
   it('should run full period if no end time is given', () => {
     const clockObserver = scheduleClock(periodLengthInMinutes, null, (clock$) => clock$.takeLast(1));
 
@@ -80,4 +77,12 @@ function scheduleClock(periodLength, endTime, transformFn) {
   const scheduler = new Rx.TestScheduler();
   const clock$ = periodClock(period, periodLength, endTime, scheduleInterval, scheduler);
   return scheduler.startScheduler(() => transformFn(clock$));
+}
+
+function firstElement(minute) {
+  return onNext(scheduleTime + scheduleInterval, { period, minute, second: 0 });
+}
+
+function completedElement(elementIndex) {
+  return onCompleted(scheduleTime + (elementIndex + 1) * scheduleInterval);
 }
