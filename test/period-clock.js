@@ -11,20 +11,17 @@ const scheduleInterval = 1;
 
 const assert = chai.assert;
 
-describe('periodClock', () => {
+// Use short period times to speed up the tests
+const periodLengthInMinutes = 3;
+const period = 1;
 
-  // Use short period times to speed up the tests
-  const periodLengthInMinutes = 3;
-  const period = 1;
+describe('periodClock', () => {
 
   const firstElement = (minute) => onNext(scheduleTime + scheduleInterval, { period, minute, second: 0 });
   const completedElement = (elementIndex) => onCompleted(scheduleTime + (elementIndex + 1) * scheduleInterval);
 
   it('should run full period if no end time is given', () => {
-    const scheduler = new Rx.TestScheduler();
-    const clockObserver = scheduler.startScheduler(() =>
-      periodClock(period, periodLengthInMinutes, null, scheduleInterval, scheduler).takeLast(1)
-    );
+    const clockObserver = scheduleClock(periodLengthInMinutes, null, (clock$) => clock$.takeLast(1));
 
     const elementCount = 722;
     const lastTimeElement = onNext(scheduleTime + elementCount * scheduleInterval, { period, minute: 0, second: 0, tenthOfASecond: 0 });
@@ -35,11 +32,8 @@ describe('periodClock', () => {
   });
 
   it('should stop at given end time', () => {
-    const scheduler = new Rx.TestScheduler();
     const endTime = { minute: 2, second: 53 };
-    const clockObserver = scheduler.startScheduler(() =>
-      periodClock(period, periodLengthInMinutes, endTime, scheduleInterval, scheduler)
-    );
+    const clockObserver = scheduleClock(periodLengthInMinutes, endTime, (clock$) => clock$);
 
     const secondElements = _.range(59, endTime.second - 1, -1).map((second, index) =>
       onNext(scheduleTime + (index + 2) * scheduleInterval, { period, minute: 2, second })
@@ -51,11 +45,7 @@ describe('periodClock', () => {
   });
 
   it('should advance by second for all minutes of a period but the last one', () => {
-    const scheduler = new Rx.TestScheduler();
-    const clockObserver = scheduler.startScheduler(() =>
-      periodClock(period, periodLengthInMinutes, null, scheduleInterval, scheduler)
-        .take((periodLengthInMinutes - 1) * 60 + 1)
-    );
+    const clockObserver = scheduleClock(periodLengthInMinutes, null, (clock$) => clock$.take((periodLengthInMinutes - 1) * 60 + 1));
 
     const minutes = _.range(periodLengthInMinutes - 1, 0, -1);
     const seconds = _.range(59, -1, -1);
@@ -72,12 +62,8 @@ describe('periodClock', () => {
   });
 
   it('should advance by tenth of a second for the last minute of a period', () => {
-    const scheduler = new Rx.TestScheduler();
     // Take only the first second to speed up and simplify the test
-    const clockObserver = scheduler.startScheduler(() =>
-      periodClock(period, 1, null, scheduleInterval, scheduler)
-        .take(11)
-    );
+    const clockObserver = scheduleClock(1, null, (clock$) => clock$.take(11));
 
     const tenthOfASecondElements = _.range(9, -1, -1).map((tenthOfASecond, index) =>
       onNext(scheduleTime + (index + 2) * scheduleInterval, { period, minute: 0, second: 59, tenthOfASecond })
@@ -89,3 +75,9 @@ describe('periodClock', () => {
   });
 
 });
+
+function scheduleClock(periodLength, endTime, transformFn) {
+  const scheduler = new Rx.TestScheduler();
+  const clock$ = periodClock(period, periodLength, endTime, scheduleInterval, scheduler);
+  return scheduler.startScheduler(() => transformFn(clock$));
+}
