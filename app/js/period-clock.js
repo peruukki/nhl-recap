@@ -1,46 +1,46 @@
 import Rx from 'rx';
 import _ from 'lodash';
 
-export default function periodClock(durationInMinutes, endTime, interval, scheduler) {
-  const elements = generateSequence(durationInMinutes, endTime);
+export default function periodClock(period, durationInMinutes, endTime, interval, scheduler) {
+  const elements = generateSequence(period, durationInMinutes, endTime);
   return Rx.Observable.interval(interval, scheduler)
     .takeWhile(index => index < elements.length)
     .map(index => elements[index]);
 }
 
-function generateSequence(durationInMinutes, endTime) {
+function generateSequence(period, durationInMinutes, endTime) {
   const lastMinute = (endTime && endTime.minute) || -1;
   const lastSecond = (endTime && endTime.second) || -1;
 
   // Advance clock by second for all minutes but the last one
-  const secondElements = generateSecondElements(durationInMinutes, lastMinute, lastSecond);
+  const secondElements = generateSecondElements(period, durationInMinutes, lastMinute, lastSecond);
 
   // Advance clock by tenth of a second for the last minute
   const tenthOfASecondElements = (lastMinute < 1) ?
-    generateTenthOfASecondElements(lastMinute, lastSecond) :
+    generateTenthOfASecondElements(period, lastMinute, lastSecond) :
     [];
 
-  const firstElement = { minute: durationInMinutes, second: 0 };
+  const firstElement = { period, minute: durationInMinutes, second: 0 };
   return [firstElement].concat(secondElements, tenthOfASecondElements);
 }
 
-function generateSecondElements(durationInMinutes, lastMinute, lastSecond) {
+function generateSecondElements(period, durationInMinutes, lastMinute, lastSecond) {
   return _.flatten(
     minuteRange(durationInMinutes, lastMinute)
       .map(minute =>
         secondRange(minute, lastMinute, lastSecond)
-          .map(second => ({ minute, second }))
+          .map(second => ({ period, minute, second }))
       )
   );
 }
 
-function generateTenthOfASecondElements(lastMinute, lastSecond) {
+function generateTenthOfASecondElements(period, lastMinute, lastSecond) {
   const minute = 0;
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond)
       .map(second =>
         _.range(9, -1, -1)
-          .map(tenthOfASecond => ({ minute, second, tenthOfASecond }))
+          .map(tenthOfASecond => ({ period, minute, second, tenthOfASecond }))
       )
   );
 }
