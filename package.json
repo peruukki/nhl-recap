@@ -49,8 +49,8 @@
     "test": "npm run lint && npm run spec"
   },
   "dependencies": {
-    "@cycle/core": "^5.0.1",
-    "@cycle/dom": "^7.1.1",
+    "@cycle/core": "^6.0.0",
+    "@cycle/dom": "^9.0.1",
     "@cycle/http": "^6.1.0",
     "lodash": "^3.10.1",
     "rx": "^4.0.7"
