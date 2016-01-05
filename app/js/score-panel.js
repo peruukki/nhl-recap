@@ -47,13 +47,13 @@ function model(actions) {
 }
 
 function view(state$) {
-  return state$.map(({scores, status, clockVtree}) =>
-    h('div.score-panel', [clockVtree, renderScores({ scores, status })])
+  return state$.map(({scores, status, clockVtree, clock}) =>
+    h('div.score-panel', [clockVtree, renderScores({ scores, status, clock })])
   );
 }
 
 function renderScores(state) {
   return state.scores ?
-    h('div.score-list', state.scores.map(game => gameScore(game.teams, game.scores))) :
+    h('div.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals))) :
     h('div.status', [state.status]);
 }
