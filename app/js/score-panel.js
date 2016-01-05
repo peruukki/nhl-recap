@@ -1,7 +1,7 @@
 import {h} from '@cycle/dom';
 import Rx from 'rx';
 
-import {gameClock, renderClock} from './game-clock';
+import GameClock from './game-clock';
 import gameScore from './game-score';
 
 export default function main({HTTP}) {
@@ -13,7 +13,6 @@ export default function main({HTTP}) {
 }
 
 function intent(HTTP, url) {
-  const clockIntervalMs = 10;
   const scoresWithErrors$ = HTTP
     .filter(res$ => res$.request === url)
     .mergeAll()
@@ -28,24 +27,28 @@ function intent(HTTP, url) {
     scores$,
     status$: scoresWithErrors$
       .filter(scores => scores.error)
-      .map(scores => `Failed to fetch latest scores: ${scores.error.message}.`),
-    clock$: scores$
-      .flatMapLatest(scores => gameClock(scores, clockIntervalMs))
+      .map(scores => `Failed to fetch latest scores: ${scores.error.message}.`)
   };
 }
 
 function model(actions) {
+  const gameClock = GameClock({
+    scores$: actions.scores$,
+    props$: Rx.Observable.just({ interval: 10 })
+  });
+
   return Rx.Observable.combineLatest(
     actions.scores$.startWith(null),
     actions.status$.startWith('Fetching latest scores...'),
-    actions.clock$.startWith(null),
-    (scores, status, clock) => ({ scores, status, clock })
+    gameClock.DOM.startWith(''),
+    gameClock.clock$.startWith(null),
+    (scores, status, clockVtree, clock) => ({ scores, status, clockVtree, clock })
   );
 }
 
 function view(state$) {
-  return state$.map(({scores, status, clock}) =>
-    h('div.score-panel', [renderClock(clock), renderScores({ scores, status })])
+  return state$.map(({scores, status, clockVtree}) =>
+    h('div.score-panel', [clockVtree, renderScores({ scores, status })])
   );
 }
 

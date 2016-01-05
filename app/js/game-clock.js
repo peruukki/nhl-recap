@@ -4,31 +4,48 @@ import _ from 'lodash';
 
 import periodClock from './period-clock';
 
-export default gameClock;
-
-export function gameClock(scores, interval, scheduler) {
-  const periodStartDelayInMs = 3000;
-  const periodClocks = getPeriodClocks(scores, interval, scheduler);
-  const periodEnds = periodClocks.map(periodClock => getPeriodEndStream(periodClock.period, interval, scheduler));
-  const delayedClocks = periodClocks.map((periodClock, index) =>
-    index === 0 ?
-      periodClock.clock :
-      periodClock.clock.delay(periodStartDelayInMs, scheduler)
-  );
-  const allSequences = _.chain()
-    .zip(delayedClocks, periodEnds)
-    .flatten()
-    .value()
-    .concat(getGamesEndStream(interval, scheduler));
-
-  return Rx.Observable.concat(allSequences);
+export default function GameClock(sources) {
+  const state$ = model(intent(sources));
+  return {
+    DOM: view(state$),
+    clock$: state$
+  };
 }
 
-export function renderClock(clock) {
-  return h('div.clock', [
-    h('div.period', clock ? renderPeriod(clock) : ''),
-    h('div.time', clock ? renderTime(clock) : '')
-  ]);
+function intent(sources) {
+  const {scores$, props$} = sources;
+  return { scores$, props$ };
+}
+
+function model(actions) {
+  return Rx.Observable.combineLatest(actions.scores$, actions.props$)
+    .flatMapLatest(([scores, props]) => {
+      const {interval, scheduler} = props;
+      const periodStartDelayInMs = 3000;
+      const periodClocks = getPeriodClocks(scores, interval, scheduler);
+      const periodEnds = periodClocks.map(periodClock => getPeriodEndStream(periodClock.period, interval, scheduler));
+      const delayedClocks = periodClocks.map((periodClock, index) =>
+        index === 0 ?
+          periodClock.clock :
+          periodClock.clock.delay(periodStartDelayInMs, scheduler)
+      );
+      const allSequences = _.chain()
+        .zip(delayedClocks, periodEnds)
+        .flatten()
+        .value()
+        .concat(getGamesEndStream(interval, scheduler));
+
+      return Rx.Observable.concat(allSequences);
+    });
+}
+
+function view(state$) {
+  return state$.map(clock =>
+    h('div.clock', [
+      h('div.period', clock ? renderPeriod(clock) : ''),
+      h('div.time', clock ? renderTime(clock) : '')
+    ])
+  );
 }
 
 function getPeriodClocks(scores, interval, scheduler) {

@@ -2,7 +2,7 @@ import Rx from 'rx';
 import _ from 'lodash';
 import chai from 'chai';
 
-import gameClock from '../app/js/game-clock';
+import GameClock from '../app/js/game-clock';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndShootout from './data/latest-ot-so.json';
@@ -11,7 +11,7 @@ const scheduleInterval = 1;
 
 const assert = chai.assert;
 
-describe('gameClock', () => {
+describe('GameClock', () => {
 
   it('should run for 3 periods if no games went to overtime or shootout', () => {
     const messages = scheduleClock(scoresAllRegularTime);
@@ -72,7 +72,10 @@ describe('gameClock', () => {
 function scheduleClock(scores, transformFn) {
   const transform = transformFn || (x => x);
   const scheduler = new Rx.TestScheduler();
-  const clock$ = gameClock(scores, scheduleInterval, scheduler);
+  const {clock$} = GameClock({
+    scores$: Rx.Observable.just(scores),
+    props$: Rx.Observable.just({ interval: scheduleInterval, scheduler })
+  });
   const clockObserver = scheduler.startScheduler(() => transform(clock$), { disposed: 30000 });
   return _.dropRight(clockObserver.messages); // Drop last 'completed' element
 }
