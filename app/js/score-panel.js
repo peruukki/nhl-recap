@@ -4,37 +4,49 @@ import Rx from 'rx';
 import {gameClock, renderClock} from './game-clock';
 import gameScore from './game-score';
 
-export default function scorePanel(responses) {
+export default function main({HTTP}) {
   const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
-  const request$ = Rx.Observable.just(url);
-  const clockIntervalMs = 10;
+  return {
+    DOM: view(model(intent(HTTP, url))),
+    HTTP: Rx.Observable.just(url)
+  };
+}
 
-  const state$ = responses.HTTP
+function intent(HTTP, url) {
+  const clockIntervalMs = 10;
+  const scoresWithErrors$ = HTTP
     .filter(res$ => res$.request === url)
     .mergeAll()
-    .map(res => ({scores: JSON.parse(res.text)}))
-    .catch(err => Rx.Observable.just({status: `Failed to fetch latest scores: ${err.message}.`}))
-    .startWith({status: 'Fetching latest scores...'});
-
-  const clock$ = state$
-    .filter(state => state.scores)
-    .flatMapLatest(state => gameClock(state.scores, clockIntervalMs))
-    .startWith(null);
-
-  const scoreListVtree$ = state$
-    .map(renderScores);
-
-  const clockVtree$ = clock$
-    .map(renderClock);
-
-  const vtree$ = Rx.Observable.combineLatest(clockVtree$, scoreListVtree$,
-    (clockVtree, scoreListVtree) => h('div.score-panel', [clockVtree, scoreListVtree])
-  );
+    .map(response => ({ success: JSON.parse(response.text) }))
+    .catch(error => Rx.Observable.just({ error }))
+    .share();
+  const scores$ = scoresWithErrors$
+    .filter(scores => scores.success)
+    .map(scores => scores.success);
 
   return {
-    DOM: vtree$,
-    HTTP: request$
+    scores$,
+    status$: scoresWithErrors$
+      .filter(scores => scores.error)
+      .map(scores => `Failed to fetch latest scores: ${scores.error.message}.`),
+    clock$: scores$
+      .flatMapLatest(scores => gameClock(scores, clockIntervalMs))
   };
+}
+
+function model(actions) {
+  return Rx.Observable.combineLatest(
+    actions.scores$.startWith(null),
+    actions.status$.startWith('Fetching latest scores...'),
+    actions.clock$.startWith(null),
+    (scores, status, clock) => ({ scores, status, clock })
+  );
+}
+
+function view(state$) {
+  return state$.map(({scores, status, clock}) =>
+    h('div.score-panel', [renderClock(clock), renderScores({ scores, status })])
+  );
 }
 
 function renderScores(state) {
