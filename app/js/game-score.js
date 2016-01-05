@@ -21,7 +21,7 @@ export default function gameScore(clock, teams, goals) {
 }
 
 function getCurrentGoals(clock, goals) {
-  if (!clock) {
+  if (!clock || clock.start) {
     return [];
   }
   if (!clock.period || clock.period === 'SO') {

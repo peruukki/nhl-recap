@@ -24,18 +24,18 @@ function model(actions) {
       const periodStartDelayInMs = 3000;
       const periodClocks = getPeriodClocks(scores, interval, scheduler);
       const periodEnds = periodClocks.map(periodClock => getPeriodEndStream(periodClock.period, interval, scheduler));
-      const delayedClocks = periodClocks.map((periodClock, index) =>
-        index === 0 ?
-          periodClock.clock :
-          periodClock.clock.delay(periodStartDelayInMs, scheduler)
-      );
-      const allSequences = _.chain()
+      const delayedClocks = periodClocks.map(periodClock => periodClock.clock
+        .delay(periodStartDelayInMs, scheduler));
+      const periodSequences = _.chain()
         .zip(delayedClocks, periodEnds)
         .flatten()
-        .value()
-        .concat(getGamesEndStream(periodStartDelayInMs, scheduler));
+        .value();
 
-      return Rx.Observable.concat(allSequences);
+      return Rx.Observable.concat(
+        getGamesStartStream(),
+        ...periodSequences,
+        getGamesEndStream(periodStartDelayInMs, scheduler)
+      );
     });
 }
 
@@ -59,6 +59,10 @@ function getPeriodClocks(scores, interval, scheduler) {
 function getPeriodEndStream(period, interval, scheduler) {
   return Rx.Observable.just({ period, end: true })
     .delay(interval, scheduler);
+}
+
+function getGamesStartStream() {
+  return Rx.Observable.just({ start: true });
 }
 
 function getGamesEndStream(delay, scheduler) {
@@ -112,8 +116,11 @@ function getEndTime(scores) {
       { period: 3 };
   }
 }
+
 function renderPeriod(clock) {
-  if (clock.end) {
+  if (clock.start) {
+    return 'Starting...';
+  } else if (clock.end) {
     return clock.period ? renderPeriodEnd(clock.period) : 'Final';
   } else {
     return renderPeriodNumber(clock.period);

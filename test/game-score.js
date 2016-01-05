@@ -14,7 +14,7 @@ describe('gameScore', () => {
   describe('goal counts', () => {
 
     it('should show zero goals in the beginning', () => {
-      const clock = { period: 1, minute: 20, second: 0 };
+      const clock = { start: true };
       const {teams, goals} = scoresAllRegularTime[1];
       assertGoalCounts(clock, teams, goals, 0, 0);
     });
