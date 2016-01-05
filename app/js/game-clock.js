@@ -33,7 +33,7 @@ function model(actions) {
         .zip(delayedClocks, periodEnds)
         .flatten()
         .value()
-        .concat(getGamesEndStream(interval, scheduler));
+        .concat(getGamesEndStream(periodStartDelayInMs, scheduler));
 
       return Rx.Observable.concat(allSequences);
     });
@@ -61,9 +61,9 @@ function getPeriodEndStream(period, interval, scheduler) {
     .delay(interval, scheduler);
 }
 
-function getGamesEndStream(interval, scheduler) {
+function getGamesEndStream(delay, scheduler) {
   return Rx.Observable.just({ end: true })
-    .delay(interval, scheduler);
+    .delay(delay, scheduler);
 }
 
 function getRegularPeriodClocks(endTime, interval, scheduler) {
