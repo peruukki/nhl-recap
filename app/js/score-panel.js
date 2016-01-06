@@ -7,7 +7,8 @@ import gameScore from './game-score';
 export default function main({HTTP}) {
   const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
   return {
-    DOM: view(model(intent(HTTP, url))),
+    DOM: view(model(intent(HTTP, url)))
+      .sample(0, Rx.Scheduler.requestAnimationFrame),
     HTTP: Rx.Observable.just(url)
   };
 }
