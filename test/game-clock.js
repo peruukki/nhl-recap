@@ -16,20 +16,18 @@ describe('GameClock', () => {
   it('should run for 3 periods if no games went to overtime or shootout', () => {
     const messages = scheduleClock(scoresAllRegularTime);
 
-    const periodEndElements = getMessageValues(getPeriodEndMessages(messages));
-    const periods = _.pluck(periodEndElements, 'period');
-    assert.deepEqual(periods, [1, 2, 3]);
-
-    const lastClockElement = getLastClockElementWithTime(messages);
-    assert.deepEqual(lastClockElement, { period: 3, minute: 0, second: 0, tenthOfASecond: 0 });
+    // Check that all period clocks ran until the end
+    const periodEndElementIndexes = getPeriodEndMessageIndexes(messages);
+    assertPeriodEnds(messages, [1, 2, 3], periodEndElementIndexes);
   });
 
   it('should run until last overtime goal if games went to overtime and none went to shootout', () => {
     const messages = scheduleClock(scoresMultipleOvertime);
 
-    const periodEndElements = getMessageValues(getPeriodEndMessages(messages));
-    const periods = _.pluck(periodEndElements, 'period');
-    assert.deepEqual(periods, [1, 2, 3, 'OT']);
+    // Check that regulation period clocks ran until the end
+    const allPeriodEndElementIndexes = getPeriodEndMessageIndexes(messages);
+    const regulationPeriodEndElementIndexes = _.dropRight(allPeriodEndElementIndexes);
+    assertPeriodEnds(messages, [1, 2, 3], regulationPeriodEndElementIndexes);
 
     const lastClockElement = getLastClockElementWithTime(messages);
     assert.deepEqual(lastClockElement, { period: 'OT', minute: 2, second: 37 });
@@ -38,9 +36,10 @@ describe('GameClock', () => {
   it('should run until shootout if games went to shootout', () => {
     const messages = scheduleClock(scoresOvertimeAndShootout);
 
-    const periodEndElements = getMessageValues(getPeriodEndMessages(messages));
-    const periods = _.pluck(periodEndElements, 'period');
-    assert.deepEqual(periods, [1, 2, 3, 'OT', 'SO']);
+    // Check that period clocks ran until the end
+    const allPeriodEndElementIndexes = getPeriodEndMessageIndexes(messages);
+    const timedPeriodEndElementIndexes = _.dropRight(allPeriodEndElementIndexes);
+    assertPeriodEnds(messages, [1, 2, 3, 'OT'], timedPeriodEndElementIndexes);
 
     const lastClockElement = getLastClockElementWithTime(messages);
     assert.deepEqual(lastClockElement, { period: 'SO' });
@@ -80,12 +79,17 @@ function scheduleClock(scores, transformFn) {
   return _.dropRight(clockObserver.messages); // Drop last 'completed' element
 }
 
-function getMessageValue(message) {
-  return _.property('value.value')(message);
+function assertPeriodEnds(messages, periods, periodEndElementIndexes) {
+  _.zip(periods, periodEndElementIndexes)
+    .forEach(([period, index]) => {
+      const lastPeriodTimeElement = getMessageValue(messages[index - 1]);
+      const normalizedTimeElement = _.omit(lastPeriodTimeElement, 'tenthOfASecond');
+      assert.deepEqual(normalizedTimeElement, { period, minute: 0, second: 0 });
+    });
 }
 
-function getMessageValues(messages) {
-  return messages.map(getMessageValue);
+function getMessageValue(message) {
+  return _.property('value.value')(message);
 }
 
 function getPeriodEndMessages(messages) {

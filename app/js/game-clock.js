@@ -71,16 +71,21 @@ function getGamesEndStream(delay, scheduler) {
 }
 
 function getRegularPeriodClocks(endTime, interval, scheduler) {
-  const finalPeriodNumber = (endTime.period === 'SO' || endTime.period === 'OT') ? 3 : endTime.period;
-  const fullPeriods = _.range(1, finalPeriodNumber).map(period => ({
+  const partialPeriodNumber = (endTime.period > 3) ? endTime.period : null;
+  const fullPeriods = _.range(1, partialPeriodNumber || 4).map(period => ({
     period,
     clock: periodClock(period, 20, null, interval, scheduler)
   }));
-  const finalPeriod = {
-    period: finalPeriodNumber,
-    clock: periodClock(finalPeriodNumber, 20, endTime, interval, scheduler)
-  };
-  return fullPeriods.concat(finalPeriod);
+
+  if (partialPeriodNumber) {
+    const partialPeriod = {
+      period: partialPeriodNumber,
+      clock: periodClock(partialPeriodNumber, 20, endTime, interval, scheduler)
+    };
+    return fullPeriods.concat(partialPeriod);
+  } else {
+    return fullPeriods;
+  }
 }
 
 function getOvertimeClock(endTime, interval, scheduler) {
