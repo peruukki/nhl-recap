@@ -154,7 +154,7 @@ function renderTime(clock) {
   }
 
   const showTenthsOfASecond = (clock.tenthOfASecond !== undefined);
-  const minute = (clock.minute >= 1) ? clock.minute + ':' : '';
+  const minute = !showTenthsOfASecond ? clock.minute + ':' : '';
   const second = (clock.second >= 10 || showTenthsOfASecond) ? clock.second : '0' + clock.second;
   const tenthOfASecond = showTenthsOfASecond ? '.' + clock.tenthOfASecond : '';
   return minute + second + tenthOfASecond;

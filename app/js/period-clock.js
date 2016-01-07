@@ -12,11 +12,12 @@ function generateSequence(period, durationInMinutes, endTime) {
   const lastMinute = (endTime && endTime.minute) || -1;
   const lastSecond = (endTime && endTime.second) || -1;
 
-  // Advance clock by second for all minutes but the last one
-  const secondElements = generateSecondElements(period, durationInMinutes, lastMinute, lastSecond);
+  // Advance clock by second for all minutes but the last one of the 3rd period
+  const allSecondElements = generateSecondElements(period, durationInMinutes, lastMinute, lastSecond);
+  const secondElements = (period === 3) ? _.dropRight(allSecondElements, 60) : allSecondElements;
 
-  // Advance clock by tenth of a second for the last minute
-  const tenthOfASecondElements = (lastMinute < 1) ?
+  // Advance clock by tenth of a second for the last minute of the 3rd period
+  const tenthOfASecondElements = (period === 3) && (lastMinute < 1) ?
     generateTenthOfASecondElements(period, lastMinute, lastSecond) :
     [];
 
@@ -46,7 +47,7 @@ function generateTenthOfASecondElements(period, lastMinute, lastSecond) {
 }
 
 function minuteRange(firstMinute, lastMinute) {
-  return _.range(firstMinute - 1, Math.max(lastMinute - 1, 0), -1);
+  return _.range(firstMinute - 1, Math.max(lastMinute - 1, -1), -1);
 }
 
 function secondRange(minute, lastMinute, lastSecond) {
