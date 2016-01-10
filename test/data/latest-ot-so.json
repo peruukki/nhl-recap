@@ -58,6 +58,21 @@
         "team": "NYR",
         "scorer": "Mats Zuccarello",
         "period": "SO"
+      },
+      {
+        "team": "ANA",
+        "scorer": "Corey Perry",
+        "period": "SO"
+      },
+      {
+        "team": "NYR",
+        "scorer": "Derick Brassard",
+        "period": "SO"
+      },
+      {
+        "team": "NYR",
+        "scorer": "Rick Nash",
+        "period": "SO"
       }
     ],
     "scores": {

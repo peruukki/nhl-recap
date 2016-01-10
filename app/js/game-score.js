@@ -2,7 +2,7 @@ import {h} from '@cycle/dom';
 import _ from 'lodash';
 
 export default function gameScore(clock, teams, goals) {
-  const currentGoals = getCurrentGoals(clock, goals);
+  const currentGoals = getCurrentGoals(clock, teams, goals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = currentGoals.length > 0 ? _.last(currentGoals).period : null;
@@ -20,12 +20,15 @@ export default function gameScore(clock, teams, goals) {
   ]);
 }
 
-function getCurrentGoals(clock, goals) {
+function getCurrentGoals(clock, teams, goals) {
   if (!clock || clock.start) {
     return [];
   }
   if (!clock.period || clock.period === 'SO') {
-    return goals;
+    const nonShootoutGoals = goals.filter(goal => goal.period !== 'SO');
+    return (nonShootoutGoals.length === goals.length) ?
+      goals :
+      nonShootoutGoals.concat(getShootoutGoal(goals, teams));
   }
 
   const periodLengthInMinutes = (clock.period === 'OT') ? 5 : 20;
@@ -40,6 +43,13 @@ function getCurrentGoals(clock, goals) {
       (goal.min < currentMinute ||
         (goal.min === currentMinute && goal.sec <= currentSecond)))
   );
+}
+
+function getShootoutGoal(goals, teams) {
+  const awayGoals = goals.filter(goal => goal.team === teams.away);
+  const homeGoals = goals.filter(goal => goal.team === teams.home);
+  const winnersGoals = (awayGoals.length > homeGoals) ? awayGoals : homeGoals;
+  return _.last(winnersGoals);
 }
 
 function getPeriodOrdinal(period) {

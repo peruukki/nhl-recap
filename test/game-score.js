@@ -55,7 +55,7 @@ describe('gameScore', () => {
       assertGoalCounts(clock, teams, goals, 1, 0);
     });
 
-    it('should show goals scored in shootout', () => {
+    it('should show only one shootout goal, for the winning team', () => {
       const clock = { period: 'SO' };
       const {teams, goals} = scoresOvertimeAndShootout[1];
       assertGoalCounts(clock, teams, goals, 2, 3);
