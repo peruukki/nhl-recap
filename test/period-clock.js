@@ -94,11 +94,10 @@ describe('periodClock', () => {
 
 });
 
-function scheduleClock(period, periodLength, endTime, transformFn) {
+function scheduleClock(period, periodLength, endTime, transformFn = _.identity) {
   const scheduler = new Rx.TestScheduler();
   const clock$ = periodClock(period, periodLength, endTime, scheduleInterval, scheduler);
-  const transform = transformFn || ((clock$) => clock$);
-  return scheduler.startScheduler(() => transform(clock$));
+  return scheduler.startScheduler(() => transformFn(clock$));
 }
 
 function firstElement(period, minute) {

@@ -68,14 +68,13 @@ describe('GameClock', () => {
 
 });
 
-function scheduleClock(scores, transformFn) {
-  const transform = transformFn || (x => x);
+function scheduleClock(scores, transformFn = _.identity) {
   const scheduler = new Rx.TestScheduler();
   const {clock$} = GameClock({
     scores$: Rx.Observable.just(scores),
     props$: Rx.Observable.just({ interval: scheduleInterval, scheduler })
   });
-  const clockObserver = scheduler.startScheduler(() => transform(clock$), { disposed: 30000 });
+  const clockObserver = scheduler.startScheduler(() => transformFn(clock$), { disposed: 30000 });
   return _.dropRight(clockObserver.messages); // Drop last 'completed' element
 }
 
