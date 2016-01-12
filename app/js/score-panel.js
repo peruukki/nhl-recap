@@ -35,7 +35,7 @@ function intent(HTTP, url) {
 function model(actions) {
   const gameClock = GameClock({
     scores$: actions.scores$,
-    props$: Rx.Observable.just({ interval: 10 })
+    props$: Rx.Observable.just({ interval: 7 })
   });
 
   return Rx.Observable.combineLatest(
