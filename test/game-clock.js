@@ -30,7 +30,7 @@ describe('GameClock', () => {
     assertPeriodEnds(messages, [1, 2, 3], regulationPeriodEndElementIndexes);
 
     const lastClockElement = getLastClockElementWithTime(messages);
-    assert.deepEqual(lastClockElement, { period: 'OT', minute: 2, second: 37 });
+    assert.deepEqual(lastClockElement, { period: 'OT', minute: 2, second: 23 });
   });
 
   it('should run until shootout if games went to shootout', () => {

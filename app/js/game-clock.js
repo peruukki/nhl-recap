@@ -3,6 +3,7 @@ import {h} from '@cycle/dom';
 import _ from 'lodash';
 
 import periodClock from './period-clock';
+import {elapsedTimeToRemainingTime} from './utils';
 
 export default function GameClock(sources) {
   const state$ = model(intent(sources));
@@ -110,14 +111,15 @@ function getEndTime(scores) {
   if (isShootout) {
     return { period: 'SO' };
   } else {
-    const lastOvertimeGoal = _.chain(lastGoals)
+    const lastOvertimeGoalTime = _.chain(lastGoals)
       .filter(goal => goal.period === 'OT' || goal.period > 3)
       .sortByAll(['period', 'min', 'sec'])
+      .map(goal => ({ period: goal.period, minute: goal.min, second: goal.sec }))
       .last()
       .value();
 
-    return lastOvertimeGoal ?
-      { period: lastOvertimeGoal.period, minute: lastOvertimeGoal.min, second: lastOvertimeGoal.sec } :
+    return lastOvertimeGoalTime ?
+      elapsedTimeToRemainingTime(lastOvertimeGoalTime) :
       { period: 3 };
   }
 }

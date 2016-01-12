@@ -1,6 +1,8 @@
 import {h} from '@cycle/dom';
 import _ from 'lodash';
 
+import {remainingTimeToElapsedTime} from './utils';
+
 export default function gameScore(clock, teams, goals) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
@@ -31,17 +33,12 @@ function getCurrentGoals(clock, teams, goals) {
       nonShootoutGoals.concat(getShootoutGoal(goals, teams));
   }
 
-  const periodLengthInMinutes = (clock.period === 'OT') ? 5 : 20;
-  const secondsRemaining = 60 * (clock.minute || 0) + (clock.second || 0);
-  const secondsElapsed = periodLengthInMinutes * 60 - secondsRemaining;
-  const currentMinute = Math.floor(secondsElapsed / 60);
-  const currentSecond = secondsElapsed - 60 * currentMinute;
-
+  const {minute, second} = remainingTimeToElapsedTime(clock);
   return goals.filter(goal =>
     (getPeriodOrdinal(goal.period) < getPeriodOrdinal(clock.period)) ||
     (getPeriodOrdinal(goal.period) === getPeriodOrdinal(clock.period) &&
-      (goal.min < currentMinute ||
-        (goal.min === currentMinute && goal.sec <= currentSecond)))
+      (goal.min < minute ||
+        (goal.min === minute && goal.sec <= second)))
   );
 }
 
