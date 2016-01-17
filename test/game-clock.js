@@ -5,7 +5,7 @@ import chai from 'chai';
 import GameClock from '../app/js/game-clock';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
-import scoresOvertimeAndShootout from './data/latest-ot-so.json';
+import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
 
 const scheduleInterval = 1;
 
@@ -34,7 +34,7 @@ describe('GameClock', () => {
   });
 
   it('should run until shootout if games went to shootout', () => {
-    const messages = scheduleClock(scoresOvertimeAndShootout);
+    const messages = scheduleClock(scoresOvertimeAndMultipleShootout);
 
     // Check that period clocks ran until the end
     const allPeriodEndElementIndexes = getPeriodEndMessageIndexes(messages);
@@ -47,7 +47,7 @@ describe('GameClock', () => {
 
   it('should have a delay before starting each period', () => {
     const periodStartDelay = 3000 + scheduleInterval;
-    const messages = scheduleClock(scoresOvertimeAndShootout);
+    const messages = scheduleClock(scoresOvertimeAndMultipleShootout);
 
     const periodEndElementIndexes = getPeriodEndMessageIndexes(messages);
     assert.lengthOf(periodEndElementIndexes, 5);

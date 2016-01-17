@@ -5,7 +5,7 @@ import chai from 'chai';
 import gameScore from '../app/js/game-score';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
-import scoresOvertimeAndShootout from './data/latest-ot-so.json';
+import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
 
 const assert = chai.assert;
 
@@ -55,10 +55,16 @@ describe('gameScore', () => {
       assertGoalCounts(clock, teams, goals, 1, 0);
     });
 
-    it('should show only one shootout goal, for the winning team', () => {
+    it('should show only one shootout goal, for the winning (home) team', () => {
       const clock = { period: 'SO' };
-      const {teams, goals} = scoresOvertimeAndShootout[1];
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
       assertGoalCounts(clock, teams, goals, 2, 3);
+    });
+
+    it('should show only one shootout goal, for the winning (away) team', () => {
+      const clock = { period: 'SO' };
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[2];
+      assertGoalCounts(clock, teams, goals, 2, 1);
     });
 
   });
@@ -91,13 +97,13 @@ describe('gameScore', () => {
 
     it('should show "SO" when the clock reaches shootout and the game has a shootout goal', () => {
       const clock = { period: 'SO' };
-      const {teams, goals} = scoresOvertimeAndShootout[1];
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
       assertDelimiter(clock, teams, goals, h('span.period', 'SO'));
     });
 
     it('should show the period of the last goal when the clock reaches the end of the game', () => {
       const clock = { end: true };
-      const {teams, goals} = scoresOvertimeAndShootout[1];
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
       assertDelimiter(clock, teams, goals, h('span.period', 'SO'));
     });
 

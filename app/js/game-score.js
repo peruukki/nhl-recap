@@ -45,7 +45,7 @@ function getCurrentGoals(clock, teams, goals) {
 function getShootoutGoal(goals, teams) {
   const awayGoals = goals.filter(goal => goal.team === teams.away);
   const homeGoals = goals.filter(goal => goal.team === teams.home);
-  const winnersGoals = (awayGoals.length > homeGoals) ? awayGoals : homeGoals;
+  const winnersGoals = (awayGoals.length > homeGoals.length) ? awayGoals : homeGoals;
   return _.last(winnersGoals);
 }
 

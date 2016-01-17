@@ -84,5 +84,39 @@
       "away": "ANA",
       "home": "NYR"
     }
+  },
+  {
+    "goals": [
+      {
+        "team": "TOR",
+        "min": 9,
+        "sec": 56,
+        "scorer": "James van Riemsdyk",
+        "goalCount": 15,
+        "period": "2"
+      },
+      {
+        "team": "TBL",
+        "min": 8,
+        "sec": 23,
+        "scorer": "Valtteri Filppula",
+        "goalCount": 9,
+        "period": "3"
+      },
+      {
+        "team": "TOR",
+        "scorer": "Leo Komarov",
+        "period": "SO"
+      }
+    ],
+    "scores": {
+      "TOR": 2,
+      "TBL": 1,
+      "shootout": true
+    },
+    "teams": {
+      "away": "TOR",
+      "home": "TBL"
+    }
   }
 ]
