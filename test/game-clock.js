@@ -83,7 +83,7 @@ function assertPeriodEnds(messages, periods, periodEndElementIndexes) {
     .forEach(([period, index]) => {
       const lastPeriodTimeElement = getMessageValue(messages[index - 1]);
       const normalizedTimeElement = _.omit(lastPeriodTimeElement, 'tenthOfASecond');
-      assert.deepEqual(normalizedTimeElement, { period, minute: 0, second: 0 });
+      assert.deepEqual(normalizedTimeElement, { period, minute: 0, second: 2 });
     });
 }
 

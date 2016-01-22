@@ -1,6 +1,8 @@
 import Rx from 'rx';
 import _ from 'lodash';
 
+const advanceClockStep = 3;
+
 export default function periodClock(period, durationInMinutes, endTime, interval, scheduler) {
   const elements = generateSequence(period, durationInMinutes, endTime);
   return Rx.Observable.interval(interval, scheduler)
@@ -40,7 +42,7 @@ function generateTenthOfASecondElements(period, lastMinute, lastSecond) {
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond)
       .map(second =>
-        _.range(9, -1, -1)
+        _.range(9, -1, -advanceClockStep)
           .map(tenthOfASecond => ({ period, minute, second, tenthOfASecond }))
       )
   );
@@ -52,5 +54,5 @@ function minuteRange(firstMinute, lastMinute) {
 
 function secondRange(minute, lastMinute, lastSecond) {
   const rangeEnd = (minute === lastMinute) ? lastSecond - 1 : -1;
-  return _.range(59, rangeEnd, -1);
+  return _.range(59, rangeEnd, -advanceClockStep);
 }
