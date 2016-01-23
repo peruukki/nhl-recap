@@ -50,7 +50,7 @@ npm run build
 ## Publishing the app on GitHub pages
 
 The `publish` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
-and create a commit, ready to be pushed:
+create a commit, and push the commit to the `gh-pages` branch in `origin`:
 ```
 npm run publish
 ```
