@@ -1,9 +1,8 @@
 .clock {
-  margin-bottom: 1em;
+  float: right;
 
-  &__period,
   &__time {
-    height: 1em;
-    margin: 0.25em 0;
+    margin-left: 0.25em;
+    font-weight: bold;
   }
 }

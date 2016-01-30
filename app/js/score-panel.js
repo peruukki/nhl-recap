@@ -49,8 +49,18 @@ function model(actions) {
 
 function view(state$) {
   return state$.map(({scores, status, clockVtree, clock}) =>
-    h('div.score-panel', [clockVtree, renderScores({ scores, status, clock })])
+    h('div', [
+      h('header.header', renderHeader(clockVtree)),
+      h('section.score-panel', renderScores({ scores, status, clock }))
+    ])
   );
+}
+
+function renderHeader(clockVtree) {
+  return h('div.header__container', [
+    h('h1.header__title', 'NHL Recap'),
+    clockVtree
+  ]);
 }
 
 function renderScores(state) {

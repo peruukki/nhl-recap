@@ -41,12 +41,13 @@ function model(actions) {
 }
 
 function view(state$) {
-  return state$.map(clock =>
-    h('div.clock', [
-      h('div.clock__period', clock ? renderPeriod(clock) : ''),
-      h('div.clock__time', clock ? renderTime(clock) : '')
-    ])
-  );
+  return state$.map(clock => {
+    const time = clock ? renderTime(clock) : '';
+    return h('span.clock', [
+      h('span.clock__period', clock ? renderPeriod(clock) : ''),
+      time ? h('span.clock__time', time) : ''
+    ]);
+  });
 }
 
 function getPeriodClocks(scores, interval, scheduler) {

@@ -66,9 +66,9 @@ function expectedStatusVtree(message) {
 }
 
 function getStatusNode(vtree) {
-  return vtree.children[1];
+  return vtree.children[1].children[0];
 }
 
 function getScoreListNode(vtree) {
-  return vtree.children[1];
+  return getStatusNode(vtree);
 }
