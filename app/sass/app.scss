@@ -1,63 +1,8 @@
-$background-color: #f8f8f8;
+// Base
+@import 'colors';
+@import 'base';
 
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-family: sans-serif;
-  font-size: 1.6em;
-  text-align: center;
-  background-color: $background-color;
-}
-
-.clock,
-.game {
-  margin-bottom: 1em;
-}
-
-.clock .period,
-.clock .time {
-  height: 1em;
-  margin: 0.25em 0;
-}
-
-.team-panel {
-  display: inline-block;
-  width: 30%;
-
-  &.away {
-    text-align: right;
-
-    .team-score {
-      margin-left: 0.5em;
-    }
-  }
-
-  &.home {
-    text-align: left;
-
-    .team-score {
-      margin-right: 0.5em;
-    }
-  }
-}
-
-.team-score {
-  font-size: larger;
-  font-weight: bold;
-}
-
-.delimiter {
-  display: inline-block;
-  width: 2em;
-  height: 1em;
-  position: relative;
-
-  .period {
-    font-size: 1.1rem;
-    position: absolute;
-    top: 0.4em;
-    left: 0.8em;
-  }
-}
+// Components
+@import 'header';
+@import 'clock';
+@import 'game';

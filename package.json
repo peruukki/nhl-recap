@@ -32,7 +32,7 @@
     "copy-to-dist": "cp -r public/* dist",
     "postcopy-to-dist": "rm -f dist/assets.json",
     "css": "npm run sass | npm run hash-css && npm run inject-hashes",
-    "css-watch": "npm run sass && npm run sass -- -w",
+    "css-watch": "npm run sass && npm run sass -- -w app/sass/*.scss",
     "hash-css": "hashmark -n public/app.css $npm_package_config_hashmark_args",
     "hash-js": "hashmark -n public/app.js $npm_package_config_hashmark_args",
     "inject-hashes": "replaceinfiles -S -r public/assets.json -s public/*.html -d {dir}/{base}",
