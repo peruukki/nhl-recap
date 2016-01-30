@@ -18,10 +18,11 @@
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
+    "autoprefix": "postcss --use autoprefixer --replace public/app.css",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/app.js",
     "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js'",
     "build:assets": "cp app/assets/* public",
-    "build:css": "npm run sass | npm run hash:css && npm run hash:inject",
+    "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
     "build:js": "npm run browserify | npm run hash:js && npm run hash:inject",
     "clean:build": "rm -rf public; mkdir public",
     "clean:dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
@@ -45,7 +46,7 @@
     "test": "npm run lint:css && npm run lint:js && npm run spec",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
     "watch:assets": "watch 'cp app/assets/* public' app/assets",
-    "watch:css": "npm run sass && npm run sass -- -w app/sass/*.scss",
+    "watch:css": "npm run sass && npm run autoprefix && npm run sass -- -w app/sass/*.scss",
     "watch:js": "watchify $npm_package_config_browserify_args -o public/app.js -v",
     "watch:lint:js": "esw -w *.js app/js/*.js{,x} test/*.js",
     "watch:lint:css": "watch 'npm run lint:css' app/sass"
@@ -58,6 +59,7 @@
     "rx": "^4.0.7"
   },
   "devDependencies": {
+    "autoprefixer": "^6.3.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.3.13",
     "babelify": "^7.2.0",
@@ -71,6 +73,7 @@
     "nock": "^4.0.0",
     "node-sass": "^3.4.2",
     "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.4.1",
     "replaceinfiles": "^1.1.3",
     "sass-lint": "^1.5.0",
     "uglify-js": "^2.6.1",
