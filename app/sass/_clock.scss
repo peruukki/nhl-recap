@@ -1,9 +1,9 @@
 .clock {
   margin-bottom: 1em;
-}
 
-.clock .period,
-.clock .time {
-  height: 1em;
-  margin: 0.25em 0;
+  &__period,
+  &__time {
+    height: 1em;
+    margin: 0.25em 0;
+  }
 }

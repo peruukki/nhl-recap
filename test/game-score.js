@@ -86,7 +86,7 @@ describe('gameScore', () => {
     it('should show "OT" when the clock reaches the scoring time of an overtime goal', () => {
       const clock = { period: 'OT', minute: 2, second: 55 };
       const {teams, goals} = scoresMultipleOvertime[0];
-      assertDelimiter(clock, teams, goals, h('span.period', 'OT'));
+      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'OT'));
     });
 
     it('should show "–" when the clock reaches shootout but there is no shootout goal', () => {
@@ -98,13 +98,13 @@ describe('gameScore', () => {
     it('should show "SO" when the clock reaches shootout and the game has a shootout goal', () => {
       const clock = { period: 'SO' };
       const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
-      assertDelimiter(clock, teams, goals, h('span.period', 'SO'));
+      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'SO'));
     });
 
     it('should show the period of the last goal when the clock reaches the end of the game', () => {
       const clock = { end: true };
       const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
-      assertDelimiter(clock, teams, goals, h('span.period', 'SO'));
+      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'SO'));
     });
 
   });
@@ -128,7 +128,7 @@ function getTeamPanels(vtree) {
 }
 
 function getDelimiter(vtree) {
-  return getGameChildrenWithClass(vtree, 'delimiter')[0];
+  return getGameChildrenWithClass(vtree, 'team-panel__delimiter')[0];
 }
 
 function getGameChildrenWithClass(vtree, className) {
@@ -138,17 +138,17 @@ function getGameChildrenWithClass(vtree, className) {
 
 function expectedTeamPanels(teams, awayGoals, homeGoals) {
   return [
-    h('div.team-panel.away', [
-      h('span.team-name', teams.away),
-      h('span.team-score', [awayGoals])
+    h('div.team-panel.team-panel--away', [
+      h('span.team-panel__team-name', teams.away),
+      h('span.team-panel__team-score', [awayGoals])
     ]),
-    h('div.team-panel.home', [
-      h('span.team-score', [homeGoals]),
-      h('span.team-name', teams.home)
+    h('div.team-panel.team-panel--home', [
+      h('span.team-panel__team-score', [homeGoals]),
+      h('span.team-panel__team-name', teams.home)
     ])
   ];
 }
 
 function expectedDelimiter(delimiter) {
-  return h('div.delimiter', delimiter);
+  return h('div.team-panel__delimiter', delimiter);
 }

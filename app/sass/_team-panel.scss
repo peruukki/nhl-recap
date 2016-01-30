@@ -1,0 +1,35 @@
+.team-panel {
+  display: inline-block;
+  width: 30%;
+
+  &--away {
+    text-align: right;
+  }
+  &--home {
+    text-align: left;
+  }
+
+  &__team-score {
+    font-weight: bold;
+  }
+  &--away &__team-score {
+    margin-left: 0.5em;
+  }
+  &--home &__team-score {
+    margin-right: 0.5em;
+  }
+
+  &__delimiter {
+    display: inline-block;
+    width: 1.5em;
+    height: 1em;
+    position: relative;
+  }
+
+  &__delimiter-period {
+    font-size: 1.1rem;
+    position: absolute;
+    top: 3px;
+    left: 5px;
+  }
+}

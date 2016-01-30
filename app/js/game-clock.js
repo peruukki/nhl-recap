@@ -43,8 +43,8 @@ function model(actions) {
 function view(state$) {
   return state$.map(clock =>
     h('div.clock', [
-      h('div.period', clock ? renderPeriod(clock) : ''),
-      h('div.time', clock ? renderTime(clock) : '')
+      h('div.clock__period', clock ? renderPeriod(clock) : ''),
+      h('div.clock__time', clock ? renderTime(clock) : '')
     ])
   );
 }
