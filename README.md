@@ -34,10 +34,12 @@ Lint on file changes:
 npm run watch:lint:js
 ```
 
-## Linting CSS (or rather SASS)
+## Linting SASS
 
 I'm trying out the [BEM (Block-Element-Modifier)](http://getbem.com/introduction/) [naming convention](http://getbem.com/naming/)
 in this project.
+
+The lint scripts have a `css` suffix (instead of `sass` that you might expect) for uniformity with the other CSS related scripts.
 
 One-time lint run:
 ```
@@ -51,6 +53,7 @@ npm run watch:lint:css
 
 ## Testing
 
+Lint SASS, lint JavaScript and run the tests:
 ```
 npm test
 ```
