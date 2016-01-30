@@ -21,15 +21,15 @@
 
   &__delimiter {
     display: inline-block;
+    position: relative;
     width: 1.5em;
     height: 1em;
-    position: relative;
   }
 
   &__delimiter-period {
-    font-size: 1.1rem;
     position: absolute;
     top: 3px;
     left: 5px;
+    font-size: 1.1rem;
   }
 }

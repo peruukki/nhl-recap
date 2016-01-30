@@ -34,6 +34,21 @@ Lint on file changes:
 npm run watch:lint:js
 ```
 
+## Linting CSS (or rather SASS)
+
+I'm trying out the [BEM (Block-Element-Modifier)](http://getbem.com/introduction/) [naming convention](http://getbem.com/naming/)
+in this project.
+
+One-time lint run:
+```
+npm run lint:css
+```
+
+Lint on file changes:
+```
+npm run watch:lint:css
+```
+
 ## Testing
 
 ```

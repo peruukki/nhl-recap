@@ -1,14 +1,14 @@
 .header {
-  color: $white;
-  background-color: $blue;
-  padding: 8px 10px;
   margin-bottom: 1em;
+  padding: 8px 10px;
+  background-color: $blue;
+  color: $white;
   box-shadow: 0 0 4px 0 $semi-transparent-gray;
 
   &__title {
     display: inline;
+    margin: 0;
     font-size: 1.6rem;
     font-weight: 800;
-    margin: 0;
   }
 }
