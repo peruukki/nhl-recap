@@ -26,12 +26,12 @@ a message like this in the console:
 
 One-time lint run:
 ```
-npm run lint
+npm run lint:js
 ```
 
 Lint on file changes:
 ```
-npm run lint-watch
+npm run watch:lint:js
 ```
 
 ## Testing
