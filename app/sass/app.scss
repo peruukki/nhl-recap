@@ -1,9 +1,11 @@
 // Base
 @import 'colors';
+@import 'sizes';
 @import 'base';
 
 // Components
 @import 'header';
 @import 'clock';
+@import 'score-list';
 @import 'game';
 @import 'team-panel';

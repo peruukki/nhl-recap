@@ -132,7 +132,7 @@ function getDelimiter(vtree) {
 }
 
 function getGameChildrenWithClass(vtree, className) {
-  return vtree.children
+  return vtree.children[0].children
     .filter(node => _.includes(node.properties.className.split(' '), className));
 }
 

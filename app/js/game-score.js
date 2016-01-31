@@ -10,14 +10,16 @@ export default function gameScore(clock, teams, goals) {
   const period = currentGoals.length > 0 ? _.last(currentGoals).period : null;
 
   return h('div.game', [
-    h('div.team-panel.team-panel--away', [
-      h('span.team-panel__team-name', teams.away),
-      h('span.team-panel__team-score', [awayGoals.length])
-    ]),
-    h('div.team-panel__delimiter', getDelimiter(period)),
-    h('div.team-panel.team-panel--home', [
-      h('span.team-panel__team-score', [homeGoals.length]),
-      h('span.team-panel__team-name', teams.home)
+    h('div.game__score-panel', [
+      h('div.team-panel.team-panel--away', [
+        h('span.team-panel__team-name', teams.away),
+        h('span.team-panel__team-score', [awayGoals.length])
+      ]),
+      h('div.team-panel__delimiter', getDelimiter(period)),
+      h('div.team-panel.team-panel--home', [
+        h('span.team-panel__team-score', [homeGoals.length]),
+        h('span.team-panel__team-name', teams.home)
+      ])
     ])
   ]);
 }

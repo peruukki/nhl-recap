@@ -1,14 +1,16 @@
 .header {
-  margin-bottom: 2em;
-  padding: 8px 10px;
+  margin-bottom: 1rem;
   background-color: $blue;
   color: $white;
   box-shadow: 0 0 4px 0 $semi-transparent-gray;
   overflow: hidden;
 
   &__container {
-    max-width: 420px;
+    width: $content-width;
     margin: auto;
+    padding: 0.8rem;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   &__title {

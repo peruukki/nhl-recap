@@ -1,3 +1,14 @@
 .game {
-  margin-bottom: 1em;
+  width: $game-card-width;
+  margin: $game-card-margin;
+  padding-bottom: 4rem;
+  float: left;
+  background: $lighter-transparent-gray;
+  font-size: 1.4rem;
+  box-sizing: border-box;
+
+  &__score-panel {
+    padding: 0.3rem 0;
+    background: $darker-transparent-gray;
+  }
 }
