@@ -15,7 +15,7 @@ export default function gameScore(clock, teams, goals) {
         h('span.team-panel__team-name', teams.away),
         h('span.team-panel__team-score', [awayGoals.length])
       ]),
-      h('div.team-panel__delimiter', getDelimiter(period)),
+      h('div.team-panel__delimiter', renderDelimiter(period)),
       h('div.team-panel.team-panel--home', [
         h('span.team-panel__team-score', [homeGoals.length]),
         h('span.team-panel__team-name', teams.home)
@@ -55,7 +55,7 @@ function getPeriodOrdinal(period) {
   return (period === 'OT') ? 4 : Number(period);
 }
 
-function getDelimiter(period) {
+function renderDelimiter(period) {
   return (period === 'OT' || period === 'SO') ?
     h('span.team-panel__delimiter-period', period) :
     '–';
