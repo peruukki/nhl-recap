@@ -2,6 +2,13 @@
 
 html {
   font-size: 62.5%;
+
+  @media (min-width: 360px) {
+    font-size: 70%;
+  }
+  @media (min-width: 400px) {
+    font-size: 80%;
+  }
 }
 
 body {

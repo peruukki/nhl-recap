@@ -6,7 +6,7 @@
   overflow: hidden;
 
   &__container {
-    width: $content-width;
+    max-width: 34rem;
     margin: auto;
     padding: 0.8rem;
     overflow: hidden;
