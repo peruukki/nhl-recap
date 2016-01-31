@@ -1,7 +1,6 @@
 .game {
   width: $game-card-width;
   margin: $game-card-margin;
-  padding-bottom: 4rem;
   float: left;
   background: $lighter-transparent-gray;
   font-size: 1.4rem;
@@ -10,5 +9,12 @@
   &__score-panel {
     padding: 0.3rem 0;
     background: $darker-transparent-gray;
+  }
+
+  &__latest-goal-panel {
+    height: 4rem;
+    padding-top: 0.3rem;
+    font-size: 1.2rem;
+    box-sizing: border-box;
   }
 }

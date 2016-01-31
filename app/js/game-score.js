@@ -2,15 +2,18 @@ import {h} from '@cycle/dom';
 import _ from 'lodash';
 
 import {remainingTimeToElapsedTime} from './utils';
+import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(clock, teams, goals) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
+  const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
-  const period = currentGoals.length > 0 ? _.last(currentGoals).period : null;
+  const period = latestGoal ? latestGoal.period : null;
 
   return h('div.game', [
-    renderScorePanel(teams, awayGoals, homeGoals, period)
+    renderScorePanel(teams, awayGoals, homeGoals, period),
+    renderLatestGoal(latestGoal)
   ]);
 }
 
@@ -63,4 +66,24 @@ function renderDelimiter(period) {
   return (period === 'OT' || period === 'SO') ?
     h('span.team-panel__delimiter-period', period) :
     '–';
+}
+
+function renderLatestGoal(latestGoal) {
+  return h('div.game__latest-goal-panel', [
+    h('div.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
+    h('div.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+  ]);
+}
+
+export function renderLatestGoalTime(latestGoal) {
+  const period = renderPeriodNumber(latestGoal.period);
+  const time = renderTime({ minute: latestGoal.min, second: latestGoal.sec });
+  return `${period} ${time} ${latestGoal.team}`;
+}
+
+export function renderLatestGoalScorer(latestGoal) {
+  return [
+    h('span.latest-goal__scorer', `${latestGoal.scorer} `),
+    h('span.latest-goal__goal-count', `(${latestGoal.goalCount})`)
+  ];
 }

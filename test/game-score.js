@@ -2,7 +2,7 @@ import {h} from '@cycle/dom';
 import _ from 'lodash';
 import chai from 'chai';
 
-import gameScore from '../app/js/game-score';
+import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer} from '../app/js/game-score';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -109,6 +109,52 @@ describe('gameScore', () => {
 
   });
 
+  describe('latest goal panel', () => {
+
+    it('should show nothing in the beginning', () => {
+      const clock = { start: true };
+      const {teams, goals} = scoresAllRegularTime[1];
+      assertLatestGoal(clock, teams, goals, null);
+    });
+
+    it('should show nothing before the clock has reached the first goal scoring time', () => {
+      const clock = { period: 1, minute: 10, second: 0 };
+      const {teams, goals} = scoresAllRegularTime[1];
+      assertLatestGoal(clock, teams, goals, null);
+    });
+
+    it('should show the latest goal when the clock reaches a goal scoring time', () => {
+      const clock = { period: 1, minute: 8, second: 44 };
+      const {teams, goals} = scoresAllRegularTime[1];
+      assertLatestGoal(clock, teams, goals, _.first(goals));
+    });
+
+    it('should show the last goal of the game when the clock reaches the end of the game', () => {
+      const clock = { end: true };
+      const {teams, goals} = scoresAllRegularTime[1];
+      assertLatestGoal(clock, teams, goals, _.last(goals));
+    });
+
+    it('should show goals scored in overtime', () => {
+      const clock = { period: 'OT', minute: 2, second: 55 };
+      const {teams, goals} = scoresMultipleOvertime[0];
+      assertLatestGoal(clock, teams, goals, _.last(goals));
+    });
+
+    it('should show the last shootout goal of the winning (home) team', () => {
+      const clock = { period: 'SO' };
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
+      assertLatestGoal(clock, teams, goals, _.last(_.dropRight(goals)));
+    });
+
+    it('should show the last shootout goal of the winning (away) team', () => {
+      const clock = { period: 'SO' };
+      const {teams, goals} = scoresOvertimeAndMultipleShootout[2];
+      assertLatestGoal(clock, teams, goals, _.last(goals));
+    });
+
+  });
+
 });
 
 function assertGoalCounts(clock, teams, goals, awayGoals, homeGoals) {
@@ -123,6 +169,12 @@ function assertDelimiter(clock, teams, goals, delimiter) {
   assert.deepEqual(delimiterNode, expected);
 }
 
+function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
+  const latestGoalPanel = getLatestGoalPanel(gameScore(clock, teams, goals));
+  const expected = expectedLatestGoalPanel(expectedLatestGoal);
+  assert.deepEqual(latestGoalPanel, expected);
+}
+
 function getTeamPanels(vtree) {
   return getGameChildrenWithClass(vtree, 'team-panel');
 }
@@ -134,6 +186,10 @@ function getDelimiter(vtree) {
 function getGameChildrenWithClass(vtree, className) {
   return vtree.children[0].children
     .filter(node => _.includes(node.properties.className.split(' '), className));
+}
+
+function getLatestGoalPanel(vtree) {
+  return vtree.children[1];
 }
 
 function expectedTeamPanels(teams, awayGoals, homeGoals) {
@@ -151,4 +207,11 @@ function expectedTeamPanels(teams, awayGoals, homeGoals) {
 
 function expectedDelimiter(delimiter) {
   return h('div.team-panel__delimiter', delimiter);
+}
+
+function expectedLatestGoalPanel(latestGoal) {
+  return h('div.game__latest-goal-panel', [
+    h('div.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
+    h('div.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+  ]);
 }

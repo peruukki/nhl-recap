@@ -1,0 +1,11 @@
+.latest-goal {
+  &__time,
+  &__goal-count {
+    color: $gray;
+  }
+
+  &__scorer {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

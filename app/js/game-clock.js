@@ -139,24 +139,27 @@ function renderPeriodEnd(period) {
   return 'End of ' + renderPeriodNumber(period);
 }
 
-function renderPeriodNumber(period) {
+export function renderPeriodNumber(period) {
   switch (period) {
     case 'OT':
       return 'OT';
     case 'SO':
       return 'SO';
     case 1:
+    case '1':
       return '1st';
     case 2:
+    case '2':
       return '2nd';
     case 3:
+    case '3':
       return '3rd';
     default:
       return period + 'th';
   }
 }
 
-function renderTime(clock) {
+export function renderTime(clock) {
   if (!clock.minute && !clock.second) {
     return '';
   }
