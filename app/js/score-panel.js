@@ -18,6 +18,7 @@ function intent(HTTP, url) {
     .filter(res$ => res$.request === url)
     .mergeAll()
     .map(response => ({ success: JSON.parse(response.text) }))
+    .map(response => (response.success.length > 0) ? response : { error: { message: 'no scores available' } })
     .catch(error => Rx.Observable.just({ error }))
     .share();
   const scores$ = scoresWithErrors$
@@ -66,5 +67,5 @@ function renderHeader(clockVtree) {
 function renderScores(state) {
   return state.scores ?
     h('div.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals))) :
-    h('div.status', [state.status]);
+    h('div.status', [state.status || 'No scores available.']);
 }
