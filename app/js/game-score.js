@@ -82,8 +82,10 @@ export function renderLatestGoalTime(latestGoal) {
 }
 
 export function renderLatestGoalScorer(latestGoal) {
-  return [
-    h('span.latest-goal__scorer', `${latestGoal.scorer} `),
-    h('span.latest-goal__goal-count', `(${latestGoal.goalCount})`)
-  ];
+  return latestGoal.goalCount ?
+    [
+      h('span.latest-goal__scorer', `${latestGoal.scorer} `),
+      h('span.latest-goal__goal-count', `(${latestGoal.goalCount})`)
+    ] :
+    h('span.latest-goal__scorer', `${latestGoal.scorer}`);
 }
