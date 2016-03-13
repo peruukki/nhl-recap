@@ -52,9 +52,9 @@
     "watch:lint:css": "watch 'npm run lint:css' app/sass"
   },
   "dependencies": {
-    "@cycle/core": "^6.0.0",
-    "@cycle/dom": "^9.0.1",
-    "@cycle/http": "^6.1.0",
+    "@cycle/core": "^6.0.3",
+    "@cycle/dom": "^9.1.0",
+    "@cycle/http": "^8.2.2",
     "lodash": "^3.10.1",
     "rx": "^4.0.7"
   },

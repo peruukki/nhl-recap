@@ -9,13 +9,13 @@ export default function main({HTTP}) {
   return {
     DOM: view(model(intent(HTTP, url)))
       .sample(0, Rx.Scheduler.requestAnimationFrame),
-    HTTP: Rx.Observable.just(url)
+    HTTP: Rx.Observable.just({ url })
   };
 }
 
 function intent(HTTP, url) {
   const scoresWithErrors$ = HTTP
-    .filter(res$ => res$.request === url)
+    .filter(res$ => res$.request.url === url)
     .mergeAll()
     .map(response => ({ success: JSON.parse(response.text) }))
     .map(response => (response.success.length > 0) ? response : { error: { message: 'no scores available' } })
