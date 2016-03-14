@@ -25,8 +25,8 @@ describe('scorePanel', () => {
 
   it('should fetch latest scores', (done) => {
     const requests = run(Rx.Observable.empty());
-    requests.HTTP.subscribe(requestUrl => {
-      assert.deepEqual(requestUrl, nhlScoreApiUrl);
+    requests.HTTP.subscribe(request => {
+      assert.deepEqual(request.url, nhlScoreApiUrl);
       done();
     });
   });
