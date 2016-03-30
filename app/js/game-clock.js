@@ -1,5 +1,5 @@
 import Rx from 'rx';
-import {h} from '@cycle/dom';
+import {span} from '@cycle/dom';
 import _ from 'lodash';
 
 import periodClock from './period-clock';
@@ -43,9 +43,9 @@ function model(actions) {
 function view(state$) {
   return state$.map(clock => {
     const time = clock ? renderTime(clock) : '';
-    return h('span.clock', [
-      h('span.clock__period', clock ? renderPeriod(clock) : ''),
-      time ? h('span.clock__time', time) : ''
+    return span('.clock', [
+      span('.clock__period', clock ? renderPeriod(clock) : ''),
+      time ? span('.clock__time', time) : ''
     ]);
   });
 }

@@ -1,4 +1,4 @@
-import {h} from '@cycle/dom';
+import {div} from '@cycle/dom';
 import {makeHTTPDriver} from '@cycle/http';
 import Rx from 'rx';
 import chai from 'chai';
@@ -62,7 +62,7 @@ function run(httpRequest$) {
 }
 
 function expectedStatusVtree(message) {
-  return h('div.status', message);
+  return div('.status', message);
 }
 
 function getStatusNode(vtree) {

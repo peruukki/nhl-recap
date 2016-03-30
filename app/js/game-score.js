@@ -1,4 +1,4 @@
-import {h} from '@cycle/dom';
+import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 
 import {remainingTimeToElapsedTime} from './utils';
@@ -11,7 +11,7 @@ export default function gameScore(clock, teams, goals) {
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
 
-  return h('div.game', [
+  return div('.game', [
     renderScorePanel(teams, awayGoals, homeGoals, period),
     renderLatestGoal(latestGoal)
   ]);
@@ -49,29 +49,29 @@ function getPeriodOrdinal(period) {
 }
 
 function renderScorePanel(teams, awayGoals, homeGoals, period) {
-  return h('div.game__score-panel', [
-    h('div.team-panel.team-panel--away', [
-      h('span.team-panel__team-name', teams.away),
-      h('span.team-panel__team-score', [awayGoals.length])
+  return div('.game__score-panel', [
+    div('.team-panel.team-panel--away', [
+      span('.team-panel__team-name', teams.away),
+      span('.team-panel__team-score', [awayGoals.length])
     ]),
-    h('div.team-panel__delimiter', renderDelimiter(period)),
-    h('div.team-panel.team-panel--home', [
-      h('span.team-panel__team-score', [homeGoals.length]),
-      h('span.team-panel__team-name', teams.home)
+    div('.team-panel__delimiter', renderDelimiter(period)),
+    div('.team-panel.team-panel--home', [
+      span('.team-panel__team-score', [homeGoals.length]),
+      span('.team-panel__team-name', teams.home)
     ])
   ]);
 }
 
 function renderDelimiter(period) {
   return (period === 'OT' || period === 'SO') ?
-    h('span.team-panel__delimiter-period', period) :
+    span('.team-panel__delimiter-period', period) :
     '–';
 }
 
 function renderLatestGoal(latestGoal) {
-  return h('div.game__latest-goal-panel', [
-    h('div.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
-    h('div.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+  return div('.game__latest-goal-panel', [
+    div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
+    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
   ]);
 }
 
@@ -84,8 +84,8 @@ export function renderLatestGoalTime(latestGoal) {
 export function renderLatestGoalScorer(latestGoal) {
   return latestGoal.goalCount ?
     [
-      h('span.latest-goal__scorer', `${latestGoal.scorer} `),
-      h('span.latest-goal__goal-count', `(${latestGoal.goalCount})`)
+      span('.latest-goal__scorer', `${latestGoal.scorer} `),
+      span('.latest-goal__goal-count', `(${latestGoal.goalCount})`)
     ] :
-    h('span.latest-goal__scorer', `${latestGoal.scorer}`);
+    span('.latest-goal__scorer', `${latestGoal.scorer}`);
 }

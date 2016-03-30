@@ -1,4 +1,4 @@
-import {h} from '@cycle/dom';
+import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 import chai from 'chai';
 
@@ -86,7 +86,7 @@ describe('gameScore', () => {
     it('should show "OT" when the clock reaches the scoring time of an overtime goal', () => {
       const clock = { period: 'OT', minute: 2, second: 55 };
       const {teams, goals} = scoresMultipleOvertime[0];
-      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'OT'));
+      assertDelimiter(clock, teams, goals, span('.team-panel__delimiter-period', 'OT'));
     });
 
     it('should show "–" when the clock reaches shootout but there is no shootout goal', () => {
@@ -98,13 +98,13 @@ describe('gameScore', () => {
     it('should show "SO" when the clock reaches shootout and the game has a shootout goal', () => {
       const clock = { period: 'SO' };
       const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
-      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'SO'));
+      assertDelimiter(clock, teams, goals, span('.team-panel__delimiter-period', 'SO'));
     });
 
     it('should show the period of the last goal when the clock reaches the end of the game', () => {
       const clock = { end: true };
       const {teams, goals} = scoresOvertimeAndMultipleShootout[1];
-      assertDelimiter(clock, teams, goals, h('span.team-panel__delimiter-period', 'SO'));
+      assertDelimiter(clock, teams, goals, span('.team-panel__delimiter-period', 'SO'));
     });
 
   });
@@ -194,24 +194,24 @@ function getLatestGoalPanel(vtree) {
 
 function expectedTeamPanels(teams, awayGoals, homeGoals) {
   return [
-    h('div.team-panel.team-panel--away', [
-      h('span.team-panel__team-name', teams.away),
-      h('span.team-panel__team-score', [awayGoals])
+    div('.team-panel.team-panel--away', [
+      span('.team-panel__team-name', teams.away),
+      span('.team-panel__team-score', [awayGoals])
     ]),
-    h('div.team-panel.team-panel--home', [
-      h('span.team-panel__team-score', [homeGoals]),
-      h('span.team-panel__team-name', teams.home)
+    div('.team-panel.team-panel--home', [
+      span('.team-panel__team-score', [homeGoals]),
+      span('.team-panel__team-name', teams.home)
     ])
   ];
 }
 
 function expectedDelimiter(delimiter) {
-  return h('div.team-panel__delimiter', delimiter);
+  return div('.team-panel__delimiter', delimiter);
 }
 
 function expectedLatestGoalPanel(latestGoal) {
-  return h('div.game__latest-goal-panel', [
-    h('div.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
-    h('div.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+  return div('.game__latest-goal-panel', [
+    div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
+    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
   ]);
 }

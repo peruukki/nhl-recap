@@ -1,4 +1,4 @@
-import {h} from '@cycle/dom';
+import {div, h1, header, section} from '@cycle/dom';
 import Rx from 'rx';
 
 import GameClock from './game-clock';
@@ -50,22 +50,22 @@ function model(actions) {
 
 function view(state$) {
   return state$.map(({scores, status, clockVtree, clock}) =>
-    h('div', [
-      h('header.header', renderHeader(clockVtree)),
-      h('section.score-panel', renderScores({ scores, status, clock }))
+    div([
+      header('.header', renderHeader(clockVtree)),
+      section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
 }
 
 function renderHeader(clockVtree) {
-  return h('div.header__container', [
-    h('h1.header__title', 'NHL Recap'),
+  return div('.header__container', [
+    h1('.header__title', 'NHL Recap'),
     clockVtree
   ]);
 }
 
 function renderScores(state) {
   return state.scores ?
-    h('div.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals))) :
-    h('div.status', [state.status || 'No scores available.']);
+    div('.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals))) :
+    div('.status', [state.status || 'No scores available.']);
 }
