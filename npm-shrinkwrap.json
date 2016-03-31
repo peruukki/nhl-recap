@@ -290,9 +290,9 @@
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
     },
     "rx": {
-      "version": "4.0.7",
-      "from": "rx@*",
-      "resolved": "https://registry.npmjs.org/rx/-/rx-4.0.7.tgz"
+      "version": "4.1.0",
+      "from": "rx@4.1.0",
+      "resolved": "https://registry.npmjs.org/rx/-/rx-4.1.0.tgz"
     }
   }
 }
