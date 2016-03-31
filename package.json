@@ -56,7 +56,7 @@
     "@cycle/dom": "^9.1.0",
     "@cycle/http": "^8.2.2",
     "lodash": "^3.10.1",
-    "rx": "^4.0.7"
+    "rx": "^4.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
