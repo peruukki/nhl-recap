@@ -6,6 +6,7 @@ import nock from 'nock';
 
 import scorePanel from '../app/js/score-panel';
 import apiResponse from './data/latest.json';
+import animations from './animations';
 
 const assert = chai.assert;
 
@@ -58,7 +59,7 @@ describe('scorePanel', () => {
 
 function run(httpRequest$) {
   const driver = makeHTTPDriver();
-  return scorePanel({ HTTP: driver(httpRequest$) });
+  return scorePanel(animations)({ HTTP: driver(httpRequest$) });
 }
 
 function expectedStatusVtree(message) {

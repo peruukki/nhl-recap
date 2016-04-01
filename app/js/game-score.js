@@ -4,12 +4,17 @@ import _ from 'lodash';
 import {remainingTimeToElapsedTime} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, teams, goals) {
+export default function gameScore(clock, teams, goals, goalCounts) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
+
+  if (goalCounts) {
+    goalCounts.away$.onNext(awayGoals.length);
+    goalCounts.home$.onNext(homeGoals.length);
+  }
 
   return div('.game', [
     renderScorePanel(teams, awayGoals, homeGoals, period),

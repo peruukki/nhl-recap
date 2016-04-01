@@ -1,15 +1,18 @@
 import {div, h1, header, section} from '@cycle/dom';
 import Rx from 'rx';
+import _ from 'lodash';
 
 import GameClock from './game-clock';
 import gameScore from './game-score';
 
-export default function main({HTTP}) {
-  const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
-  return {
-    DOM: view(model(intent(HTTP, url)))
-      .sample(0, Rx.Scheduler.requestAnimationFrame),
-    HTTP: Rx.Observable.just({ url })
+export default function main(animations) {
+  return ({HTTP}) => {
+    const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
+    return {
+      DOM: view(model(intent(HTTP, url), animations))
+        .sample(0, Rx.Scheduler.requestAnimationFrame),
+      HTTP: Rx.Observable.just({ url })
+    };
   };
 }
 
@@ -33,19 +36,38 @@ function intent(HTTP, url) {
   };
 }
 
-function model(actions) {
+function model(actions, animations) {
   const gameClock = GameClock({
     scores$: actions.scores$,
     props$: Rx.Observable.just({ interval: 20 })
   });
 
+  const scores$ = actions.scores$.startWith([])
+    .map(games =>
+      games.map((game, index) =>
+        _.extend({}, game, {
+          goalCounts: {
+            away$: createGoalCountSubject('away', index, animations),
+            home$: createGoalCountSubject('home', index, animations)
+          }
+        })
+      )
+    );
+
   return Rx.Observable.combineLatest(
-    actions.scores$.startWith(null),
+    scores$,
     actions.status$.startWith('Fetching latest scores...'),
     gameClock.DOM.startWith(''),
     gameClock.clock$.startWith(null),
     (scores, status, clockVtree, clock) => ({ scores, status, clockVtree, clock })
   );
+}
+
+function createGoalCountSubject(classModifier, gameIndex, animations) {
+  const subject$ = new Rx.Subject();
+  subject$.distinctUntilChanged()
+    .subscribe(() => animations.highlightGoalCountChange(classModifier, gameIndex));
+  return subject$;
 }
 
 function view(state$) {
@@ -65,7 +87,7 @@ function renderHeader(clockVtree) {
 }
 
 function renderScores(state) {
-  return state.scores ?
-    div('.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals))) :
+  return state.scores.length > 0 ?
+    div('.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals, game.goalCounts))) :
     div('.status', [state.status || 'No scores available.']);
 }
