@@ -16,7 +16,7 @@ export default function gameScore(clock, teams, goals, goalCounts) {
     goalCounts.home$.onNext(homeGoals.length);
   }
 
-  return div('.game', [
+  return div('.game.fade-in', [
     renderScorePanel(teams, awayGoals, homeGoals, period),
     renderLatestGoal(latestGoal)
   ]);

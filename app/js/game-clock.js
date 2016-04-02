@@ -43,7 +43,8 @@ function model(actions) {
 function view(state$) {
   return state$.map(clock => {
     const time = clock ? renderTime(clock) : '';
-    return span('.clock', [
+    const animationClass = time ? '.fade-in-fast' : '';
+    return span(`.clock${animationClass}`, [
       span('.clock__period', clock ? renderPeriod(clock) : ''),
       time ? span('.clock__time', time) : ''
     ]);
@@ -127,9 +128,9 @@ function getEndTime(scores) {
 
 function renderPeriod(clock) {
   if (clock.start) {
-    return 'Starting...';
+    return span('.fade-in', 'Starting...');
   } else if (clock.end) {
-    return clock.period ? renderPeriodEnd(clock.period) : 'Final';
+    return clock.period ? span('.fade-in', renderPeriodEnd(clock.period)) : span('.fade-in-fast', 'Final');
   } else {
     return renderPeriodNumber(clock.period);
   }

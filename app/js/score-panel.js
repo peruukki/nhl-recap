@@ -73,7 +73,7 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 function view(state$) {
   return state$.map(({scores, status, clockVtree, clock}) =>
     div([
-      header('.header', renderHeader(clockVtree)),
+      header('.header.fade-in', renderHeader(clockVtree)),
       section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
@@ -89,5 +89,5 @@ function renderHeader(clockVtree) {
 function renderScores(state) {
   return state.scores.length > 0 ?
     div('.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals, game.goalCounts))) :
-    div('.status', [state.status || 'No scores available.']);
+    div('.status.fade-in', [state.status || 'No scores available.']);
 }

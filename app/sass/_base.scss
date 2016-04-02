@@ -1,3 +1,5 @@
+$fade-duration: 0.5s;
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,800);
 
 html {
@@ -17,4 +19,21 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 1.6em;
   text-align: center;
+}
+
+.fade-in {
+  animation: $fade-duration fade-in;
+}
+.fade-in-fast {
+  animation: ($fade-duration / 2) fade-in-fast;
+}
+
+// Need two separate animation names to re-trigger animation
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-in-fast {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

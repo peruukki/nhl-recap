@@ -39,7 +39,7 @@ describe('scorePanel', () => {
     const requests = run(Rx.Observable.just(nhlScoreApiUrl));
     requests.DOM.skip(1).take(1).subscribe(vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
-      assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game', 'game']);
+      assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game fade-in', 'game fade-in']);
       done();
     });
   });
@@ -63,7 +63,7 @@ function run(httpRequest$) {
 }
 
 function expectedStatusVtree(message) {
-  return div('.status', message);
+  return div('.status.fade-in', message);
 }
 
 function getStatusNode(vtree) {
