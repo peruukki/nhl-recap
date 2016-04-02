@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: 0 */
 
-function highlightGoalCountChange(classModifier, gameIndex) {}
+function highlightGoal(classModifier, gameIndex) {}
 
-export default { highlightGoalCountChange };
+export default { highlightGoal };

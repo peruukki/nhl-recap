@@ -66,7 +66,7 @@ function model(actions, animations) {
 function createGoalCountSubject(classModifier, gameIndex, animations) {
   const subject$ = new Rx.Subject();
   subject$.distinctUntilChanged()
-    .subscribe(() => animations.highlightGoalCountChange(classModifier, gameIndex));
+    .subscribe(() => animations.highlightGoal(classModifier, gameIndex));
   return subject$;
 }
 
