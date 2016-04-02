@@ -39,7 +39,7 @@ describe('scorePanel', () => {
     const requests = run(Rx.Observable.just(nhlScoreApiUrl));
     requests.DOM.skip(1).take(1).subscribe(vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
-      assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game fade-in', 'game fade-in']);
+      assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game expand', 'game expand']);
       done();
     });
   });

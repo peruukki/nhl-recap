@@ -1,4 +1,5 @@
 $fade-duration: 1s;
+$expand-duration: 1s;
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,800);
 
@@ -36,4 +37,13 @@ body {
 @keyframes fade-in-fast {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.expand {
+  animation: $expand-duration expand, ($fade-duration * 2) fade-in;
+}
+
+@keyframes expand {
+  from { transform: scale(0, 0); }
+  to { transform: scale(1, 1); }
 }
