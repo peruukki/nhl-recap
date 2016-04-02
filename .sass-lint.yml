@@ -12,6 +12,9 @@ rules:
   leading-zero:
     - 1
     - include: true
+  no-mergeable-selectors:
+    - 2
+    - whitelist: ['from', 'to']
   property-sort-order:
     - 1
     - order: smacss
