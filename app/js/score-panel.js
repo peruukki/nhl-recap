@@ -73,7 +73,7 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 function view(state$) {
   return state$.map(({scores, status, clockVtree, clock}) =>
     div([
-      header('.header.fade-in', renderHeader(clockVtree)),
+      header('.header', renderHeader(clockVtree)),
       section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
