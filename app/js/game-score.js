@@ -1,7 +1,7 @@
 import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 
-import {remainingTimeToElapsedTime} from './utils';
+import {hasGoalBeenScored} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(clock, teams, goals, goalCounts) {
@@ -33,13 +33,7 @@ function getCurrentGoals(clock, teams, goals) {
       nonShootoutGoals.concat(getShootoutGoal(goals, teams));
   }
 
-  const {minute, second} = remainingTimeToElapsedTime(clock);
-  return goals.filter(goal =>
-    (getPeriodOrdinal(goal.period) < getPeriodOrdinal(clock.period)) ||
-    (getPeriodOrdinal(goal.period) === getPeriodOrdinal(clock.period) &&
-      (goal.min < minute ||
-        (goal.min === minute && goal.sec <= second)))
-  );
+  return goals.filter(_.partial(hasGoalBeenScored, clock));
 }
 
 function getShootoutGoal(goals, teams) {
@@ -47,10 +41,6 @@ function getShootoutGoal(goals, teams) {
   const homeGoals = goals.filter(goal => goal.team === teams.home);
   const winnersGoals = (awayGoals.length > homeGoals.length) ? awayGoals : homeGoals;
   return _.last(winnersGoals);
-}
-
-function getPeriodOrdinal(period) {
-  return (period === 'OT') ? 4 : Number(period);
 }
 
 function renderScorePanel(teams, awayGoals, homeGoals, period) {

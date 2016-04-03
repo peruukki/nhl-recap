@@ -11,3 +11,15 @@ export function remainingTimeToElapsedTime({period, minute, second}) {
 export function elapsedTimeToRemainingTime(time) {
   return remainingTimeToElapsedTime(time);
 }
+
+export function hasGoalBeenScored(clock, goal) {
+  const {minute, second} = remainingTimeToElapsedTime(clock);
+  return (getPeriodOrdinal(goal.period) < getPeriodOrdinal(clock.period)) ||
+    (getPeriodOrdinal(goal.period) === getPeriodOrdinal(clock.period) &&
+      (goal.min < minute ||
+        (goal.min === minute && goal.sec <= second)));
+}
+
+function getPeriodOrdinal(period) {
+  return (period === 'OT') ? 4 : Number(period);
+}
