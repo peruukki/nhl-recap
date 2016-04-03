@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@cycle/core": "^6.0.3",
-    "@cycle/dom": "^9.1.0",
+    "@cycle/dom": "^9.2.2",
     "@cycle/http": "^8.2.2",
     "lodash": "^4.7.0",
     "rx": "^4.1.0"

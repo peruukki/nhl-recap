@@ -8,9 +8,9 @@
       "resolved": "https://registry.npmjs.org/@cycle/core/-/core-6.0.3.tgz"
     },
     "@cycle/dom": {
-      "version": "9.1.0",
-      "from": "@cycle/dom@*",
-      "resolved": "https://registry.npmjs.org/@cycle/dom/-/dom-9.1.0.tgz",
+      "version": "9.2.2",
+      "from": "@cycle/dom@9.2.2",
+      "resolved": "https://registry.npmjs.org/@cycle/dom/-/dom-9.2.2.tgz",
       "dependencies": {
         "hyperscript-helpers": {
           "version": "2.0.3",
