@@ -2,7 +2,7 @@ import Rx from 'rx';
 import _ from 'lodash';
 import chai from 'chai';
 
-import GameClock from '../app/js/game-clock';
+import {default as GameClock, getGoalScoringTimes} from '../app/js/game-clock';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -64,6 +64,18 @@ describe('GameClock', () => {
 
     const lastClockElement = getMessageValue(_.last(messages));
     assert.deepEqual(lastClockElement, { end: true });
+  });
+
+  it('should determine correct goal scoring times', () => {
+    const goalScoringTimes = getGoalScoringTimes(scoresMultipleOvertime);
+
+    const expectedGoalScoringTimes = _.flatten([
+      _.dropRight(scoresMultipleOvertime[1].goals),
+      scoresMultipleOvertime[0].goals,
+      _.takeRight(scoresMultipleOvertime[1].goals)
+    ]);
+
+    assert.deepEqual(goalScoringTimes, expectedGoalScoringTimes);
   });
 
 });

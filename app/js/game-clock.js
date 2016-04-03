@@ -53,8 +53,9 @@ function view(state$) {
 
 function getPeriodClocks(scores, interval, scheduler) {
   const endTime = getEndTime(scores);
-  return getRegularPeriodClocks(endTime, interval, scheduler)
-    .concat(getOvertimeClock(endTime, interval, scheduler))
+  const goalScoringTimes = getGoalScoringTimes(scores);
+  return getRegularPeriodClocks(endTime, goalScoringTimes, interval, scheduler)
+    .concat(getOvertimeClock(endTime, goalScoringTimes, interval, scheduler))
     .concat(getShootoutClock(endTime, interval, scheduler))
     .filter(value => value);
 }
@@ -73,17 +74,17 @@ function getGamesEndStream(delay, scheduler) {
     .delay(delay, scheduler);
 }
 
-function getRegularPeriodClocks(endTime, interval, scheduler) {
+function getRegularPeriodClocks(endTime, goalScoringTimes, interval, scheduler) {
   const partialPeriodNumber = (endTime.period > 3) ? endTime.period : null;
   const fullPeriods = _.range(1, partialPeriodNumber || 4).map(period => ({
     period,
-    clock: periodClock(period, 20, null, interval, scheduler)
+    clock: periodClock(period, 20, null, goalScoringTimes, interval, scheduler)
   }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      clock: periodClock(partialPeriodNumber, 20, endTime, interval, scheduler)
+      clock: periodClock(partialPeriodNumber, 20, endTime, goalScoringTimes, interval, scheduler)
     };
     return fullPeriods.concat(partialPeriod);
   } else {
@@ -91,12 +92,12 @@ function getRegularPeriodClocks(endTime, interval, scheduler) {
   }
 }
 
-function getOvertimeClock(endTime, interval, scheduler) {
+function getOvertimeClock(endTime, goalScoringTimes, interval, scheduler) {
   if (endTime.period !== 'SO' && endTime.period !== 'OT') {
     return null;
   } else {
     const periodEnd = (endTime.period === 'OT') ? endTime : null;
-    return { period: 'OT', clock: periodClock('OT', 5, periodEnd, interval, scheduler) };
+    return { period: 'OT', clock: periodClock('OT', 5, periodEnd, goalScoringTimes, interval, scheduler) };
   }
 }
 
@@ -124,6 +125,13 @@ function getEndTime(scores) {
       elapsedTimeToRemainingTime(lastOvertimeGoalTime) :
       { period: 3 };
   }
+}
+
+export function getGoalScoringTimes(scores) {
+  return _.chain(scores.map(game => game.goals))
+    .flatten()
+    .sortByAll(['period', 'min', 'sec'])
+    .value();
 }
 
 function renderPeriod(clock) {
