@@ -109,14 +109,14 @@ function getShootoutClock(endTime, interval, scheduler) {
 
 function getEndTime(scores) {
   const lastGoals = scores.map(game => _.last(game.goals));
-  const isShootout = _.any(lastGoals, goal => goal.period === 'SO');
+  const isShootout = _.some(lastGoals, goal => goal.period === 'SO');
 
   if (isShootout) {
     return { period: 'SO' };
   } else {
     const lastOvertimeGoalTime = _.chain(lastGoals)
       .filter(goal => goal.period === 'OT' || goal.period > 3)
-      .sortByAll(['period', 'min', 'sec'])
+      .sortBy(['period', 'min', 'sec'])
       .map(goal => ({ period: goal.period, minute: goal.min, second: goal.sec }))
       .last()
       .value();
@@ -130,7 +130,7 @@ function getEndTime(scores) {
 export function getGoalScoringTimes(scores) {
   return _.chain(scores.map(game => game.goals))
     .flatten()
-    .sortByAll(['period', 'min', 'sec'])
+    .sortBy(['period', 'min', 'sec'])
     .value();
 }
 

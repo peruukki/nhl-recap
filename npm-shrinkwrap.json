@@ -285,9 +285,9 @@
       }
     },
     "lodash": {
-      "version": "3.10.1",
-      "from": "lodash@*",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+      "version": "4.7.0",
+      "from": "lodash@4.7.0",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.7.0.tgz"
     },
     "rx": {
       "version": "4.1.0",
