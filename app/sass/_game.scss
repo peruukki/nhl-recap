@@ -2,13 +2,13 @@
   width: $game-card-width;
   margin: $game-card-margin;
   float: left;
-  background: $lighter-transparent-gray;
+  background: $darker-blue;
   font-size: 1.4rem;
   box-sizing: border-box;
 
   &__score-panel {
     padding: 0.3rem 0;
-    background: $darker-transparent-gray;
+    background: $lighter-blue;
   }
 
   &__latest-goal-panel {

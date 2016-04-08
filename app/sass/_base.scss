@@ -16,7 +16,8 @@ html {
 
 body {
   margin: 0;
-  background-color: $white;
+  background-image: linear-gradient(to right, darken($body-background, 5), lighten($body-background, 10));
+  color: $white;
   font-family: 'Open Sans', sans-serif;
   font-size: 1.6em;
   text-align: center;
