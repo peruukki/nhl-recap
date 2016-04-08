@@ -13,8 +13,8 @@ export default function periodClock(period, durationInMinutes, endTime, goalScor
 }
 
 function generateSequence(period, durationInMinutes, endTime, goalScoringTimes) {
-  const lastMinute = (endTime && endTime.minute) || -1;
-  const lastSecond = (endTime && endTime.second) || -1;
+  const lastMinute = endTime ? endTime.minute : -1;
+  const lastSecond = endTime ? endTime.second : -1;
 
   // Advance clock by second for all minutes but the last one of the 3rd period
   const allSecondElements = generateSecondElements(period, durationInMinutes, lastMinute, lastSecond);
