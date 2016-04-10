@@ -1,10 +1,13 @@
 .header {
-  margin-bottom: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
   background-color: $darker-blue;
   background-image: linear-gradient(to right, $darker-blue, $light-blue);
   color: $white;
   box-shadow: 0 0 4px 0 $semi-transparent-gray;
   overflow: hidden;
+  z-index: 1;
 
   &__container {
     max-width: 34rem;
