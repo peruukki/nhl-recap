@@ -1,7 +1,7 @@
 import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 
-import {hasGoalBeenScored} from './utils';
+import {hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(clock, teams, goals, goalCounts) {
@@ -77,10 +77,11 @@ export function renderLatestGoalTime(latestGoal) {
 }
 
 export function renderLatestGoalScorer(latestGoal) {
+  const scorer = truncatePlayerName(latestGoal.scorer);
   return latestGoal.goalCount ?
     [
-      span('.latest-goal__scorer', `${latestGoal.scorer} `),
+      span('.latest-goal__scorer', `${scorer} `),
       span('.latest-goal__goal-count', `(${latestGoal.goalCount})`)
     ] :
-    span('.latest-goal__scorer', `${latestGoal.scorer}`);
+    span('.latest-goal__scorer', scorer);
 }
