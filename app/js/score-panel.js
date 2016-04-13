@@ -21,7 +21,7 @@ function intent(HTTP, url) {
     .filter(res$ => res$.request.url === url)
     .mergeAll()
     .map(response => ({ success: JSON.parse(response.text) }))
-    .map(response => (response.success.length > 0) ? response : { error: { message: 'no scores available' } })
+    .map(response => (response.success.length > 0) ? response : { error: { message: 'No latest scores available.', expected: true } })
     .catch(error => Rx.Observable.just({ error }))
     .share();
   const scores$ = scoresWithErrors$
@@ -32,7 +32,9 @@ function intent(HTTP, url) {
     scores$,
     status$: scoresWithErrors$
       .filter(scores => scores.error)
-      .map(scores => `Failed to fetch latest scores: ${scores.error.message}.`)
+      .map(scores => scores.error.expected ?
+        scores.error.message :
+        `Failed to fetch latest scores: ${scores.error.message}.`)
   };
 }
 

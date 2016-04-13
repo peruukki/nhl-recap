@@ -44,6 +44,17 @@ describe('scorePanel', () => {
     });
   });
 
+  it('should show a message if there are no latest scores available', (done) => {
+    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .reply(200, []);
+
+    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
+    requests.DOM.skip(1).subscribe(vtree => {
+      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('No latest scores available.'));
+      done();
+    });
+  });
+
   it('should show a message if fetching latest scores fails', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
       .reply(404, 'Fake error');
