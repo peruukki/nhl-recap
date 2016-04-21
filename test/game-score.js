@@ -168,10 +168,12 @@ describe('gameScore', () => {
       const clock = { start: true };
       const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[0];
       assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
-        span('Series tied '),
-        span('.series-wins__tied', '1'),
+        'Series ',
+        span('.series-wins__tied', 'tied'),
+        ' ',
+        span('.series-wins__tied-count', '1'),
         span('.series-wins__delimiter', '–'),
-        span('.series-wins__tied', '1')
+        span('.series-wins__tied-count', '1')
       ]);
     });
 
@@ -180,10 +182,10 @@ describe('gameScore', () => {
       const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[1];
       assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
         span('.series-wins__leading-team', 'NYR'),
-        span(' leads '),
-        span('.series-wins__leading', '2'),
+        ' leads ',
+        span('.series-wins__leading-count', '2'),
         span('.series-wins__delimiter', '–'),
-        span('.series-wins__trailing', '1')
+        span('.series-wins__trailing-count', '1')
       ]);
     });
   });

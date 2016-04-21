@@ -83,18 +83,20 @@ function getSeriesWinsDescription(seriesWins) {
 
   if (leading.wins === trailing.wins) {
     return [
-      span('Series tied '),
-      span('.series-wins__tied', String(leading.wins)),
+      'Series ',
+      span('.series-wins__tied', 'tied'),
+      ' ',
+      span('.series-wins__tied-count', String(leading.wins)),
       span('.series-wins__delimiter', '–'),
-      span('.series-wins__tied', String(trailing.wins))
+      span('.series-wins__tied-count', String(trailing.wins))
     ];
   } else {
     return [
       span('.series-wins__leading-team', leading.team),
-      span(' leads '),
-      span('.series-wins__leading', String(leading.wins)),
+      ' leads ',
+      span('.series-wins__leading-count', String(leading.wins)),
       span('.series-wins__delimiter', '–'),
-      span('.series-wins__trailing', String(trailing.wins))
+      span('.series-wins__trailing-count', String(trailing.wins))
     ];
   }
 }
