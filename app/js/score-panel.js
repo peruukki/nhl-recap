@@ -90,6 +90,7 @@ function renderHeader(clockVtree) {
 
 function renderScores(state) {
   return state.scores.length > 0 ?
-    div('.score-list', state.scores.map(game => gameScore(state.clock, game.teams, game.goals, game.goalCounts))) :
+    div('.score-list', state.scores.map(game =>
+      gameScore(state.clock, game.teams, game.goals, game.playoffSeries, game.goalCounts))) :
     div('.status.fade-in', [state.status || 'No scores available.']);
 }

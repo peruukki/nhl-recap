@@ -17,4 +17,12 @@
     font-size: 1.2rem;
     box-sizing: border-box;
   }
+
+  &__series-wins {
+    padding-top: 0.2rem;
+    padding-bottom: 0.4rem;
+    color: $gray;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
 }

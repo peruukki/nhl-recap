@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, teams, goals, goalCounts) {
+export default function gameScore(clock, teams, goals, playoffSeries, goalCounts) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
@@ -18,7 +18,8 @@ export default function gameScore(clock, teams, goals, goalCounts) {
 
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period),
-    renderLatestGoal(latestGoal)
+    renderLatestGoal(latestGoal),
+    playoffSeries ? renderSeriesWins(playoffSeries.wins) : null
   ]);
 }
 
@@ -68,6 +69,34 @@ function renderLatestGoal(latestGoal) {
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
   ]);
+}
+
+function renderSeriesWins(seriesWins) {
+  return div('.game__series-wins', getSeriesWinsDescription(seriesWins));
+}
+
+function getSeriesWinsDescription(seriesWins) {
+  const teamsWithWins = _.map(seriesWins, (wins, team) => ({ team, wins }));
+  const sortedByWins = _.sortBy(teamsWithWins, 'wins');
+  const leading = _.last(sortedByWins);
+  const trailing = _.first(sortedByWins);
+
+  if (leading.wins === trailing.wins) {
+    return [
+      span('Series tied '),
+      span('.series-wins__tied', String(leading.wins)),
+      span('.series-wins__delimiter', '–'),
+      span('.series-wins__tied', String(trailing.wins))
+    ];
+  } else {
+    return [
+      span('.series-wins__leading-team', leading.team),
+      span(' leads '),
+      span('.series-wins__leading', String(leading.wins)),
+      span('.series-wins__delimiter', '–'),
+      span('.series-wins__trailing', String(trailing.wins))
+    ];
+  }
 }
 
 export function renderLatestGoalTime(latestGoal) {

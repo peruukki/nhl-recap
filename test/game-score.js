@@ -6,6 +6,7 @@ import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer} from
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
+import scoresAllRegularTimePlayoffs from './data/latest-playoffs.json';
 
 const assert = chai.assert;
 
@@ -155,6 +156,38 @@ describe('gameScore', () => {
 
   });
 
+  describe('playoff series wins panel', () => {
+
+    it('should not exist if there is no playoff series information', () => {
+      const clock = { start: true };
+      const {teams, goals, playoffSeries} = scoresAllRegularTime[1];
+      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, undefined);
+    });
+
+    it('should show the series tied when teams have the same amount of wins', () => {
+      const clock = { start: true };
+      const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[0];
+      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+        span('Series tied '),
+        span('.series-wins__tied', '1'),
+        span('.series-wins__delimiter', '–'),
+        span('.series-wins__tied', '1')
+      ]);
+    });
+
+    it('should show the team that has more wins leading the series', () => {
+      const clock = { start: true };
+      const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[1];
+      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+        span('.series-wins__leading-team', 'NYR'),
+        span(' leads '),
+        span('.series-wins__leading', '2'),
+        span('.series-wins__delimiter', '–'),
+        span('.series-wins__trailing', '1')
+      ]);
+    });
+  });
+
 });
 
 function assertGoalCounts(clock, teams, goals, awayGoals, homeGoals) {
@@ -175,6 +208,12 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   assert.deepEqual(latestGoalPanel, expected);
 }
 
+function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, expectedSeriesWinsVtree) {
+  const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, teams, goals, playoffSeries));
+  const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree);
+  assert.deepEqual(playoffSeriesWinsPanel, expected);
+}
+
 function getTeamPanels(vtree) {
   return getGameChildrenWithClass(vtree, 'team-panel');
 }
@@ -190,6 +229,10 @@ function getGameChildrenWithClass(vtree, className) {
 
 function getLatestGoalPanel(vtree) {
   return vtree.children[1];
+}
+
+function getPlayoffSeriesWinsPanel(vtree) {
+  return vtree.children[2];
 }
 
 function expectedTeamPanels(teams, awayGoals, homeGoals) {
@@ -214,4 +257,10 @@ function expectedLatestGoalPanel(latestGoal) {
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
   ]);
+}
+
+function expectedPlayoffSeriesWinsPanel(seriesWinsVtree) {
+  return seriesWinsVtree ?
+    div('.game__series-wins', seriesWinsVtree) :
+    seriesWinsVtree;
 }
