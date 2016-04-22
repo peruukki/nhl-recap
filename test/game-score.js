@@ -167,26 +167,13 @@ describe('gameScore', () => {
     it('should show the series tied when teams have the same amount of wins', () => {
       const clock = { start: true };
       const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[0];
-      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
-        'Series ',
-        span('.series-wins__tied', 'tied'),
-        ' ',
-        span('.series-wins__tied-count', '1'),
-        span('.series-wins__delimiter', '–'),
-        span('.series-wins__tied-count', '1')
-      ]);
+      assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, 1);
     });
 
     it('should show the team that has more wins leading the series', () => {
       const clock = { start: true };
       const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[1];
-      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
-        span('.series-wins__leading-team', 'NYR'),
-        ' leads ',
-        span('.series-wins__leading-count', '2'),
-        span('.series-wins__delimiter', '–'),
-        span('.series-wins__trailing-count', '1')
-      ]);
+      assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, 'NYR', 2, 1);
     });
   });
 
@@ -208,6 +195,27 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   const latestGoalPanel = getLatestGoalPanel(gameScore(clock, teams, goals));
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
+}
+
+function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins) {
+  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+    span('.series-wins__leading-team', leadingTeam),
+    ' leads ',
+    span('.series-wins__leading-count', String(leadingWins)),
+    span('.series-wins__delimiter', '–'),
+    span('.series-wins__trailing-count', String(trailingWins))
+  ]);
+}
+
+function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins) {
+  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+    'Series ',
+    span('.series-wins__tied', 'tied'),
+    ' ',
+    span('.series-wins__tied-count', String(wins)),
+    span('.series-wins__delimiter', '–'),
+    span('.series-wins__tied-count', String(wins))
+  ]);
 }
 
 function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, expectedSeriesWinsVtree) {
