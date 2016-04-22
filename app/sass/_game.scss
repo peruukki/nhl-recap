@@ -13,14 +13,15 @@
 
   &__latest-goal-panel {
     height: 4rem;
-    padding-top: 0.3rem;
+    padding-top: 0.5rem;
     font-size: 1.2rem;
+    line-height: 1.6rem;
     box-sizing: border-box;
   }
 
   &__series-wins {
     padding-top: 0.2rem;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.5rem;
     color: $gray;
     font-size: 1rem;
     text-transform: uppercase;
