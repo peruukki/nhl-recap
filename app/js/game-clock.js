@@ -151,6 +151,8 @@ function renderPeriodEnd(period) {
 export function renderPeriodNumber(period) {
   switch (period) {
     case 'OT':
+    case 4:
+    case '4':
       return 'OT';
     case 'SO':
       return 'SO';
@@ -164,7 +166,7 @@ export function renderPeriodNumber(period) {
     case '3':
       return '3rd';
     default:
-      return period + 'th';
+      return `${period - 3}OT`;
   }
 }
 
