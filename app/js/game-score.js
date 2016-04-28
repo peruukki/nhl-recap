@@ -10,6 +10,8 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
+  const allGamesEnded = clock && clock.end && !clock.period;
+  const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded);
 
   if (goalCounts) {
     goalCounts.away$.onNext(awayGoals.length);
@@ -19,8 +21,25 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period),
     renderLatestGoal(latestGoal),
-    playoffSeries ? renderSeriesWins(playoffSeries.wins) : null
+    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, allGamesEnded) : null
   ]);
+}
+
+function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded) {
+  if (playoffSeries) {
+    return allGamesEnded ?
+      getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals) :
+      playoffSeries.wins;
+  } else {
+    return null;
+  }
+}
+
+function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) {
+  const updatedWinCount = (awayGoals.length > homeGoals.length) ?
+    { [teams.away]: seriesWins[teams.away] + 1 } :
+    { [teams.home]: seriesWins[teams.home] + 1 };
+  return _.merge({}, seriesWins, updatedWinCount);
 }
 
 function getCurrentGoals(clock, teams, goals) {
@@ -71,8 +90,9 @@ function renderLatestGoal(latestGoal) {
   ]);
 }
 
-function renderSeriesWins(seriesWins) {
-  return div('.game__series-wins', getSeriesWinsDescription(seriesWins));
+function renderSeriesWins(seriesWins, isChanged) {
+  const animationClass = isChanged ? '.fade-in' : '';
+  return div(`.game__series-wins${animationClass}`, getSeriesWinsDescription(seriesWins));
 }
 
 function getSeriesWinsDescription(seriesWins) {
@@ -91,9 +111,10 @@ function getSeriesWinsDescription(seriesWins) {
       span('.series-wins__tied-count', String(trailing.wins))
     ];
   } else {
+    const seriesWinCount = 4;
     return [
       span('.series-wins__leading-team', leading.team),
-      ' leads ',
+      (leading.wins === seriesWinCount) ? ' wins ' : ' leads ',
       span('.series-wins__leading-count', String(leading.wins)),
       span('.series-wins__delimiter', '–'),
       span('.series-wins__trailing-count', String(trailing.wins))

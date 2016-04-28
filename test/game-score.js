@@ -7,6 +7,7 @@ import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
 import scoresAllRegularTimePlayoffs from './data/latest-playoffs.json';
+import scoresRegularTimeAndOvertimePlayoffs from './data/latest-playoffs-ot.json';
 
 const assert = chai.assert;
 
@@ -174,6 +175,24 @@ describe('gameScore', () => {
       const clock = { start: true };
       const {teams, goals, playoffSeries} = scoresAllRegularTimePlayoffs[1];
       assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, 'NYR', 2, 1);
+    });
+
+    it('should not increase the winning teams\' win counts until all games have ended', () => {
+      const clock = { period: 3, end: true };
+      const game1 = scoresRegularTimeAndOvertimePlayoffs[0];
+      assertPlayoffSeriesTied(clock, game1.teams, game1.goals, game1.playoffSeries, 1);
+
+      const game2 = scoresRegularTimeAndOvertimePlayoffs[1];
+      assertPlayoffSeriesLead(clock, game2.teams, game2.goals, game2.playoffSeries, 'ANA', 2, 1);
+    });
+
+    it('should increase the winning teams\' win counts after all games have ended', () => {
+      const clock = { end: true };
+      const game1 = scoresRegularTimeAndOvertimePlayoffs[0];
+      assertPlayoffSeriesLead(clock, game1.teams, game1.goals, game1.playoffSeries, 'STL', 2, 1);
+
+      const game2 = scoresRegularTimeAndOvertimePlayoffs[1];
+      assertPlayoffSeriesTied(clock, game2.teams, game2.goals, game2.playoffSeries, 2);
     });
   });
 
