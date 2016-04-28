@@ -189,10 +189,10 @@ describe('gameScore', () => {
     it('should increase the winning teams\' win counts after all games have ended', () => {
       const clock = { end: true };
       const game1 = scoresRegularTimeAndOvertimePlayoffs[0];
-      assertPlayoffSeriesLead(clock, game1.teams, game1.goals, game1.playoffSeries, 'STL', 2, 1);
+      assertPlayoffSeriesLead(clock, game1.teams, game1.goals, game1.playoffSeries, 'STL', 2, 1, '.fade-in');
 
       const game2 = scoresRegularTimeAndOvertimePlayoffs[1];
-      assertPlayoffSeriesTied(clock, game2.teams, game2.goals, game2.playoffSeries, 2);
+      assertPlayoffSeriesTied(clock, game2.teams, game2.goals, game2.playoffSeries, 2, '.fade-in');
     });
   });
 
@@ -216,8 +216,8 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   assert.deepEqual(latestGoalPanel, expected);
 }
 
-function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins) {
-  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins, animationClass) {
+  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
     ' leads ',
     span('.series-wins__leading-count', String(leadingWins)),
@@ -226,8 +226,8 @@ function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam
   ]);
 }
 
-function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins) {
-  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, [
+function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins, animationClass) {
+  return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, [
     'Series ',
     span('.series-wins__tied', 'tied'),
     ' ',
@@ -237,9 +237,9 @@ function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins) {
   ]);
 }
 
-function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, expectedSeriesWinsVtree) {
+function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, expectedSeriesWinsVtree) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, teams, goals, playoffSeries));
-  const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree);
+  const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
 }
 
@@ -288,8 +288,8 @@ function expectedLatestGoalPanel(latestGoal) {
   ]);
 }
 
-function expectedPlayoffSeriesWinsPanel(seriesWinsVtree) {
+function expectedPlayoffSeriesWinsPanel(seriesWinsVtree, animationClass) {
   return seriesWinsVtree ?
-    div('.game__series-wins', seriesWinsVtree) :
+    div(`.game__series-wins${animationClass || ''}`, seriesWinsVtree) :
     seriesWinsVtree;
 }
