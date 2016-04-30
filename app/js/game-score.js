@@ -125,7 +125,10 @@ function getSeriesWinsDescription(seriesWins) {
 export function renderLatestGoalTime(latestGoal) {
   const period = renderPeriodNumber(latestGoal.period);
   const time = renderTime({ minute: latestGoal.min, second: latestGoal.sec });
-  return `${period} ${time} ${latestGoal.team}`;
+  const generalGoalInfo = span(`${period} ${time} ${latestGoal.team}`);
+  return latestGoal.emptyNet ?
+    [generalGoalInfo, span('.latest-goal__empty-net', 'EN')] :
+    generalGoalInfo;
 }
 
 export function renderLatestGoalScorer(latestGoal) {
