@@ -41,10 +41,20 @@ body {
 }
 
 .expand {
-  animation: $expand-duration expand, $fade-duration fade-in;
+  @for $i from 1 through 15 {
+    &:nth-child(#{$i}) {
+      $delay: $i * 100ms;
+      animation: $delay hidden, $expand-duration ease-in expand $delay, $fade-duration ease-in fade-in $delay;
+    }
+  }
 }
 
 @keyframes expand {
   from { transform: scale(0, 0); }
   to { transform: scale(1, 1); }
+}
+
+@keyframes hidden {
+  from { opacity: 0; }
+  to { opacity: 0; }
 }
