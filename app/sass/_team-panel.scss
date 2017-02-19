@@ -1,6 +1,6 @@
 .team-panel {
-  display: inline-block;
-  width: 30%;
+  flex-basis: 0;
+  flex-grow: 1;
 
   &--away {
     text-align: right;
@@ -20,17 +20,15 @@
   }
 
   &__delimiter {
-    display: inline-block;
-    position: relative;
     width: 1.5em;
     height: 1em;
     color: $gray;
+    text-align: center;
   }
 
   &__delimiter-period {
-    position: absolute;
-    top: 2px;
-    left: 4px;
+    position: relative;
+    bottom: 1px;
     font-size: 1rem;
   }
 }

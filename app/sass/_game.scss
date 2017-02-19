@@ -7,6 +7,7 @@
   box-sizing: border-box;
 
   &__score-panel {
+    display: flex;
     padding: 0.3rem 0;
     background: $lighter-blue;
   }
