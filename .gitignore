@@ -4,6 +4,9 @@ public/
 # Deployment directory
 dist/
 
+# Copied dependencies
+app/sass/vendor
+
 # Node
 node_modules/
 npm-debug.log

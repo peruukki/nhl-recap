@@ -29,12 +29,14 @@
     "clone:dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
     "commit:dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
     "copy:dist": "cp -r public/* dist",
+    "copy:normalize": "mkdir -p app/sass/vendor && cp node_modules/normalize.css/normalize.css app/sass/vendor",
     "hash:css": "hashmark -n public/app.css $npm_package_config_hashmark_args",
     "hash:js": "hashmark -n public/app.js $npm_package_config_hashmark_args",
     "hash:inject": "replaceinfiles -S -r public/assets.json -s public/*.html -d {dir}/{base}",
     "lint:css": "sass-lint -v",
     "lint:js": "eslint *.js app/js/*.js{,x} test/*.js",
     "postcopy:dist": "rm -f dist/assets.json",
+    "postinstall": "npm run copy:normalize",
     "prebuild": "npm run clean:build",
     "prewatch": "npm run clean:build",
     "publish": "npm run build && npm run clone:dist && npm run clean:dist && npm run copy:dist && npm run commit:dist && npm run push:dist",
@@ -56,6 +58,7 @@
     "@cycle/dom": "^9.2.2",
     "@cycle/http": "^8.2.2",
     "lodash": "^4.7.0",
+    "normalize.css": "^5.0.0",
     "rx": "^4.1.0"
   },
   "devDependencies": {
