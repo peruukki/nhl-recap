@@ -45,6 +45,7 @@
     "server": "http-server public -p 8000 -o",
     "spec": "mocha --compilers js:babel-register",
     "start": "parallelshell 'npm run watch' 'npm run server'",
+    "svg": "node generate-svg-data.js",
     "test": "npm run lint:css && npm run lint:js && npm run spec",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
