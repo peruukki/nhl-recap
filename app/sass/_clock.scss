@@ -1,5 +1,6 @@
 .clock {
-  float: right;
+  @include stretch;
+  text-align: right;
 
   &__time {
     margin-left: 0.25em;

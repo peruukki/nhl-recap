@@ -10,6 +10,8 @@
   z-index: 1;
 
   &__container {
+    display: flex;
+    align-items: center;
     max-width: 34rem;
     margin: auto;
     padding: 0.8rem;
@@ -18,10 +20,11 @@
   }
 
   &__title {
+    @include stretch;
     display: inline;
     margin: 0;
-    float: left;
     font-size: 1.6rem;
     font-weight: 800;
+    text-align: left;
   }
 }
