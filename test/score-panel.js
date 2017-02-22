@@ -44,6 +44,18 @@ describe('scorePanel', () => {
     });
   });
 
+  it('should show a delayed and animated play button', (done) => {
+    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .reply(200, apiResponse);
+
+    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
+    requests.DOM.skip(1).take(1).subscribe(vtree => {
+      const playButtonNode = getPlayButtonNode(vtree);
+      assert.deepEqual(playButtonNode.properties.className, 'button button--play expand--2');
+      done();
+    });
+  });
+
   it('should show a message if there are no latest scores available', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
       .reply(200, []);
@@ -77,8 +89,16 @@ function expectedStatusVtree(message) {
   return div('.status.fade-in', message);
 }
 
+function getHeaderNode(vtree) {
+  return vtree.children[0].children[0];
+}
+
 function getStatusNode(vtree) {
   return vtree.children[1].children[0];
+}
+
+function getPlayButtonNode(vtree) {
+  return getHeaderNode(vtree).children[1];
 }
 
 function getScoreListNode(vtree) {

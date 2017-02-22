@@ -1,4 +1,4 @@
-import {div, h1, header, section} from '@cycle/dom';
+import {button, div, h1, header, section} from '@cycle/dom';
 import Rx from 'rx';
 import _ from 'lodash';
 
@@ -61,7 +61,7 @@ function model(actions, animations) {
     actions.status$.startWith('Fetching latest scores...'),
     gameClock.DOM.startWith(''),
     gameClock.clock$.startWith(null),
-    (scores, status, clockVtree, clock) => ({ scores, status, clockVtree, clock })
+    (scores, status, clockVtree, clock) => ({ scores, status, clockVtree, clock, gameCount: scores.length })
   );
 }
 
@@ -73,17 +73,18 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 }
 
 function view(state$) {
-  return state$.map(({scores, status, clockVtree, clock}) =>
+  return state$.map(({scores, status, clockVtree, clock, gameCount}) =>
     div([
-      header('.header', renderHeader(clockVtree)),
+      header('.header', renderHeader(clockVtree, gameCount)),
       section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
 }
 
-function renderHeader(clockVtree) {
+function renderHeader(clockVtree, gameCount) {
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),
+    gameCount ? button(`.button .button--play .expand--${gameCount}`, 'Play') : null,
     clockVtree
   ]);
 }
