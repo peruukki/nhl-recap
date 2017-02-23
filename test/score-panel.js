@@ -1,4 +1,5 @@
 import {div} from '@cycle/dom';
+import {mockDOMSource} from '@cycle/dom';
 import {makeHTTPDriver} from '@cycle/http';
 import Rx from 'rx';
 import chai from 'chai';
@@ -82,7 +83,7 @@ describe('scorePanel', () => {
 
 function run(httpRequest$) {
   const driver = makeHTTPDriver();
-  return scorePanel(animations)({ HTTP: driver(httpRequest$) });
+  return scorePanel(animations)({ DOM: mockDOMSource(), HTTP: driver(httpRequest$) });
 }
 
 function expectedStatusVtree(message) {

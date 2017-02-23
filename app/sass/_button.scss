@@ -1,0 +1,27 @@
+.button {
+  width: 3rem;
+  height: 3rem;
+  transition: background-image $transition-duration $transition-timing-function;
+  border: 0;
+  outline: none;
+  background: center / contain;
+  cursor: pointer;
+
+  &--play {
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23000000%22%20fill-opacity%3D%22.35%22%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23D0D1E2%22%20points%3D%229%201%2018%2017%200%2017%22%20transform%3D%22rotate(90%209.5%2021.5)%22%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A');
+
+    &:hover,
+    &:focus {
+      background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23000000%22%20fill-opacity%3D%22.35%22%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23F8F8F8%22%20points%3D%229%201%2018%2017%200%2017%22%20transform%3D%22rotate(90%209.5%2021.5)%22%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A');
+    }
+  }
+
+  &--pause {
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23000000%22%20fill-opacity%3D%22.35%22%2F%3E%0A%20%20%20%20%3Cg%20fill%3D%22%23D0D1E2%22%20transform%3D%22translate(13%2011)%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%225%22%20height%3D%2218%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%225%22%20height%3D%2218%22%20x%3D%229%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A');
+
+    &:hover,
+    &:focus {
+      background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2220%22%20fill%3D%22%23000000%22%20fill-opacity%3D%22.35%22%2F%3E%0A%20%20%20%20%3Cg%20fill%3D%22%23F8F8F8%22%20transform%3D%22translate(13%2011)%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%225%22%20height%3D%2218%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%225%22%20height%3D%2218%22%20x%3D%229%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A');
+    }
+  }
+}

@@ -6,17 +6,17 @@ import GameClock from './game-clock';
 import gameScore from './game-score';
 
 export default function main(animations) {
-  return ({HTTP}) => {
+  return ({DOM, HTTP}) => {
     const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
     return {
-      DOM: view(model(intent(HTTP, url), animations))
+      DOM: view(model(intent(DOM, HTTP, url), animations))
         .sample(0, Rx.Scheduler.requestAnimationFrame),
       HTTP: Rx.Observable.just({ url })
     };
   };
 }
 
-function intent(HTTP, url) {
+function intent(DOM, HTTP, url) {
   const scoresWithErrors$ = HTTP
     .filter(res$ => res$.request.url === url)
     .mergeAll()
@@ -28,8 +28,15 @@ function intent(HTTP, url) {
     .filter(scores => scores.success)
     .map(scores => scores.success);
 
+  const playClicks$ = DOM.select('.button--play').events('click')
+    .map(() => true);
+  const pauseClicks$ = DOM.select('.button--pause').events('click')
+    .map(() => false);
+  const isPlaying$ = Rx.Observable.merge(playClicks$, pauseClicks$);
+
   return {
     scores$,
+    isPlaying$,
     status$: scoresWithErrors$
       .filter(scores => scores.error)
       .map(scores => scores.error.expected ?
@@ -58,10 +65,12 @@ function model(actions, animations) {
 
   return Rx.Observable.combineLatest(
     scores$,
+    actions.isPlaying$.startWith(false),
     actions.status$.startWith('Fetching latest scores...'),
     gameClock.DOM.startWith(''),
     gameClock.clock$.startWith(null),
-    (scores, status, clockVtree, clock) => ({ scores, status, clockVtree, clock, gameCount: scores.length })
+    (scores, isPlaying, status, clockVtree, clock) =>
+      ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.length })
   );
 }
 
@@ -73,18 +82,21 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 }
 
 function view(state$) {
-  return state$.map(({scores, status, clockVtree, clock, gameCount}) =>
+  return state$.map(({scores, isPlaying, status, clockVtree, clock, gameCount}) =>
     div([
-      header('.header', renderHeader(clockVtree, gameCount)),
+      header('.header', renderHeader(clockVtree, gameCount, isPlaying)),
       section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
 }
 
-function renderHeader(clockVtree, gameCount) {
+function renderHeader(clockVtree, gameCount, isPlaying) {
+  const buttonType = isPlaying ? 'pause' : 'play';
+  const buttonClass = gameCount ? `.button .button--${buttonType} .expand--${gameCount}` : '.button';
+
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),
-    gameCount ? button(`.button .button--play .expand--${gameCount}`, 'Play') : null,
+    button(buttonClass),
     clockVtree
   ]);
 }
