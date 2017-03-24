@@ -12,19 +12,20 @@ export default function GameClock(sources) {
 }
 
 function intent(sources) {
-  const {scores$, props$} = sources;
-  return { scores$, props$ };
+  const {scores$, isPlaying$, props$ } = sources;
+  return { scores$, isPlaying$, props$ };
 }
 
 function model(actions) {
-  return Rx.Observable.combineLatest(actions.scores$, actions.props$)
-    .flatMapLatest(([scores, props]) => {
-      const {interval, scheduler} = props;
-      const events = gameEvents(scores);
-      return Rx.Observable.concat(events.map(event =>
-        Rx.Observable.just(event).delay(interval, scheduler)
-      ));
-    });
+  const ticks$ = actions.props$.flatMapLatest(props => Rx.Observable.interval(props.interval, props.scheduler));
+  const events$ = actions.scores$.map(scores => gameEvents(scores));
+  const eventIndex$ = Rx.Observable.combineLatest(actions.isPlaying$, ticks$)
+    .filter(([isPlaying]) => isPlaying)
+    .scan(acc => acc + 1, 0);
+
+  return Rx.Observable.combineLatest(events$, eventIndex$)
+    .takeWhile(([events, clockIndex]) => clockIndex < events.length)
+    .map(([events, clockIndex]) => events[clockIndex]);
 }
 
 function view(state$) {

@@ -58,16 +58,10 @@ function model(actions, animations) {
       )
     );
 
-  const interval = 20;
-  const ticks$ = Rx.Observable.interval(interval);
-  const clockIndex$ = Rx.Observable.combineLatest(actions.isPlaying$, ticks$)
-    .filter(([isPlaying]) => isPlaying)
-    .scan(acc => acc + 1, 0);
-
   const gameClock = GameClock({
     scores$: actions.scores$,
-    clockIndex$,
-    props$: Rx.Observable.just({ interval })
+    isPlaying$: actions.isPlaying$,
+    props$: Rx.Observable.just({ interval: 20 })
   });
 
   return Rx.Observable.combineLatest(
