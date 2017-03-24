@@ -4,10 +4,12 @@ import periodEvents from './period-events';
 import {elapsedTimeToRemainingTime} from './utils';
 
 export default function gameEvents(scores) {
-  const periodStartMultiplier = 150;
+  const gamesStartDelayMultiplier = 50;
+  const periodEndDelayMultiplier = 150;
+
   const eventsByPeriod = getAllPeriodEvents(scores);
   const periodEnds = eventsByPeriod.map(onePeriodEvents => appendDelay(
-    getPeriodEndElement(onePeriodEvents.period), periodStartMultiplier)
+    getPeriodEndElement(onePeriodEvents.period), periodEndDelayMultiplier)
   );
   const allPeriodEvents = eventsByPeriod.map(onePeriodEvents => onePeriodEvents.events);
   const periodSequences = _.chain()
@@ -16,7 +18,7 @@ export default function gameEvents(scores) {
     .value();
 
   return _.concat(
-    appendDelay(getGamesStartElement(), periodStartMultiplier),
+    appendDelay(getGamesStartElement(), gamesStartDelayMultiplier),
     ...periodSequences,
     getGamesEndElement()
   );
