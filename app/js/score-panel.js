@@ -1,4 +1,4 @@
-import {button, div, h1, header, section} from '@cycle/dom';
+import {button, div, h1, header, section, span} from '@cycle/dom';
 import Rx from 'rx';
 import _ from 'lodash';
 
@@ -68,7 +68,7 @@ function model(actions, animations) {
     scores$,
     actions.isPlaying$.startWith(false),
     actions.status$.startWith('Fetching latest scores...'),
-    gameClock.DOM.startWith(''),
+    gameClock.DOM.startWith(span('.clock')),
     gameClock.clock$.startWith(null),
     (scores, isPlaying, status, clockVtree, clock) =>
       ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.length })
