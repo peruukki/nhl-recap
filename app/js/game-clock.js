@@ -1,9 +1,7 @@
 import Rx from 'rx';
 import {span} from '@cycle/dom';
-import _ from 'lodash';
 
-import periodClock from './period-clock';
-import {elapsedTimeToRemainingTime} from './utils';
+import gameEvents from './game-events';
 
 export default function GameClock(sources) {
   const state$ = model(intent(sources));
@@ -22,21 +20,10 @@ function model(actions) {
   return Rx.Observable.combineLatest(actions.scores$, actions.props$)
     .flatMapLatest(([scores, props]) => {
       const {interval, scheduler} = props;
-      const periodStartDelayInMs = 3000;
-      const periodClocks = getPeriodClocks(scores, interval, scheduler);
-      const periodEnds = periodClocks.map(periodClock => getPeriodEndStream(periodClock.period, interval, scheduler));
-      const delayedClocks = periodClocks.map(periodClock => periodClock.clock
-        .delay(periodStartDelayInMs, scheduler));
-      const periodSequences = _.chain()
-        .zip(delayedClocks, periodEnds)
-        .flatten()
-        .value();
-
-      return Rx.Observable.concat(
-        getGamesStartStream(),
-        ...periodSequences,
-        getGamesEndStream(periodStartDelayInMs, scheduler)
-      );
+      const events = gameEvents(scores);
+      return Rx.Observable.concat(events.map(event =>
+        Rx.Observable.just(event).delay(interval, scheduler)
+      ));
     });
 }
 
@@ -49,89 +36,6 @@ function view(state$) {
       time ? span('.clock__time', time) : ''
     ]);
   });
-}
-
-function getPeriodClocks(scores, interval, scheduler) {
-  const endTime = getEndTime(scores);
-  const goalScoringTimes = getGoalScoringTimes(scores);
-  return getRegularPeriodClocks(endTime, goalScoringTimes, interval, scheduler)
-    .concat(getOvertimeClock(endTime, goalScoringTimes, interval, scheduler))
-    .concat(getShootoutClock(endTime, interval, scheduler))
-    .filter(value => value);
-}
-
-function getPeriodEndStream(period, interval, scheduler) {
-  return Rx.Observable.just({ period, end: true })
-    .delay(interval, scheduler);
-}
-
-function getGamesStartStream() {
-  return Rx.Observable.just({ start: true });
-}
-
-function getGamesEndStream(delay, scheduler) {
-  return Rx.Observable.just({ end: true })
-    .delay(delay, scheduler);
-}
-
-function getRegularPeriodClocks(endTime, goalScoringTimes, interval, scheduler) {
-  const partialPeriodNumber = (endTime.period > 3) ? endTime.period : null;
-  const fullPeriods = _.range(1, partialPeriodNumber || 4).map(period => ({
-    period,
-    clock: periodClock(period, 20, null, goalScoringTimes, interval, scheduler)
-  }));
-
-  if (partialPeriodNumber) {
-    const partialPeriod = {
-      period: partialPeriodNumber,
-      clock: periodClock(partialPeriodNumber, 20, endTime, goalScoringTimes, interval, scheduler)
-    };
-    return fullPeriods.concat(partialPeriod);
-  } else {
-    return fullPeriods;
-  }
-}
-
-function getOvertimeClock(endTime, goalScoringTimes, interval, scheduler) {
-  if (endTime.period !== 'SO' && endTime.period !== 'OT') {
-    return null;
-  } else {
-    const periodEnd = (endTime.period === 'OT') ? endTime : null;
-    return { period: 'OT', clock: periodClock('OT', 5, periodEnd, goalScoringTimes, interval, scheduler) };
-  }
-}
-
-function getShootoutClock(endTime, interval, scheduler) {
-  return endTime.period === 'SO' ?
-    { period: 'SO', clock: Rx.Observable.just({ period: 'SO' }).delay(interval, scheduler) } :
-    null;
-}
-
-function getEndTime(scores) {
-  const lastGoals = scores.map(game => _.last(game.goals));
-  const isShootout = _.some(lastGoals, goal => goal.period === 'SO');
-
-  if (isShootout) {
-    return { period: 'SO' };
-  } else {
-    const lastOvertimeGoalTime = _.chain(lastGoals)
-      .filter(goal => goal.period === 'OT' || goal.period > 3)
-      .sortBy(['period', 'min', 'sec'])
-      .map(goal => ({ period: goal.period, minute: goal.min, second: goal.sec }))
-      .last()
-      .value();
-
-    return lastOvertimeGoalTime ?
-      elapsedTimeToRemainingTime(lastOvertimeGoalTime) :
-      { period: 3 };
-  }
-}
-
-export function getGoalScoringTimes(scores) {
-  return _.chain(scores.map(game => game.goals))
-    .flatten()
-    .sortBy(['period', 'min', 'sec'])
-    .value();
 }
 
 function renderPeriod(clock) {

@@ -46,11 +46,6 @@ function intent(DOM, HTTP, url) {
 }
 
 function model(actions, animations) {
-  const gameClock = GameClock({
-    scores$: actions.scores$,
-    props$: Rx.Observable.just({ interval: 20 })
-  });
-
   const scores$ = actions.scores$.startWith([])
     .map(games =>
       games.map((game, index) =>
@@ -62,6 +57,18 @@ function model(actions, animations) {
         })
       )
     );
+
+  const interval = 20;
+  const ticks$ = Rx.Observable.interval(interval);
+  const clockIndex$ = Rx.Observable.combineLatest(actions.isPlaying$, ticks$)
+    .filter(([isPlaying]) => isPlaying)
+    .scan(acc => acc + 1, 0);
+
+  const gameClock = GameClock({
+    scores$: actions.scores$,
+    clockIndex$,
+    props$: Rx.Observable.just({ interval })
+  });
 
   return Rx.Observable.combineLatest(
     scores$,

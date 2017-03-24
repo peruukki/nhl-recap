@@ -1,36 +1,28 @@
-import Rx from 'rx';
 import _ from 'lodash';
 
 import {hasGoalBeenScored} from './utils';
 
 const advanceClockStep = 3;
 
-export default function periodClock(period, durationInMinutes, endTime, goalScoringTimes, interval, scheduler) {
-  const elements = generateSequence(period, durationInMinutes, endTime, goalScoringTimes);
-  return Rx.Observable.interval(interval, scheduler)
-    .takeWhile(index => index < elements.length)
-    .map(index => elements[index]);
-}
-
-function generateSequence(period, durationInMinutes, endTime, goalScoringTimes) {
+export default function periodEvents(period, durationInMinutes, endTime, goalScoringTimes) {
   const lastMinute = endTime ? endTime.minute : -1;
   const lastSecond = endTime ? endTime.second : -1;
 
   // Advance clock by second for all minutes but the last one of the 3rd period
-  const allSecondElements = generateSecondElements(period, durationInMinutes, lastMinute, lastSecond);
-  const secondElements = (period === 3) ? _.dropRight(allSecondElements, 60) : allSecondElements;
+  const allSecondEvents = generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond);
+  const secondEvents = (period === 3) ? _.dropRight(allSecondEvents, 60) : allSecondEvents;
 
   // Advance clock by tenth of a second for the last minute of the 3rd period
-  const tenthOfASecondElements = (period === 3) && (lastMinute < 1) ?
-    generateTenthOfASecondElements(period, lastMinute, lastSecond) :
+  const tenthOfASecondEvents = (period === 3) && (lastMinute < 1) ?
+    generateTenthOfASecondEvents(period, lastMinute, lastSecond) :
     [];
 
-  const firstElement = { period, minute: durationInMinutes, second: 0 };
-  const sequence = [firstElement].concat(secondElements, tenthOfASecondElements);
-  return multiplyGoalScoringTimeElements(sequence, goalScoringTimes);
+  const firstEvent = { period, minute: durationInMinutes, second: 0 };
+  const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
+  return multiplyGoalScoringTimeEvents(sequence, goalScoringTimes);
 }
 
-function generateSecondElements(period, durationInMinutes, lastMinute, lastSecond) {
+function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
   return _.flatten(
     minuteRange(durationInMinutes, lastMinute)
       .map(minute =>
@@ -40,7 +32,7 @@ function generateSecondElements(period, durationInMinutes, lastMinute, lastSecon
   );
 }
 
-function generateTenthOfASecondElements(period, lastMinute, lastSecond) {
+function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
   const minute = 0;
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond)
@@ -60,11 +52,11 @@ function secondRange(minute, lastMinute, lastSecond) {
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
-function multiplyGoalScoringTimeElements(clockElements, goalScoringTimes) {
+function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes) {
   const multiplier = 50;
-  return _.take(clockElements).concat(
+  return _.take(clockEvents).concat(
     _.flatten(
-      _.zip(_.dropRight(clockElements), _.drop(clockElements))
+      _.zip(_.dropRight(clockEvents), _.drop(clockEvents))
         .map(([previousClock, currentClock]) => {
             const count = wasGoalScoredInRange(previousClock, currentClock, goalScoringTimes) ? multiplier : 1;
             return _.times(count, () => currentClock);
