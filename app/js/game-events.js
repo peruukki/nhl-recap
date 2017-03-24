@@ -6,8 +6,9 @@ import {elapsedTimeToRemainingTime} from './utils';
 export default function gameEvents(scores) {
   const gamesStartDelayMultiplier = 50;
   const periodEndDelayMultiplier = 150;
+  const goalDelayMultiplier = 50;
 
-  const eventsByPeriod = getAllPeriodEvents(scores);
+  const eventsByPeriod = getAllPeriodEvents(scores, goalDelayMultiplier);
   const periodEnds = eventsByPeriod.map(onePeriodEvents => appendDelay(
     getPeriodEndElement(onePeriodEvents.period), periodEndDelayMultiplier)
   );
@@ -40,24 +41,24 @@ function getGamesEndElement() {
   return { end: true };
 }
 
-function getAllPeriodEvents(scores) {
+function getAllPeriodEvents(scores, goalDelayMultiplier) {
   const endTime = getEndTime(scores);
   const goalScoringTimes = getGoalScoringTimes(scores);
-  return getRegularPeriodClocks(endTime, goalScoringTimes)
-    .concat(getOvertimeClock(endTime, goalScoringTimes))
+  return getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier)
+    .concat(getOvertimeClock(endTime, goalScoringTimes, goalDelayMultiplier))
     .concat(getShootoutClock(endTime))
     .filter(value => value);
 }
 
-function getRegularPeriodClocks(endTime, goalScoringTimes) {
+function getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier) {
   const partialPeriodNumber = (endTime.period > 3) ? endTime.period : null;
   const fullPeriods = _.range(1, partialPeriodNumber || 4)
-    .map(period => ({ period: period, events: periodEvents(period, 20, null, goalScoringTimes) }));
+    .map(period => ({ period: period, events: periodEvents(period, 20, null, goalScoringTimes, goalDelayMultiplier) }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      events: periodEvents(partialPeriodNumber, 20, endTime, goalScoringTimes)
+      events: periodEvents(partialPeriodNumber, 20, endTime, goalScoringTimes, goalDelayMultiplier)
     };
     return fullPeriods.concat(partialPeriod);
   } else {
@@ -65,12 +66,12 @@ function getRegularPeriodClocks(endTime, goalScoringTimes) {
   }
 }
 
-function getOvertimeClock(endTime, goalScoringTimes) {
+function getOvertimeClock(endTime, goalScoringTimes, goalDelayMultiplier) {
   if (endTime.period !== 'SO' && endTime.period !== 'OT') {
     return null;
   } else {
     const periodEnd = (endTime.period === 'OT') ? endTime : null;
-    return { period: 'OT', events: periodEvents('OT', 5, periodEnd, goalScoringTimes) };
+    return { period: 'OT', events: periodEvents('OT', 5, periodEnd, goalScoringTimes, goalDelayMultiplier) };
   }
 }
 

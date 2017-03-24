@@ -4,7 +4,7 @@ import {hasGoalBeenScored} from './utils';
 
 const advanceClockStep = 3;
 
-export default function periodEvents(period, durationInMinutes, endTime, goalScoringTimes) {
+export default function periodEvents(period, durationInMinutes, endTime, goalScoringTimes, goalDelayMultiplier) {
   const lastMinute = endTime ? endTime.minute : -1;
   const lastSecond = endTime ? endTime.second : -1;
 
@@ -19,7 +19,7 @@ export default function periodEvents(period, durationInMinutes, endTime, goalSco
 
   const firstEvent = { period, minute: durationInMinutes, second: 0 };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
-  return multiplyGoalScoringTimeEvents(sequence, goalScoringTimes);
+  return multiplyGoalScoringTimeEvents(sequence, goalScoringTimes, goalDelayMultiplier);
 }
 
 function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
@@ -52,13 +52,12 @@ function secondRange(minute, lastMinute, lastSecond) {
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
-function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes) {
-  const multiplier = 50;
+function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes, goalDelayMultiplier) {
   return _.take(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents))
         .map(([previousClock, currentClock]) => {
-            const count = wasGoalScoredInRange(previousClock, currentClock, goalScoringTimes) ? multiplier : 1;
+            const count = wasGoalScoredInRange(previousClock, currentClock, goalScoringTimes) ? goalDelayMultiplier : 1;
             return _.times(count, () => currentClock);
           })
     )
