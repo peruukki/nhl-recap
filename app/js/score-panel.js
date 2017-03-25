@@ -1,6 +1,7 @@
 import {button, div, h1, header, section, span} from '@cycle/dom';
 import Rx from 'rx';
 import _ from 'lodash';
+import classNames from 'classnames';
 
 import GameClock from './game-clock';
 import gameScore from './game-score';
@@ -85,15 +86,21 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 function view(state$) {
   return state$.map(({scores, isPlaying, status, clockVtree, clock, gameCount}) =>
     div([
-      header('.header', renderHeader(clockVtree, gameCount, isPlaying)),
+      header('.header', renderHeader(clockVtree, clock, gameCount, isPlaying)),
       section('.score-panel', renderScores({ scores, status, clock }))
     ])
   );
 }
 
-function renderHeader(clockVtree, gameCount, isPlaying) {
+function renderHeader(clockVtree, clock, gameCount, isPlaying) {
+  const isFinished = !!(clock && clock.end && !clock.period);
   const buttonType = isPlaying ? 'pause' : 'play';
-  const buttonClass = gameCount ? `.button .button--${buttonType} .expand--${gameCount}` : '.button';
+  const buttonClass = classNames({
+    '.button': true,
+    [`.button--${buttonType}`]: gameCount > 0,
+    [`.expand--${gameCount}`]: gameCount > 0 && !isFinished,
+    '.button--hidden': isFinished
+  });
 
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),

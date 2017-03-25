@@ -284,6 +284,11 @@
         }
       }
     },
+    "classnames": {
+      "version": "2.2.5",
+      "from": "classnames@latest",
+      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz"
+    },
     "lodash": {
       "version": "4.7.0",
       "from": "lodash@4.7.0",
