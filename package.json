@@ -59,7 +59,7 @@
     "@cycle/dom": "^9.2.2",
     "@cycle/http": "^8.2.2",
     "classnames": "^2.2.5",
-    "lodash": "^4.7.0",
+    "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
     "rx": "^4.1.0"
   },
