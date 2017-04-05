@@ -1,6 +1,6 @@
 import {div, span} from '@cycle/dom';
 import _ from 'lodash';
-import chai from 'chai';
+import {assert} from 'chai';
 
 import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer} from '../app/js/game-score';
 import scoresAllRegularTime from './data/latest.json';
@@ -8,8 +8,6 @@ import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
 import scoresAllRegularTimePlayoffs from './data/latest-playoffs.json';
 import scoresRegularTimeAndOvertimePlayoffs from './data/latest-playoffs-ot.json';
-
-const assert = chai.assert;
 
 describe('gameScore', () => {
 
@@ -162,7 +160,7 @@ describe('gameScore', () => {
     it('should not exist if there is no playoff series information', () => {
       const clock = { start: true };
       const {teams, goals, playoffSeries} = scoresAllRegularTime[1];
-      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, undefined);
+      assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, undefined, null);
     });
 
     it('should show the series tied when teams have the same amount of wins', () => {
@@ -252,8 +250,9 @@ function getDelimiter(vtree) {
 }
 
 function getGameChildrenWithClass(vtree, className) {
+  const stripHtmlElement = sel => sel.replace(/^\w\./, '');
   return vtree.children[0].children
-    .filter(node => _.includes(node.properties.className.split(' '), className));
+    .filter(node => _.includes(stripHtmlElement(node.sel).split('.'), className));
 }
 
 function getLatestGoalPanel(vtree) {

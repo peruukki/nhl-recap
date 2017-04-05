@@ -1,15 +1,13 @@
 import {div} from '@cycle/dom';
 import {mockDOMSource} from '@cycle/dom';
 import {makeHTTPDriver} from '@cycle/http';
-import Rx from 'rx';
-import chai from 'chai';
+import xs from 'xstream';
+import {assert} from 'chai';
 import nock from 'nock';
 
 import scorePanel from '../app/js/score-panel';
 import apiResponse from './data/latest.json';
 import animations from './animations';
-
-const assert = chai.assert;
 
 describe('scorePanel', () => {
 
@@ -18,64 +16,62 @@ describe('scorePanel', () => {
   const nhlScoreApiUrl = nhlScoreApiHost + nhlScoreApiPath;
 
   it('should initially show a message about fetching latest scores', (done) => {
-    const requests = run(Rx.Observable.empty());
-    requests.DOM.subscribe(vtree => {
+    const sinks = run(xs.empty());
+    addListener(done, sinks.DOM.take(1), vtree => {
       assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Fetching latest scores...'));
-      done();
     });
   });
 
   it('should fetch latest scores', (done) => {
-    const requests = run(Rx.Observable.empty());
-    requests.HTTP.subscribe(request => {
+    const sinks = run(xs.empty());
+    addListener(done, sinks.HTTP, request => {
       assert.deepEqual(request.url, nhlScoreApiUrl);
-      done();
     });
   });
 
   it('should render fetched latest scores', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
       .reply(200, apiResponse);
 
-    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
-    requests.DOM.skip(1).take(1).subscribe(vtree => {
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
-      assert.deepEqual(gameScoreNodes.map(node => node.properties.className), ['game expand', 'game expand']);
-      done();
+      assert.deepEqual(gameScoreNodes.map(node => node.sel), ['div.game.expand', 'div.game.expand']);
     });
   });
 
   it('should show a delayed and animated play button', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
       .reply(200, apiResponse);
 
-    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
-    requests.DOM.skip(1).take(1).subscribe(vtree => {
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const playButtonNode = getPlayButtonNode(vtree);
-      assert.deepEqual(playButtonNode.properties.className, 'button button--play expand--2');
-      done();
+      assert.deepEqual(playButtonNode.sel, 'button.button.button--play.expand--2');
     });
   });
 
   it('should show a message if there are no latest scores available', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
       .reply(200, []);
 
-    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
-    requests.DOM.skip(1).subscribe(vtree => {
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('No latest scores available.'));
-      done();
     });
   });
 
   it('should show a message if fetching latest scores fails', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
       .reply(404, 'Fake error');
 
-    const requests = run(Rx.Observable.just(nhlScoreApiUrl));
-    requests.DOM.skip(1).subscribe(vtree => {
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Failed to fetch latest scores: Not Found.'));
-      done();
     });
   });
 
@@ -83,11 +79,19 @@ describe('scorePanel', () => {
 
 function run(httpRequest$) {
   const driver = makeHTTPDriver();
-  return scorePanel(animations)({ DOM: mockDOMSource(), HTTP: driver(httpRequest$) });
+  return scorePanel(animations)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
+}
+
+function addListener(done, stream$, assertFn) {
+  stream$.addListener({
+    next: value => assertFn(value),
+    error: err => done(err),
+    complete: done
+  });
 }
 
 function expectedStatusVtree(message) {
-  return div('.status.fade-in', message);
+  return div('.status.fade-in', [message]);
 }
 
 function getHeaderNode(vtree) {

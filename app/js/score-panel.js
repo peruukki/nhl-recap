@@ -1,5 +1,5 @@
 import {button, div, h1, header, section, span} from '@cycle/dom';
-import Rx from 'rx';
+import xs from 'xstream';
 import _ from 'lodash';
 import classNames from 'classnames';
 
@@ -10,30 +10,36 @@ export default function main(animations) {
   return ({DOM, HTTP}) => {
     const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
     return {
-      DOM: view(model(intent(DOM, HTTP, url), animations))
-        .sample(0, Rx.Scheduler.requestAnimationFrame),
-      HTTP: Rx.Observable.just({ url })
+      DOM: view(model(intent(DOM, HTTP), animations)),
+      HTTP: xs.of({ url })
     };
   };
 }
 
-function intent(DOM, HTTP, url) {
+function intent(DOM, HTTP) {
   const scoresWithErrors$ = HTTP
-    .filter(res$ => res$.request.url === url)
-    .mergeAll()
-    .map(response => ({ success: JSON.parse(response.text) }))
-    .map(response => (response.success.length > 0) ? response : { error: { message: 'No latest scores available.', expected: true } })
-    .catch(error => Rx.Observable.just({ error }))
-    .share();
+    .select()
+    .map(response$ => response$.replaceError(error => xs.of({ error })))
+    .flatten()
+    .map(response => {
+      if (response.error) {
+        return response;
+      } else {
+        const responseJson = JSON.parse(response.text);
+        return responseJson.length > 0
+          ? { success: responseJson }
+          : { error: { message: 'No latest scores available.', expected: true } };
+      }
+    });
   const scores$ = scoresWithErrors$
     .filter(scores => scores.success)
     .map(scores => scores.success);
 
   const playClicks$ = DOM.select('.button--play').events('click')
-    .map(() => true);
+    .mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click')
-    .map(() => false);
-  const isPlaying$ = Rx.Observable.merge(playClicks$, pauseClicks$);
+    .mapTo(false);
+  const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
 
   return {
     scores$,
@@ -62,24 +68,25 @@ function model(actions, animations) {
   const gameClock = GameClock({
     scores$: actions.scores$,
     isPlaying$: actions.isPlaying$,
-    props$: Rx.Observable.just({ interval: 20 })
+    props$: xs.of({ interval: 20 })
   });
 
-  return Rx.Observable.combineLatest(
+  return xs.combine(
     scores$,
     actions.isPlaying$.startWith(false),
     actions.status$.startWith('Fetching latest scores...'),
     gameClock.DOM.startWith(span('.clock')),
-    gameClock.clock$.startWith(null),
-    (scores, isPlaying, status, clockVtree, clock) =>
-      ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.length })
+    gameClock.clock$.startWith(null)
+  ).map(([scores, isPlaying, status, clockVtree, clock]) =>
+    ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.length })
   );
 }
 
 function createGoalCountSubject(classModifier, gameIndex, animations) {
-  const subject$ = new Rx.Subject();
-  subject$.distinctUntilChanged()
-    .subscribe(() => animations.highlightGoal(classModifier, gameIndex));
+  const subject$ = new xs.create();
+  subject$.fold((acc, curr) => ({ last: curr, changed: acc.last !== curr }), { last: 0 })
+    .filter(({ changed }) => changed)
+    .addListener({ next: () => animations.highlightGoal(classModifier, gameIndex) });
   return subject$;
 }
 
@@ -93,14 +100,15 @@ function view(state$) {
 }
 
 function renderHeader(clockVtree, clock, gameCount, isPlaying) {
+  const hasNotStarted = !clock;
   const isFinished = !!(clock && clock.end && !clock.period);
   const buttonType = isPlaying ? 'pause' : 'play';
   const buttonClass = classNames({
     '.button': true,
     [`.button--${buttonType}`]: gameCount > 0,
-    [`.expand--${gameCount}`]: gameCount > 0 && !isFinished,
+    [`.expand--${gameCount}`]: gameCount > 0 && hasNotStarted,
     '.button--hidden': isFinished
-  });
+  }).replace(/\s/g, '');
 
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),

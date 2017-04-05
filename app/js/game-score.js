@@ -14,8 +14,8 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded);
 
   if (goalCounts) {
-    goalCounts.away$.onNext(awayGoals.length);
-    goalCounts.home$.onNext(homeGoals.length);
+    goalCounts.away$.shamefullySendNext(awayGoals.length);
+    goalCounts.home$.shamefullySendNext(homeGoals.length);
   }
 
   return div('.game.expand', [

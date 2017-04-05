@@ -1,4 +1,4 @@
-import Rx from 'rx';
+import xs from 'xstream';
 import {span} from '@cycle/dom';
 
 import gameEvents from './game-events';
@@ -17,15 +17,19 @@ function intent(sources) {
 }
 
 function model(actions) {
-  const ticks$ = actions.props$.flatMapLatest(props => Rx.Observable.interval(props.interval, props.scheduler));
+  const ticks$ = actions.props$.map(props => xs.periodic(props.interval))
+    .flatten();
   const events$ = actions.scores$.map(scores => gameEvents(scores));
-  const eventIndex$ = Rx.Observable.combineLatest(actions.isPlaying$, ticks$)
+  const eventIndex$ = xs.combine(actions.isPlaying$, ticks$)
     .filter(([isPlaying]) => isPlaying)
-    .scan(acc => acc + 1, 0);
+    .fold(acc => acc + 1, 0)
+    .drop(1);
+  const eventsEnd$ = xs.combine(events$, eventIndex$)
+    .filter(([events, eventIndex]) => eventIndex >= events.length);
 
-  return Rx.Observable.combineLatest(events$, eventIndex$)
-    .takeWhile(([events, clockIndex]) => clockIndex < events.length)
-    .map(([events, clockIndex]) => events[clockIndex]);
+  return xs.combine(events$, eventIndex$)
+    .endWhen(eventsEnd$)
+    .map(([events, eventIndex]) => events[eventIndex]);
 }
 
 function view(state$) {

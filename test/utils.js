@@ -1,8 +1,6 @@
-import chai from 'chai';
+import {assert} from 'chai';
 
 import {truncatePlayerName} from '../app/js/utils';
-
-const assert = chai.assert;
 
 describe('utils', () => {
 
