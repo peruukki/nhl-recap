@@ -78,8 +78,8 @@ function renderScorePanel(teams, awayGoals, homeGoals, period) {
 }
 
 function renderDelimiter(period) {
-  return (period === 'OT' || period === 'SO') ?
-    span('.team-panel__delimiter-period', period) :
+  return (period === 'OT' || period === 'SO' || period > 3) ?
+    span('.team-panel__delimiter-period', period === 'SO' ? 'SO' : 'OT') :
     '–';
 }
 
