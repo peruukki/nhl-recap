@@ -56,7 +56,7 @@ describe('scorePanel', () => {
   it('should show a message if there are no latest scores available', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
-      .reply(200, []);
+      .reply(200, { date: {}, games: [] });
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {

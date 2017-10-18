@@ -26,14 +26,14 @@ function intent(DOM, HTTP) {
         return response;
       } else {
         const responseJson = JSON.parse(response.text);
-        return responseJson.length > 0
+        return responseJson.games.length > 0
           ? { success: responseJson }
           : { error: { message: 'No latest scores available.', expected: true } };
       }
     });
   const scores$ = scoresWithErrors$
     .filter(scores => scores.success)
-    .map(scores => scores.success);
+    .map(scores => scores.success.games);
 
   const playClicks$ = DOM.select('.button--play').events('click')
     .mapTo(true);

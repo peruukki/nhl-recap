@@ -11,7 +11,7 @@ const periodStartMultiplier = 150;
 describe('gameEvents', () => {
 
   it('should include 3 periods if no games went to overtime or shootout', () => {
-    const events = gameEvents(scoresAllRegularTime);
+    const events = gameEvents(scoresAllRegularTime.games);
 
     // Check that regulation periods were included
     assertPeriodEndEvents(events, [1, 2, 3]);
@@ -21,7 +21,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until last overtime goal if games went to overtime and none went to shootout', () => {
-    const events = gameEvents(scoresMultipleOvertime);
+    const events = gameEvents(scoresMultipleOvertime.games);
 
     // Check that regulation periods and overtime were included
     assertPeriodEndEvents(events, [1, 2, 3, 'OT']);
@@ -32,7 +32,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until shootout if games went to shootout', () => {
-    const events = gameEvents(scoresOvertimeAndMultipleShootout);
+    const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
     // Check that regulation periods, overtime and shootout were included
     assertPeriodEndEvents(events, [1, 2, 3, 'OT', 'SO']);
@@ -42,24 +42,24 @@ describe('gameEvents', () => {
   });
 
   it('should pause by multiplying each period end event', () => {
-    const events = gameEvents(scoresOvertimeAndMultipleShootout);
+    const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
     // Check period end event count
     assertPeriodEndEventsCount(events, [1, 2, 3, 'OT', 'SO']);
   });
 
   it('should have a final "end" event as the last event', () => {
-    const events = gameEvents(scoresAllRegularTime);
+    const events = gameEvents(scoresAllRegularTime.games);
     assert.deepEqual(_.last(events), { end: true });
   });
 
   it('should determine correct goal scoring times', () => {
-    const goalScoringTimes = getGoalScoringTimes(scoresMultipleOvertime);
+    const goalScoringTimes = getGoalScoringTimes(scoresMultipleOvertime.games);
 
     const expectedGoalScoringTimes = _.flatten([
-      _.dropRight(scoresMultipleOvertime[1].goals),
-      scoresMultipleOvertime[0].goals,
-      _.takeRight(scoresMultipleOvertime[1].goals)
+      _.dropRight(scoresMultipleOvertime.games[1].goals),
+      scoresMultipleOvertime.games[0].goals,
+      _.takeRight(scoresMultipleOvertime.games[1].goals)
     ]);
 
     assert.deepEqual(goalScoringTimes, expectedGoalScoringTimes);

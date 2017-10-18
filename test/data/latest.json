@@ -1,82 +1,88 @@
-[
-  {
-    "goals": [
-      {
-        "team": "STL",
-        "min": 7,
-        "sec": 35,
-        "scorer": "Vladimir Tarasenko",
-        "goalCount": 22,
-        "period": "3"
-      },
-      {
-        "team": "STL",
-        "min": 12,
-        "sec": 50,
-        "scorer": "Robby Fabbri",
-        "goalCount": 7,
-        "period": "3"
-      }
-    ],
-    "scores": {
-      "STL": 2,
-      "BOS": 0
-    },
-    "teams": {
-      "away": "STL",
-      "home": "BOS"
-    }
+{
+  "date": {
+    "raw": "2017-10-18",
+    "pretty": "Tue Oct 17"
   },
-  {
-    "goals": [
-      {
-        "team": "ANA",
-        "min": 11,
-        "sec": 16,
-        "scorer": "Corey Perry",
-        "goalCount": 11,
-        "period": "1"
+  "games": [
+    {
+      "goals": [
+        {
+          "team": "STL",
+          "min": 7,
+          "sec": 35,
+          "scorer": "Vladimir Tarasenko",
+          "goalCount": 22,
+          "period": "3"
+        },
+        {
+          "team": "STL",
+          "min": 12,
+          "sec": 50,
+          "scorer": "Robby Fabbri",
+          "goalCount": 7,
+          "period": "3"
+        }
+      ],
+      "scores": {
+        "STL": 2,
+        "BOS": 0
       },
-      {
-        "team": "NYR",
-        "min": 17,
-        "sec": 50,
-        "scorer": "Derick Brassard",
-        "goalCount": 12,
-        "period": "1"
-      },
-      {
-        "team": "NYR",
-        "min": 2,
-        "sec": 44,
-        "scorer": "Derick Brassard",
-        "goalCount": 13,
-        "period": "3"
-      },
-      {
-        "team": "ANA",
-        "min": 17,
-        "sec": 6,
-        "scorer": "Rickard Rakell",
-        "goalCount": 7,
-        "period": "3"
-      },
-      {
-        "team": "NYR",
-        "min": 19,
-        "sec": 37,
-        "scorer": "Mats Zuccarello",
-        "goalCount": 15,
-        "period": "3"
+      "teams": {
+        "away": "STL",
+        "home": "BOS"
       }
-    ],
-    "scores": {
-      "ANA": 2,
-      "NYR": 3
     },
-    "teams": {
-      "away": "ANA",
-      "home": "NYR"
+    {
+      "goals": [
+        {
+          "team": "ANA",
+          "min": 11,
+          "sec": 16,
+          "scorer": "Corey Perry",
+          "goalCount": 11,
+          "period": "1"
+        },
+        {
+          "team": "NYR",
+          "min": 17,
+          "sec": 50,
+          "scorer": "Derick Brassard",
+          "goalCount": 12,
+          "period": "1"
+        },
+        {
+          "team": "NYR",
+          "min": 2,
+          "sec": 44,
+          "scorer": "Derick Brassard",
+          "goalCount": 13,
+          "period": "3"
+        },
+        {
+          "team": "ANA",
+          "min": 17,
+          "sec": 6,
+          "scorer": "Rickard Rakell",
+          "goalCount": 7,
+          "period": "3"
+        },
+        {
+          "team": "NYR",
+          "min": 19,
+          "sec": 37,
+          "scorer": "Mats Zuccarello",
+          "goalCount": 15,
+          "period": "3"
+        }
+      ],
+      "scores": {
+        "ANA": 2,
+        "NYR": 3
+      },
+      "teams": {
+        "away": "ANA",
+        "home": "NYR"
+      }
     }
-  }
-]
+  ]
+}
