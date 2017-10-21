@@ -17,7 +17,7 @@ export default function main(animations) {
 }
 
 function intent(DOM, HTTP) {
-  const scoresWithErrors$ = HTTP
+  const apiResponseWithErrors$ = HTTP
     .select()
     .map(response$ => response$.replaceError(error => xs.of({ error })))
     .flatten()
@@ -31,9 +31,9 @@ function intent(DOM, HTTP) {
           : { error: { message: 'No latest scores available.', expected: true } };
       }
     });
-  const scores$ = scoresWithErrors$
+  const successApiResponse$ = apiResponseWithErrors$
     .filter(scores => scores.success)
-    .map(scores => scores.success.games);
+    .map(scores => scores.success);
 
   const playClicks$ = DOM.select('.button--play').events('click')
     .mapTo(true);
@@ -42,9 +42,9 @@ function intent(DOM, HTTP) {
   const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
 
   return {
-    scores$,
+    successApiResponse$,
     isPlaying$,
-    status$: scoresWithErrors$
+    status$: apiResponseWithErrors$
       .filter(scores => scores.error)
       .map(scores => scores.error.expected ?
         scores.error.message :
@@ -53,20 +53,23 @@ function intent(DOM, HTTP) {
 }
 
 function model(actions, animations) {
-  const scores$ = actions.scores$.startWith([])
-    .map(games =>
-      games.map((game, index) =>
-        _.extend({}, game, {
-          goalCounts: {
-            away$: createGoalCountSubject('away', index, animations),
-            home$: createGoalCountSubject('home', index, animations)
-          }
-        })
-      )
-    );
+  const initialState = { date: {}, games: [] };
+  const successResponse$ = actions.successApiResponse$.startWith(initialState);
+
+  const scores$ = successResponse$.map(({ date, games }) => ({
+    date,
+    games: games.map((game, index) =>
+      _.extend({}, game, {
+        goalCounts: {
+          away$: createGoalCountSubject('away', index, animations),
+          home$: createGoalCountSubject('home', index, animations)
+        }
+      })
+    )
+  }));
 
   const gameClock = GameClock({
-    scores$: actions.scores$,
+    scores$: actions.successApiResponse$.map(({ games }) => games),
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 })
   });
@@ -78,7 +81,7 @@ function model(actions, animations) {
     gameClock.DOM.startWith(span('.clock')),
     gameClock.clock$.startWith(null)
   ).map(([scores, isPlaying, status, clockVtree, clock]) =>
-    ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.length })
+    ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.games.length })
   );
 }
 
@@ -93,13 +96,13 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 function view(state$) {
   return state$.map(({scores, isPlaying, status, clockVtree, clock, gameCount}) =>
     div([
-      header('.header', renderHeader(clockVtree, clock, gameCount, isPlaying)),
-      section('.score-panel', renderScores({ scores, status, clock }))
+      header('.header', renderHeader(clockVtree, clock, gameCount, isPlaying, scores.date)),
+      section('.score-panel', renderScores({ games: scores.games, status, clock }))
     ])
   );
 }
 
-function renderHeader(clockVtree, clock, gameCount, isPlaying) {
+function renderHeader(clockVtree, clock, gameCount, isPlaying, date) {
   const hasNotStarted = !clock;
   const isFinished = !!(clock && clock.end && !clock.period);
   const buttonType = isPlaying ? 'pause' : 'play';
@@ -109,17 +112,22 @@ function renderHeader(clockVtree, clock, gameCount, isPlaying) {
     [`.expand--${gameCount}`]: gameCount > 0 && hasNotStarted,
     '.button--hidden': isFinished
   }).replace(/\s/g, '');
+  const showDate = hasNotStarted && !!date;
 
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),
     button(buttonClass),
-    clockVtree
+    showDate ? renderDate(date) : clockVtree
   ]);
 }
 
 function renderScores(state) {
-  return state.scores.length > 0 ?
-    div('.score-list', state.scores.map(game =>
+  return state.games.length > 0 ?
+    div('.score-list', state.games.map(game =>
       gameScore(state.clock, game.teams, game.goals, game.playoffSeries, game.goalCounts))) :
     div('.status.fade-in', [state.status || 'No scores available.']);
+}
+
+function renderDate(date) {
+  return span('.date.fade-in', date.pretty);
 }
