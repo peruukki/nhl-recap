@@ -96,28 +96,28 @@ function createGoalCountSubject(classModifier, gameIndex, animations) {
 function view(state$) {
   return state$.map(({scores, isPlaying, status, clockVtree, clock, gameCount}) =>
     div([
-      header('.header', renderHeader(clockVtree, clock, gameCount, isPlaying, scores.date)),
+      header('.header', renderHeader({ clockVtree, clock, gameCount, isPlaying, date: scores.date })),
       section('.score-panel', renderScores({ games: scores.games, status, clock }))
     ])
   );
 }
 
-function renderHeader(clockVtree, clock, gameCount, isPlaying, date) {
-  const hasNotStarted = !clock;
-  const isFinished = !!(clock && clock.end && !clock.period);
-  const buttonType = isPlaying ? 'pause' : 'play';
+function renderHeader(state) {
+  const hasNotStarted = !state.clock;
+  const isFinished = !!(state.clock && state.clock.end && !state.clock.period);
+  const buttonType = state.isPlaying ? 'pause' : 'play';
   const buttonClass = classNames({
     '.button': true,
-    [`.button--${buttonType}`]: gameCount > 0,
-    [`.expand--${gameCount}`]: gameCount > 0 && hasNotStarted,
+    [`.button--${buttonType}`]: state.gameCount > 0,
+    [`.expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
     '.button--hidden': isFinished
   }).replace(/\s/g, '');
-  const showDate = hasNotStarted && !!date;
+  const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
     h1('.header__title', 'NHL Recap'),
     button(buttonClass),
-    showDate ? renderDate(date) : clockVtree
+    showDate ? renderDate(state.date) : state.clockVtree
   ]);
 }
 
