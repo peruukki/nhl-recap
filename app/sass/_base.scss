@@ -31,6 +31,9 @@ body {
 .fade-in-fast {
   animation: ($fade-duration / 2) fade-in-fast;
 }
+.fade-in-slow {
+  animation: ($fade-duration * 2) fade-in;
+}
 
 // Need two separate animation names to re-trigger animation
 @keyframes fade-in {

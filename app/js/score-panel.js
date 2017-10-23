@@ -129,5 +129,5 @@ function renderScores(state) {
 }
 
 function renderDate(date) {
-  return span('.date.fade-in', date.pretty);
+  return span('.date.fade-in-slow', date.pretty);
 }
