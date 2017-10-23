@@ -1,4 +1,4 @@
-import {div} from '@cycle/dom';
+import {div, span} from '@cycle/dom';
 import {mockDOMSource} from '@cycle/dom';
 import {makeHTTPDriver} from '@cycle/http';
 import xs from 'xstream';
@@ -53,6 +53,17 @@ describe('scorePanel', () => {
     });
   });
 
+  it('should show the date of the latest scores with a slow fade-in', (done) => {
+    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, apiResponse);
+
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
+      assert.deepEqual(getDateNode(vtree), expectedDateVtree('Tue Oct 17'));
+    });
+  });
+
   it('should show a message if there are no latest scores available', (done) => {
     nock(nhlScoreApiHost).get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
@@ -94,6 +105,10 @@ function expectedStatusVtree(message) {
   return div('.status.fade-in', [message]);
 }
 
+function expectedDateVtree(date) {
+  return span('.date.fade-in-slow', date);
+}
+
 function getHeaderNode(vtree) {
   return vtree.children[0].children[0];
 }
@@ -104,6 +119,10 @@ function getStatusNode(vtree) {
 
 function getPlayButtonNode(vtree) {
   return getHeaderNode(vtree).children[1];
+}
+
+function getDateNode(vtree) {
+  return getHeaderNode(vtree).children[2];
 }
 
 function getScoreListNode(vtree) {
