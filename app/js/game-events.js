@@ -82,7 +82,8 @@ function getShootoutClock(endTime) {
 }
 
 function getEndTime(scores) {
-  const lastGoals = scores.map(game => _.last(game.goals));
+  const lastGoals = scores.map(game => _.last(game.goals))
+    .filter(goal => !!goal);
   const isShootout = _.some(lastGoals, goal => goal.period === 'SO');
 
   if (isShootout) {
