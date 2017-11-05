@@ -5,7 +5,8 @@
 A web app playing back the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
 Built with [Cycle.js](http://cycle.js.org/) and `npm` scripts.
 
-The app is running at [GitHub pages](http://peruukki.github.io/nhl-recap/).
+The app is running at [GitHub pages](http://peruukki.github.io/nhl-recap/). Add it to your home screen on Android for
+a more app-like, chromeless experience.
 
 ## Running the app
 
