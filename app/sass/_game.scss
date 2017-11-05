@@ -12,6 +12,17 @@
     background: $lighter-blue;
   }
 
+  &__pre-game-info-panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 4rem;
+    padding-top: 0.5rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    box-sizing: border-box;
+  }
+
   &__latest-goal-panel {
     height: 4rem;
     padding-top: 0.5rem;

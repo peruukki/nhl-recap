@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, teams, goals, playoffSeries, goalCounts) {
+export default function gameScore(clock, teams, goals, records, playoffSeries, goalCounts) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
@@ -21,7 +21,7 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
 
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
-    renderLatestGoal(latestGoal),
+    showPreGameInfo ? renderPreGameInfo(teams, records) : renderLatestGoal(latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, allGamesEnded) : null
   ]);
 }
@@ -84,6 +84,18 @@ function renderDelimiter(period) {
   return (period === 'OT' || period === 'SO' || period > 3) ?
     span('.team-panel__delimiter-period', period === 'SO' ? 'SO' : 'OT') :
     '–';
+}
+
+function renderPreGameInfo(teams, records) {
+  return div('.game__pre-game-info-panel', [
+    span('.pre-game-info__value.pre-game-info__value--away', records ? renderRecord(records[teams.away]) : ''),
+    span('.pre-game-info__label', 'Record'),
+    span('.pre-game-info__value.pre-game-info__value--home', records ? renderRecord(records[teams.home]) : ''),
+  ]);
+}
+
+function renderRecord(record) {
+  return `${record.wins}–${record.losses}–${record.ot}`;
 }
 
 function renderLatestGoal(latestGoal) {

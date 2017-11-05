@@ -1,0 +1,21 @@
+.pre-game-info {
+  &__value {
+    flex: 1;
+    color: $light-gray;
+
+    &--away {
+      text-align: right;
+    }
+    &--home {
+      text-align: left;
+    }
+  }
+
+  &__label {
+    display: inline-block;
+    width: 5rem;
+    color: $gray;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+}

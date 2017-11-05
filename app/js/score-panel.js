@@ -124,7 +124,7 @@ function renderHeader(state) {
 function renderScores(state) {
   return state.games.length > 0 ?
     div('.score-list', state.games.map(game =>
-      gameScore(state.clock, game.teams, game.goals, game.playoffSeries, game.goalCounts))) :
+      gameScore(state.clock, game.teams, game.goals, game.records, game.playoffSeries, game.goalCounts))) :
     div('.status.fade-in', [state.status || 'No scores available.']);
 }
 

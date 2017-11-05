@@ -123,12 +123,6 @@ describe('gameScore', () => {
 
   describe('latest goal panel', () => {
 
-    it('should show nothing in the pre-game info', () => {
-      const clock = null;
-      const {teams, goals} = scoresAllRegularTime.games[1];
-      assertLatestGoal(clock, teams, goals, null);
-    });
-
     it('should show nothing in the beginning', () => {
       const clock = { start: true };
       const {teams, goals} = scoresAllRegularTime.games[1];
@@ -169,6 +163,16 @@ describe('gameScore', () => {
       const clock = { period: 'SO' };
       const {teams, goals} = scoresOvertimeAndMultipleShootout.games[2];
       assertLatestGoal(clock, teams, goals, _.last(goals));
+    });
+
+  });
+
+  describe('pre-game info panel', () => {
+
+    it('should show teams\' league records', () => {
+      const clock = null;
+      const {teams, goals, records} = scoresAllRegularTime.games[1];
+      assertPreGameInfo(clock, teams, goals, records, { away: '7–5–0', home: '5–9–3' });
     });
 
   });
@@ -232,6 +236,12 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   assert.deepEqual(latestGoalPanel, expected);
 }
 
+function assertPreGameInfo(clock, teams, goals, records, renderedRecords) {
+  const preGameInfoPanel = getPreGameInfoPanel(gameScore(clock, teams, goals, records));
+  const expected = expectedPreGameInfoPanel(renderedRecords);
+  assert.deepEqual(preGameInfoPanel, expected);
+}
+
 function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins, animationClass) {
   return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
@@ -254,7 +264,7 @@ function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins, anima
 }
 
 function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, expectedSeriesWinsVtree) {
-  const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, teams, goals, playoffSeries));
+  const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, teams, goals, null, playoffSeries));
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
 }
@@ -274,6 +284,10 @@ function getGameChildrenWithClass(vtree, className) {
 }
 
 function getLatestGoalPanel(vtree) {
+  return vtree.children[1];
+}
+
+function getPreGameInfoPanel(vtree) {
   return vtree.children[1];
 }
 
@@ -302,6 +316,14 @@ function expectedLatestGoalPanel(latestGoal) {
   return div('.game__latest-goal-panel', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+  ]);
+}
+
+function expectedPreGameInfoPanel(records) {
+  return div('.game__pre-game-info-panel', [
+    span('.pre-game-info__value.pre-game-info__value--away', records.away),
+    span('.pre-game-info__label', 'Record'),
+    span('.pre-game-info__value.pre-game-info__value--home', records.home),
   ]);
 }
 
