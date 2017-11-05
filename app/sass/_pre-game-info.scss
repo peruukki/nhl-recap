@@ -1,6 +1,6 @@
 .pre-game-info {
   &__value {
-    flex: 1;
+    @include stretch;
     color: $light-gray;
 
     &--away {
