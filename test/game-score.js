@@ -13,6 +13,12 @@ describe('gameScore', () => {
 
   describe('goal counts', () => {
 
+    it('should be hidden in the pre-game info', () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertGoalCounts(clock, teams, goals, 0, 0, '.team-panel__team-score--hidden');
+    });
+
     it('should show zero goals in the beginning', () => {
       const clock = { start: true };
       const {teams, goals} = scoresAllRegularTime.games[1];
@@ -71,6 +77,12 @@ describe('gameScore', () => {
 
   describe('goal delimiter', () => {
 
+    it('should show "at" in the pre-game info', () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertDelimiter(clock, teams, goals, 'at', '');
+    });
+
     it('should show "–" when the clock is running in regulation', () => {
       const clock = { period: 3, minute: 19, second: 2 };
       const {teams, goals} = scoresAllRegularTime.games[1];
@@ -110,6 +122,12 @@ describe('gameScore', () => {
   });
 
   describe('latest goal panel', () => {
+
+    it('should show nothing in the pre-game info', () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertLatestGoal(clock, teams, goals, null);
+    });
 
     it('should show nothing in the beginning', () => {
       const clock = { start: true };
@@ -196,15 +214,15 @@ describe('gameScore', () => {
 
 });
 
-function assertGoalCounts(clock, teams, goals, awayGoals, homeGoals) {
+function assertGoalCounts(clock, teams, goals, awayGoals, homeGoals, visibilityClass = '.fade-in') {
   const teamPanels = getTeamPanels(gameScore(clock, teams, goals));
-  const expected = expectedTeamPanels(teams, awayGoals, homeGoals);
+  const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
 }
 
-function assertDelimiter(clock, teams, goals, delimiter) {
+function assertDelimiter(clock, teams, goals, delimiter, visibilityClass = '.fade-in') {
   const delimiterNode = getDelimiter(gameScore(clock, teams, goals));
-  const expected = expectedDelimiter(delimiter);
+  const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
 }
 
@@ -263,21 +281,21 @@ function getPlayoffSeriesWinsPanel(vtree) {
   return vtree.children[2];
 }
 
-function expectedTeamPanels(teams, awayGoals, homeGoals) {
+function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
   return [
     div('.team-panel.team-panel--away', [
       span('.team-panel__team-name', teams.away),
-      span('.team-panel__team-score', [awayGoals])
+      span('.team-panel__team-score' + visibilityClass, [awayGoals])
     ]),
     div('.team-panel.team-panel--home', [
-      span('.team-panel__team-score', [homeGoals]),
+      span('.team-panel__team-score' + visibilityClass, [homeGoals]),
       span('.team-panel__team-name', teams.home)
     ])
   ];
 }
 
-function expectedDelimiter(delimiter) {
-  return div('.team-panel__delimiter', delimiter);
+function expectedDelimiter(delimiter, visibilityClass) {
+  return div('.team-panel__delimiter' + visibilityClass, delimiter);
 }
 
 function expectedLatestGoalPanel(latestGoal) {

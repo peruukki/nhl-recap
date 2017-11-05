@@ -10,6 +10,7 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
+  const showPreGameInfo = !clock;
   const allGamesEnded = clock && clock.end && !clock.period;
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded);
 
@@ -19,7 +20,7 @@ export default function gameScore(clock, teams, goals, playoffSeries, goalCounts
   }
 
   return div('.game.expand', [
-    renderScorePanel(teams, awayGoals, homeGoals, period),
+    renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
     renderLatestGoal(latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, allGamesEnded) : null
   ]);
@@ -63,15 +64,17 @@ function getShootoutGoal(goals, teams) {
   return _.last(winnersGoals);
 }
 
-function renderScorePanel(teams, awayGoals, homeGoals, period) {
+function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo) {
+  const scoreVisibilityClass = showPreGameInfo ? '.team-panel__team-score--hidden' : '.fade-in';
+  const delimiterVisibilityClass = showPreGameInfo ? '' : '.fade-in';
   return div('.game__score-panel', [
     div('.team-panel.team-panel--away', [
       span('.team-panel__team-name', teams.away),
-      span('.team-panel__team-score', [awayGoals.length])
+      span('.team-panel__team-score' + scoreVisibilityClass, [awayGoals.length])
     ]),
-    div('.team-panel__delimiter', renderDelimiter(period)),
+    div('.team-panel__delimiter' + delimiterVisibilityClass, showPreGameInfo ? 'at' : renderDelimiter(period)),
     div('.team-panel.team-panel--home', [
-      span('.team-panel__team-score', [homeGoals.length]),
+      span('.team-panel__team-score' + scoreVisibilityClass, [homeGoals.length]),
       span('.team-panel__team-name', teams.home)
     ])
   ]);

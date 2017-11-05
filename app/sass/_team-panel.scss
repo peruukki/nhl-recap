@@ -10,6 +10,10 @@
 
   &__team-score {
     font-weight: bold;
+
+    &--hidden {
+      visibility: hidden;
+    }
   }
   &--away &__team-score {
     margin-left: 0.5em;
