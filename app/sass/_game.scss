@@ -24,8 +24,11 @@
   }
 
   &__latest-goal-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 4rem;
-    padding-top: 0.5rem;
     font-size: 1.2rem;
     line-height: 1.6rem;
     box-sizing: border-box;
