@@ -175,6 +175,18 @@ describe('gameScore', () => {
       assertPreGameStats(clock, teams, goals, records, { away: '7–5–0', home: '5–9–3' });
     });
 
+    it('should show game in FINAL state as finished', () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameDescription(clock, teams, goals, 'FINAL', 'Finished');
+    });
+
+    it('should show game in non-FINAL state as in progress', () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameDescription(clock, teams, goals, 'LIVE', 'In progress');
+    });
+
   });
 
   describe('playoff series wins panel', () => {
@@ -242,6 +254,12 @@ function assertPreGameStats(clock, teams, goals, records, renderedRecords) {
   assert.deepEqual(preGameStats, expected);
 }
 
+function assertPreGameDescription(clock, teams, goals, state, description) {
+  const preGameDescription = getPreGameDescription(gameScore(clock, { state, teams, goals }));
+  const expected = expectedPreGameDescription(description);
+  assert.deepEqual(preGameDescription, expected);
+}
+
 function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins, animationClass) {
   return assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
@@ -291,6 +309,10 @@ function getPreGameStats(vtree) {
   return vtree.children[1].children[0];
 }
 
+function getPreGameDescription(vtree) {
+  return vtree.children[1].children[1];
+}
+
 function getPlayoffSeriesWinsPanel(vtree) {
   return vtree.children[2];
 }
@@ -325,6 +347,10 @@ function expectedPreGameStats(records) {
     span('.pre-game-stats__label', 'Record'),
     span('.pre-game-stats__value.pre-game-stats__value--home', records.home),
   ]);
+}
+
+function expectedPreGameDescription(description) {
+  return div('.pre-game-description', description);
 }
 
 function expectedPlayoffSeriesWinsPanel(seriesWinsVtree, animationClass) {
