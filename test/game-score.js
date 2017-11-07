@@ -172,7 +172,7 @@ describe('gameScore', () => {
     it('should show teams\' league records', () => {
       const clock = null;
       const {teams, goals, records} = scoresAllRegularTime.games[1];
-      assertPreGameInfo(clock, teams, goals, records, { away: '7–5–0', home: '5–9–3' });
+      assertPreGameStats(clock, teams, goals, records, { away: '7–5–0', home: '5–9–3' });
     });
 
   });
@@ -219,27 +219,27 @@ describe('gameScore', () => {
 });
 
 function assertGoalCounts(clock, teams, goals, awayGoals, homeGoals, visibilityClass = '.fade-in') {
-  const teamPanels = getTeamPanels(gameScore(clock, teams, goals));
+  const teamPanels = getTeamPanels(gameScore(clock, { teams, goals }));
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
 }
 
 function assertDelimiter(clock, teams, goals, delimiter, visibilityClass = '.fade-in') {
-  const delimiterNode = getDelimiter(gameScore(clock, teams, goals));
+  const delimiterNode = getDelimiter(gameScore(clock, { teams, goals }));
   const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
 }
 
 function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
-  const latestGoalPanel = getLatestGoalPanel(gameScore(clock, teams, goals));
+  const latestGoalPanel = getLatestGoalPanel(gameScore(clock, { teams, goals }));
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
 }
 
-function assertPreGameInfo(clock, teams, goals, records, renderedRecords) {
-  const preGameInfoPanel = getPreGameInfoPanel(gameScore(clock, teams, goals, records));
-  const expected = expectedPreGameInfoPanel(renderedRecords);
-  assert.deepEqual(preGameInfoPanel, expected);
+function assertPreGameStats(clock, teams, goals, records, renderedRecords) {
+  const preGameStats = getPreGameStats(gameScore(clock, { teams, goals, records }));
+  const expected = expectedPreGameStats(renderedRecords);
+  assert.deepEqual(preGameStats, expected);
 }
 
 function assertPlayoffSeriesLead(clock, teams, goals, playoffSeries, leadingTeam, leadingWins, trailingWins, animationClass) {
@@ -264,7 +264,7 @@ function assertPlayoffSeriesTied(clock, teams, goals, playoffSeries, wins, anima
 }
 
 function assertPlayoffSeriesWins(clock, teams, goals, playoffSeries, animationClass, expectedSeriesWinsVtree) {
-  const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, teams, goals, null, playoffSeries));
+  const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(gameScore(clock, { teams, goals, playoffSeries }));
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
 }
@@ -287,8 +287,8 @@ function getLatestGoalPanel(vtree) {
   return vtree.children[1];
 }
 
-function getPreGameInfoPanel(vtree) {
-  return vtree.children[1];
+function getPreGameStats(vtree) {
+  return vtree.children[1].children[0];
 }
 
 function getPlayoffSeriesWinsPanel(vtree) {
@@ -319,11 +319,11 @@ function expectedLatestGoalPanel(latestGoal) {
   ]);
 }
 
-function expectedPreGameInfoPanel(records) {
-  return div('.game__pre-game-info-panel', [
-    span('.pre-game-info__value.pre-game-info__value--away', records.away),
-    span('.pre-game-info__label', 'Record'),
-    span('.pre-game-info__value.pre-game-info__value--home', records.home),
+function expectedPreGameStats(records) {
+  return div('.pre-game-stats', [
+    span('.pre-game-stats__value.pre-game-stats__value--away', records.away),
+    span('.pre-game-stats__label', 'Record'),
+    span('.pre-game-stats__value.pre-game-stats__value--home', records.home),
   ]);
 }
 

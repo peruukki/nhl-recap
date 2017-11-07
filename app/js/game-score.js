@@ -88,9 +88,11 @@ function renderDelimiter(period) {
 
 function renderPreGameInfo(teams, records) {
   return div('.game__pre-game-info-panel', [
-    span('.pre-game-info__value.pre-game-info__value--away', records ? renderRecord(records[teams.away]) : ''),
-    span('.pre-game-info__label', 'Record'),
-    span('.pre-game-info__value.pre-game-info__value--home', records ? renderRecord(records[teams.home]) : ''),
+    div('.pre-game-stats', [
+      span('.pre-game-stats__value.pre-game-stats__value--away', records ? renderRecord(records[teams.away]) : ''),
+      span('.pre-game-stats__label', 'Record'),
+      span('.pre-game-stats__value.pre-game-stats__value--home', records ? renderRecord(records[teams.home]) : '')
+    ])
   ]);
 }
 

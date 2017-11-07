@@ -1,4 +1,8 @@
-.pre-game-info {
+.pre-game-stats {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
   &__value {
     @include stretch;
     color: $light-gray;
