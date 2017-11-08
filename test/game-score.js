@@ -208,10 +208,10 @@ describe('gameScore', () => {
       assertPreGameStats(clock, { teams, goals, records }, { away: '7–5–0', home: '5–9–3' });
     });
 
-    it('should show game in FINAL state as finished', () => {
+    it('should show no description for game in FINAL state', () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { state: finishedState, teams, goals }, 'Finished');
+      assertPreGameDescription(clock, { state: finishedState, teams, goals }, '');
     });
 
     it('should show game in non-FINAL state as in progress', () => {

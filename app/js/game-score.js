@@ -93,7 +93,7 @@ function renderPreGameInfo(state, teams, records) {
       span('.pre-game-stats__label', 'Record'),
       span('.pre-game-stats__value.pre-game-stats__value--home', records ? renderRecord(records[teams.home]) : '')
     ]),
-    div('.pre-game-description', hasGameFinished(state) ? 'Finished' : 'In progress')
+    div('.pre-game-description', hasGameFinished(state) ? '' : 'In progress')
   ]);
 }
 
