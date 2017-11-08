@@ -10,7 +10,7 @@ export default function gameScore(clock, {state, teams, goals, records, playoffS
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
-  const showPreGameInfo = !clock;
+  const showPreGameInfo = !clock || !hasGameFinished(state);
   const allGamesEnded = clock && clock.end && !clock.period;
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded);
 
