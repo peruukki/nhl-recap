@@ -140,7 +140,7 @@ function getSeriesWinsDescription(seriesWins) {
   }
 }
 
-function hasGameFinished(state) {
+export function hasGameFinished(state) {
   return state === 'FINAL';
 }
 
