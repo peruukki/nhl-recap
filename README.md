@@ -22,6 +22,13 @@ a message like this in the console:
 1087061 bytes written to public/app.js (5.39 seconds)
 ```
 
+## Running the app with local API server
+
+To run the app using a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:
+```
+npm run start:local
+```
+
 ## Linting JavaScript
 
 One-time lint run:

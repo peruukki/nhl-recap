@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "config": {
-    "browserify_args": "app/js/app.js -t [ babelify ]",
+    "browserify_args": "app/js/app.js -t babelify -t [ envify purge ]",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
@@ -46,6 +46,7 @@
     "server": "http-server public -p 8000 -o",
     "spec": "mocha --compilers js:babel-register",
     "start": "parallelshell 'npm run watch' 'npm run server'",
+    "start:local": "NODE_ENV=local npm start",
     "svg": "node generate-svg-data.js",
     "test": "npm run lint && npm run spec",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
@@ -71,6 +72,7 @@
     "babelify": "^7.2.0",
     "browserify": "^14.1.0",
     "chai": "^3.4.1",
+    "envify": "^4.1.0",
     "eslint": "^3.18.0",
     "eslint-watch": "^3.0.1",
     "hashmark": "^3.1.0",

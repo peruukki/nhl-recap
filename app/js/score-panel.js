@@ -8,12 +8,19 @@ import gameScore, {hasGameFinished} from './game-score';
 
 export default function main(animations) {
   return ({DOM, HTTP}) => {
-    const url = 'https://nhl-score-api.herokuapp.com/api/scores/latest';
+    const url = getApiUrl();
     return {
       DOM: view(model(intent(DOM, HTTP), animations)),
       HTTP: xs.of({ url })
     };
   };
+}
+
+function getApiUrl() {
+  const host = process.env.NODE_ENV === "local"
+    ? 'http://localhost:8080'
+    : 'https://nhl-score-api.herokuapp.com';
+  return `${host}/api/scores/latest`;
 }
 
 function intent(DOM, HTTP) {
