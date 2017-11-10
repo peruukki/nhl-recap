@@ -17,9 +17,7 @@ export default function main(animations) {
 }
 
 function getApiUrl() {
-  const host = process.env.NODE_ENV === "local"
-    ? 'http://localhost:8080'
-    : 'https://nhl-score-api.herokuapp.com';
+  const host = process.env.SCORE_API_HOST || 'https://nhl-score-api.herokuapp.com';
   return `${host}/api/scores/latest`;
 }
 

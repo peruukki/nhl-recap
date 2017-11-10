@@ -46,7 +46,7 @@
     "server": "http-server public -p 8000 -o",
     "spec": "mocha --compilers js:babel-register",
     "start": "parallelshell 'npm run watch' 'npm run server'",
-    "start:local": "NODE_ENV=local npm start",
+    "start:local": "SCORE_API_HOST=http://localhost:8080 npm start",
     "svg": "node generate-svg-data.js",
     "test": "npm run lint && npm run spec",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
