@@ -11,6 +11,7 @@ import scoresRegularTimeAndOvertimePlayoffs from './data/latest-playoffs-ot.json
 
 const finishedState = 'FINAL';
 const inProgressState = 'LIVE';
+const notStartedState = 'PREVIEW';
 
 describe('gameScore', () => {
 
@@ -208,16 +209,22 @@ describe('gameScore', () => {
       assertPreGameStats(clock, { teams, goals, records }, { away: '7–5–0', home: '5–9–3' });
     });
 
-    it('should show no description for game in FINAL state', () => {
+    it(`should show no description for game in ${finishedState} state`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
       assertPreGameDescription(clock, { state: finishedState, teams, goals }, '');
     });
 
-    it('should show game in non-FINAL state as in progress', () => {
+    it(`should show game in ${inProgressState} state as in progress`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
       assertPreGameDescription(clock, { state: inProgressState, teams, goals }, 'In progress');
+    });
+
+    it(`should show game in ${notStartedState} state as not started`, () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameDescription(clock, { state: notStartedState, teams, goals }, 'Not started');
     });
 
   });
