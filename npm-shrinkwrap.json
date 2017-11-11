@@ -1,6 +1,6 @@
 {
   "name": "nhl-recap",
-  "version": "1.19.0",
+  "version": "1.20.0",
   "dependencies": {
     "@cycle/dom": {
       "version": "17.1.0",
