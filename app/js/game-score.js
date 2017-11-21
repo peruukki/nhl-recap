@@ -87,14 +87,41 @@ function renderDelimiter(period) {
 }
 
 function renderPreGameInfo(state, teams, records) {
+  const valueClassName = '.pre-game-stats__value';
+  const highlightClassNames = getHighlightClassNames(valueClassName, teams, records);
   return div('.game__pre-game-info-panel', [
     div('.pre-game-stats', [
-      span('.pre-game-stats__value.pre-game-stats__value--away', records ? renderRecord(records[teams.away]) : ''),
+      span(`${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
+        records ? renderRecord(records[teams.away]) : ''),
       span('.pre-game-stats__label', 'Record'),
-      span('.pre-game-stats__value.pre-game-stats__value--home', records ? renderRecord(records[teams.home]) : '')
+      span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
+        records ? renderRecord(records[teams.home]) : '')
     ]),
     div('.pre-game-description', renderGameState(state))
   ]);
+}
+
+function getHighlightClassNames(baseClassName, teams, records) {
+  if (!records) {
+    return { away: '', home: '' };
+  }
+
+  const awayWinPercentage = getWinPercentage(records[teams.away]);
+  const homeWinPercentage = getWinPercentage(records[teams.home]);
+
+  if (awayWinPercentage > homeWinPercentage) {
+    return { away: `${baseClassName}--highlight`, home: '' };
+  } else if (homeWinPercentage > awayWinPercentage) {
+    return { away: '', home: `${baseClassName}--highlight` };
+  } else {
+    return { away: '', home: '' };
+  }
+}
+
+function getWinPercentage({ wins, losses, ot}) {
+  const points = 2 * wins + ot;
+  const maxPoints = 2 * (wins + losses + ot);
+  return points / maxPoints;
 }
 
 function renderRecord(record) {

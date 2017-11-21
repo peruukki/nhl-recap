@@ -203,10 +203,18 @@ describe('gameScore', () => {
       assertPreGameInfoIsNotShown(clock, { state: finishedState, teams, goals });
     });
 
-    it('should show teams\' league records', () => {
+    it('should show teams\' league records, highlighting the better record', () => {
       const clock = null;
-      const {teams, goals, records} = scoresAllRegularTime.games[1];
-      assertPreGameStats(clock, { teams, goals, records }, { away: '7–5–0', home: '5–9–3' });
+
+      assertPreGameStats(clock, scoresAllRegularTime.games[0], {
+        away: { record: '8–4–1' },
+        home: { record: '7–3–3' }
+      });
+
+      assertPreGameStats(clock, scoresAllRegularTime.games[1], {
+        away: { record: '8–4–1' },
+        home: { record: '7–2–4', className: '--highlight' }
+      });
     });
 
     it(`should show no description for game in ${finishedState} state`, () => {
@@ -396,11 +404,12 @@ function expectedLatestGoalPanel(latestGoal) {
   ]);
 }
 
-function expectedPreGameStats(records) {
+function expectedPreGameStats({away, home}) {
+  const valueClass = '.pre-game-stats__value';
   return div('.pre-game-stats', [
-    span('.pre-game-stats__value.pre-game-stats__value--away', records.away),
+    span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.record),
     span('.pre-game-stats__label', 'Record'),
-    span('.pre-game-stats__value.pre-game-stats__value--home', records.home),
+    span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.record),
   ]);
 }
 
