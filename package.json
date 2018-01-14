@@ -13,6 +13,9 @@
     "url": "git+https://github.com/peruukki/nhl-recap.git"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=4.1 <7.0"
+  },
   "config": {
     "browserify_args": "app/js/app.js -t babelify -t [ envify purge ]",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
