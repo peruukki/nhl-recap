@@ -205,15 +205,16 @@ describe('gameScore', () => {
 
     it('should show teams\' league records, highlighting the better record', () => {
       const clock = null;
+      const delimiter = span('.pre-game-stats__delimiter', '-');
 
       assertPreGameStats(clock, scoresAllRegularTime.games[0], {
-        away: { record: '8–4–1' },
-        home: { record: '7–3–3' }
+        away: { record: [ '8', delimiter, '4', delimiter, '1' ] },
+        home: { record: [ '7', delimiter, '3', delimiter, '3' ] }
       });
 
       assertPreGameStats(clock, scoresAllRegularTime.games[1], {
-        away: { record: '8–4–1' },
-        home: { record: '7–2–4', className: '--highlight' }
+        away: { record: [ '8', delimiter, '4', delimiter, '1' ] },
+        home: { record: [ '7', delimiter, '2', delimiter, '4' ], className: '--highlight' }
       });
     });
 

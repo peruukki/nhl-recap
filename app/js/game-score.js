@@ -125,7 +125,13 @@ function getWinPercentage({ wins, losses, ot}) {
 }
 
 function renderRecord(record) {
-  return `${record.wins}–${record.losses}–${record.ot}`;
+  return [
+    `${record.wins}`,
+    span('.pre-game-stats__delimiter', '-'),
+    `${record.losses}`,
+    span('.pre-game-stats__delimiter', '-'),
+    `${record.ot}`
+  ];
 }
 
 function renderLatestGoal(latestGoal) {
