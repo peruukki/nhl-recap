@@ -93,7 +93,7 @@ function renderPreGameInfo(state, teams, records) {
     div('.pre-game-stats', [
       span(`${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
         records ? renderRecord(records[teams.away]) : ''),
-      span('.pre-game-stats__label', 'Record'),
+      span('.pre-game-stats__label', records ? 'Record' : ''),
       span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
         records ? renderRecord(records[teams.home]) : '')
     ]),
