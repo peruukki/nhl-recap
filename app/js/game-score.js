@@ -126,11 +126,11 @@ function getWinPercentage({ wins, losses, ot}) {
 
 function renderRecord(record) {
   return [
-    `${record.wins}`,
+    `${record.wins || 0}`,
     span('.pre-game-stats__delimiter', '-'),
-    `${record.losses}`,
+    `${record.losses || 0}`,
     span('.pre-game-stats__delimiter', '-'),
-    `${record.ot}`
+    `${record.ot || 0}`
   ];
 }
 
