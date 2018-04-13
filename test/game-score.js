@@ -218,6 +218,21 @@ describe('gameScore', () => {
       });
     });
 
+    it('should show teams\' playoff records, highlighting the better record', () => {
+      const clock = null;
+      const delimiter = span('.pre-game-stats__delimiter', '-');
+
+      assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[0], {
+        away: { record: [ '7', delimiter, '3' ] },
+        home: { record: [ '7', delimiter, '3' ] }
+      });
+
+      assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[1], {
+        away: { record: [ '7', delimiter, '5' ], className: '--highlight' },
+        home: { record: [ '5', delimiter, '9' ] }
+      });
+    });
+
     it(`should show no description for game in ${finishedState} state`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];

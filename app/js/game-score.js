@@ -118,7 +118,7 @@ function getHighlightClassNames(baseClassName, teams, records) {
   }
 }
 
-function getWinPercentage({ wins, losses, ot}) {
+function getWinPercentage({ wins, losses, ot = 0 }) {
   const points = 2 * wins + ot;
   const maxPoints = 2 * (wins + losses + ot);
   return points / maxPoints;
@@ -129,9 +129,17 @@ function renderRecord(record) {
     `${Math.max(record.wins || 0, 0)}`,
     span('.pre-game-stats__delimiter', '-'),
     `${Math.max(record.losses || 0, 0)}`,
-    span('.pre-game-stats__delimiter', '-'),
-    `${Math.max(record.ot || 0, 0)}`
+    ...renderOtLosses(record)
   ];
+}
+
+function renderOtLosses(record) {
+  return record.ot === undefined
+    ? []
+    : [
+      span('.pre-game-stats__delimiter', '-'),
+      `${Math.max(record.ot, 0)}`
+    ];
 }
 
 function renderLatestGoal(latestGoal) {

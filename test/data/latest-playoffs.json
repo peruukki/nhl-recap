@@ -25,14 +25,12 @@
       ],
       "records": {
         "STL": {
-          "wins": 8,
-          "losses": 4,
-          "ot": 1
+          "wins": 7,
+          "losses": 3
         },
         "BOS": {
-          "wins": 6,
-          "losses": 7,
-          "ot": 2
+          "wins": 7,
+          "losses": 3
         }
       },
       "scores": {
@@ -96,13 +94,11 @@
       "records": {
         "ANA": {
           "wins": 7,
-          "losses": 5,
-          "ot": 0
+          "losses": 5
         },
         "NYR": {
           "wins": 5,
-          "losses": 9,
-          "ot": 3
+          "losses": 9
         }
       },
       "scores": {
