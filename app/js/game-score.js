@@ -12,7 +12,8 @@ export default function gameScore(clock, {state, teams, goals, records, playoffS
   const period = latestGoal ? latestGoal.period : null;
   const showPreGameInfo = !clock || !hasGameFinished(state);
   const allGamesEnded = clock && clock.end && !clock.period;
-  const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded);
+  const updatePlayoffSeriesWins = hasGameFinished(state) && allGamesEnded;
+  const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
 
   if (goalCounts) {
     goalCounts.away$.shamefullySendNext(awayGoals.length);
@@ -22,13 +23,13 @@ export default function gameScore(clock, {state, teams, goals, records, playoffS
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
     showPreGameInfo ? renderPreGameInfo(state, teams, records) : renderLatestGoal(latestGoal),
-    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, allGamesEnded) : null
+    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
 
-function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, allGamesEnded) {
+function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins) {
   if (playoffSeries) {
-    return allGamesEnded ?
+    return updatePlayoffSeriesWins ?
       getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals) :
       playoffSeries.wins;
   } else {

@@ -282,6 +282,15 @@ describe('gameScore', () => {
       assertPlayoffSeriesLead(clock, game2.teams, game2.goals, game2.playoffSeries, finishedState, 'ANA', 2, 1);
     });
 
+    it('should not increase win counts for "not started" or "in progress" games after all finished games have ended', () => {
+      const clock = { end: true };
+      const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
+      assertPlayoffSeriesTied(clock, game1.teams, game1.goals, game1.playoffSeries, inProgressState, 1);
+
+      const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
+      assertPlayoffSeriesLead(clock, game2.teams, game2.goals, game2.playoffSeries, notStartedState, 'ANA', 2, 1);
+    });
+
     it('should increase the winning teams\' win counts after all games have ended', () => {
       const clock = { end: true };
       const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
