@@ -74,7 +74,7 @@ function model(actions, animations) {
   }));
 
   const gameClock = GameClock({
-    scores$: actions.successApiResponse$.map(({ games }) => games.filter(game => hasGameFinished(game.state))),
+    scores$: actions.successApiResponse$.map(({ games }) => games.filter(game => hasGameFinished(game.status.state))),
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 })
   });
