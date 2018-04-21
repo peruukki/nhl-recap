@@ -4,7 +4,8 @@ import _ from 'lodash';
 import {hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, {state, teams, goals, records, playoffSeries, goalCounts}) {
+export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}) {
+  const state = status.state;
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
