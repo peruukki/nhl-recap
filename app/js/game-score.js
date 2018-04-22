@@ -5,15 +5,14 @@ import {hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}) {
-  const state = status.state;
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
-  const showPreGameInfo = !clock || !hasGameFinished(state);
+  const showPreGameInfo = !clock || !hasGameFinished(status.state);
   const allGamesEnded = clock && clock.end && !clock.period;
-  const updatePlayoffSeriesWins = hasGameFinished(state) && allGamesEnded;
+  const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
 
   if (goalCounts) {
@@ -23,7 +22,7 @@ export default function gameScore(clock, {status, teams, goals, records, playoff
 
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
-    showPreGameInfo ? renderPreGameInfo(state, teams, records) : renderLatestGoal(latestGoal),
+    showPreGameInfo ? renderPreGameInfo(status, teams, records) : renderLatestGoal(latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
@@ -88,7 +87,7 @@ function renderDelimiter(period) {
     '–';
 }
 
-function renderPreGameInfo(state, teams, records) {
+function renderPreGameInfo(status, teams, records) {
   const valueClassName = '.pre-game-stats__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, records);
   return div('.game__pre-game-info-panel', [
@@ -99,7 +98,7 @@ function renderPreGameInfo(state, teams, records) {
       span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
         records ? renderRecord(records[teams.home]) : '')
     ]),
-    div('.pre-game-description', renderGameState(state))
+    div('.pre-game-description', renderGameStatus(status))
   ]);
 }
 
@@ -183,11 +182,24 @@ function getSeriesWinsDescription(seriesWins) {
   }
 }
 
-function renderGameState(state) {
-  switch (state) {
-    case 'LIVE': return 'In progress';
-    case 'PREVIEW': return 'Not started';
-    default: return '';
+function renderGameStatus(status) {
+  switch (status.state) {
+    case 'LIVE':
+      return renderCurrentProgress(status.progress);
+    case 'PREVIEW':
+      return 'Not started';
+    default:
+      return '';
+  }
+}
+
+function renderCurrentProgress(progress) {
+  if (!progress) {
+    return 'In progress';
+  } else if (progress.currentPeriodTimeRemaining === 'END') {
+    return `End of ${progress.currentPeriodOrdinal}`;
+  } else {
+    return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining}`;
   }
 }
 

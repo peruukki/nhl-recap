@@ -235,20 +235,52 @@ describe('gameScore', () => {
 
     it(`should show no description for game in ${finishedState} state`, () => {
       const clock = null;
-      const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { state: finishedState, teams, goals }, '');
+      const {teams, goals, status} = scoresAllRegularTime.games[1];
+      assertPreGameDescription(clock, { status, teams, goals }, '');
     });
 
-    it(`should show game in ${inProgressState} state as in progress`, () => {
+    it(`should game without progress information in ${inProgressState} state as in progress`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { state: inProgressState, teams, goals }, 'In progress');
+      const status = { state: inProgressState };
+      assertPreGameDescription(clock, { status, teams, goals }, 'In progress');
+    });
+
+    it(`should show time remaining progress for game in ${inProgressState} state`, () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      const status = {
+        state: inProgressState,
+        progress: {
+          currentPeriod: 1,
+          currentPeriodOrdinal: '1st',
+          currentPeriodTimeRemaining: '08:42'
+        }
+      };
+      assertPreGameDescription(clock, { status, teams, goals },
+        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining}`);
+    });
+
+    it(`should show end of period progress for game in ${inProgressState} state`, () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      const status = {
+        state: inProgressState,
+        progress: {
+          currentPeriod: 1,
+          currentPeriodOrdinal: '1st',
+          currentPeriodTimeRemaining: 'END'
+        }
+      };
+      assertPreGameDescription(clock, { status, teams, goals },
+        `End of ${status.progress.currentPeriodOrdinal}`);
     });
 
     it(`should show game in ${notStartedState} state as not started`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { state: notStartedState, teams, goals }, 'Not started');
+      const status = { state: notStartedState };
+      assertPreGameDescription(clock, { status, teams, goals }, 'Not started');
     });
 
   });
@@ -338,8 +370,8 @@ function assertPreGameStats(clock, {state = finishedState, teams, goals, records
   assert.deepEqual(preGameStats, expected);
 }
 
-function assertPreGameDescription(clock, {state, teams, goals }, description) {
-  const preGameDescription = getPreGameDescription(gameScore(clock, { status: { state }, teams, goals }));
+function assertPreGameDescription(clock, {status, teams, goals }, description) {
+  const preGameDescription = getPreGameDescription(gameScore(clock, { status, teams, goals }));
   const expected = expectedPreGameDescription(description);
   assert.deepEqual(preGameDescription, expected);
 }
