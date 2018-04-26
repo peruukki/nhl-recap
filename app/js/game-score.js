@@ -1,7 +1,7 @@
 import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 
-import {hasGoalBeenScored, truncatePlayerName} from './utils';
+import {hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}) {
@@ -10,9 +10,11 @@ export default function gameScore(clock, {status, teams, goals, records, playoff
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
-  const showPreGameInfo = !clock || !hasGameFinished(status.state);
+  const showPreGameInfo = !clock || !hasGameStarted(status.state);
   const allGamesEnded = clock && clock.end && !clock.period;
   const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
+  const showProgressInfo = isGameInProgress(status.state) &&
+    (hasClockPassedCurrentProgress(clock, status) || allGamesEnded);
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
 
   if (goalCounts) {
@@ -22,7 +24,9 @@ export default function gameScore(clock, {status, teams, goals, records, playoff
 
   return div('.game.expand', [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
-    showPreGameInfo ? renderPreGameInfo(status, teams, records) : renderLatestGoal(latestGoal),
+    (showPreGameInfo || showProgressInfo) ?
+      renderPreGameInfo(status, teams, showProgressInfo ? null : records) :
+      renderLatestGoal(latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
@@ -98,7 +102,7 @@ function renderPreGameInfo(status, teams, records) {
       span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
         records ? renderRecord(records[teams.home]) : '')
     ]),
-    div('.pre-game-description', renderGameStatus(status))
+    div('.pre-game-description.fade-in', renderGameStatus(status))
   ]);
 }
 
@@ -203,8 +207,16 @@ function renderCurrentProgress(progress) {
   }
 }
 
-export function hasGameFinished(state) {
+function hasGameFinished(state) {
   return state === 'FINAL';
+}
+
+function hasGameStarted(state) {
+  return state !== 'PREVIEW';
+}
+
+function isGameInProgress(state) {
+  return state === 'LIVE';
 }
 
 export function renderLatestGoalTime(latestGoal) {

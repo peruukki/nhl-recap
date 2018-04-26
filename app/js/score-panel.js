@@ -4,7 +4,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
-import gameScore, {hasGameFinished} from './game-score';
+import gameScore from './game-score';
 
 export default function main(animations) {
   return ({DOM, HTTP}) => {
@@ -74,7 +74,7 @@ function model(actions, animations) {
   }));
 
   const gameClock = GameClock({
-    scores$: actions.successApiResponse$.map(({ games }) => games.filter(game => hasGameFinished(game.status.state))),
+    scores$: actions.successApiResponse$.map(({ games }) => games),
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 })
   });

@@ -15,11 +15,51 @@ export function elapsedTimeToRemainingTime(time) {
 }
 
 export function hasGoalBeenScored(clock, goal) {
+  const {period, min: minute, sec: second} = goal;
+  return hasElapsedTimePassed(clock, { period, minute, second });
+}
+
+export function hasClockPassedCurrentProgress(clock, status) {
+  if (!clock) {
+    return false;
+  }
+
+  const progressTime = parseProgressTimeRemaining(status.progress);
+  if (!progressTime) {
+    return false;
+  }
+
+  const progressTimeElapsed = remainingTimeToElapsedTime(progressTime);
+  return hasElapsedTimePassed(clock, progressTimeElapsed);
+}
+
+function hasElapsedTimePassed(clock, elapsedTime) {
   const {minute, second} = remainingTimeToElapsedTime(clock);
-  return (getPeriodOrdinal(goal.period) < getPeriodOrdinal(clock.period)) ||
-    (getPeriodOrdinal(goal.period) === getPeriodOrdinal(clock.period) &&
-      (goal.min < minute ||
-        (goal.min === minute && goal.sec <= second)));
+  return (getPeriodOrdinal(elapsedTime.period) < getPeriodOrdinal(clock.period)) ||
+    (getPeriodOrdinal(elapsedTime.period) === getPeriodOrdinal(clock.period) &&
+      (elapsedTime.minute < minute ||
+        (elapsedTime.minute === minute && elapsedTime.second <= second)));
+}
+
+function parseProgressTimeRemaining(progress) {
+  if (!progress) {
+    return null;
+  }
+
+  if (progress.currentPeriodTimeRemaining === 'END') {
+    return { period: progress.currentPeriod, minute: 0, second: 0 };
+  }
+
+  const minutesAndSecondsMatch = /(\d+)?:(\d+)/.exec(progress.currentPeriodTimeRemaining);
+  if (minutesAndSecondsMatch) {
+    return {
+      period: progress.currentPeriod,
+      minute: Number(minutesAndSecondsMatch[1] || 0),
+      second: Number(minutesAndSecondsMatch[2])
+    };
+  }
+
+  return null;
 }
 
 function getPeriodOrdinal(period) {
