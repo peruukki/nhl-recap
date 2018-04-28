@@ -194,7 +194,7 @@ function renderGameStatus(status) {
 }
 
 function renderCurrentProgress(progress) {
-  if (!progress) {
+  if (!progress || !progress.currentPeriodOrdinal) {
     return 'In progress';
   } else if (progress.currentPeriodTimeRemaining === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
