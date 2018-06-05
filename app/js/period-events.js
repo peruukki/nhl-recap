@@ -10,7 +10,9 @@ export default function periodEvents(period, durationInMinutes, endTime, goalSco
 
   // Advance clock by second for all minutes but the last one of the 3rd period
   const allSecondEvents = generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond);
-  const secondEvents = (period === 3) ? _.dropRight(allSecondEvents, 60) : allSecondEvents;
+  const secondEvents = (period === 3) ?
+    _.dropRightWhile(allSecondEvents, event => event.minute === 0) :
+    allSecondEvents;
 
   // Advance clock by tenth of a second for the last minute of the 3rd period
   const tenthOfASecondEvents = (period === 3) && (lastMinute < 1) ?

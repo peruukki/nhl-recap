@@ -5,6 +5,8 @@ import gameEvents, {getGoalScoringTimes} from '../app/js/game-events';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
+import scoresAllLive from './data/latest-live.json';
+import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
 
 const periodStartMultiplier = 150;
 
@@ -41,6 +43,28 @@ describe('gameEvents', () => {
     assert.deepEqual(lastClockElement, { period: 'SO' });
   });
 
+  it('should include events until most progressed game if no games have finished', () => {
+    const events = gameEvents(scoresAllLive.games);
+
+    // Check that expected regulation periods were included
+    assertPeriodEndEvents(events, [1, 2]);
+
+    // Check the last event with time
+    const lastTimeEvent = getLastNonEndEvent(events);
+    assert.deepEqual(lastTimeEvent, { period: 3, minute: 0, second: 53, tenthOfASecond: 0 });
+  });
+
+  it('should include events until most progressed game even if some games have finished', () => {
+    const events = gameEvents(scoresLiveProgressedMoreThanFinished.games);
+
+    // Check that expected regulation periods were included
+    assertPeriodEndEvents(events, [1, 2, 3, 4]);
+
+    // Check the last event with time
+    const lastTimeEvent = getLastNonEndEvent(events);
+    assert.deepEqual(lastTimeEvent, { period: 5, minute: 11, second: 2 });
+  });
+
   it('should pause by multiplying each period end event', () => {
     const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
@@ -51,6 +75,11 @@ describe('gameEvents', () => {
   it('should have a final "end" event as the last event', () => {
     const events = gameEvents(scoresAllRegularTime.games);
     assert.deepEqual(_.last(events), { end: true });
+  });
+
+  it('should have a final "end" event with inProgress flag if no games have finished', () => {
+    const events = gameEvents(scoresAllLive.games);
+    assert.deepEqual(_.last(events), { end: true, inProgress: true });
   });
 
   it('should determine correct goal scoring times', () => {
@@ -73,6 +102,13 @@ function assertPeriodEndEvents(events, periods) {
   periods.forEach(period => {
     assert.equal(periodEndEventExists(period), true, `Period ${period} end event exists`);
   });
+
+  const otherPeriodEndEvents = _.chain(allPeriodEndEvents)
+    .reject(event => _.includes(periods, event.period))
+    .map('period')
+    .uniq()
+    .value();
+  assert.deepEqual(otherPeriodEndEvents, [], 'No other period end events exist');
 }
 
 function assertPeriodEndEventsCount(events, periods) {

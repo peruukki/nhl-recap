@@ -1,0 +1,123 @@
+{
+  "date": {
+    "raw": "2017-10-17",
+    "pretty": "Tue Oct 17"
+  },
+  "games": [
+    {
+      "status": {
+        "state": "LIVE",
+        "progress": {
+          "currentPeriod": 5,
+          "currentPeriodOrdinal": "5th",
+          "currentPeriodTimeRemaining": "11:02"
+        }
+      },
+      "goals": [
+        {
+          "team": "STL",
+          "min": 7,
+          "sec": 35,
+          "scorer": "Vladimir Tarasenko",
+          "goalCount": 22,
+          "period": "3"
+        },
+        {
+          "team": "BOS",
+          "min": 12,
+          "sec": 50,
+          "scorer": "Patrice Bergeron",
+          "goalCount": 7,
+          "period": "3"
+        }
+      ],
+      "records": {
+        "STL": {
+          "wins": 8,
+          "losses": 4,
+          "ot": 1
+        },
+        "BOS": {
+          "wins": 7,
+          "losses": 3,
+          "ot": 3
+        }
+      },
+      "scores": {
+        "STL": 1,
+        "BOS": 1
+      },
+      "teams": {
+        "away": "STL",
+        "home": "BOS"
+      }
+    },
+    {
+      "status": {
+        "state": "FINAL"
+      },
+      "goals": [
+        {
+          "team": "ANA",
+          "min": 11,
+          "sec": 16,
+          "scorer": "Corey Perry",
+          "goalCount": 11,
+          "period": "1"
+        },
+        {
+          "team": "NYR",
+          "min": 17,
+          "sec": 50,
+          "scorer": "Derick Brassard",
+          "goalCount": 12,
+          "period": "1"
+        },
+        {
+          "team": "NYR",
+          "min": 2,
+          "sec": 44,
+          "scorer": "Derick Brassard",
+          "goalCount": 13,
+          "period": "3"
+        },
+        {
+          "team": "ANA",
+          "min": 17,
+          "sec": 6,
+          "scorer": "Rickard Rakell",
+          "goalCount": 7,
+          "period": "3"
+        },
+        {
+          "team": "NYR",
+          "min": 19,
+          "sec": 37,
+          "scorer": "Mats Zuccarello",
+          "goalCount": 15,
+          "period": "3"
+        }
+      ],
+      "records": {
+        "ANA": {
+          "wins": 8,
+          "losses": 4,
+          "ot": 1
+        },
+        "NYR": {
+          "wins": 7,
+          "losses": 2,
+          "ot": 4
+        }
+      },
+      "scores": {
+        "ANA": 2,
+        "NYR": 3
+      },
+      "teams": {
+        "away": "ANA",
+        "home": "NYR"
+      }
+    }
+  ]
+}

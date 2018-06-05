@@ -47,7 +47,9 @@ function renderPeriod(clock) {
   if (clock.start) {
     return span('.fade-in', 'Starting...');
   } else if (clock.end) {
-    return clock.period ? span('.fade-in', renderPeriodEnd(clock.period)) : span('.fade-in-fast', 'Final');
+    return clock.period ?
+      span('.fade-in', renderPeriodEnd(clock.period)) :
+      span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
   } else {
     return renderPeriodNumber(clock.period);
   }
