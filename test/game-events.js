@@ -97,18 +97,12 @@ describe('gameEvents', () => {
 });
 
 function assertPeriodEndEvents(events, periods) {
-  const allPeriodEndEvents = events.filter(event => event.period && event.end);
-  const periodEndEventExists = period => _.some(allPeriodEndEvents, event => event.period === period);
-  periods.forEach(period => {
-    assert.equal(periodEndEventExists(period), true, `Period ${period} end event exists`);
-  });
-
-  const otherPeriodEndEvents = _.chain(allPeriodEndEvents)
-    .reject(event => _.includes(periods, event.period))
+  const periodsWithEndEvent = _.chain(events)
+    .filter(event => event.period && event.end)
     .map('period')
     .uniq()
     .value();
-  assert.deepEqual(otherPeriodEndEvents, [], 'No other period end events exist');
+  assert.deepEqual(periodsWithEndEvent, periods, `End events exist only for period(s) ${periods}`);
 }
 
 function assertPeriodEndEventsCount(events, periods) {
