@@ -10,7 +10,11 @@
         "progress": {
           "currentPeriod": 3,
           "currentPeriodOrdinal": "3rd",
-          "currentPeriodTimeRemaining": "00:53"
+          "currentPeriodTimeRemaining": {
+            "pretty": "00:53",
+            "min": 0,
+            "sec": 53
+          }
         }
       },
       "goals": [
@@ -58,7 +62,11 @@
         "progress": {
           "currentPeriod": 1,
           "currentPeriodOrdinal": "1st",
-          "currentPeriodTimeRemaining": "03:19"
+          "currentPeriodTimeRemaining": {
+            "pretty": "03:19",
+            "min": 3,
+            "sec": 19
+          }
         }
       },
       "goals": [

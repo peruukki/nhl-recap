@@ -46,20 +46,8 @@ function parseProgressTimeRemaining(progress) {
     return null;
   }
 
-  if (progress.currentPeriodTimeRemaining === 'END') {
-    return { period: progress.currentPeriod, minute: 0, second: 0 };
-  }
-
-  const minutesAndSecondsMatch = /(\d+)?:(\d+)/.exec(progress.currentPeriodTimeRemaining);
-  if (minutesAndSecondsMatch) {
-    return {
-      period: progress.currentPeriod,
-      minute: Number(minutesAndSecondsMatch[1] || 0),
-      second: Number(minutesAndSecondsMatch[2])
-    };
-  }
-
-  return null;
+  const { min, sec } = progress.currentPeriodTimeRemaining;
+  return { period: progress.currentPeriod, minute: min, second: sec };
 }
 
 function getPeriodOrdinal(period) {

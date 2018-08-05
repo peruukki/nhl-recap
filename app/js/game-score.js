@@ -200,10 +200,10 @@ function renderGameStatus(status) {
 function renderCurrentProgress(progress) {
   if (!progress || !progress.currentPeriodOrdinal) {
     return 'In progress';
-  } else if (progress.currentPeriodTimeRemaining === 'END') {
+  } else if (progress.currentPeriodTimeRemaining.pretty === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
   } else {
-    return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining}`;
+    return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
   }
 }
 

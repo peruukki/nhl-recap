@@ -213,7 +213,7 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: '08:42'
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
         }
       };
       const {teams, goals} = scoresAllRegularTime.games[1];
@@ -227,7 +227,7 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: '08:42'
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
         }
       };
       const {teams, goals} = scoresAllRegularTime.games[1];
@@ -292,11 +292,11 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: '08:42'
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
         }
       };
       assertPreGameDescription(clock, { status, teams, goals },
-        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining}`);
+        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`);
     });
 
     it(`should show end of period progress for game in ${inProgressState} state`, () => {
@@ -307,7 +307,7 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: 'END'
+          currentPeriodTimeRemaining: { pretty: 'END', min: 0, sec: 0 }
         }
       };
       assertPreGameDescription(clock, { status, teams, goals },

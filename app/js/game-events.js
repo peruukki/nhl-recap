@@ -121,11 +121,10 @@ function getGameEndTime(game) {
 }
 
 function getGameEndTimeFromProgress(progress) {
-  const remainingTimeMatch = /(.+):(.+)/.exec(progress.currentPeriodTimeRemaining);
   return {
     period: progress.currentPeriod,
-    minute: Number(remainingTimeMatch[1]),
-    second: Number(remainingTimeMatch[2]),
+    minute: progress.currentPeriodTimeRemaining.min,
+    second: progress.currentPeriodTimeRemaining.sec,
     inProgress: true
   };
 }

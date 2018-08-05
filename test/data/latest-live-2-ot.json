@@ -10,7 +10,11 @@
         "progress": {
           "currentPeriod": 5,
           "currentPeriodOrdinal": "5th",
-          "currentPeriodTimeRemaining": "11:02"
+          "currentPeriodTimeRemaining": {
+            "pretty": "11:02",
+            "min": 11,
+            "sec": 2
+          }
         }
       },
       "goals": [
