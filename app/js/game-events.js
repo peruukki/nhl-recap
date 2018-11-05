@@ -122,7 +122,9 @@ function getGameEndTime(game) {
 
 function getGameEndTimeFromProgress(progress) {
   return {
-    period: progress.currentPeriod,
+    period: _.includes(['OT', 'SO'], progress.currentPeriodOrdinal)
+      ? progress.currentPeriodOrdinal
+      : progress.currentPeriod,
     minute: progress.currentPeriodTimeRemaining.min,
     second: progress.currentPeriodTimeRemaining.sec,
     inProgress: true
