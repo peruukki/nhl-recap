@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import periodEvents from './period-events';
-import {elapsedTimeToRemainingTime} from './utils';
+import {elapsedTimeToRemainingTime, getPeriodOrdinal} from './utils';
 
 export default function gameEvents(scores) {
   const gamesStartDelayMultiplier = 50;
@@ -93,14 +93,7 @@ function getClockEndTime(scores) {
 }
 
 function getPeriodIteratee(event) {
-  switch (event.period) {
-    case 'SO':
-      return 5;
-    case 'OT':
-      return 4;
-    default:
-      return Number(event.period);
-  }
+  return getPeriodOrdinal(event.period);
 }
 
 function getMinuteIteratee(event) {

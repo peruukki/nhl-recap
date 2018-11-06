@@ -50,8 +50,15 @@ function parseProgressTimeRemaining(progress) {
   return { period: progress.currentPeriod, minute: min, second: sec };
 }
 
-function getPeriodOrdinal(period) {
-  return (period === 'OT') ? 4 : Number(period);
+export function getPeriodOrdinal(period) {
+  switch (period) {
+    case 'SO':
+      return 5;
+    case 'OT':
+      return 4;
+    default:
+      return Number(period);
+  }
 }
 
 export function truncatePlayerName(name) {
