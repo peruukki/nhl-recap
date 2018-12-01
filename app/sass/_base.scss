@@ -48,19 +48,19 @@ body {
 .expand {
   @for $i from 1 through 15 {
     &:nth-child(#{$i}) {
-      $delay: $i * 100ms;
-      animation: $delay hidden, $expand-duration ease-in expand $delay, $fade-duration ease-in fade-in $delay;
+      $delay: $i * 150ms;
+      animation: $delay hidden, $expand-duration cubic-bezier(0.53, 0.01, 0.6, 1.23) expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
     }
     &--#{$i} {
-      $delay: $i * 100ms + 500ms;
-      animation: $delay hidden, $expand-duration ease-in expand $delay, $fade-duration ease-in fade-in $delay;
+      $delay: $i * 150ms + 500ms;
+      animation: $delay hidden, $expand-duration cubic-bezier(0.53, 0.01, 0.6, 1.23) expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
     }
   }
 }
 
 @keyframes expand {
-  from { transform: scale(0, 0); }
-  to { transform: scale(1, 1); }
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }
 
 @keyframes hidden {
