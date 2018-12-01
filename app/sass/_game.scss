@@ -2,6 +2,7 @@
   width: $game-card-width;
   margin: $game-card-margin;
   float: left;
+  border-radius: 4px;
   background: $darker-blue;
   font-size: 1.4rem;
   box-sizing: border-box;
@@ -9,6 +10,7 @@
   &__score-panel {
     display: flex;
     padding: 0.3rem 0;
+    border-radius: 4px 4px 0 0;
     background: $lighter-blue;
   }
 
