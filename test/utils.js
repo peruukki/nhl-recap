@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 
-import {truncatePlayerName} from '../app/js/utils';
+import {getGameAnimationIndexes, truncatePlayerName} from '../app/js/utils';
 
 describe('utils', () => {
 
@@ -30,5 +30,23 @@ describe('utils', () => {
       const name = 'Pierre-Alexandre Jean Parenteau';
       assert.equal(truncatePlayerName(name), 'P.A.J. Parenteau');
     });
+
+  });
+
+  describe('getAnimationIndexes', () => {
+
+    it('should return empty indexes for zero games', () => {
+      assert.deepEqual(getGameAnimationIndexes(0), []);
+    });
+
+    it('should return correct indexes for an even number of games', () => {
+      assert.deepEqual(getGameAnimationIndexes(6), [0, 2, 1, 1, 2, 0]);
+    });
+
+    it('should return correct indexes for an odd number of games', () => {
+      // Both columns' animations finish at the same time at index 3
+      assert.deepEqual(getGameAnimationIndexes(7), [0, 3, 1, 2, 2, 1, 3]);
+    });
+
   });
 });

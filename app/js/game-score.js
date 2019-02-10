@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}) {
+export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}, gameAnimationIndex) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
@@ -22,7 +22,7 @@ export default function gameScore(clock, {status, teams, goals, records, playoff
     goalCounts.home$.shamefullySendNext(homeGoals.length);
   }
 
-  return div('.game.expand', [
+  return div(`.game.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
     (showPreGameInfo || showProgressInfo) ?
       renderPreGameInfo(status, teams, showProgressInfo ? null : records) :

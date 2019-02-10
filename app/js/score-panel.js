@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import GameClock from './game-clock';
 import gameScore from './game-score';
+import {getGameAnimationIndexes} from './utils';
 
 export default function main(animations) {
   return ({DOM, HTTP}) => {
@@ -127,8 +128,9 @@ function renderHeader(state) {
 }
 
 function renderScores(state) {
+  const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
   return state.games.length > 0 ?
-    div('.score-list', state.games.map(game => gameScore(state.clock, game))) :
+    div('.score-list', state.games.map((game, index) => gameScore(state.clock, game, gameAnimationIndexes[index]))) :
     div('.status.fade-in', [state.status || 'No scores available.']);
 }
 

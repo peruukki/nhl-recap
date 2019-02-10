@@ -37,7 +37,7 @@ describe('scorePanel', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
-      assert.deepEqual(gameScoreNodes.map(node => node.sel), ['div.game.expand', 'div.game.expand']);
+      assert.deepEqual(gameScoreNodes.map(node => node.sel), ['div.game.expand--0', 'div.game.expand--0']);
     });
   });
 

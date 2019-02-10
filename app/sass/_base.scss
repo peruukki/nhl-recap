@@ -46,13 +46,9 @@ body {
 }
 
 .expand {
-  @for $i from 1 through 15 {
-    &:nth-child(#{$i}) {
-      $delay: $i * 150ms;
-      animation: $delay hidden, $expand-duration cubic-bezier(0.53, 0.01, 0.6, 1.23) expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
-    }
+  @for $i from 0 through 15 {
     &--#{$i} {
-      $delay: $i * 150ms + 500ms;
+      $delay: $i * 50ms + 50ms;
       animation: $delay hidden, $expand-duration cubic-bezier(0.53, 0.01, 0.6, 1.23) expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
     }
   }
