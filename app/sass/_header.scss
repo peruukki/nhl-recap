@@ -2,9 +2,9 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: $darker-blue;
-  color: $white;
-  box-shadow: 0 0 4px 0 $semi-transparent-gray;
+  background-color: $background-header;
+  color: $color-header;
+  box-shadow: 0 0 4px 0 $color-shadow;
   overflow: hidden;
   z-index: 1;
 

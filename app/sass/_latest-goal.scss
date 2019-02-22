@@ -1,13 +1,13 @@
 .latest-goal {
   &__time,
   &__goal-count {
-    color: $gray;
+    color: $color-main;
   }
 
   &__strength,
   &__empty-net {
     margin-left: 0.7rem;
-    color: $light-gray;
+    color: $color-accent;
   }
 
   &__scorer {

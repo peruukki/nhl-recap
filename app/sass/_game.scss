@@ -3,7 +3,7 @@
   margin: $game-card-margin;
   float: left;
   border-radius: 4px;
-  background: $darker-blue;
+  background: $background-game;
   font-size: 1.4rem;
   box-sizing: border-box;
 
@@ -11,7 +11,7 @@
     display: flex;
     padding: 0.3rem 0;
     border-radius: 4px 4px 0 0;
-    background: $lighter-blue;
+    background: $background-score-panel;
   }
 
   &__pre-game-info-panel {
@@ -36,7 +36,7 @@
   &__series-wins {
     padding-top: 0.2rem;
     padding-bottom: 0.5rem;
-    color: $gray;
+    color: $color-main;
     font-size: 1rem;
     text-transform: uppercase;
   }

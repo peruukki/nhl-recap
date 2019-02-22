@@ -13,7 +13,7 @@
   }
 
   &__team-score {
-    color: $light-gray;
+    color: $color-accent;
     font-weight: bold;
 
     &--hidden {
@@ -30,7 +30,7 @@
   &__delimiter {
     width: 1.5em;
     height: 1em;
-    color: $gray;
+    color: $color-main;
     text-align: center;
   }
 

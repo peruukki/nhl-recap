@@ -5,7 +5,7 @@
 
   &__value {
     @include stretch;
-    color: $light-gray;
+    color: $color-accent;
 
     &--away {
       text-align: right;
@@ -14,14 +14,14 @@
       text-align: left;
     }
     &--highlight {
-      color: $white;
+      color: $color-highlight;
     }
   }
 
   &__label {
     display: inline-block;
     width: 5rem;
-    color: $gray;
+    color: $color-main;
     font-size: 0.8rem;
     text-transform: uppercase;
   }

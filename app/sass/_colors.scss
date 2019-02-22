@@ -1,9 +1,22 @@
-$lighter-blue: hsl(229, 48%, 32%);
-$darker-blue: hsl(227, 77%, 25%);
-$gray: hsl(0, 0%, 61%);
-$light-gray: hsl(0, 0%, 71%);
+// Color values
+$blue-dark: hsl(227, 77%, 25%);
+$blue-light: hsl(226, 47%, 49%);
+$blue-medium: hsl(229, 48%, 32%);
+$gray-light: hsl(0, 0%, 71%);
+$gray-medium: hsl(0, 0%, 61%);
+$gray-semi-transparent: rgba(0, 0, 0, 0.5);
 $white: hsl(0, 0%, 97%);
 
-$semi-transparent-gray: rgba(0, 0, 0, 0.5);
+// Background colors
+$background-body: $blue-light;
+$background-game: $blue-dark;
+$background-header: $blue-dark;
+$background-score-panel: $blue-medium;
 
-$body-background: hsl(226, 47%, 49%);
+// Foreground colors
+$color-accent: $gray-light;
+$color-body: $white;
+$color-header: $white;
+$color-highlight: $white;
+$color-main: $gray-medium;
+$color-shadow: $gray-semi-transparent;
