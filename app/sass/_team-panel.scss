@@ -9,11 +9,16 @@
   }
 
   &__team-name {
+    position: relative;
+    bottom: 2px;
     font-weight: bold;
   }
 
   &__team-score {
-    color: $color-accent;
+    position: relative;
+    bottom: 1px;
+    color: $color-highlight;
+    font-size: 1.7rem;
     font-weight: bold;
 
     &--hidden {
@@ -28,7 +33,9 @@
   }
 
   &__delimiter {
-    width: 1.5em;
+    position: relative;
+    top: 1px;
+    width: 1.2em;
     height: 1em;
     color: $color-main;
     text-align: center;
@@ -36,7 +43,7 @@
 
   &__delimiter-period {
     position: relative;
-    bottom: 1px;
-    font-size: 1rem;
+    bottom: 2px;
+    font-size: 0.8rem;
   }
 }
