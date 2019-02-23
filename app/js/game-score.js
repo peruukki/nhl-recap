@@ -1,10 +1,15 @@
 import {div, span} from '@cycle/dom';
 import _ from 'lodash';
+import {format} from 'timeago.js';
 
 import {hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
 
-export default function gameScore(clock, {status, teams, goals, records, playoffSeries, goalCounts}, gameAnimationIndex) {
+export default function gameScore(
+  clock,
+  {status, startTime, teams, goals, records, playoffSeries, goalCounts},
+  gameAnimationIndex
+) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
@@ -25,7 +30,7 @@ export default function gameScore(clock, {status, teams, goals, records, playoff
   return div(`.game.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
     (showPreGameInfo || showProgressInfo) ?
-      renderPreGameInfo(status, teams, showProgressInfo ? null : records) :
+      renderPreGameInfo(status, startTime, teams, showProgressInfo ? null : records) :
       renderLatestGoal(latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
@@ -91,7 +96,7 @@ function renderDelimiter(period) {
     '–';
 }
 
-function renderPreGameInfo(status, teams, records) {
+function renderPreGameInfo(status, startTime, teams, records) {
   const valueClassName = '.pre-game-stats__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, records);
   return div('.game__pre-game-info-panel', [
@@ -102,7 +107,7 @@ function renderPreGameInfo(status, teams, records) {
       span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
         records ? renderRecord(records[teams.home]) : '')
     ]),
-    div('.pre-game-description.fade-in', renderGameStatus(status))
+    div('.pre-game-description.fade-in', renderGameStatus(status, startTime))
   ]);
 }
 
@@ -186,12 +191,15 @@ function getSeriesWinsDescription(seriesWins) {
   }
 }
 
-function renderGameStatus(status) {
+function renderGameStatus(status, startTime) {
   switch (status.state) {
     case 'LIVE':
       return renderCurrentProgress(status.progress);
     case 'PREVIEW':
-      return 'Not started';
+      {
+        const isInFuture = (new Date(startTime) - new Date()) > 0 ;
+        return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
+      }
     default:
       return '';
   }

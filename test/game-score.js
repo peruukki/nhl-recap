@@ -314,11 +314,24 @@ describe('gameScore', () => {
         `End of ${status.progress.currentPeriodOrdinal}`);
     });
 
-    it(`should show game in ${notStartedState} state as not started`, () => {
+    it(`should show game in ${notStartedState} state and start time in the past as starting soon`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
       const status = { state: notStartedState };
-      assertPreGameDescription(clock, { status, teams, goals }, 'Not started');
+      assertPreGameDescription(clock, { status, teams, goals }, 'Starts soon');
+    });
+
+    it(`should show game in ${notStartedState} state and start time in the future as starting in some time`, () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      const status = { state: notStartedState };
+
+      const time = new Date();
+      time.setHours(time.getHours() + 3);
+      time.setMinutes(time.getMinutes() + 1);
+      const startTime = time.toISOString();
+
+      assertPreGameDescription(clock, { status, startTime, teams, goals }, 'Starts in 3 hours');
     });
 
   });
@@ -408,8 +421,8 @@ function assertPreGameStats(clock, {state = finishedState, teams, goals, records
   assert.deepEqual(preGameStats, expected);
 }
 
-function assertPreGameDescription(clock, {status, teams, goals }, description) {
-  const preGameDescription = getPreGameDescription(gameScore(clock, { status, teams, goals }));
+function assertPreGameDescription(clock, {status, startTime, teams, goals }, description) {
+  const preGameDescription = getPreGameDescription(gameScore(clock, { status, startTime, teams, goals }));
   const expected = expectedPreGameDescription(description);
   assert.deepEqual(preGameDescription, expected);
 }

@@ -66,6 +66,7 @@
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
+    "timeago.js": "^4.0.0-beta.2",
     "xstream": "^10.5.0"
   },
   "devDependencies": {
