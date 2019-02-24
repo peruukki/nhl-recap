@@ -7,7 +7,7 @@ import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(
   clock,
-  {status, startTime, teams, goals, records, playoffSeries, goalCounts},
+  {status, startTime, teams, goals, records, streaks, playoffSeries, goalCounts},
   gameAnimationIndex
 ) {
   const currentGoals = getCurrentGoals(clock, teams, goals);
@@ -15,11 +15,11 @@ export default function gameScore(
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
   const period = latestGoal ? latestGoal.period : null;
-  const showPreGameInfo = !clock || !hasGameStarted(status.state);
   const allGamesEnded = clock && clock.end && !clock.period;
   const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
-  const showProgressInfo = isGameInProgress(status.state) &&
-    (hasClockPassedCurrentProgress(clock, status) || allGamesEnded);
+  const showPreGameStats = !clock || !hasGameStarted(status.state);
+  const showProgressInfo = !clock ||
+    (isGameInProgress(status.state) && (hasClockPassedCurrentProgress(clock, status) || allGamesEnded));
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
 
   if (goalCounts) {
@@ -28,10 +28,8 @@ export default function gameScore(
   }
 
   return div(`.game.expand--${gameAnimationIndex}`, [
-    renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo),
-    (showPreGameInfo || showProgressInfo) ?
-      renderPreGameInfo(status, startTime, teams, showProgressInfo ? null : records) :
-      renderLatestGoal(latestGoal),
+    renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats),
+    renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, status, latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
@@ -74,15 +72,15 @@ function getShootoutGoal(goals, teams) {
   return _.last(winnersGoals);
 }
 
-function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameInfo) {
-  const scoreVisibilityClass = showPreGameInfo ? '.team-panel__team-score--hidden' : '.fade-in';
-  const delimiterVisibilityClass = showPreGameInfo ? '' : '.fade-in';
+function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats) {
+  const scoreVisibilityClass = showPreGameStats ? '.team-panel__team-score--hidden' : '.fade-in';
+  const delimiterVisibilityClass = showPreGameStats ? '' : '.fade-in';
   return div('.game__score-panel', [
     div('.team-panel.team-panel--away', [
       span('.team-panel__team-name', teams.away),
       span('.team-panel__team-score' + scoreVisibilityClass, [awayGoals.length])
     ]),
-    div('.team-panel__delimiter' + delimiterVisibilityClass, showPreGameInfo ? 'at' : renderDelimiter(period)),
+    div('.team-panel__delimiter' + delimiterVisibilityClass, showPreGameStats ? 'at' : renderDelimiter(period)),
     div('.team-panel.team-panel--home', [
       span('.team-panel__team-score' + scoreVisibilityClass, [homeGoals.length]),
       span('.team-panel__team-name', teams.home)
@@ -96,32 +94,46 @@ function renderDelimiter(period) {
     '–';
 }
 
-function renderPreGameInfo(status, startTime, teams, records) {
+function renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, status, latestGoal) {
+  const showLatestGoal = !showPreGameStats && !showProgressInfo;
+  return div('.game__info-panel',
+    showLatestGoal ?
+      renderLatestGoal(latestGoal) :
+      renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, records, streaks)
+  );
+}
+
+function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, records, streaks) {
+  return [
+    showPreGameStats ? renderPreGameStats(teams, records, 'Record', getWinPercentage, renderRecord) : null,
+    showPreGameStats ? renderPreGameStats(teams, streaks, 'Streak', getStreakRating, renderStreak) : null,
+    showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
+  ];
+}
+
+function renderPreGameStats(teams, values, label, ratingFn, renderFn) {
   const valueClassName = '.pre-game-stats__value';
-  const highlightClassNames = getHighlightClassNames(valueClassName, teams, records);
-  return div('.game__pre-game-info-panel', [
-    div('.pre-game-stats', [
-      span(`${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
-        records ? renderRecord(records[teams.away]) : ''),
-      span('.pre-game-stats__label', records ? 'Record' : ''),
-      span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
-        records ? renderRecord(records[teams.home]) : '')
-    ]),
-    div('.pre-game-description.fade-in', renderGameStatus(status, startTime))
+  const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
+  return div('.pre-game-stats', [
+    span(`${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
+      values ? renderFn(values[teams.away]) : ''),
+    span('.pre-game-stats__label', values ? label : ''),
+    span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
+      values ? renderFn(values[teams.home]) : '')
   ]);
 }
 
-function getHighlightClassNames(baseClassName, teams, records) {
-  if (!records) {
+function getHighlightClassNames(baseClassName, teams, values, ratingFn) {
+  if (!values) {
     return { away: '', home: '' };
   }
 
-  const awayWinPercentage = getWinPercentage(records[teams.away]);
-  const homeWinPercentage = getWinPercentage(records[teams.home]);
+  const awayRating = ratingFn(values[teams.away]);
+  const homeRating = ratingFn(values[teams.home]);
 
-  if (awayWinPercentage > homeWinPercentage) {
+  if (awayRating > homeRating) {
     return { away: `${baseClassName}--highlight`, home: '' };
-  } else if (homeWinPercentage > awayWinPercentage) {
+  } else if (homeRating > awayRating) {
     return { away: '', home: `${baseClassName}--highlight` };
   } else {
     return { away: '', home: '' };
@@ -134,6 +146,21 @@ function getWinPercentage({ wins, losses, ot = 0 }) {
   return points / maxPoints;
 }
 
+function getStreakRating({ type, count }) {
+  return count * getStreakMultiplier(type);
+}
+
+function getStreakMultiplier(type) {
+  switch (type) {
+    case 'wins':
+      return 1;
+    case 'losses':
+      return -1;
+    default:
+      return 0;
+  }
+}
+
 function renderRecord(record) {
   return [
     `${record.wins}`,
@@ -141,6 +168,23 @@ function renderRecord(record) {
     `${record.losses}`,
     ...renderOtLosses(record)
   ];
+}
+
+function renderStreak(streak) {
+  return `${streak.count} ${renderStreakType(streak)}`;
+}
+
+function renderStreakType({type}) {
+  switch (type) {
+    case 'wins':
+      return 'W';
+    case 'losses':
+      return 'L';
+    case 'ot':
+      return 'OT L';
+    default:
+      return '';
+  }
 }
 
 function renderOtLosses(record) {
@@ -153,10 +197,10 @@ function renderOtLosses(record) {
 }
 
 function renderLatestGoal(latestGoal) {
-  return div('.game__latest-goal-panel', [
+  return [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
-  ]);
+  ];
 }
 
 function renderSeriesWins(seriesWins, isChanged) {
@@ -201,7 +245,7 @@ function renderGameStatus(status, startTime) {
         return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
       }
     default:
-      return '';
+      return 'Finished';
   }
 }
 

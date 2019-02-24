@@ -1,6 +1,6 @@
 function highlightGoal(classModifier, gameIndex) {
   highlightGoalCountChange(classModifier, gameIndex);
-  highlightLatestGoalChange(classModifier, gameIndex);
+  highlightLatestGoalChange(gameIndex);
 }
 
 function highlightGoalCountChange(classModifier, gameIndex) {
@@ -11,12 +11,17 @@ function highlightGoalCountChange(classModifier, gameIndex) {
   }
 }
 
-function highlightLatestGoalChange(classModifier, gameIndex) {
-  const element = document.querySelectorAll('.game__latest-goal-panel')[gameIndex];
+function highlightLatestGoalChange(gameIndex) {
+  const element = document.querySelectorAll('.game__info-panel')[gameIndex];
   if (element) {
     const highlightDuration = 500;
     element.animate([{ opacity: 0 }, { opacity: 1 }], highlightDuration);
   }
 }
 
-export default { highlightGoal };
+function reduceInfoPanelsHeight() {
+  document.querySelectorAll('.game__info-panel')
+    .forEach(element => element.classList.add('reduced-height'));
+}
+
+export default { highlightGoal, reduceInfoPanelsHeight };

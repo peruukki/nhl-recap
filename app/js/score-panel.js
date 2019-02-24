@@ -46,10 +46,12 @@ function intent(DOM, HTTP) {
   const pauseClicks$ = DOM.select('.button--pause').events('click')
     .mapTo(false);
   const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
+  const playbackHasStarted$ = playClicks$.take(1);
 
   return {
     successApiResponse$,
     isPlaying$,
+    playbackHasStarted$,
     status$: apiResponseWithErrors$
       .filter(scores => scores.error)
       .map(scores => scores.error.expected ?
@@ -73,6 +75,8 @@ function model(actions, animations) {
       })
     )
   }));
+
+  actions.playbackHasStarted$.addListener({ next: () => animations.reduceInfoPanelsHeight() });
 
   const gameClock = GameClock({
     scores$: actions.successApiResponse$.map(({ games }) => games),

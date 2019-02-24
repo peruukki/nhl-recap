@@ -183,27 +183,27 @@ describe('gameScore', () => {
 
   });
 
-  describe('pre-game info panel', () => {
+  describe('pre-game stats', () => {
 
     it('should be shown before playback has started', () => {
       const clock = null;
       const status = { state: finishedState };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams, goals });
     });
 
     it('should be shown after playback has started for not started games', () => {
       const clock = { start: true };
       const status = { state: notStartedState };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams, goals });
     });
 
     it('should not be shown after playback has started for in-progress games', () => {
       const clock = { start: true };
       const status = { state: inProgressState };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
     it('should not be shown when playback has not reached current progress in in-progress games', () => {
@@ -217,10 +217,10 @@ describe('gameScore', () => {
         }
       };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
-    it('should be shown again after playback has reached current progress in in-progress games', () => {
+    it('should not be shown after playback has reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 42 };
       const status = {
         state: inProgressState,
@@ -231,14 +231,14 @@ describe('gameScore', () => {
         }
       };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
     it('should not be shown after playback has started for finished games', () => {
       const clock = { start: true };
       const status = { state: finishedState };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameInfoIsNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
     it('should show teams\' league records, highlighting the better record', () => {
@@ -270,11 +270,14 @@ describe('gameScore', () => {
         home: { record: [ '5', delimiter, '9' ] }
       });
     });
+  });
 
-    it(`should show no description for game in ${finishedState} state`, () => {
+  describe('pre-game description', () => {
+
+    it(`should show "Finished" description for game in ${finishedState} state`, () => {
       const clock = null;
       const {teams, goals, status} = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { status, teams, goals }, '');
+      assertPreGameDescription(clock, { status, teams, goals }, 'Finished');
     });
 
     it(`should show game without progress information in ${inProgressState} state as in progress`, () => {
@@ -286,6 +289,21 @@ describe('gameScore', () => {
 
     it(`should show time remaining progress for game in ${inProgressState} state`, () => {
       const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      const status = {
+        state: inProgressState,
+        progress: {
+          currentPeriod: 1,
+          currentPeriodOrdinal: '1st',
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
+        }
+      };
+      assertPreGameDescription(clock, { status, teams, goals },
+        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`);
+    });
+
+    it(`should show time remaining progress for game in ${inProgressState} state after playback has reached current progress`, () => {
+      const clock = { period: 1, minute: 8, second: 42 };
       const {teams, goals} = scoresAllRegularTime.games[1];
       const status = {
         state: inProgressState,
@@ -404,15 +422,15 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   assert.deepEqual(latestGoalPanel, expected);
 }
 
-function assertPreGameInfoIsShown(clock, {status, teams, goals}) {
-  assertPreGameInfo(clock, { status, teams, goals }, assert.deepEqual);
+function assertPreGameStatsAreShown(clock, {status, teams, goals}) {
+  assertPreGameStatsExistence(clock, { status, teams, goals }, assert.deepEqual);
 }
-function assertPreGameInfoIsNotShown(clock, {status, teams, goals}) {
-  assertPreGameInfo(clock, { status, teams, goals }, assert.notDeepEqual);
+function assertPreGameStatsAreNotShown(clock, {status, teams, goals}) {
+  assertPreGameStatsExistence(clock, { status, teams, goals }, assert.notDeepEqual);
 }
-function assertPreGameInfo(clock, {status, teams, goals}, assertFn) {
-  const preGameInfo = getPreGameInfo(gameScore(clock, { status, teams, goals }));
-  assertFn(preGameInfo.sel, 'div.game__pre-game-info-panel');
+function assertPreGameStatsExistence(clock, {status, teams, goals}, assertFn) {
+  const preGameStats = getPreGameStats(gameScore(clock, { status, teams, goals }));
+  assertFn(preGameStats && preGameStats.sel, 'div.pre-game-stats');
 }
 
 function assertPreGameStats(clock, {state = finishedState, teams, goals, records}, renderedRecords) {
@@ -472,16 +490,12 @@ function getLatestGoalPanel(vtree) {
   return vtree.children[1];
 }
 
-function getPreGameInfo(vtree) {
-  return vtree.children[1];
-}
-
 function getPreGameStats(vtree) {
   return vtree.children[1].children[0];
 }
 
 function getPreGameDescription(vtree) {
-  return vtree.children[1].children[1];
+  return vtree.children[1].children[2];
 }
 
 function getPlayoffSeriesWinsPanel(vtree) {
@@ -506,7 +520,7 @@ function expectedDelimiter(delimiter, visibilityClass) {
 }
 
 function expectedLatestGoalPanel(latestGoal) {
-  return div('.game__latest-goal-panel', [
+  return div('.game__info-panel', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
   ]);

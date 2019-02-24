@@ -1,7 +1,9 @@
 $fade-duration: 1s;
 $expand-duration: 0.5s;
-$transition-duration: 0.2s;
-$transition-timing-function: ease-in-out;
+$height-duration: 0.25s;
+
+$expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
+$height-timing-function: ease-in-out;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
 
@@ -49,7 +51,7 @@ body {
   @for $i from 0 through 15 {
     &--#{$i} {
       $delay: $i * 50ms + 50ms;
-      animation: $delay hidden, $expand-duration cubic-bezier(0.53, 0.01, 0.6, 1.23) expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
+      animation: $delay hidden, $expand-duration $expand-timing-function expand $delay, ($fade-duration / 2) ease-in fade-in $delay;
     }
   }
 }
