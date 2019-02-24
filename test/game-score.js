@@ -241,33 +241,37 @@ describe('gameScore', () => {
       assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
-    it('should show teams\' league records, highlighting the better record', () => {
+    it('should show teams\' point percentages, highlighting the better one', () => {
       const clock = null;
-      const delimiter = span('.pre-game-stats__delimiter', '-');
+      const label = 'Point-%';
 
       assertPreGameStats(clock, scoresAllRegularTime.games[0], {
-        away: { record: [ '8', delimiter, '4', delimiter, '1' ] },
-        home: { record: [ '7', delimiter, '3', delimiter, '3' ] }
+        away: { pointPct: '.654' },
+        home: { pointPct: '.654' },
+        label
       });
 
       assertPreGameStats(clock, scoresAllRegularTime.games[1], {
-        away: { record: [ '8', delimiter, '4', delimiter, '1' ] },
-        home: { record: [ '7', delimiter, '2', delimiter, '4' ], className: '--highlight' }
+        away: { pointPct: '.654' },
+        home: { pointPct: '.692', className: '--highlight' },
+        label
       });
     });
 
-    it('should show teams\' playoff records, highlighting the better record', () => {
+    it('should show teams\' playoff win percentages, highlighting the better one', () => {
       const clock = null;
-      const delimiter = span('.pre-game-stats__delimiter', '-');
+      const label = 'Win-%';
 
       assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[0], {
-        away: { record: [ '7', delimiter, '3' ] },
-        home: { record: [ '7', delimiter, '3' ] }
+        away: { pointPct: '.700' },
+        home: { pointPct: '.700' },
+        label
       });
 
       assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[1], {
-        away: { record: [ '7', delimiter, '5' ], className: '--highlight' },
-        home: { record: [ '5', delimiter, '9' ] }
+        away: { pointPct: '.583', className: '--highlight' },
+        home: { pointPct: '.357' },
+        label
       });
     });
   });
@@ -433,8 +437,8 @@ function assertPreGameStatsExistence(clock, {status, teams, goals}, assertFn) {
   assertFn(preGameStats && preGameStats.sel, 'div.pre-game-stats');
 }
 
-function assertPreGameStats(clock, {state = finishedState, teams, goals, records}, renderedRecords) {
-  const preGameStats = getPreGameStats(gameScore(clock, { status: { state }, teams, goals, records }));
+function assertPreGameStats(clock, {state = finishedState, teams, goals, records, playoffSeries}, renderedRecords) {
+  const preGameStats = getPreGameStats(gameScore(clock, { status: { state }, teams, goals, records, playoffSeries }));
   const expected = expectedPreGameStats(renderedRecords);
   assert.deepEqual(preGameStats, expected);
 }
@@ -526,12 +530,12 @@ function expectedLatestGoalPanel(latestGoal) {
   ]);
 }
 
-function expectedPreGameStats({away, home}) {
+function expectedPreGameStats({away, home, label}) {
   const valueClass = '.pre-game-stats__value';
   return div('.pre-game-stats', [
-    span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.record),
-    span('.pre-game-stats__label', 'Record'),
-    span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.record),
+    span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.pointPct),
+    span('.pre-game-stats__label', label),
+    span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.pointPct),
   ]);
 }
 
