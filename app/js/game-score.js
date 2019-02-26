@@ -157,9 +157,9 @@ function getStreakRating({ type, count }) {
 
 function getStreakMultiplier(type) {
   switch (type) {
-    case 'wins':
+    case 'WINS':
       return 1;
-    case 'losses':
+    case 'LOSSES':
       return -1;
     default:
       return 0;
@@ -180,11 +180,11 @@ function renderStreak(streak) {
 
 function renderStreakType({type}) {
   switch (type) {
-    case 'wins':
+    case 'WINS':
       return 'W';
-    case 'losses':
+    case 'LOSSES':
       return 'L';
-    case 'ot':
+    case 'OT':
       return 'OT L';
     default:
       return '';
