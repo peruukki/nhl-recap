@@ -245,6 +245,8 @@ function renderCurrentProgress(progress) {
     return 'In progress';
   } else if (progress.currentPeriodTimeRemaining.pretty === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
+  } else if (progress.currentPeriodOrdinal === 'SO') {
+    return 'In shootout';
   } else {
     return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
   }

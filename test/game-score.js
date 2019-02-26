@@ -336,6 +336,20 @@ describe('gameScore', () => {
         `End of ${status.progress.currentPeriodOrdinal}`);
     });
 
+    it(`should not show remaining time for SO game in ${inProgressState} state`, () => {
+      const clock = null;
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      const status = {
+        state: inProgressState,
+        progress: {
+          currentPeriod: 5,
+          currentPeriodOrdinal: 'SO',
+          currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 }
+        }
+      };
+      assertPreGameDescription(clock, { status, teams, goals }, 'In shootout');
+    });
+
     it(`should show game in ${notStartedState} state and start time in the past as starting soon`, () => {
       const clock = null;
       const {teams, goals} = scoresAllRegularTime.games[1];
