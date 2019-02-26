@@ -10,7 +10,7 @@ export default function gameScore(
   {status, startTime, teams, goals, records, streaks, playoffSeries, goalCounts},
   gameAnimationIndex
 ) {
-  const currentGoals = getCurrentGoals(clock, teams, goals);
+  const currentGoals = getCurrentGoals(clock, teams, goals, status);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home);
@@ -51,7 +51,7 @@ function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) 
   return _.merge({}, seriesWins, updatedWinCount);
 }
 
-function getCurrentGoals(clock, teams, goals) {
+function getCurrentGoals(clock, teams, goals, status) {
   if (!clock || clock.start) {
     return [];
   }
@@ -59,13 +59,17 @@ function getCurrentGoals(clock, teams, goals) {
     const nonShootoutGoals = goals.filter(goal => goal.period !== 'SO');
     return (nonShootoutGoals.length === goals.length) ?
       goals :
-      nonShootoutGoals.concat(getShootoutGoal(goals, teams));
+      nonShootoutGoals.concat(getShootoutGoal(goals, teams, status));
   }
 
   return goals.filter(_.partial(hasGoalBeenScored, clock));
 }
 
-function getShootoutGoal(goals, teams) {
+function getShootoutGoal(goals, teams, status) {
+  if (isGameInProgress(status.state)) {
+    return [];
+  }
+
   const awayGoals = goals.filter(goal => goal.team === teams.away);
   const homeGoals = goals.filter(goal => goal.team === teams.home);
   const winnersGoals = (awayGoals.length > homeGoals.length) ? awayGoals : homeGoals;

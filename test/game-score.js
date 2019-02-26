@@ -83,6 +83,12 @@ describe('gameScore', () => {
       assertGoalCounts(clock, { teams, goals }, 2, 1);
     });
 
+    it('should not show shootout goals for in-progress games', () => {
+      const clock = { period: 'SO' };
+      const {teams, goals} = scoresOvertimeAndMultipleShootout.games[2];
+      assertGoalCounts(clock, { teams, goals, state: inProgressState }, 1, 1);
+    });
+
   });
 
   describe('goal delimiter', () => {
