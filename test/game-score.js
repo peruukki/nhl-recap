@@ -41,7 +41,7 @@ describe('gameScore', () => {
       assertGoalCounts(clock, { teams, goals }, 0, 0);
     });
 
-    it('should show increase the goal count when the clock reaches a goal scoring time', () => {
+    it('should increase the goal count when the clock reaches a goal scoring time', () => {
       const clock = { period: 1, minute: 8, second: 44 };
       const {teams, goals} = scoresAllRegularTime.games[1];
       assertGoalCounts(clock, { teams, goals }, 1, 0);
