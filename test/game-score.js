@@ -519,7 +519,7 @@ function getPreGameStats(vtree) {
 }
 
 function getPreGameDescription(vtree) {
-  return vtree.children[1].children[2];
+  return vtree.children[1].children[3];
 }
 
 function getPlayoffSeriesWinsPanel(vtree) {
