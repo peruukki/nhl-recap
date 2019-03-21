@@ -7,7 +7,7 @@ import {renderPeriodNumber, renderTime} from './game-clock';
 
 export default function gameScore(
   clock,
-  {status, startTime, teams, goals, records, streaks, playoffSeries, goalCounts},
+  {status, startTime, teams, goals, records, streaks, standings, playoffSeries, goalCounts},
   gameAnimationIndex
 ) {
   const currentGoals = getCurrentGoals(clock, teams, goals, status);
@@ -29,7 +29,8 @@ export default function gameScore(
 
   return div(`.game.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats),
-    renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, status, !!playoffSeriesWins, latestGoal),
+    renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, standings, status,
+      !!playoffSeriesWins, latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
@@ -98,20 +99,21 @@ function renderDelimiter(period) {
     '–';
 }
 
-function renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, status, isPlayoffGame, latestGoal) {
+function renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, streaks, standings, status, isPlayoffGame, latestGoal) {
   const showLatestGoal = !showPreGameStats && !showProgressInfo;
   return div('.game__info-panel',
     showLatestGoal ?
       renderLatestGoal(latestGoal) :
-      renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records, streaks)
+      renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records, streaks, standings)
   );
 }
 
-function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records, streaks) {
+function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records, streaks, standings) {
   const recordLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
   return [
     showPreGameStats ? renderPreGameStats(teams, records, recordLabel, renderRecord, renderRecord) : null,
     showPreGameStats ? renderPreGameStats(teams, streaks, 'Streak', getStreakRating, renderStreak) : null,
+    showPreGameStats ? renderPreGameStats(teams, standings, 'PO spot pts', getPlayoffSpotRating, renderPlayoffSpot) : null,
     showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
@@ -166,6 +168,10 @@ function getStreakMultiplier(type) {
   }
 }
 
+function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
+  return parseInt(pointsFromPlayoffSpot);
+}
+
 function renderRecord(record) {
   const percentage = getPointPercentage(record);
   const sliceIndex = percentage < 1 ? 1 : 0;
@@ -178,7 +184,7 @@ function renderStreak(streak) {
   return `${streak.count} ${renderStreakType(streak)}`;
 }
 
-function renderStreakType({type}) {
+function renderStreakType({ type }) {
   switch (type) {
     case 'WINS':
       return 'W';
@@ -189,6 +195,10 @@ function renderStreakType({type}) {
     default:
       return '';
   }
+}
+
+function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
+  return pointsFromPlayoffSpot || '';
 }
 
 function renderLatestGoal(latestGoal) {
