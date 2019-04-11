@@ -182,6 +182,10 @@ function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
 
 function renderRecord(record) {
   const percentage = getPointPercentage(record);
+  if (isNaN(percentage)) {
+    return '-';
+  }
+
   const sliceIndex = percentage < 1 ? 1 : 0;
   return percentage
     .toFixed(3)
