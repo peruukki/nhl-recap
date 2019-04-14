@@ -105,7 +105,8 @@ function renderInfoPanel(
   isPlayoffGame, latestGoal
 ) {
   const showLatestGoal = !showTopPreGameStats && !showProgressInfo;
-  return div('.game__info-panel',
+  const modifierClass = isPlayoffGame ? ' .game__info-panel--playoff' : '';
+  return div(`.game__info-panel${modifierClass}`,
     showLatestGoal ?
       renderLatestGoal(latestGoal) :
       renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo,
@@ -114,7 +115,7 @@ function renderInfoPanel(
 }
 
 function renderPreGameInfo(
-  status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo,isPlayoffGame, records,
+  status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo, isPlayoffGame, records,
   streaks, standings
 ) {
   const recordLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
