@@ -2,7 +2,7 @@ import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 import {assert} from 'chai';
 
-import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer} from '../app/js/game-score';
+import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer, renderLatestGoalAssists} from '../app/js/game-score';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -546,7 +546,8 @@ function expectedDelimiter(delimiter, visibilityClass) {
 function expectedLatestGoalPanel(latestGoal) {
   return div('.game__info-panel', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
-    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
+    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : '')
   ]);
 }
 

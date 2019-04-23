@@ -217,7 +217,8 @@ function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
 function renderLatestGoal(latestGoal) {
   return [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
-    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : '')
+    div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
+    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : '')
   ];
 }
 
@@ -310,4 +311,22 @@ export function renderLatestGoalScorer(latestGoal) {
       span('.latest-goal__goal-count', `(${seasonTotal})`)
     ] :
     span('.latest-goal__scorer', scorer);
+}
+
+export function renderLatestGoalAssists(latestGoal) {
+  if (!latestGoal.assists) {
+    return '';
+  }
+  if (latestGoal.assists.length === 0) {
+    return span('.latest-goal__assists-label', 'Unassisted');
+  }
+  return [
+    div('.latest-goal__assists-label', 'Assists:'),
+    ...latestGoal.assists.map(assist =>
+      div('.latest-goal__assist', [
+        span('.latest-goal__assister', `${truncatePlayerName(assist.player)} `),
+        span('.latest-goal__assist-count', `(${assist.seasonTotal})`)
+      ])
+    )
+  ];
 }

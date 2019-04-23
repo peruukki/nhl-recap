@@ -19,9 +19,9 @@ function highlightLatestGoalChange(gameIndex) {
   }
 }
 
-function reduceInfoPanelsHeight() {
+function changeInfoPanelsHeight() {
   document.querySelectorAll('.game__info-panel')
-    .forEach(element => element.classList.add('reduced-height'));
+    .forEach(element => element.classList.add('increased-height'));
 }
 
-export default { highlightGoal, reduceInfoPanelsHeight };
+export default { highlightGoal, changeInfoPanelsHeight };

@@ -10,9 +10,19 @@
     color: $color-accent;
   }
 
-  &__scorer {
+  &__scorer,
+  &__assister {
     color: $color-highlight;
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  &__assists {
+    margin-top: 0.25rem;
+  }
+
+  &__assists-label {
+    font-size: 1rem;
+    text-transform: uppercase;
   }
 }

@@ -76,7 +76,7 @@ function model(actions, animations) {
     )
   }));
 
-  actions.playbackHasStarted$.addListener({ next: () => animations.reduceInfoPanelsHeight() });
+  actions.playbackHasStarted$.addListener({ next: () => animations.changeInfoPanelsHeight() });
 
   const gameClock = GameClock({
     scores$: actions.successApiResponse$.map(({ games }) => games),
