@@ -10,8 +10,10 @@
           "team": "STL",
           "min": 2,
           "sec": 5,
-          "scorer": "Robby Fabbri",
-          "goalCount": 7,
+          "scorer": {
+            "player": "Robby Fabbri",
+            "seasonTotal": 7
+          },
           "period": "OT"
         }
       ],
@@ -43,40 +45,50 @@
           "team": "ANA",
           "min": 11,
           "sec": 16,
-          "scorer": "Corey Perry",
-          "goalCount": 11,
+          "scorer": {
+            "player": "Corey Perry",
+            "seasonTotal": 11
+          },
           "period": "1"
         },
         {
           "team": "NYR",
           "min": 17,
           "sec": 50,
-          "scorer": "Derick Brassard",
-          "goalCount": 12,
+          "scorer": {
+            "player": "Derick Brassard",
+            "seasonTotal": 12
+          },
           "period": "1"
         },
         {
           "team": "NYR",
           "min": 2,
           "sec": 44,
-          "scorer": "Derick Brassard",
-          "goalCount": 13,
+          "scorer": {
+            "player": "Derick Brassard",
+            "seasonTotal": 13
+          },
           "period": "3"
         },
         {
           "team": "ANA",
           "min": 17,
           "sec": 6,
-          "scorer": "Rickard Rakell",
-          "goalCount": 7,
+          "scorer": {
+            "player": "Rickard Rakell",
+            "seasonTotal": 7
+          },
           "period": "3"
         },
         {
           "team": "NYR",
           "min": 2,
           "sec": 37,
-          "scorer": "Mats Zuccarello",
-          "goalCount": 15,
+          "scorer": {
+            "player": "Mats Zuccarello",
+            "seasonTotal": 15
+          },
           "period": "OT"
         }
       ],

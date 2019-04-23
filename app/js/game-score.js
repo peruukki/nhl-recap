@@ -302,11 +302,12 @@ export function renderLatestGoalTime(latestGoal) {
 }
 
 export function renderLatestGoalScorer(latestGoal) {
-  const scorer = truncatePlayerName(latestGoal.scorer);
-  return latestGoal.goalCount ?
+  const {player, seasonTotal} = latestGoal.scorer;
+  const scorer = truncatePlayerName(player);
+  return seasonTotal ?
     [
       span('.latest-goal__scorer', `${scorer} `),
-      span('.latest-goal__goal-count', `(${latestGoal.goalCount})`)
+      span('.latest-goal__goal-count', `(${seasonTotal})`)
     ] :
     span('.latest-goal__scorer', scorer);
 }
