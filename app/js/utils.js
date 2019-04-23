@@ -46,7 +46,7 @@ function parseProgressTimeRemaining(progress) {
     return null;
   }
 
-  const { min, sec } = progress.currentPeriodTimeRemaining;
+  const {min, sec} = progress.currentPeriodTimeRemaining;
   return { period: progress.currentPeriod, minute: min, second: sec };
 }
 

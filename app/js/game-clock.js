@@ -12,7 +12,7 @@ export default function GameClock(sources) {
 }
 
 function intent(sources) {
-  const {scores$, isPlaying$, props$ } = sources;
+  const {scores$, isPlaying$, props$} = sources;
   return { scores$, isPlaying$, props$ };
 }
 
