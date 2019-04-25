@@ -296,7 +296,8 @@ export function renderLatestGoalTime(latestGoal) {
   const period = renderPeriodNumber(latestGoal.period);
   const time = renderTime({ minute: latestGoal.min, second: latestGoal.sec });
   return [
-    span(`${period} ${time} ${latestGoal.team}`),
+    span(`${period} ${time}`),
+    span('.latest-goal__team', latestGoal.team),
     latestGoal.strength ? span('.latest-goal__strength', latestGoal.strength) : null,
     latestGoal.emptyNet ? span('.latest-goal__empty-net', 'EN') : null
   ];
