@@ -7,6 +7,8 @@ import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
 import scoresAllLive from './data/latest-live.json';
 import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
+import scoresLiveEndOfOT from './data/latest-live-end-of-ot.json';
+import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
 
 const periodStartMultiplier = 150;
 
@@ -63,6 +65,34 @@ describe('gameEvents', () => {
     // Check the last event with time
     const lastTimeEvent = getLastNonEndEvent(events);
     assert.deepEqual(lastTimeEvent, { period: 5, minute: 11, second: 2 });
+  });
+
+  it('should include 20 minute overtime events if game is live at the end of overtime', () => {
+    const events = gameEvents(scoresLiveEndOfOT.games);
+
+    // Check the last event
+    assert.deepEqual(_.last(events), { end: true, inProgress: true });
+
+    // Check the last event with time
+    const lastTimeEvent = getLastNonEndEvent(events);
+    assert.deepEqual(lastTimeEvent, { period: 4, minute: 0, second: 2 });
+
+    // Check that the last period lasted 20 minutes
+    assert.isTrue(_.some(events, { period: 4, minute: 20, second: 0 }));
+  });
+
+  it('should include 20 minute overtime events if game is live at the end of second overtime', () => {
+    const events = gameEvents(scoresLiveEndOf2OT.games);
+
+    // Check the last event
+    assert.deepEqual(_.last(events), { end: true, inProgress: true });
+
+    // Check the last event with time
+    const lastTimeEvent = getLastNonEndEvent(events);
+    assert.deepEqual(lastTimeEvent, { period: 5, minute: 0, second: 2 });
+
+    // Check that the last period lasted 20 minutes
+    assert.isTrue(_.some(events, { period: 5, minute: 20, second: 0 }));
   });
 
   it('should pause by multiplying each period end event', () => {

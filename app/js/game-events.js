@@ -53,8 +53,9 @@ function getAllPeriodEvents(scores, endTime, goalDelayMultiplier) {
 }
 
 function getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier) {
-  const partialPeriodNumber = (!isNaN(endTime.period) && endTime.minute !== undefined) ? endTime.period : null;
-  const fullPeriods = _.range(1, partialPeriodNumber || 4)
+  const partialPeriodNumber = getPartialPeriodNumber(endTime);
+  const lastFullPeriodNumber = partialPeriodNumber ? partialPeriodNumber - 1 : getLastFullPeriodNumber(endTime);
+  const fullPeriods = _.range(1, lastFullPeriodNumber + 1)
     .map(period => ({ period: period, events: periodEvents(period, 20, null, goalScoringTimes, goalDelayMultiplier) }));
 
   if (partialPeriodNumber) {
@@ -66,6 +67,18 @@ function getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier) 
   } else {
     return fullPeriods;
   }
+}
+
+function getPartialPeriodNumber(endTime) {
+  return (!isNaN(endTime.period) && !hasLastPeriodEnded(endTime)) ? endTime.period : null;
+}
+
+function getLastFullPeriodNumber(endTime) {
+  return (!isNaN(endTime.period) && hasLastPeriodEnded(endTime)) ? endTime.period : 3;
+}
+
+function hasLastPeriodEnded(endTime) {
+  return endTime.minute === undefined;
 }
 
 function getOvertimeClock(endTime, goalScoringTimes, goalDelayMultiplier) {
@@ -109,17 +122,19 @@ function getTimeValueIteratee(value) {
 
 function getGameEndTime(game) {
   return (game.status && game.status.state === 'LIVE') ?
-    getGameEndTimeFromProgress(game.status.progress) :
+    getGameEndTimeFromProgress(game.status.progress, !!game.playoffSeries) :
     getGameEndTimeFromGoals(game.goals);
 }
 
-function getGameEndTimeFromProgress(progress) {
+function getGameEndTimeFromProgress(progress, isPlayoffGame) {
+  const {min, sec} = progress.currentPeriodTimeRemaining;
+  const hasEnded = min === 0 && sec === 0;
   return {
-    period: _.includes(['OT', 'SO'], progress.currentPeriodOrdinal)
+    period: !isPlayoffGame && _.includes(['OT', 'SO'], progress.currentPeriodOrdinal)
       ? progress.currentPeriodOrdinal
       : progress.currentPeriod,
-    minute: progress.currentPeriodTimeRemaining.min,
-    second: progress.currentPeriodTimeRemaining.sec,
+    minute: hasEnded ? undefined : min,
+    second: hasEnded ? undefined : sec,
     inProgress: true
   };
 }
