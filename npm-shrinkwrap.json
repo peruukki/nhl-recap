@@ -5932,7 +5932,7 @@
       "integrity": "sha1-njr6TVglzdE3YHW9tW3jbfszZJ8=",
       "dev": true,
       "requires": {
-        "readable-stream": "2.2.6"
+        "readable-stream": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.6.tgz"
       }
     },
     "path-browserify": {
