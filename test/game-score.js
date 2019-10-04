@@ -1,4 +1,4 @@
-import {div, span} from '@cycle/dom';
+import {div, span, svg} from '@cycle/dom';
 import _ from 'lodash';
 import {assert} from 'chai';
 
@@ -105,16 +105,16 @@ describe('gameScore', () => {
       assertDelimiter(clock, { state: notStartedState, teams, goals }, 'at', '');
     });
 
-    it('should show "–" when the clock is running in regulation', () => {
+    it('should not be shown when the clock is running in regulation', () => {
       const clock = { period: 3, minute: 19, second: 2 };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { teams, goals }, '–');
+      assertDelimiter(clock, { teams, goals }, '');
     });
 
-    it('should show "–" when the clock is running in overtime but there has been no overtime goal', () => {
+    it('should not be shown when the clock is running in overtime but there has been no overtime goal', () => {
       const clock = { period: 'OT', minute: 2, second: 56 };
       const {teams, goals} = scoresMultipleOvertime.games[0];
-      assertDelimiter(clock, { teams, goals }, '–');
+      assertDelimiter(clock, { teams, goals }, '');
     });
 
     it('should show "OT" when the clock reaches the scoring time of an overtime goal', () => {
@@ -123,10 +123,10 @@ describe('gameScore', () => {
       assertDelimiter(clock, { teams, goals }, span('.team-panel__delimiter-period', 'OT'));
     });
 
-    it('should show "–" when the clock reaches shootout but there is no shootout goal', () => {
+    it('should not be shown when the clock reaches shootout but there is no shootout goal', () => {
       const clock = { period: 'SO' };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { teams, goals }, '–');
+      assertDelimiter(clock, { teams, goals }, '');
     });
 
     it('should show "SO" when the clock reaches shootout and the game has a shootout goal', () => {
@@ -529,12 +529,22 @@ function getPlayoffSeriesWinsPanel(vtree) {
 function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
   return [
     div('.team-panel.team-panel--away', [
+      span('.team-logo', [
+        svg({attrs: {class: `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`}}, [
+          svg.use({attrs: {'href': `#team-${teams.away.id}-20192020-dark`}})
+        ])
+      ]),
       span('.team-panel__team-name', teams.away.abbreviation),
       span('.team-panel__team-score' + visibilityClass, [awayGoals])
     ]),
     div('.team-panel.team-panel--home', [
       span('.team-panel__team-score' + visibilityClass, [homeGoals]),
-      span('.team-panel__team-name', teams.home.abbreviation)
+      span('.team-panel__team-name', teams.home.abbreviation),
+      span('.team-logo', [
+        svg({attrs: {class: `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`}}, [
+          svg.use({attrs: {'href': `#team-${teams.home.id}-20192020-dark`}})
+        ])
+      ]),
     ])
   ];
 }

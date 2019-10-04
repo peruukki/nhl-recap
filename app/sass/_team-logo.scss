@@ -1,0 +1,19 @@
+.team-logo {
+  position: relative;
+  flex-grow: 1;
+  height: 1.25em;
+
+  &__image {
+    position: absolute;
+    top: 0.1em;
+    width: 2.5em;
+    height: 1.67em;
+
+    &--away {
+      right: 0;
+    }
+    &--home {
+      left: 0;
+    }
+  }
+}

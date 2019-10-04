@@ -9,10 +9,12 @@
 
   &__score-panel {
     display: flex;
-    padding: 0.3rem 0;
+    align-items: baseline;
+    padding-bottom: 0.5rem;
     border-radius: 4px 4px 0 0;
     background: $background-score-panel;
     color: $color-score-panel;
+    font-size: 1.2rem;
   }
 
   &__info-panel {

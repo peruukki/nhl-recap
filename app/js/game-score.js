@@ -1,4 +1,4 @@
-import {div, span} from '@cycle/dom';
+import {div, span, svg} from '@cycle/dom';
 import _ from 'lodash';
 import {format} from 'timeago.js';
 
@@ -83,13 +83,23 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats)
   const delimiterVisibilityClass = showPreGameStats ? '' : '.fade-in';
   return div('.game__score-panel', [
     div('.team-panel.team-panel--away', [
+      renderLogo(teams.away.id, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),
       span('.team-panel__team-score' + scoreVisibilityClass, [awayGoals.length])
     ]),
     div('.team-panel__delimiter' + delimiterVisibilityClass, showPreGameStats ? 'at' : renderDelimiter(period)),
     div('.team-panel.team-panel--home', [
       span('.team-panel__team-score' + scoreVisibilityClass, [homeGoals.length]),
-      span('.team-panel__team-name', teams.home.abbreviation)
+      span('.team-panel__team-name', teams.home.abbreviation),
+      renderLogo(teams.home.id, 'home')
+    ])
+  ]);
+}
+
+function renderLogo(teamId, modifier) {
+  return span('.team-logo', [
+    svg({attrs: {class: `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`}}, [
+      svg.use({attrs: {'href': `#team-${teamId}-20192020-dark`}})
     ])
   ]);
 }
@@ -97,7 +107,7 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats)
 function renderDelimiter(period) {
   return (period === 'OT' || period === 'SO' || period > 3) ?
     span('.team-panel__delimiter-period', period === 'SO' ? 'SO' : 'OT') :
-    '–';
+    '';
 }
 
 function renderInfoPanel(

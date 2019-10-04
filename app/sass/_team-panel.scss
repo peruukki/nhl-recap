@@ -1,22 +1,18 @@
 .team-panel {
-  @include stretch;
-
-  &--away {
-    text-align: right;
-  }
-  &--home {
-    text-align: left;
-  }
+  display: flex;
+  flex-basis: 1rem;
+  flex-grow: 1;
+  align-items: baseline;
 
   &__team-name {
-    position: relative;
-    bottom: 2px;
+    padding-bottom: 1px;
     font-weight: bold;
   }
 
   &__team-score {
     position: relative;
-    bottom: 1px;
+    top: 2px;
+    padding-bottom: 1px;
     color: $color-highlight;
     font-size: 1.7rem;
     font-weight: bold;
@@ -26,24 +22,21 @@
     }
   }
   &--away &__team-score {
-    margin-left: 0.5em;
+    margin-left: 0.4em;
   }
   &--home &__team-score {
-    margin-right: 0.5em;
+    margin-right: 0.4em;
   }
 
   &__delimiter {
     position: relative;
-    top: 2px;
-    width: 1.2em;
-    height: 1em;
+    bottom: 2px;
+    width: 1em;
     color: $color-main;
     text-align: center;
   }
 
   &__delimiter-period {
-    position: relative;
-    bottom: 2px;
     font-size: 0.8rem;
   }
 }
