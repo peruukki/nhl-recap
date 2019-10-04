@@ -162,8 +162,8 @@ function getPointPercentage({ wins, losses, ot = 0 }) {
   return points / maxPoints;
 }
 
-function getStreakRating({ type, count }) {
-  return count * getStreakMultiplier(type);
+function getStreakRating(streak) {
+  return streak ? streak.count * getStreakMultiplier(streak.type) : 0;
 }
 
 function getStreakMultiplier(type) {
@@ -194,7 +194,7 @@ function renderRecord(record) {
 }
 
 function renderStreak(streak) {
-  return `${streak.count} ${renderStreakType(streak)}`;
+  return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
 }
 
 function renderStreakType({ type }) {
