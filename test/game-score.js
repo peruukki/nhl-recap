@@ -529,12 +529,12 @@ function getPlayoffSeriesWinsPanel(vtree) {
 function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
   return [
     div('.team-panel.team-panel--away', [
-      span('.team-panel__team-name', teams.away),
+      span('.team-panel__team-name', teams.away.abbreviation),
       span('.team-panel__team-score' + visibilityClass, [awayGoals])
     ]),
     div('.team-panel.team-panel--home', [
       span('.team-panel__team-score' + visibilityClass, [homeGoals]),
-      span('.team-panel__team-name', teams.home)
+      span('.team-panel__team-name', teams.home.abbreviation)
     ])
   ];
 }

@@ -35,8 +35,14 @@
         "overtime": true
       },
       "teams": {
-        "away": "STL",
-        "home": "BOS"
+        "away": {
+          "abbreviation": "STL",
+          "id": 19
+        },
+        "home": {
+          "abbreviation": "BOS",
+          "id": 6
+        }
       }
     },
     {
@@ -121,8 +127,14 @@
         "shootout": true
       },
       "teams": {
-        "away": "ANA",
-        "home": "NYR"
+        "away": {
+          "abbreviation": "ANA",
+          "id": 24
+        },
+        "home": {
+          "abbreviation": "NYR",
+          "id": 3
+        }
       }
     },
     {
@@ -173,8 +185,14 @@
         "shootout": true
       },
       "teams": {
-        "away": "TOR",
-        "home": "TBL"
+        "away": {
+          "abbreviation": "TOR",
+          "id": 10
+        },
+        "home": {
+          "abbreviation": "TBL",
+          "id": 14
+        }
       }
     }
   ]

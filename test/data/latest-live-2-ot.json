@@ -56,8 +56,14 @@
         "BOS": 1
       },
       "teams": {
-        "away": "STL",
-        "home": "BOS"
+        "away": {
+          "abbreviation": "STL",
+          "id": 19
+        },
+        "home": {
+          "abbreviation": "BOS",
+          "id": 6
+        }
       }
     },
     {
@@ -133,8 +139,14 @@
         "NYR": 3
       },
       "teams": {
-        "away": "ANA",
-        "home": "NYR"
+        "away": {
+          "abbreviation": "ANA",
+          "id": 24
+        },
+        "home": {
+          "abbreviation": "NYR",
+          "id": 3
+        }
       }
     }
   ]
