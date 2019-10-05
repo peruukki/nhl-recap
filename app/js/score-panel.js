@@ -125,7 +125,10 @@ function renderHeader(state) {
   const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
-    h1('.header__title', 'NHL Recap'),
+    h1('.header__title', [
+      span('.all-caps', 'NHL'),
+      ' Recap'
+    ]),
     button(buttonClass),
     showDate ? renderDate(state.date) : state.clockVtree
   ]);
