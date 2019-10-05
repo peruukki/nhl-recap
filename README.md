@@ -15,9 +15,7 @@ To run the app and re-build on file changes:
 npm start
 ```
 
-NOTE: the app is opened in the browser too early, before it has been built. Just refresh the browser when you see
-a message like this in the console:
-
+Open http://localhost:8000/ in your browser once you see a message like this in the console:
 ```
 1087061 bytes written to public/app.js (5.39 seconds)
 ```

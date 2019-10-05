@@ -46,7 +46,7 @@
     "publish": "npm run build && npm run clone:dist && npm run clean:dist && npm run copy:dist && npm run commit:dist && npm run push:dist",
     "push:dist": "cd dist && git push origin gh-pages",
     "sass": "node-sass app/sass/app.scss public/app.css --output-style compressed",
-    "server": "http-server public -p 8000 -o",
+    "server": "http-server public -p 8000",
     "spec": "mocha --compilers js:babel-register",
     "start": "parallelshell 'npm run watch' 'npm run server'",
     "start:local": "SCORE_API_HOST=http://localhost:8080 npm start",
