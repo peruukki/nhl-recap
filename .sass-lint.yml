@@ -20,4 +20,5 @@ rules:
   property-sort-order:
     - 1
     - order: smacss
+  space-between-parens: 0
   url-quotes: 0

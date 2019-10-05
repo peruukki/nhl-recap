@@ -1,3 +1,12 @@
+@mixin horizontal-offset($team-id, $offset) {
+  &--#{$team-id}#{&}--away {
+    right: $offset;
+  }
+  &--#{$team-id}#{&}--home {
+    left: $offset;
+  }
+}
+
 .team-logo {
   position: relative;
   flex-grow: 1;
@@ -15,5 +24,22 @@
     &--home {
       left: 0;
     }
+
+    @include horizontal-offset(12,  2px); // CAR
+    @include horizontal-offset(25, -1px); // DAL
+    @include horizontal-offset(13, -1px); // FLA
+    @include horizontal-offset(26, -3px); // LAK
+    @include horizontal-offset(30,  2px); // MIN
+    @include horizontal-offset( 8,  2px); // MTL
+    @include horizontal-offset( 1, -1px); // NJD
+    @include horizontal-offset(18,  2px); // NSH
+    @include horizontal-offset( 3, -1px); // NYR
+    @include horizontal-offset( 9, -1px); // OTT
+    @include horizontal-offset(28,  3px); // SJS
+    @include horizontal-offset(19, -1px); // STL
+    @include horizontal-offset(14,  1px); // TBL
+    @include horizontal-offset(10, -2px); // TOR
+    @include horizontal-offset(54, -3px); // VGK
+    @include horizontal-offset(15,  1px); // WSH
   }
 }
