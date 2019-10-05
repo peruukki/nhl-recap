@@ -24,10 +24,17 @@ a message like this in the console:
 
 ## Running the app with local API server
 
-To run the app using a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:
+To run the app connecting to a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:
 ```
 npm run start:local
 ```
+
+Instead of a real `nhl-score-api` server, you can also start a mock [json-server](https://github.com/typicode/json-server)
+API server that returns a static response from the [`server/db.json`](server/db.json) file:
+```
+npm run start:server
+```
+Then you can run the app connecting to the local server with `npm run start:local` as described above.
 
 ## Linting JavaScript
 
