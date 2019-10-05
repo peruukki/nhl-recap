@@ -29,14 +29,14 @@
   }
 
   &__delimiter {
-    position: relative;
-    bottom: 2px;
     width: 1em;
     color: $color-main;
     text-align: center;
   }
 
   &__delimiter-period {
+    position: relative;
+    bottom: 2px;
     font-size: 0.8rem;
   }
 }
