@@ -1,9 +1,10 @@
-import {div, span, svg} from '@cycle/dom';
+import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 import {format} from 'timeago.js';
 
 import {hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName} from './utils';
 import {renderPeriodNumber, renderTime} from './game-clock';
+import {renderTeamLogo} from './logos';
 
 export default function gameScore(
   clock,
@@ -98,9 +99,7 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats)
 
 function renderLogo(teamId, modifier) {
   return span('.team-logo', [
-    svg({attrs: {class: `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`}}, [
-      svg.use({attrs: {'href': `#team-${teamId}-20192020-dark`}})
-    ])
+    renderTeamLogo(teamId, `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`)
   ]);
 }
 

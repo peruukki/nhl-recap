@@ -1,8 +1,9 @@
-import {div, span, svg} from '@cycle/dom';
+import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 import {assert} from 'chai';
 
 import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer, renderLatestGoalAssists} from '../app/js/game-score';
+import {renderTeamLogo} from '../app/js/logos';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -530,9 +531,7 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
   return [
     div('.team-panel.team-panel--away', [
       span('.team-logo', [
-        svg({attrs: {class: `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`}}, [
-          svg.use({attrs: {'href': `#team-${teams.away.id}-20192020-dark`}})
-        ])
+        renderTeamLogo(teams.away.id, `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`)
       ]),
       span('.team-panel__team-name', teams.away.abbreviation),
       span('.team-panel__team-score' + visibilityClass, [awayGoals])
@@ -541,9 +540,7 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
       span('.team-panel__team-score' + visibilityClass, [homeGoals]),
       span('.team-panel__team-name', teams.home.abbreviation),
       span('.team-logo', [
-        svg({attrs: {class: `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`}}, [
-          svg.use({attrs: {'href': `#team-${teams.home.id}-20192020-dark`}})
-        ])
+        renderTeamLogo(teams.home.id, `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`)
       ]),
     ])
   ];
