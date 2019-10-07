@@ -26,7 +26,8 @@
     }
 
     @include horizontal-offset(12,  2px); // CAR
-    @include horizontal-offset(25, -1px); // DAL
+    @include horizontal-offset(25, -2px); // DAL
+    @include horizontal-offset(17,  2px); // DET
     @include horizontal-offset(13, -1px); // FLA
     @include horizontal-offset(26, -3px); // LAK
     @include horizontal-offset(30,  2px); // MIN
