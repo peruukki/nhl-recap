@@ -14,6 +14,16 @@
     &--highlight {
       color: $color-highlight;
     }
+
+    &--spaced {
+      letter-spacing: 1px;
+    }
+    &--spaced#{&}--away {
+      margin-right: -1px;
+    }
+    &--spaced#{&}--home {
+      margin-left: -1px;
+    }
   }
 
   &__label {

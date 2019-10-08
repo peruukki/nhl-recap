@@ -19,7 +19,7 @@ export default function gameScore(
   const allGamesEnded = clock && clock.end && !clock.period;
   const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
   const showTopPreGameStats = !clock || !hasGameStarted(status.state);
-  const showBottomPreGameStats = !clock;
+  const showBottomPreGameStats = false;
   const showProgressInfo = !clock ||
     (isGameInProgress(status.state) && (hasClockPassedCurrentProgress(clock, status) || allGamesEnded));
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
@@ -127,23 +127,25 @@ function renderPreGameInfo(
   status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo, isPlayoffGame, records,
   streaks, standings
 ) {
-  const recordLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
+  const winPctLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
   return [
-    showTopPreGameStats ? renderPreGameStats(teams, records, recordLabel, renderRecord, renderRecord) : null,
-    showTopPreGameStats ? renderPreGameStats(teams, streaks, 'Streak', getStreakRating, renderStreak) : null,
+    showTopPreGameStats ? renderPreGameStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
+    showTopPreGameStats ? renderPreGameStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
+    showBottomPreGameStats ? renderPreGameStats(teams, streaks, 'Streak', getStreakRating, renderStreak) : null,
     showBottomPreGameStats ? renderPreGameStats(teams, standings, 'PO spot pts', getPlayoffSpotRating, renderPlayoffSpot) : null,
     showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
 
-function renderPreGameStats(teams, values, label, ratingFn, renderFn) {
+function renderPreGameStats(teams, values, label, ratingFn, renderFn, modifier = '') {
   const valueClassName = '.pre-game-stats__value';
+  const valueClassNameModifer = modifier ? `${valueClassName}--${modifier}` : '';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
   return div('.pre-game-stats', [
-    span(`${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
+    span(`${valueClassName}${valueClassNameModifer}${valueClassName}--away${highlightClassNames.away}`,
       values ? renderFn(values[teams.away.abbreviation]) : ''),
     span('.pre-game-stats__label', values ? label : ''),
-    span(`${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
+    span(`${valueClassName}${valueClassNameModifer}${valueClassName}--home${highlightClassNames.home}`,
       values ? renderFn(values[teams.home.abbreviation]) : '')
   ]);
 }
@@ -190,7 +192,7 @@ function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot);
 }
 
-function renderRecord(record) {
+function renderWinPercentage(record) {
   const percentage = getPointPercentage(record);
   if (isNaN(percentage)) {
     return '-';
@@ -200,6 +202,10 @@ function renderRecord(record) {
   return percentage
     .toFixed(3)
     .slice(sliceIndex);
+}
+
+function renderRecord({ wins, losses, ot }) {
+  return ot !== undefined ? `${wins}-${losses}-${ot}` : `${wins}-${losses}`;
 }
 
 function renderStreak(streak) {
