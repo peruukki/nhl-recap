@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/peruukki/nhl-recap.svg?branch=master)](https://travis-ci.org/peruukki/nhl-recap)
 
 A web app playing back the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
-Built with [Cycle.js](http://cycle.js.org/) and `npm` scripts.
+Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts.
 
-The app is running at [GitHub pages](http://peruukki.github.io/nhl-recap/). Add it to your home screen on Android for
+The app is running at [GitHub pages](https://peruukki.github.io/nhl-recap/). Add it to your home screen on Android for
 a more app-like, chromeless experience.
 
 ## Running the app
