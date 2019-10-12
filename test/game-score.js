@@ -455,7 +455,7 @@ function assertPreGameStatsAreNotShown(clock, {status, teams, goals}) {
 }
 function assertPreGameStatsExistence(clock, {status, teams, goals}, assertFn) {
   const preGameStats = getPreGameStats(gameScore(clock, { status, teams, goals }));
-  assertFn(preGameStats && preGameStats.sel, 'div.pre-game-stats');
+  assertFn(preGameStats && preGameStats.sel, 'div.team-stats');
 }
 
 function assertPreGameStats(clock, {state = finishedState, teams, goals, preGameStats}, renderedRecords) {
@@ -559,10 +559,10 @@ function expectedLatestGoalPanel(latestGoal) {
 }
 
 function expectedPreGameStats({away, home, label}) {
-  const valueClass = '.pre-game-stats__value';
-  return div('.pre-game-stats', [
+  const valueClass = '.team-stats__value';
+  return div('.team-stats', [
     span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.pointPct),
-    span('.pre-game-stats__label', label),
+    span('.team-stats__label', label),
     span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.pointPct),
   ]);
 }

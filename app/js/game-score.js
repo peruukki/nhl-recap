@@ -121,20 +121,20 @@ function renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, r
 function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records) {
   const winPctLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
   return [
-    showPreGameStats ? renderPreGameStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
-    showPreGameStats ? renderPreGameStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
+    showPreGameStats ? renderTeamStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
+    showPreGameStats ? renderTeamStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
     showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
 
-function renderPreGameStats(teams, values, label, ratingFn, renderFn, modifier = '') {
-  const valueClassName = '.pre-game-stats__value';
+function renderTeamStats(teams, values, label, ratingFn, renderFn, modifier = '') {
+  const valueClassName = '.team-stats__value';
   const valueClassNameModifer = modifier ? `${valueClassName}--${modifier}` : '';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
-  return div('.pre-game-stats', [
+  return div('.team-stats', [
     span(`${valueClassName}${valueClassNameModifer}${valueClassName}--away${highlightClassNames.away}`,
       values ? renderFn(values[teams.away.abbreviation]) : ''),
-    span('.pre-game-stats__label', values ? label : ''),
+    span('.team-stats__label', values ? label : ''),
     span(`${valueClassName}${valueClassNameModifer}${valueClassName}--home${highlightClassNames.home}`,
       values ? renderFn(values[teams.home.abbreviation]) : '')
   ]);
