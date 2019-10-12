@@ -121,8 +121,9 @@ function getTimeValueIteratee(value) {
 }
 
 function getGameEndTime(game) {
+  const isPlayoffGame = !!game.preGameStats && !!game.preGameStats.playoffSeries;
   return (game.status && game.status.state === 'LIVE') ?
-    getGameEndTimeFromProgress(game.status.progress, !!game.playoffSeries) :
+    getGameEndTimeFromProgress(game.status.progress, isPlayoffGame) :
     getGameEndTimeFromGoals(game.goals);
 }
 

@@ -39,16 +39,24 @@
           "period": "3"
         }
       ],
-      "records": {
-        "STL": {
-          "wins": 8,
-          "losses": 4,
-          "ot": 1
+      "preGameStats": {
+        "records": {
+          "STL": {
+            "wins": 8,
+            "losses": 4,
+            "ot": 1
+          },
+          "BOS": {
+            "wins": 7,
+            "losses": 3,
+            "ot": 3
+          }
         },
-        "BOS": {
-          "wins": 7,
-          "losses": 3,
-          "ot": 3
+        "playoffSeries": {
+          "wins": {
+            "STL": 1,
+            "BOS": 1
+          }
         }
       },
       "scores": {
@@ -63,12 +71,6 @@
         "home": {
           "abbreviation": "BOS",
           "id": 6
-        }
-      },
-      "playoffSeries": {
-        "wins": {
-          "STL": 1,
-          "BOS": 1
         }
       }
     },
@@ -128,16 +130,24 @@
           "period": "3"
         }
       ],
-      "records": {
-        "ANA": {
-          "wins": 8,
-          "losses": 4,
-          "ot": 1
+      "preGameStats": {
+        "records": {
+          "ANA": {
+            "wins": 8,
+            "losses": 4,
+            "ot": 1
+          },
+          "NYR": {
+            "wins": 7,
+            "losses": 2,
+            "ot": 4
+          }
         },
-        "NYR": {
-          "wins": 7,
-          "losses": 2,
-          "ot": 4
+        "playoffSeries": {
+          "wins": {
+            "ANA": 2,
+            "NYR": 1
+          }
         }
       },
       "scores": {
@@ -152,12 +162,6 @@
         "home": {
           "abbreviation": "NYR",
           "id": 3
-        }
-      },
-      "playoffSeries": {
-        "wins": {
-          "ANA": 2,
-          "NYR": 1
         }
       }
     }

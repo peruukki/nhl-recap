@@ -17,16 +17,18 @@
           "period": "OT"
         }
       ],
-      "records": {
-        "STL": {
-          "wins": 8,
-          "losses": 4,
-          "ot": 1
-        },
-        "BOS": {
-          "wins": 6,
-          "losses": 7,
-          "ot": 2
+      "preGameStats": {
+        "records": {
+          "STL": {
+            "wins": 8,
+            "losses": 4,
+            "ot": 1
+          },
+          "BOS": {
+            "wins": 6,
+            "losses": 7,
+            "ot": 2
+          }
         }
       },
       "scores": {
@@ -109,16 +111,18 @@
           "period": "SO"
         }
       ],
-      "records": {
-        "ANA": {
-          "wins": 7,
-          "losses": 5,
-          "ot": 0
-        },
-        "NYR": {
-          "wins": 5,
-          "losses": 9,
-          "ot": 3
+      "preGameStats": {
+        "records": {
+          "ANA": {
+            "wins": 7,
+            "losses": 5,
+            "ot": 0
+          },
+          "NYR": {
+            "wins": 5,
+            "losses": 9,
+            "ot": 3
+          }
         }
       },
       "scores": {
@@ -167,16 +171,18 @@
           "period": "SO"
         }
       ],
-      "records": {
-        "TOR": {
-          "wins": 4,
-          "losses": 4,
-          "ot": 3
-        },
-        "TBL": {
-          "wins": 6,
-          "losses": 2,
-          "ot": 4
+      "preGameStats": {
+        "records": {
+          "TOR": {
+            "wins": 4,
+            "losses": 4,
+            "ot": 3
+          },
+          "TBL": {
+            "wins": 6,
+            "losses": 2,
+            "ot": 4
+          }
         }
       },
       "scores": {

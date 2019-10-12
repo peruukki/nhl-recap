@@ -8,7 +8,7 @@ import {renderTeamLogo} from './logos';
 
 export default function gameScore(
   clock,
-  {status, startTime, teams, goals, records, streaks, standings, playoffSeries, goalCounts},
+  {status, startTime, teams, goals, preGameStats = {}, goalCounts},
   gameAnimationIndex
 ) {
   const currentGoals = getCurrentGoals(clock, teams, goals, status);
@@ -19,10 +19,9 @@ export default function gameScore(
   const allGamesEnded = clock && clock.end && !clock.period;
   const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
   const showTopPreGameStats = !clock || !hasGameStarted(status.state);
-  const showBottomPreGameStats = false;
   const showProgressInfo = !clock ||
     (isGameInProgress(status.state) && (hasClockPassedCurrentProgress(clock, status) || allGamesEnded));
-  const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins);
+  const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, preGameStats.playoffSeries, updatePlayoffSeriesWins);
 
   if (goalCounts) {
     goalCounts.away$.shamefullySendNext(awayGoals.length);
@@ -31,8 +30,8 @@ export default function gameScore(
 
   return div(`.game.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, showTopPreGameStats),
-    renderInfoPanel(showTopPreGameStats, showBottomPreGameStats, showProgressInfo, startTime, teams, records, streaks,
-      standings, status, !!playoffSeriesWins, latestGoal),
+    renderInfoPanel(showTopPreGameStats, showProgressInfo, startTime, teams, preGameStats.records, status,
+      !!playoffSeriesWins, latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
 }
@@ -109,30 +108,21 @@ function renderDelimiter(period) {
     '';
 }
 
-function renderInfoPanel(
-  showTopPreGameStats, showBottomPreGameStats, showProgressInfo, startTime, teams, records, streaks, standings, status,
-  isPlayoffGame, latestGoal
-) {
+function renderInfoPanel(showTopPreGameStats, showProgressInfo, startTime, teams, records, status, isPlayoffGame, latestGoal) {
   const showLatestGoal = !showTopPreGameStats && !showProgressInfo;
   const modifierClass = isPlayoffGame ? ' .game__info-panel--playoff' : '';
   return div(`.game__info-panel${modifierClass}`,
     showLatestGoal ?
       renderLatestGoal(latestGoal) :
-      renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo,
-        isPlayoffGame, records, streaks, standings)
+      renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showProgressInfo, isPlayoffGame, records)
   );
 }
 
-function renderPreGameInfo(
-  status, startTime, teams, showTopPreGameStats, showBottomPreGameStats, showProgressInfo, isPlayoffGame, records,
-  streaks, standings
-) {
+function renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showProgressInfo, isPlayoffGame, records) {
   const winPctLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
   return [
     showTopPreGameStats ? renderPreGameStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
     showTopPreGameStats ? renderPreGameStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
-    showBottomPreGameStats ? renderPreGameStats(teams, streaks, 'Streak', getStreakRating, renderStreak) : null,
-    showBottomPreGameStats ? renderPreGameStats(teams, standings, 'PO spot pts', getPlayoffSpotRating, renderPlayoffSpot) : null,
     showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
@@ -173,6 +163,7 @@ function getPointPercentage({ wins, losses, ot = 0 }) {
   return points / maxPoints;
 }
 
+// eslint-disable-next-line no-unused-vars
 function getStreakRating(streak) {
   return streak ? streak.count * getStreakMultiplier(streak.type) : 0;
 }
@@ -188,6 +179,7 @@ function getStreakMultiplier(type) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot);
 }
@@ -208,6 +200,7 @@ function renderRecord({ wins, losses, ot }) {
   return ot !== undefined ? `${wins}-${losses}-${ot}` : `${wins}-${losses}`;
 }
 
+// eslint-disable-next-line no-unused-vars
 function renderStreak(streak) {
   return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
 }
@@ -225,6 +218,7 @@ function renderStreakType({ type }) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
   return pointsFromPlayoffSpot || '';
 }
