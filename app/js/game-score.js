@@ -123,7 +123,7 @@ function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgr
   return [
     showPreGameStats ? renderTeamStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
     showPreGameStats ? renderTeamStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
-    showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
+    showProgressInfo ? div('.game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
 

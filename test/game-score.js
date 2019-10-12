@@ -568,7 +568,7 @@ function expectedPreGameStats({away, home, label}) {
 }
 
 function expectedPreGameDescription(description) {
-  return div('.pre-game-description.fade-in', description);
+  return div('.game-description.fade-in', description);
 }
 
 function expectedPlayoffSeriesWinsPanel(seriesWinsVtree, animationClass) {
