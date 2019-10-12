@@ -18,7 +18,7 @@ export default function gameScore(
   const period = latestGoal ? latestGoal.period : null;
   const allGamesEnded = clock && clock.end && !clock.period;
   const updatePlayoffSeriesWins = hasGameFinished(status.state) && allGamesEnded;
-  const showTopPreGameStats = !clock || !hasGameStarted(status.state);
+  const showPreGameStats = !clock || !hasGameStarted(status.state);
   const showProgressInfo = !clock ||
     (isGameInProgress(status.state) && (hasClockPassedCurrentProgress(clock, status) || allGamesEnded));
   const playoffSeriesWins = getPlayoffSeriesWins(teams, awayGoals, homeGoals, preGameStats.playoffSeries, updatePlayoffSeriesWins);
@@ -29,8 +29,8 @@ export default function gameScore(
   }
 
   return div(`.game.expand--${gameAnimationIndex}`, [
-    renderScorePanel(teams, awayGoals, homeGoals, period, showTopPreGameStats),
-    renderInfoPanel(showTopPreGameStats, showProgressInfo, startTime, teams, preGameStats.records, status,
+    renderScorePanel(teams, awayGoals, homeGoals, period, showPreGameStats),
+    renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, preGameStats.records, status,
       !!playoffSeriesWins, latestGoal),
     playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
   ]);
@@ -108,21 +108,21 @@ function renderDelimiter(period) {
     '';
 }
 
-function renderInfoPanel(showTopPreGameStats, showProgressInfo, startTime, teams, records, status, isPlayoffGame, latestGoal) {
-  const showLatestGoal = !showTopPreGameStats && !showProgressInfo;
+function renderInfoPanel(showPreGameStats, showProgressInfo, startTime, teams, records, status, isPlayoffGame, latestGoal) {
+  const showLatestGoal = !showPreGameStats && !showProgressInfo;
   const modifierClass = isPlayoffGame ? ' .game__info-panel--playoff' : '';
   return div(`.game__info-panel${modifierClass}`,
     showLatestGoal ?
       renderLatestGoal(latestGoal) :
-      renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showProgressInfo, isPlayoffGame, records)
+      renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records)
   );
 }
 
-function renderPreGameInfo(status, startTime, teams, showTopPreGameStats, showProgressInfo, isPlayoffGame, records) {
+function renderPreGameInfo(status, startTime, teams, showPreGameStats, showProgressInfo, isPlayoffGame, records) {
   const winPctLabel = isPlayoffGame ? 'Win-%' : 'Point-%';
   return [
-    showTopPreGameStats ? renderPreGameStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
-    showTopPreGameStats ? renderPreGameStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
+    showPreGameStats ? renderPreGameStats(teams, records, winPctLabel, renderWinPercentage, renderWinPercentage) : null,
+    showPreGameStats ? renderPreGameStats(teams, records, 'Record', renderWinPercentage, renderRecord, 'spaced') : null,
     showProgressInfo ? div('.pre-game-description.fade-in', renderGameStatus(status, startTime)) : null
   ];
 }
