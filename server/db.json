@@ -98,17 +98,25 @@
           "away": { "abbreviation": "OTT", "id": 9 },
           "home": { "abbreviation": "TOR", "id": 10 }
         },
-        "records": {
-          "TOR": { "wins": 0, "losses": 0, "ot": 0 },
-          "OTT": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "TOR": { "wins": 3, "losses": 3, "ot": 1 },
+            "OTT": { "wins": 1, "losses": 3, "ot": 0 }
+          }
         },
-        "streaks": {
-          "OTT": { "type": "LOSSES", "count": 2 },
-          "TOR": { "type": "OT", "count": 1 }
-        },
-        "standings": {
-          "OTT": { "pointsFromPlayoffSpot": "-34" },
-          "TOR": { "pointsFromPlayoffSpot": "+4" }
+        "currentStats": {
+          "records": {
+            "TOR": { "wins": 4, "losses": 3, "ot": 1 },
+            "OTT": { "wins": 1, "losses": 4, "ot": 0 }
+          },
+          "streaks": {
+            "OTT": { "type": "LOSSES", "count": 2 },
+            "TOR": { "type": "OT", "count": 1 }
+          },
+          "standings": {
+            "OTT": { "pointsFromPlayoffSpot": "-3" },
+            "TOR": { "pointsFromPlayoffSpot": "+4" }
+          }
         }
       },
       {
@@ -178,17 +186,25 @@
           "away": { "abbreviation": "WSH", "id": 15 },
           "home": { "abbreviation": "STL", "id": 19 }
         },
-        "records": {
-          "WSH": { "wins": 0, "losses": 0, "ot": 0 },
-          "STL": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "WSH": { "wins": 3, "losses": 2, "ot": 2 },
+            "STL": { "wins": 3, "losses": 1, "ot": 1 }
+          }
         },
-        "streaks": {
-          "WSH": { "type": "LOSSES", "count": 1 },
-          "STL": { "type": "WINS", "count": 2 }
-        },
-        "standings": {
-          "WSH": { "pointsFromPlayoffSpot": "+8" },
-          "STL": { "pointsFromPlayoffSpot": "+13" }
+        "currentStats": {
+          "records": {
+            "WSH": { "wins": 4, "losses": 2, "ot": 2 },
+            "STL": { "wins": 3, "losses": 1, "ot": 2 }
+          },
+          "streaks": {
+            "WSH": { "type": "WINS", "count": 1 },
+            "STL": { "type": "OT", "count": 2 }
+          },
+          "standings": {
+            "WSH": { "pointsFromPlayoffSpot": "+8" },
+            "STL": { "pointsFromPlayoffSpot": "+13" }
+          }
         }
       },
       {
@@ -256,17 +272,25 @@
           "away": { "abbreviation": "VAN", "id": 23 },
           "home": { "abbreviation": "EDM", "id": 22 }
         },
-        "records": {
-          "EDM": { "wins": 0, "losses": 0, "ot": 0 },
-          "VAN": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "EDM": { "wins": 5, "losses": 1, "ot": 0 },
+            "VAN": { "wins": 3, "losses": 1, "ot": 0 }
+          }
         },
-        "streaks": {
-          "VAN": { "type": "OT", "count": 1 },
-          "EDM": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "VAN": { "pointsFromPlayoffSpot": "-9" },
-          "EDM": { "pointsFromPlayoffSpot": "-11" }
+        "currentStats": {
+          "records": {
+            "EDM": { "wins": 6, "losses": 1, "ot": 0 },
+            "VAN": { "wins": 3, "losses": 2, "ot": 0 }
+          },
+          "streaks": {
+            "VAN": { "type": "OT", "count": 1 },
+            "EDM": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "VAN": { "pointsFromPlayoffSpot": "-9" },
+            "EDM": { "pointsFromPlayoffSpot": "-11" }
+          }
         }
       },
       {
@@ -327,17 +351,25 @@
           "away": { "abbreviation": "SJS", "id": 28 },
           "home": { "abbreviation": "VGK", "id": 54 }
         },
-        "records": {
-          "VGK": { "wins": 0, "losses": 0, "ot": 0 },
-          "SJS": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "VGK": { "wins": 3, "losses": 3, "ot": 0 },
+            "SJS": { "wins": 3, "losses": 3, "ot": 0 }
+          }
         },
-        "streaks": {
-          "SJS": { "type": "WINS", "count": 2 },
-          "VGK": { "type": "LOSSES", "count": 2 }
-        },
-        "standings": {
-          "SJS": { "pointsFromPlayoffSpot": "+15" },
-          "VGK": { "pointsFromPlayoffSpot": "+7" }
+        "currentStats": {
+          "records": {
+            "VGK": { "wins": 4, "losses": 3, "ot": 0 },
+            "SJS": { "wins": 3, "losses": 4, "ot": 0 }
+          },
+          "streaks": {
+            "SJS": { "type": "LOSSES", "count": 2 },
+            "VGK": { "type": "WINS", "count": 2 }
+          },
+          "standings": {
+            "SJS": { "pointsFromPlayoffSpot": "+15" },
+            "VGK": { "pointsFromPlayoffSpot": "+7" }
+          }
         }
       },
       {
@@ -424,17 +456,25 @@
           "away": { "abbreviation": "FLA", "id": 13 },
           "home": { "abbreviation": "TBL", "id": 14 }
         },
-        "records": {
-          "TBL": { "wins": 0, "losses": 0, "ot": 0 },
-          "FLA": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "TBL": { "wins": 2, "losses": 2, "ot": 1 },
+            "FLA": { "wins": 2, "losses": 1, "ot": 2 }
+          }
         },
-        "streaks": {
-          "FLA": { "type": "LOSSES", "count": 1 },
-          "TBL": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "FLA": { "pointsFromPlayoffSpot": "-1" },
-          "TBL": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "TBL": { "wins": 3, "losses": 2, "ot": 1 },
+            "FLA": { "wins": 2, "losses": 2, "ot": 2 }
+          },
+          "streaks": {
+            "FLA": { "type": "LOSSES", "count": 1 },
+            "TBL": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "FLA": { "pointsFromPlayoffSpot": "-1" },
+            "TBL": { "pointsFromPlayoffSpot": "+2" }
+          }
         }
       },
       {
@@ -555,17 +595,25 @@
           "away": { "abbreviation": "WPG", "id": 52 },
           "home": { "abbreviation": "NYR", "id": 3 }
         },
-        "records": {
-          "NYR": { "wins": 0, "losses": 0, "ot": 0 },
-          "WPG": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "NYR": { "wins": 1, "losses": 1, "ot": 0 },
+            "WPG": { "wins": 4, "losses": 3, "ot": 0 }
+          }
         },
-        "streaks": {
-          "WPG": { "type": "LOSSES", "count": 1 },
-          "NYR": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "WPG": { "pointsFromPlayoffSpot": "0" },
-          "NYR": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "NYR": { "wins": 2, "losses": 1, "ot": 0 },
+            "WPG": { "wins": 4, "losses": 4, "ot": 0 }
+          },
+          "streaks": {
+            "WPG": { "type": "LOSSES", "count": 1 },
+            "NYR": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "WPG": { "pointsFromPlayoffSpot": "0" },
+            "NYR": { "pointsFromPlayoffSpot": "-2" }
+          }
         }
       },
       {
@@ -621,17 +669,25 @@
           "away": { "abbreviation": "BUF", "id": 7 },
           "home": { "abbreviation": "PIT", "id": 5 }
         },
-        "records": {
-          "BUF": { "wins": 0, "losses": 0, "ot": 0 },
-          "PIT": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "BUF": { "wins": 4, "losses": 1, "ot": 1 },
+            "PIT": { "wins": 5, "losses": 1, "ot": 0 }
+          }
         },
-        "streaks": {
-          "BUF": { "type": "WINS", "count": 1 },
-          "PIT": { "type": "LOSSES", "count": 1 }
-        },
-        "standings": {
-          "BUF": { "pointsFromPlayoffSpot": "+2" },
-          "PIT": { "pointsFromPlayoffSpot": "-1" }
+        "currentStats": {
+          "records": {
+            "BUF": { "wins": 5, "losses": 1, "ot": 1 },
+            "PIT": { "wins": 5, "losses": 2, "ot": 0 }
+          },
+          "streaks": {
+            "BUF": { "type": "WINS", "count": 1 },
+            "PIT": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "BUF": { "pointsFromPlayoffSpot": "+2" },
+            "PIT": { "pointsFromPlayoffSpot": "-1" }
+          }
         }
       },
       {
@@ -711,17 +767,25 @@
           "away": { "abbreviation": "MTL", "id": 8 },
           "home": { "abbreviation": "CAR", "id": 12 }
         },
-        "records": {
-          "CAR": { "wins": 0, "losses": 0, "ot": 0 },
-          "MTL": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "CAR": { "wins": 5, "losses": 2, "ot": 0 },
+            "MTL": { "wins": 2, "losses": 2, "ot": 1 }
+          }
         },
-        "streaks": {
-          "MTL": { "type": "OT", "count": 1 },
-          "CAR": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "MTL": { "pointsFromPlayoffSpot": "+1" },
-          "CAR": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "CAR": { "wins": 6, "losses": 2, "ot": 0 },
+            "MTL": { "wins": 2, "losses": 2, "ot": 2 }
+          },
+          "streaks": {
+            "MTL": { "type": "OT", "count": 1 },
+            "CAR": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "MTL": { "pointsFromPlayoffSpot": "+1" },
+            "CAR": { "pointsFromPlayoffSpot": "+2" }
+          }
         }
       },
       {
@@ -813,17 +877,25 @@
           "away": { "abbreviation": "MIN", "id": 30 },
           "home": { "abbreviation": "NSH", "id": 18 }
         },
-        "records": {
-          "NSH": { "wins": 0, "losses": 0, "ot": 0 },
-          "MIN": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "NSH": { "wins": 3, "losses": 2, "ot": 0 },
+            "MIN": { "wins": 1, "losses": 4, "ot": 0 }
+          }
         },
-        "streaks": {
-          "MIN": { "type": "LOSSES", "count": 1 },
-          "NSH": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "MIN": { "pointsFromPlayoffSpot": "0" },
-          "NSH": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "NSH": { "wins": 4, "losses": 2, "ot": 0 },
+            "MIN": { "wins": 1, "losses": 5, "ot": 0 }
+          },
+          "streaks": {
+            "MIN": { "type": "LOSSES", "count": 1 },
+            "NSH": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "MIN": { "pointsFromPlayoffSpot": "0" },
+            "NSH": { "pointsFromPlayoffSpot": "+2" }
+          }
         }
       },
       {
@@ -867,17 +939,25 @@
           "away": { "abbreviation": "BOS", "id": 6 },
           "home": { "abbreviation": "DAL", "id": 25 }
         },
-        "records": {
-          "BOS": { "wins": 0, "losses": 0, "ot": 0 },
-          "DAL": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "BOS": { "wins": 4, "losses": 1, "ot": 0 },
+            "DAL": { "wins": 1, "losses": 5, "ot": 1 }
+          }
         },
-        "streaks": {
-          "BOS": { "type": "WINS", "count": 1 },
-          "DAL": { "type": "LOSSES", "count": 1 }
-        },
-        "standings": {
-          "BOS": { "pointsFromPlayoffSpot": "+2" },
-          "DAL": { "pointsFromPlayoffSpot": "0" }
+        "currentStats": {
+          "records": {
+            "BOS": { "wins": 5, "losses": 1, "ot": 0 },
+            "DAL": { "wins": 1, "losses": 6, "ot": 1 }
+          },
+          "streaks": {
+            "BOS": { "type": "WINS", "count": 1 },
+            "DAL": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "BOS": { "pointsFromPlayoffSpot": "+2" },
+            "DAL": { "pointsFromPlayoffSpot": "0" }
+          }
         }
       },
       {
@@ -980,17 +1060,25 @@
           "away": { "abbreviation": "CGY", "id": 20 },
           "home": { "abbreviation": "COL", "id": 21 }
         },
-        "records": {
-          "COL": { "wins": 0, "losses": 0, "ot": 0 },
-          "CGY": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "COL": { "wins": 4, "losses": 0, "ot": 1 },
+            "CGY": { "wins": 3, "losses": 2, "ot": 1 }
+          }
         },
-        "streaks": {
-          "CGY": { "type": "LOSSES", "count": 1 },
-          "COL": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "CGY": { "pointsFromPlayoffSpot": "0" },
-          "COL": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "COL": { "wins": 5, "losses": 0, "ot": 1 },
+            "CGY": { "wins": 3, "losses": 3, "ot": 1 }
+          },
+          "streaks": {
+            "CGY": { "type": "LOSSES", "count": 1 },
+            "COL": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "CGY": { "pointsFromPlayoffSpot": "0" },
+            "COL": { "pointsFromPlayoffSpot": "+2" }
+          }
         }
       },
       {
@@ -1036,17 +1124,25 @@
           "away": { "abbreviation": "ARI", "id": 53 },
           "home": { "abbreviation": "ANA", "id": 24 }
         },
-        "records": {
-          "ANA": { "wins": 0, "losses": 0, "ot": 0 },
-          "ARI": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "ANA": { "wins": 4, "losses": 2, "ot": 0 },
+            "ARI": { "wins": 2, "losses": 1, "ot": 1 }
+          }
         },
-        "streaks": {
-          "ARI": { "type": "LOSSES", "count": 1 },
-          "ANA": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "ARI": { "pointsFromPlayoffSpot": "0" },
-          "ANA": { "pointsFromPlayoffSpot": "+2" }
+        "currentStats": {
+          "records": {
+            "ANA": { "wins": 5, "losses": 2, "ot": 0 },
+            "ARI": { "wins": 2, "losses": 2, "ot": 1 }
+          },
+          "streaks": {
+            "ARI": { "type": "LOSSES", "count": 1 },
+            "ANA": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "ARI": { "pointsFromPlayoffSpot": "0" },
+            "ANA": { "pointsFromPlayoffSpot": "+2" }
+          }
         }
       },
       {
@@ -1126,41 +1222,88 @@
           "away": { "abbreviation": "CHI", "id": 16 },
           "home": { "abbreviation": "PHI", "id": 4 }
         },
-        "records": {
-          "PHI": { "wins": 0, "losses": 0, "ot": 0 },
-          "CHI": { "wins": 0, "losses": 0, "ot": 0 }
+        "preGameStats": {
+          "records": {
+            "PHI": { "wins": 1, "losses": 2, "ot": 1 },
+            "CHI": { "wins": 1, "losses": 1, "ot": 1 }
+          }
         },
-        "streaks": {
-          "CHI": { "type": "LOSSES", "count": 1 },
-          "PHI": { "type": "WINS", "count": 1 }
-        },
-        "standings": {
-          "CHI": { "pointsFromPlayoffSpot": "0" },
-          "PHI": { "pointsFromPlayoffSpot": "+1" }
+        "currentStats": {
+          "records": {
+            "PHI": { "wins": 2, "losses": 2, "ot": 1 },
+            "CHI": { "wins": 1, "losses": 2, "ot": 1 }
+          },
+          "streaks": {
+            "CHI": { "type": "LOSSES", "count": 1 },
+            "PHI": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "CHI": { "pointsFromPlayoffSpot": "0" },
+            "PHI": { "pointsFromPlayoffSpot": "+1" }
+          }
         }
       },
       {
-        "status": { "state": "FINAL" },
+        "status": { "state": "PREVIEW" },
+        "startTime": "2019-10-04T18:00:00Z",
         "goals": [],
         "teams": {
           "away": { "abbreviation": "CBJ", "id": 29 },
           "home": { "abbreviation": "NJD", "id": 1 }
+        },
+        "preGameStats": {
+          "records": {
+            "CBJ": { "wins": 3, "losses": 3, "ot": 0 },
+            "NJD": { "wins": 0, "losses": 4, "ot": 2 }
+          }
+        },
+        "currentStats": {
+          "records": {
+            "CBJ": { "wins": 3, "losses": 3, "ot": 0 },
+            "NJD": { "wins": 0, "losses": 4, "ot": 2 }
+          }
         }
       },
       {
-        "status": { "state": "FINAL" },
+        "status": { "state": "PREVIEW" },
+        "startTime": "2019-10-04T18:00:00Z",
         "goals": [],
         "teams": {
           "away": { "abbreviation": "DET", "id": 17 },
           "home": { "abbreviation": "NYI", "id": 2 }
+        },
+        "preGameStats": {
+          "records": {
+            "DET": { "wins": 3, "losses": 3, "ot": 0 },
+            "NYI": { "wins": 3, "losses": 3, "ot": 0 }
+          }
+        },
+        "currentStats": {
+          "records": {
+            "DET": { "wins": 3, "losses": 3, "ot": 0 },
+            "NYI": { "wins": 3, "losses": 3, "ot": 0 }
+          }
         }
       },
       {
-        "status": { "state": "FINAL" },
+        "status": { "state": "PREVIEW" },
+        "startTime": "2019-10-04T18:00:00Z",
         "goals": [],
         "teams": {
           "away": { "abbreviation": "LAK", "id": 26 },
           "home": { "abbreviation": "WSH", "id": 15 }
+        },
+        "preGameStats": {
+          "records": {
+            "LAK": { "wins": 2, "losses": 4, "ot": 0 },
+            "WSH": { "wins": 4, "losses": 2, "ot": 2 }
+          }
+        },
+        "currentStats": {
+          "records": {
+            "LAK": { "wins": 2, "losses": 4, "ot": 0 },
+            "WSH": { "wins": 4, "losses": 2, "ot": 2 }
+          }
         }
       }
     ]
