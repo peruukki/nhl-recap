@@ -1082,7 +1082,18 @@
         }
       },
       {
-        "status": { "state": "FINAL" },
+        "status": {
+          "state": "LIVE",
+          "progress": {
+            "currentPeriod": 1,
+            "currentPeriodOrdinal": "1st",
+            "currentPeriodTimeRemaining": {
+              "pretty": "17:22",
+              "min": 17,
+              "sec": 22
+            }
+          }
+        },
         "startTime": "2019-10-04T02:00:00Z",
         "goals": [
           {
@@ -1093,33 +1104,11 @@
               { "player": "Devin Shore", "seasonTotal": 1 },
               { "player": "Hampus Lindholm", "seasonTotal": 1 }
             ],
-            "min": 14,
+            "min": 1,
             "sec": 32
-          },
-          {
-            "team": "ARI",
-            "period": "2",
-            "scorer": { "player": "Derek Stepan", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Phil Kessel", "seasonTotal": 1 },
-              { "player": "Clayton Keller", "seasonTotal": 1 }
-            ],
-            "min": 9,
-            "sec": 3
-          },
-          {
-            "team": "ANA",
-            "period": "2",
-            "scorer": { "player": "Cam Fowler", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Carter Rowney", "seasonTotal": 1 },
-              { "player": "Max Jones", "seasonTotal": 1 }
-            ],
-            "min": 19,
-            "sec": 28
           }
         ],
-        "scores": { "ARI": 1, "ANA": 2 },
+        "scores": { "ARI": 1, "ANA": 0 },
         "teams": {
           "away": { "abbreviation": "ARI", "id": 53 },
           "home": { "abbreviation": "ANA", "id": 24 }
@@ -1132,8 +1121,8 @@
         },
         "currentStats": {
           "records": {
-            "ANA": { "wins": 5, "losses": 2, "ot": 0 },
-            "ARI": { "wins": 2, "losses": 2, "ot": 1 }
+            "ANA": { "wins": 4, "losses": 2, "ot": 0 },
+            "ARI": { "wins": 2, "losses": 1, "ot": 1 }
           },
           "streaks": {
             "ARI": { "type": "LOSSES", "count": 1 },
@@ -1146,7 +1135,18 @@
         }
       },
       {
-        "status": { "state": "FINAL" },
+        "status": {
+          "state": "LIVE",
+          "progress": {
+            "currentPeriod": 1,
+            "currentPeriodOrdinal": "1st",
+            "currentPeriodTimeRemaining": {
+              "pretty": "11:58",
+              "min": 11,
+              "sec": 58
+            }
+          }
+        },
         "startTime": "2019-10-04T18:00:00Z",
         "goals": [
           {
@@ -1164,60 +1164,9 @@
             "assists": [{ "player": "Patrick Kane", "seasonTotal": 1 }],
             "min": 7,
             "sec": 44
-          },
-          {
-            "team": "PHI",
-            "period": "2",
-            "scorer": { "player": "Oskar Lindblom", "seasonTotal": 1 },
-            "assists": [],
-            "min": 6,
-            "sec": 28,
-            "strength": "PPG"
-          },
-          {
-            "team": "PHI",
-            "period": "2",
-            "scorer": { "player": "Travis Konecny", "seasonTotal": 2 },
-            "assists": [{ "player": "Scott Laughton", "seasonTotal": 1 }],
-            "min": 18,
-            "sec": 4
-          },
-          {
-            "team": "CHI",
-            "period": "2",
-            "scorer": { "player": "Alex DeBrincat", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Patrick Kane", "seasonTotal": 2 },
-              { "player": "Erik Gustafsson", "seasonTotal": 1 }
-            ],
-            "min": 19,
-            "sec": 47,
-            "strength": "PPG"
-          },
-          {
-            "team": "PHI",
-            "period": "3",
-            "scorer": { "player": "Michael Raffl", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Tyler Pitlick", "seasonTotal": 1 },
-              { "player": "Robert Hagg", "seasonTotal": 1 }
-            ],
-            "min": 9,
-            "sec": 48
-          },
-          {
-            "team": "CHI",
-            "period": "3",
-            "scorer": { "player": "Patrick Kane", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Erik Gustafsson", "seasonTotal": 2 },
-              { "player": "Duncan Keith", "seasonTotal": 1 }
-            ],
-            "min": 17,
-            "sec": 53
           }
         ],
-        "scores": { "CHI": 3, "PHI": 4 },
+        "scores": { "CHI": 1, "PHI": 1 },
         "teams": {
           "away": { "abbreviation": "CHI", "id": 16 },
           "home": { "abbreviation": "PHI", "id": 4 }
@@ -1230,8 +1179,8 @@
         },
         "currentStats": {
           "records": {
-            "PHI": { "wins": 2, "losses": 2, "ot": 1 },
-            "CHI": { "wins": 1, "losses": 2, "ot": 1 }
+            "PHI": { "wins": 1, "losses": 2, "ot": 1 },
+            "CHI": { "wins": 1, "losses": 1, "ot": 1 }
           },
           "streaks": {
             "CHI": { "type": "LOSSES", "count": 1 },
