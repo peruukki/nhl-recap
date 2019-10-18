@@ -2,7 +2,9 @@ import {div, span} from '@cycle/dom';
 import _ from 'lodash';
 import {assert} from 'chai';
 
-import {default as gameScore, renderLatestGoalTime, renderLatestGoalScorer, renderLatestGoalAssists} from '../app/js/game-score';
+import {
+  default as gameScore, delimiter, renderLatestGoalTime, renderLatestGoalScorer, renderLatestGoalAssists
+} from '../app/js/game-score';
 import {renderTeamLogo} from '../app/js/logos';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
@@ -300,14 +302,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
-        away: { value: '8-4-1' },
-        home: { value: '7-3-3' },
+        away: { value: [8, delimiter, 4, delimiter, 1] },
+        home: { value: [7, delimiter, 3, delimiter, 3] },
         label
       });
 
       assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
-        away: { value: '8-4-1' },
-        home: { value: '7-2-4', className: '--highlight' },
+        away: { value: [8, delimiter, 4, delimiter, 1] },
+        home: { value: [7, delimiter, 2, delimiter, 4], className: '--highlight' },
         label
       });
     });
@@ -317,14 +319,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
-        away: { value: '7-3' },
-        home: { value: '7-3' },
+        away: { value: [7, delimiter, 3] },
+        home: { value: [7, delimiter, 3] },
         label
       });
 
       assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
-        away: { value: '7-5', className: '--highlight' },
-        home: { value: '5-9' },
+        away: { value: [7, delimiter, 5], className: '--highlight' },
+        home: { value: [5, delimiter, 9] },
         label
       });
     });
@@ -434,14 +436,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
-        away: { value: '9-4-1', className: '--highlight' },
-        home: { value: '7-4-3' },
+        away: { value: [9, delimiter, 4, delimiter, 1], className: '--highlight' },
+        home: { value: [7, delimiter, 4, delimiter, 3] },
         label
       });
 
       assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
-        away: { value: '8-5-1' },
-        home: { value: '8-2-4', className: '--highlight' },
+        away: { value: [8, delimiter, 5, delimiter, 1] },
+        home: { value: [8, delimiter, 2, delimiter, 4], className: '--highlight' },
         label
       });
     });
@@ -451,14 +453,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
-        away: { value: '8-3', className: '--highlight' },
-        home: { value: '7-4' },
+        away: { value: [8, delimiter, 3], className: '--highlight' },
+        home: { value: [7, delimiter, 4] },
         label
       });
 
       assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
-        away: { value: '7-6', className: '--highlight' },
-        home: { value: '6-9' },
+        away: { value: [7, delimiter, 6], className: '--highlight' },
+        home: { value: [6, delimiter, 9] },
         label
       });
     });

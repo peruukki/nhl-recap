@@ -210,8 +210,10 @@ function renderWinPercentage(record) {
     .slice(sliceIndex);
 }
 
+export const delimiter = span('.team-stats__delimiter', ['-']);
+
 function renderRecord({ wins, losses, ot }) {
-  return ot !== undefined ? `${wins}-${losses}-${ot}` : `${wins}-${losses}`;
+  return ot !== undefined ? [wins, delimiter, losses, delimiter, ot] : [wins, delimiter, losses];
 }
 
 function renderStreak(streak) {
