@@ -44,6 +44,38 @@
           }
         }
       },
+      "currentStats": {
+        "records": {
+          "STL": {
+            "wins": 9,
+            "losses": 4,
+            "ot": 1
+          },
+          "BOS": {
+            "wins": 7,
+            "losses": 4,
+            "ot": 3
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 2,
+            "type": "WINS"
+          },
+          "BOS": {
+            "count": 1,
+            "type": "LOSSES"
+          }
+        },
+        "standings": {
+          "STL": {
+            "pointsFromPlayoffSpot": "+4"
+          },
+          "BOS": {
+            "pointsFromPlayoffSpot": "+4"
+          }
+        }
+      },
       "scores": {
         "STL": 2,
         "BOS": 0
@@ -126,6 +158,38 @@
             "wins": 7,
             "losses": 2,
             "ot": 4
+          }
+        }
+      },
+      "currentStats": {
+        "records": {
+          "ANA": {
+            "wins": 8,
+            "losses": 5,
+            "ot": 1
+          },
+          "NYR": {
+            "wins": 8,
+            "losses": 2,
+            "ot": 4
+          }
+        },
+        "streaks": {
+          "ANA": {
+            "count": 2,
+            "type": "LOSSES"
+          },
+          "NYR": {
+            "count": 2,
+            "type": "WINS"
+          }
+        },
+        "standings": {
+          "ANA": {
+            "pointsFromPlayoffSpot": "+2"
+          },
+          "NYR": {
+            "pointsFromPlayoffSpot": "-2"
           }
         }
       },

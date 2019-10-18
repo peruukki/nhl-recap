@@ -19,9 +19,14 @@ function highlightLatestGoalChange(gameIndex) {
   }
 }
 
-function changeInfoPanelsHeight() {
+function setInfoPanelsPlaybackHeight() {
   document.querySelectorAll('.game__info-panel')
     .forEach(element => element.classList.add('increased-height'));
 }
 
-export default { highlightGoal, changeInfoPanelsHeight };
+function setInfoPanelsFinalHeight() {
+  document.querySelectorAll('.game__info-panel')
+    .forEach(element => element.classList.add('final'));
+}
+
+export default { highlightGoal, setInfoPanelsPlaybackHeight, setInfoPanelsFinalHeight };

@@ -76,13 +76,14 @@ function model(actions, animations) {
     )
   }));
 
-  actions.playbackHasStarted$.addListener({ next: () => animations.changeInfoPanelsHeight() });
-
   const gameClock = GameClock({
     scores$: actions.successApiResponse$.map(({ games }) => games),
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 })
   });
+
+  actions.playbackHasStarted$.addListener({ next: () => animations.setInfoPanelsPlaybackHeight() });
+  gameClock.clock$.addListener({ complete: () => animations.setInfoPanelsFinalHeight() });
 
   return xs.combine(
     scores$,

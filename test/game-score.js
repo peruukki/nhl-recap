@@ -14,6 +14,12 @@ const finishedState = 'FINAL';
 const inProgressState = 'LIVE';
 const notStartedState = 'PREVIEW';
 
+const inProgressGameProgress = {
+  currentPeriod: 1,
+  currentPeriodOrdinal: '1st',
+  currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
+};
+
 describe('gameScore', () => {
 
   describe('goal counts', () => {
@@ -206,6 +212,13 @@ describe('gameScore', () => {
       assertPreGameStatsAreShown(clock, { status, teams, goals });
     });
 
+    it('should be shown after playback has finished for not started games', () => {
+      const clock = { end: true };
+      const status = { state: notStartedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreShown(clock, { status, teams, goals });
+    });
+
     it('should not be shown after playback has started for in-progress games', () => {
       const clock = { start: true };
       const status = { state: inProgressState };
@@ -215,30 +228,23 @@ describe('gameScore', () => {
 
     it('should not be shown when playback has not reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 43 };
-      const status = {
-        state: inProgressState,
-        progress: {
-          currentPeriod: 1,
-          currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
-        }
-      };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
       const {teams, goals} = scoresAllRegularTime.games[1];
       assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
-    it('should not be shown after playback has reached current progress in in-progress games', () => {
+    it('should be shown after playback has reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 42 };
-      const status = {
-        state: inProgressState,
-        progress: {
-          currentPeriod: 1,
-          currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
-        }
-      };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
       const {teams, goals} = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams, goals });
+    });
+
+    it('should be shown after playback has finished for in-progress games', () => {
+      const clock = { end: true };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreShown(clock, { status, teams, goals });
     });
 
     it('should not be shown after playback has started for finished games', () => {
@@ -248,19 +254,26 @@ describe('gameScore', () => {
       assertPreGameStatsAreNotShown(clock, { status, teams, goals });
     });
 
+    it('should not be shown after playback has finished for finished games', () => {
+      const clock = { end: true };
+      const status = { state: finishedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
     it('should show teams\' point percentages, highlighting the better one', () => {
       const clock = null;
       const label = 'Point-%';
 
-      assertPreGameStats(clock, scoresAllRegularTime.games[0], {
-        away: { pointPct: '.654' },
-        home: { pointPct: '.654' },
+      assertGameStats(clock, scoresAllRegularTime.games[0], 0, {
+        away: { value: '.654' },
+        home: { value: '.654' },
         label
       });
 
-      assertPreGameStats(clock, scoresAllRegularTime.games[1], {
-        away: { pointPct: '.654' },
-        home: { pointPct: '.692', className: '--highlight' },
+      assertGameStats(clock, scoresAllRegularTime.games[1], 0, {
+        away: { value: '.654' },
+        home: { value: '.692', className: '--highlight' },
         label
       });
     });
@@ -269,15 +282,217 @@ describe('gameScore', () => {
       const clock = null;
       const label = 'Win-%';
 
-      assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[0], {
-        away: { pointPct: '.700' },
-        home: { pointPct: '.700' },
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 0, {
+        away: { value: '.700' },
+        home: { value: '.700' },
         label
       });
 
-      assertPreGameStats(clock, scoresAllRegularTimePlayoffs.games[1], {
-        away: { pointPct: '.583', className: '--highlight' },
-        home: { pointPct: '.357' },
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 0, {
+        away: { value: '.583', className: '--highlight' },
+        home: { value: '.357' },
+        label
+      });
+    });
+
+    it('should show teams\' regular season records, highlighting the better one', () => {
+      const clock = null;
+      const label = 'Record';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
+        away: { value: '8-4-1' },
+        home: { value: '7-3-3' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
+        away: { value: '8-4-1' },
+        home: { value: '7-2-4', className: '--highlight' },
+        label
+      });
+    });
+
+    it('should show teams\' playoff records, highlighting the better one', () => {
+      const clock = null;
+      const label = 'Record';
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
+        away: { value: '7-3' },
+        home: { value: '7-3' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
+        away: { value: '7-5', className: '--highlight' },
+        home: { value: '5-9' },
+        label
+      });
+    });
+  });
+
+  describe('after-game stats', () => {
+
+    it('should not be shown before playback has started', () => {
+      const clock = null;
+      const status = { state: finishedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has started for not started games', () => {
+      const clock = { start: true };
+      const status = { state: notStartedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has finished for not started games', () => {
+      const clock = { end: true };
+      const status = { state: notStartedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has started for in-progress games', () => {
+      const clock = { start: true };
+      const status = { state: inProgressState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown when playback has not reached current progress in in-progress games', () => {
+      const clock = { period: 1, minute: 8, second: 43 };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has reached current progress in in-progress games', () => {
+      const clock = { period: 1, minute: 8, second: 42 };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has finished for in-progress games', () => {
+      const clock = { end: true };
+      const status = { state: inProgressState, progress: inProgressGameProgress };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should not be shown after playback has started for finished games', () => {
+      const clock = { start: true };
+      const status = { state: finishedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+    });
+
+    it('should be shown after playback has finished for finished games', () => {
+      const clock = { end: true };
+      const status = { state: finishedState };
+      const {teams, goals} = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreShown(clock, { status, teams, goals });
+    });
+
+    it('should show teams\' point percentages, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'Point-%';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], 0, {
+        away: { value: '.679', className: '--highlight' },
+        home: { value: '.607' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], 0, {
+        away: { value: '.607' },
+        home: { value: '.714', className: '--highlight' },
+        label
+      });
+    });
+
+    it('should show teams\' playoff win percentages, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'Win-%';
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 0, {
+        away: { value: '.727', className: '--highlight' },
+        home: { value: '.636' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 0, {
+        away: { value: '.538', className: '--highlight' },
+        home: { value: '.400' },
+        label
+      });
+    });
+
+    it('should show teams\' regular season records, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'Record';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
+        away: { value: '9-4-1', className: '--highlight' },
+        home: { value: '7-4-3' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
+        away: { value: '8-5-1' },
+        home: { value: '8-2-4', className: '--highlight' },
+        label
+      });
+    });
+
+    it('should show teams\' playoff records, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'Record';
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
+        away: { value: '8-3', className: '--highlight' },
+        home: { value: '7-4' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
+        away: { value: '7-6', className: '--highlight' },
+        home: { value: '6-9' },
+        label
+      });
+    });
+
+    it('should show teams\' streaks, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'Streak';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], 2, {
+        away: { value: '2 W', className: '--highlight' },
+        home: { value: '1 L' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], 2, {
+        away: { value: '2 L' },
+        home: { value: '2 W', className: '--highlight' },
+        label
+      });
+    });
+
+    it('should show teams\' playoff spot point differences, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'PO spot pts';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], 3, {
+        away: { value: '+4' },
+        home: { value: '+4' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], 3, {
+        away: { value: '+2', className: '--highlight' },
+        home: { value: '-2' },
         label
       });
     });
@@ -448,19 +663,28 @@ function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
 }
 
 function assertPreGameStatsAreShown(clock, {status, teams, goals}) {
-  assertPreGameStatsExistence(clock, { status, teams, goals }, assert.deepEqual);
+  assertGameStatsExistence(clock, { status, teams, goals }, assert.deepEqual, 'div.game-stats.fade-in');
 }
 function assertPreGameStatsAreNotShown(clock, {status, teams, goals}) {
-  assertPreGameStatsExistence(clock, { status, teams, goals }, assert.notDeepEqual);
+  assertGameStatsExistence(clock, { status, teams, goals }, assert.notDeepEqual, 'div.game-stats.fade-in');
 }
-function assertPreGameStatsExistence(clock, {status, teams, goals}, assertFn) {
-  const preGameStats = getPreGameStats(gameScore(clock, { status, teams, goals }));
-  assertFn(preGameStats && preGameStats.sel, 'div.team-stats');
+function assertAfterGameStatsAreShown(clock, {status, teams, goals}) {
+  assertGameStatsExistence(clock, { status, teams, goals }, assert.deepEqual,
+    'div.game-stats.game-stats--after-game.fade-in');
+}
+function assertAfterGameStatsAreNotShown(clock, {status, teams, goals}) {
+  assertGameStatsExistence(clock, { status, teams, goals }, assert.notDeepEqual,
+    'div.game-stats.game-stats--after-game.fade-in');
+}
+function assertGameStatsExistence(clock, {status, teams, goals}, assertFn, selector) {
+  const gameStats = getGameStats(gameScore(clock, { status, teams, goals }));
+  assertFn(gameStats && gameStats.sel, selector);
 }
 
-function assertPreGameStats(clock, {state = finishedState, teams, goals, preGameStats}, renderedRecords) {
-  const renderedStats = getPreGameStats(gameScore(clock, { status: { state }, teams, goals, preGameStats }));
-  const expected = expectedPreGameStats(renderedRecords);
+function assertGameStats(clock, {state = finishedState, teams, goals, preGameStats, currentStats}, statIndex, renderedRecords) {
+  const renderedStats = getGameStats(gameScore(clock, { status: { state }, teams, goals, preGameStats, currentStats }))
+    .children[statIndex];
+  const expected = expectedTeamStats(renderedRecords);
   assert.deepEqual(renderedStats, expected);
 }
 
@@ -512,15 +736,15 @@ function getGameChildrenWithClass(vtree, className) {
 }
 
 function getLatestGoalPanel(vtree) {
-  return vtree.children[1];
-}
-
-function getPreGameStats(vtree) {
   return vtree.children[1].children[0];
 }
 
-function getPreGameDescription(vtree) {
+function getGameStats(vtree) {
   return vtree.children[1].children[2];
+}
+
+function getPreGameDescription(vtree) {
+  return vtree.children[1].children[1];
 }
 
 function getPlayoffSeriesWinsPanel(vtree) {
@@ -551,19 +775,19 @@ function expectedDelimiter(delimiter, visibilityClass) {
 }
 
 function expectedLatestGoalPanel(latestGoal) {
-  return div('.game__info-panel', [
+  return div('.latest-goal', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
     div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : '')
   ]);
 }
 
-function expectedPreGameStats({away, home, label}) {
+function expectedTeamStats({away, home, label}) {
   const valueClass = '.team-stats__value';
   return div('.team-stats', [
-    span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.pointPct),
+    span(`${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`, away.value),
     span('.team-stats__label', label),
-    span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.pointPct),
+    span(`${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`, home.value),
   ]);
 }
 

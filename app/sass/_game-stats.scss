@@ -1,0 +1,8 @@
+.game-stats {
+  width: 100%;
+
+  &--after-game {
+    animation-fill-mode: both;
+    animation-delay: ($fade-duration / 4);
+  }
+}
