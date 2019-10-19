@@ -4,7 +4,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
-import gameScore from './game-score';
+import gameScore, { hasGameFinished } from './game-score';
 import {getGameAnimationIndexes} from './utils';
 
 export default function main(animations) {
@@ -83,7 +83,11 @@ function model(actions, animations) {
   });
 
   actions.playbackHasStarted$.addListener({ next: () => animations.setInfoPanelsPlaybackHeight() });
-  gameClock.clock$.addListener({ complete: () => animations.setInfoPanelsFinalHeight() });
+  actions.successApiResponse$
+    .filter(({ games }) =>
+      games.filter(game => hasGameFinished(game.status.state))
+        .length > 0)
+    .addListener({ next: () => gameClock.clock$.addListener({ complete: () => animations.setInfoPanelsFinalHeight() })});
 
   return xs.combine(
     scores$,

@@ -312,7 +312,7 @@ function renderCurrentProgress(progress) {
   }
 }
 
-function hasGameFinished(state) {
+export function hasGameFinished(state) {
   return state === 'FINAL';
 }
 
