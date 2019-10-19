@@ -37,11 +37,11 @@
     }
 
     &.final {
-      height: 15rem;
+      height: 15.5rem;
 
       .game-stats--after-game {
         position: absolute;
-        bottom: 0.5rem;
+        bottom: 0;
       }
     }
   }
