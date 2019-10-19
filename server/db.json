@@ -114,8 +114,8 @@
             "TOR": { "type": "OT", "count": 1 }
           },
           "standings": {
-            "OTT": { "pointsFromPlayoffSpot": "-3" },
-            "TOR": { "pointsFromPlayoffSpot": "+4" }
+            "OTT": { "leagueRank": "29", "pointsFromPlayoffSpot": "-3" },
+            "TOR": { "leagueRank": "12", "pointsFromPlayoffSpot": "+4" }
           }
         }
       },
@@ -202,8 +202,8 @@
             "STL": { "type": "OT", "count": 2 }
           },
           "standings": {
-            "WSH": { "pointsFromPlayoffSpot": "+8" },
-            "STL": { "pointsFromPlayoffSpot": "+13" }
+            "WSH": { "leagueRank": "6", "pointsFromPlayoffSpot": "+8" },
+            "STL": { "leagueRank": "11", "pointsFromPlayoffSpot": "+13" }
           }
         }
       },
@@ -288,8 +288,8 @@
             "EDM": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "VAN": { "pointsFromPlayoffSpot": "-9" },
-            "EDM": { "pointsFromPlayoffSpot": "-11" }
+            "VAN": { "leagueRank": "14", "pointsFromPlayoffSpot": "-9" },
+            "EDM": { "leagueRank": "1", "pointsFromPlayoffSpot": "-11" }
           }
         }
       },
@@ -367,8 +367,8 @@
             "VGK": { "type": "WINS", "count": 2 }
           },
           "standings": {
-            "SJS": { "pointsFromPlayoffSpot": "+15" },
-            "VGK": { "pointsFromPlayoffSpot": "+7" }
+            "SJS": { "leagueRank": "22", "pointsFromPlayoffSpot": "+15" },
+            "VGK": { "leagueRank": "9", "pointsFromPlayoffSpot": "+7" }
           }
         }
       },
@@ -472,8 +472,8 @@
             "TBL": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "FLA": { "pointsFromPlayoffSpot": "-1" },
-            "TBL": { "pointsFromPlayoffSpot": "+2" }
+            "FLA": { "leagueRank": "21", "pointsFromPlayoffSpot": "-1" },
+            "TBL": { "leagueRank": "10", "pointsFromPlayoffSpot": "+2" }
           }
         }
       },
@@ -611,8 +611,8 @@
             "NYR": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "WPG": { "pointsFromPlayoffSpot": "0" },
-            "NYR": { "pointsFromPlayoffSpot": "-2" }
+            "WPG": { "leagueRank": "18", "pointsFromPlayoffSpot": "0" },
+            "NYR": { "leagueRank": "26", "pointsFromPlayoffSpot": "-2" }
           }
         }
       },
@@ -685,8 +685,8 @@
             "PIT": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "BUF": { "pointsFromPlayoffSpot": "+2" },
-            "PIT": { "pointsFromPlayoffSpot": "-1" }
+            "BUF": { "leagueRank": "3", "pointsFromPlayoffSpot": "+2" },
+            "PIT": { "leagueRank": "5", "pointsFromPlayoffSpot": "-1" }
           }
         }
       },
@@ -783,8 +783,8 @@
             "CAR": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "MTL": { "pointsFromPlayoffSpot": "+1" },
-            "CAR": { "pointsFromPlayoffSpot": "+2" }
+            "MTL": { "leagueRank": "17", "pointsFromPlayoffSpot": "+1" },
+            "CAR": { "leagueRank": "7", "pointsFromPlayoffSpot": "+2" }
           }
         }
       },
@@ -893,8 +893,8 @@
             "NSH": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "MIN": { "pointsFromPlayoffSpot": "0" },
-            "NSH": { "pointsFromPlayoffSpot": "+2" }
+            "MIN": { "leagueRank": "31", "pointsFromPlayoffSpot": "0" },
+            "NSH": { "leagueRank": "15", "pointsFromPlayoffSpot": "+2" }
           }
         }
       },
@@ -955,8 +955,8 @@
             "DAL": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "BOS": { "pointsFromPlayoffSpot": "+2" },
-            "DAL": { "pointsFromPlayoffSpot": "0" }
+            "BOS": { "leagueRank": "8", "pointsFromPlayoffSpot": "+2" },
+            "DAL": { "leagueRank": "30", "pointsFromPlayoffSpot": "0" }
           }
         }
       },
@@ -1076,8 +1076,8 @@
             "COL": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "CGY": { "pointsFromPlayoffSpot": "0" },
-            "COL": { "pointsFromPlayoffSpot": "+2" }
+            "CGY": { "leagueRank": "13", "pointsFromPlayoffSpot": "0" },
+            "COL": { "leagueRank": "2", "pointsFromPlayoffSpot": "+2" }
           }
         }
       },
@@ -1129,8 +1129,8 @@
             "ANA": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "ARI": { "pointsFromPlayoffSpot": "0" },
-            "ANA": { "pointsFromPlayoffSpot": "+2" }
+            "ARI": { "leagueRank": "19", "pointsFromPlayoffSpot": "0" },
+            "ANA": { "leagueRank": "4", "pointsFromPlayoffSpot": "+2" }
           }
         }
       },
@@ -1187,8 +1187,8 @@
             "PHI": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "CHI": { "pointsFromPlayoffSpot": "0" },
-            "PHI": { "pointsFromPlayoffSpot": "+1" }
+            "CHI": { "leagueRank": "25", "pointsFromPlayoffSpot": "0" },
+            "PHI": { "leagueRank": "24", "pointsFromPlayoffSpot": "+1" }
           }
         }
       },

@@ -22,6 +22,14 @@ const inProgressGameProgress = {
   currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
 };
 
+const statIndexes = {
+  leagueRank: 0,
+  pointPct: 1,
+  record: 2,
+  streak: 3,
+  playoffSpotPts: 4
+};
+
 describe('gameScore', () => {
 
   describe('goal counts', () => {
@@ -267,13 +275,13 @@ describe('gameScore', () => {
       const clock = null;
       const label = 'Point-%';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 0, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.654' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 0, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.692', className: '--highlight' },
         label
@@ -284,13 +292,13 @@ describe('gameScore', () => {
       const clock = null;
       const label = 'Win-%';
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 0, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
         away: { value: '.700' },
         home: { value: '.700' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 0, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
         away: { value: '.583', className: '--highlight' },
         home: { value: '.357' },
         label
@@ -301,13 +309,13 @@ describe('gameScore', () => {
       const clock = null;
       const label = 'Record';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [8, delimiter, 4, delimiter, 1] },
         home: { value: [7, delimiter, 3, delimiter, 3] },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, delimiter, 4, delimiter, 1] },
         home: { value: [7, delimiter, 2, delimiter, 4], className: '--highlight' },
         label
@@ -318,13 +326,13 @@ describe('gameScore', () => {
       const clock = null;
       const label = 'Record';
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [7, delimiter, 3] },
         home: { value: [7, delimiter, 3] },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, delimiter, 5], className: '--highlight' },
         home: { value: [5, delimiter, 9] },
         label
@@ -397,17 +405,34 @@ describe('gameScore', () => {
       assertAfterGameStatsAreShown(clock, { status, teams, goals });
     });
 
+    it('should show teams\' league ranks, highlighting the better one', () => {
+      const clock = { end: true };
+      const label = 'NHL rank';
+
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
+        away: { value: '11' },
+        home: { value: '8', className: '--highlight' },
+        label
+      });
+
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
+        away: { value: '4', className: '--highlight' },
+        home: { value: '26' },
+        label
+      });
+    });
+
     it('should show teams\' point percentages, highlighting the better one', () => {
       const clock = { end: true };
       const label = 'Point-%';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 0, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.679', className: '--highlight' },
         home: { value: '.607' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 0, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.607' },
         home: { value: '.714', className: '--highlight' },
         label
@@ -418,13 +443,13 @@ describe('gameScore', () => {
       const clock = { end: true };
       const label = 'Win-%';
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 0, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
         away: { value: '.727', className: '--highlight' },
         home: { value: '.636' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 0, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
         away: { value: '.538', className: '--highlight' },
         home: { value: '.400' },
         label
@@ -435,13 +460,13 @@ describe('gameScore', () => {
       const clock = { end: true };
       const label = 'Record';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 1, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [9, delimiter, 4, delimiter, 1], className: '--highlight' },
         home: { value: [7, delimiter, 4, delimiter, 3] },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 1, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, delimiter, 5, delimiter, 1] },
         home: { value: [8, delimiter, 2, delimiter, 4], className: '--highlight' },
         label
@@ -452,13 +477,13 @@ describe('gameScore', () => {
       const clock = { end: true };
       const label = 'Record';
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], 1, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [8, delimiter, 3], className: '--highlight' },
         home: { value: [7, delimiter, 4] },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], 1, {
+      assertGameStats(clock, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, delimiter, 6], className: '--highlight' },
         home: { value: [6, delimiter, 9] },
         label
@@ -469,13 +494,13 @@ describe('gameScore', () => {
       const clock = { end: true };
       const label = 'Streak';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 2, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.streak, {
         away: { value: '2 W', className: '--highlight' },
         home: { value: '1 L' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 2, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.streak, {
         away: { value: '2 L' },
         home: { value: '2 W', className: '--highlight' },
         label
@@ -486,13 +511,13 @@ describe('gameScore', () => {
       const clock = { end: true };
       const label = 'PO spot pts';
 
-      assertGameStats(clock, scoresAllRegularTime.games[0], 3, {
+      assertGameStats(clock, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
         away: { value: '+4' },
         home: { value: '+4' },
         label
       });
 
-      assertGameStats(clock, scoresAllRegularTime.games[1], 3, {
+      assertGameStats(clock, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
         away: { value: '+2', className: '--highlight' },
         home: { value: '-2' },
         label

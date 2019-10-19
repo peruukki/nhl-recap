@@ -69,9 +69,11 @@
         },
         "standings": {
           "STL": {
+            "leagueRank": "11",
             "pointsFromPlayoffSpot": "+4"
           },
           "BOS": {
+            "leagueRank": "8",
             "pointsFromPlayoffSpot": "+4"
           }
         }
@@ -186,9 +188,11 @@
         },
         "standings": {
           "ANA": {
+            "leagueRank": "4",
             "pointsFromPlayoffSpot": "+2"
           },
           "NYR": {
+            "leagueRank": "26",
             "pointsFromPlayoffSpot": "-2"
           }
         }

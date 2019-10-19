@@ -135,6 +135,7 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
   const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
 
   return div(`.game-stats${afterGameModifier}${fadeInModifier}`, [
+    showAfterGameStats ? renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank) : null,
     renderTeamStats(teams, stats.records, winPctLabel, renderWinPercentage, renderWinPercentage),
     renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
     showAfterGameStats ? renderTeamStats(teams, stats.streaks, 'Streak', getStreakRating, renderStreak) : null,
@@ -198,6 +199,10 @@ function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot);
 }
 
+function getLeagueRankRating({ leagueRank }) {
+  return -parseInt(leagueRank);
+}
+
 function renderWinPercentage(record) {
   const percentage = getPointPercentage(record);
   if (isNaN(percentage)) {
@@ -235,6 +240,10 @@ function renderStreakType({ type }) {
 
 function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
   return pointsFromPlayoffSpot || '';
+}
+
+function renderLeagueRank({ leagueRank }) {
+  return leagueRank || '';
 }
 
 function renderLatestGoal(latestGoal) {
