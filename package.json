@@ -47,7 +47,7 @@
     "push:dist": "cd dist && git push origin gh-pages",
     "sass": "node-sass app/sass/app.scss public/app.css --output-style compressed",
     "server": "http-server public -p 8000",
-    "spec": "mocha --compilers js:babel-register",
+    "spec": "mocha",
     "start": "parallelshell 'npm run watch' 'npm run server'",
     "start:local": "SCORE_API_HOST=http://localhost:8080 npm start",
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
