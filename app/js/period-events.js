@@ -8,7 +8,7 @@ export default function periodEvents(
   period,
   durationInMinutes,
   endTime,
-  goalScoringTimes,
+  allGoalsSorted,
   goalDelayMultiplier
 ) {
   const lastMinute = endTime ? endTime.minute : -1;
@@ -27,7 +27,7 @@ export default function periodEvents(
 
   const firstEvent = { period, minute: durationInMinutes, second: 0 };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
-  return multiplyGoalScoringTimeEvents(sequence, goalScoringTimes, goalDelayMultiplier);
+  return multiplyGoalScoringTimeEvents(sequence, allGoalsSorted, goalDelayMultiplier);
 }
 
 function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
@@ -65,14 +65,14 @@ function secondRange(minute, lastMinute, lastSecond) {
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
-function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes, goalDelayMultiplier) {
+function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalDelayMultiplier) {
   return _.take(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
         const goalsScoredCount = goalsScoredCountInRange(
           previousClock,
           currentClock,
-          goalScoringTimes
+          allGoalsSorted
         );
         const currentClockEventCount = 1 + goalsScoredCount * goalDelayMultiplier;
         return _.times(currentClockEventCount, () => currentClock);
@@ -81,12 +81,12 @@ function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes, goalDelayM
   );
 }
 
-function goalsScoredCountInRange(previousClock, currentClock, goalScoringTimes) {
+function goalsScoredCountInRange(previousClock, currentClock, allGoalsSorted) {
   const previousLastGoalFilter = _.partial(hasGoalBeenScored, previousClock);
   const currentLastGoalFilter = _.partial(hasGoalBeenScored, currentClock);
 
-  const previousLastGoalIndex = _.findLastIndex(goalScoringTimes, previousLastGoalFilter);
-  const currentLastGoalIndex = _.findLastIndex(goalScoringTimes, currentLastGoalFilter);
+  const previousLastGoalIndex = _.findLastIndex(allGoalsSorted, previousLastGoalFilter);
+  const currentLastGoalIndex = _.findLastIndex(allGoalsSorted, currentLastGoalFilter);
 
   return currentLastGoalIndex - previousLastGoalIndex;
 }

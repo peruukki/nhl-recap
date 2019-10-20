@@ -93,7 +93,7 @@ describe('periodEvents', () => {
   });
 
   it('should pause by multiplying events when goals were scored since last event', () => {
-    const assertLastEvent = (goalScoringTimes, expectedGoalScoreCount, description) => {
+    const assertLastEvent = (allGoalsSorted, expectedGoalScoreCount, description) => {
       const period = 1;
       const periodLength = 20;
       const eventMultiplier = 50;
@@ -102,7 +102,7 @@ describe('periodEvents', () => {
         period,
         periodLength,
         null,
-        goalScoringTimes,
+        allGoalsSorted,
         goalDelayMultiplier
       );
       const eventCount = 401 + expectedGoalScoreCount * eventMultiplier;
@@ -116,24 +116,24 @@ describe('periodEvents', () => {
     assertLastEvent([], 0, 'last event without goal scoring times');
 
     // Assert that last event is as expected with goal scoring times
-    const goalScoringTimesWithMultipleGoalsAtDifferingTimes = [
+    const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
       { period: 1, min: 1, sec: 1 },
       { period: 1, min: 2, sec: 2 },
       { period: 2, min: 1, sec: 1 }
     ];
     assertLastEvent(
-      goalScoringTimesWithMultipleGoalsAtDifferingTimes,
+      allGoalsSortedWithMultipleGoalsAtDifferingTimes,
       2,
       'last event with goal scoring times with goals at different times'
     );
 
-    const goalScoringTimesWithMultipleGoalsAtTheSameTime = [
+    const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
       { period: 1, min: 1, sec: 1 },
       { period: 1, min: 1, sec: 1 },
       { period: 2, min: 1, sec: 1 }
     ];
     assertLastEvent(
-      goalScoringTimesWithMultipleGoalsAtTheSameTime,
+      allGoalsSortedWithMultipleGoalsAtTheSameTime,
       2,
       'last event with goal scoring times with simultaneous goals'
     );

@@ -47,27 +47,27 @@ function getGamesEndElement(inProgress) {
 }
 
 function getAllPeriodEvents(scores, endTime, goalDelayMultiplier) {
-  const goalScoringTimes = getGoalScoringTimes(scores);
-  return getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier)
-    .concat(getOvertimeClock(endTime, goalScoringTimes, goalDelayMultiplier))
+  const allGoalsSorted = getAllGoalSorted(scores);
+  return getRegularPeriodClocks(endTime, allGoalsSorted, goalDelayMultiplier)
+    .concat(getOvertimeClock(endTime, allGoalsSorted, goalDelayMultiplier))
     .concat(getShootoutClock(endTime))
     .filter(_.identity);
 }
 
-function getRegularPeriodClocks(endTime, goalScoringTimes, goalDelayMultiplier) {
+function getRegularPeriodClocks(endTime, allGoalsSorted, goalDelayMultiplier) {
   const partialPeriodNumber = getPartialPeriodNumber(endTime);
   const lastFullPeriodNumber = partialPeriodNumber
     ? partialPeriodNumber - 1
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map(period => ({
     period: period,
-    events: periodEvents(period, 20, null, goalScoringTimes, goalDelayMultiplier)
+    events: periodEvents(period, 20, null, allGoalsSorted, goalDelayMultiplier)
   }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      events: periodEvents(partialPeriodNumber, 20, endTime, goalScoringTimes, goalDelayMultiplier)
+      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalDelayMultiplier)
     };
     return fullPeriods.concat(partialPeriod);
   } else {
@@ -87,14 +87,14 @@ function hasLastPeriodEnded(endTime) {
   return endTime.minute === undefined;
 }
 
-function getOvertimeClock(endTime, goalScoringTimes, goalDelayMultiplier) {
+function getOvertimeClock(endTime, allGoalsSorted, goalDelayMultiplier) {
   if (endTime.period !== 'SO' && endTime.period !== 'OT') {
     return null;
   } else {
     const periodEnd = endTime.period === 'OT' ? endTime : null;
     return {
       period: 'OT',
-      events: periodEvents('OT', 5, periodEnd, goalScoringTimes, goalDelayMultiplier)
+      events: periodEvents('OT', 5, periodEnd, allGoalsSorted, goalDelayMultiplier)
     };
   }
 }
@@ -170,7 +170,7 @@ function getGameEndTimeFromGoals(goals) {
   }
 }
 
-export function getGoalScoringTimes(scores) {
+export function getAllGoalSorted(scores) {
   return _.chain(scores.map(game => game.goals))
     .flatten()
     .sortBy(['period', 'min', 'sec'])

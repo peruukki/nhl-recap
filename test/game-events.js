@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getGoalScoringTimes } from '../app/js/game-events';
+import gameEvents, { getAllGoalSorted } from '../app/js/game-events';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -115,16 +115,16 @@ describe('gameEvents', () => {
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
   });
 
-  it('should determine correct goal scoring times', () => {
-    const goalScoringTimes = getGoalScoringTimes(scoresMultipleOvertime.games);
+  it('should sort all goals correctly', () => {
+    const allGoalsSorted = getAllGoalSorted(scoresMultipleOvertime.games);
 
-    const expectedGoalScoringTimes = _.flatten([
+    const expectedAllGoalsSorted = _.flatten([
       _.dropRight(scoresMultipleOvertime.games[1].goals),
       scoresMultipleOvertime.games[0].goals,
       _.takeRight(scoresMultipleOvertime.games[1].goals)
     ]);
 
-    assert.deepEqual(goalScoringTimes, expectedGoalScoringTimes);
+    assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);
   });
 });
 
