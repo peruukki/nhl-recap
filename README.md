@@ -34,6 +34,15 @@ npm run start:server
 ```
 Then you can run the app connecting to the local server with `npm run start:local` as described above.
 
+## Formatting with Prettier
+
+JavaScript is formatted using [Prettier](https://prettier.io/). Prettier is the most convenient to run via your IDE,
+but it is also run as part of the linting tasks:
+
+```
+npm run lint:format
+```
+
 ## Linting JavaScript
 
 One-time lint run:
@@ -65,7 +74,7 @@ npm run watch:lint:css
 
 ## Testing
 
-Lint SASS, lint JavaScript and run the tests:
+Lint SASS, lint JavaScript, run Prettier and run unit tests:
 ```
 npm test
 ```
