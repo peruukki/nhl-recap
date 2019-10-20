@@ -3,7 +3,7 @@
 
   &--after-game {
     padding: 0.5rem 0;
-    background-color: $blue-dark;
+    background-color: $background-game-stats-after-game;
     animation-fill-mode: both;
     animation-delay: ($fade-duration / 4);
   }
