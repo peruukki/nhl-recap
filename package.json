@@ -64,7 +64,7 @@
   "dependencies": {
     "@cycle/dom": "^22.4.0",
     "@cycle/http": "^15.2.0",
-    "@cycle/run": "^3.1.0",
+    "@cycle/run": "^5.3.0",
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
