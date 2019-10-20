@@ -69,7 +69,7 @@
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
     "timeago.js": "^4.0.0-beta.2",
-    "xstream": "^10.5.0"
+    "xstream": "^11.11.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
