@@ -69,21 +69,24 @@ function multiplyGoalScoringTimeEvents(clockEvents, goalScoringTimes, goalDelayM
   return _.take(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
-        const count = wasGoalScoredInRange(previousClock, currentClock, goalScoringTimes)
-          ? goalDelayMultiplier
-          : 1;
-        return _.times(count, () => currentClock);
+        const goalsScoredCount = goalsScoredCountInRange(
+          previousClock,
+          currentClock,
+          goalScoringTimes
+        );
+        const currentClockEventCount = 1 + goalsScoredCount * goalDelayMultiplier;
+        return _.times(currentClockEventCount, () => currentClock);
       })
     )
   );
 }
 
-function wasGoalScoredInRange(previousClock, currentClock, goalScoringTimes) {
+function goalsScoredCountInRange(previousClock, currentClock, goalScoringTimes) {
   const previousLastGoalFilter = _.partial(hasGoalBeenScored, previousClock);
   const currentLastGoalFilter = _.partial(hasGoalBeenScored, currentClock);
 
   const previousLastGoalIndex = _.findLastIndex(goalScoringTimes, previousLastGoalFilter);
   const currentLastGoalIndex = _.findLastIndex(goalScoringTimes, currentLastGoalFilter);
 
-  return previousLastGoalIndex !== currentLastGoalIndex;
+  return currentLastGoalIndex - previousLastGoalIndex;
 }

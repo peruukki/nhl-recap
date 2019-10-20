@@ -92,7 +92,7 @@ describe('periodEvents', () => {
     assert.deepEqual(clockEvents, expected);
   });
 
-  it('should pause by multiplying events when a goal was scored since last event', () => {
+  it('should pause by multiplying events when goals were scored since last event', () => {
     const assertLastEvent = (goalScoringTimes, expectedGoalScoreCount, description) => {
       const period = 1;
       const periodLength = 20;
@@ -105,7 +105,7 @@ describe('periodEvents', () => {
         goalScoringTimes,
         goalDelayMultiplier
       );
-      const eventCount = 401 + expectedGoalScoreCount * (eventMultiplier - 1);
+      const eventCount = 401 + expectedGoalScoreCount * eventMultiplier;
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
       assert.deepEqual(clockEvents.length, eventCount);
@@ -116,12 +116,27 @@ describe('periodEvents', () => {
     assertLastEvent([], 0, 'last event without goal scoring times');
 
     // Assert that last event is as expected with goal scoring times
-    const goalScoringTimes = [
+    const goalScoringTimesWithMultipleGoalsAtDifferingTimes = [
       { period: 1, min: 1, sec: 1 },
       { period: 1, min: 2, sec: 2 },
       { period: 2, min: 1, sec: 1 }
     ];
-    assertLastEvent(goalScoringTimes, 2, 'last event with goal scoring times');
+    assertLastEvent(
+      goalScoringTimesWithMultipleGoalsAtDifferingTimes,
+      2,
+      'last event with goal scoring times with goals at different times'
+    );
+
+    const goalScoringTimesWithMultipleGoalsAtTheSameTime = [
+      { period: 1, min: 1, sec: 1 },
+      { period: 1, min: 1, sec: 1 },
+      { period: 2, min: 1, sec: 1 }
+    ];
+    assertLastEvent(
+      goalScoringTimesWithMultipleGoalsAtTheSameTime,
+      2,
+      'last event with goal scoring times with simultaneous goals'
+    );
   });
 });
 
