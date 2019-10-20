@@ -84,9 +84,7 @@ function model(actions, animations) {
 
   actions.playbackHasStarted$.addListener({ next: () => animations.setInfoPanelsPlaybackHeight() });
   actions.successApiResponse$
-    .filter(({ games }) =>
-      games.filter(game => hasGameFinished(game.status.state))
-        .length > 0)
+    .filter(({ games }) => games.some(game => hasGameFinished(game.status.state)))
     .addListener({ next: () => gameClock.clock$.addListener({ complete: () => animations.setInfoPanelsFinalHeight() })});
 
   return xs.combine(
