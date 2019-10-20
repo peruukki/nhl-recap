@@ -35,7 +35,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 'OT', minute: 2, second: 23 });
+    assert.deepEqual(lastTimeEvent, { period: 'OT', minute: 2, second: 23, gameIndex: 1 });
   });
 
   it('should include events until shootout if games went to shootout', () => {
@@ -119,9 +119,9 @@ describe('gameEvents', () => {
     const allGoalsSorted = getAllGoalSorted(scoresMultipleOvertime.games);
 
     const expectedAllGoalsSorted = _.flatten([
-      _.dropRight(scoresMultipleOvertime.games[1].goals),
-      scoresMultipleOvertime.games[0].goals,
-      _.takeRight(scoresMultipleOvertime.games[1].goals)
+      _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({ ...goal, gameIndex: 1 })),
+      scoresMultipleOvertime.games[0].goals.map(goal => ({ ...goal, gameIndex: 0 })),
+      _.takeRight(scoresMultipleOvertime.games[1].goals).map(goal => ({ ...goal, gameIndex: 1 }))
     ]);
 
     assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);

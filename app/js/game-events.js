@@ -179,7 +179,7 @@ function getGameEndTimeFromGoals(goals) {
 }
 
 export function getAllGoalSorted(scores) {
-  return _.chain(scores.map(game => game.goals))
+  return _.chain(scores.map((game, gameIndex) => game.goals.map(goal => ({ ...goal, gameIndex }))))
     .flatten()
     .sortBy(['period', 'min', 'sec'])
     .value();

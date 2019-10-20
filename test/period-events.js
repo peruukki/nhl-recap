@@ -92,8 +92,8 @@ describe('periodEvents', () => {
     assert.deepEqual(clockEvents, expected);
   });
 
-  it('should pause by multiplying events when goals were scored since last event', () => {
-    const assertLastEvent = (allGoalsSorted, expectedGoalScoreCount, description) => {
+  it('should pause by extra clock events when goals were scored since last event', () => {
+    const assertLastEvent = (allGoalsSorted, expectedGoalCount, expectedIndexes, description) => {
       const period = 1;
       const periodLength = 20;
       const goalPauseEventCount = 50;
@@ -105,36 +105,43 @@ describe('periodEvents', () => {
         allGoalsSorted,
         goalPauseEventCount
       );
-      const eventCount = 401 + expectedGoalScoreCount * goalPauseEventCount;
+      const eventCount = 401 + expectedGoalCount * goalPauseEventCount;
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
       assert.deepEqual(clockEvents.length, eventCount);
       assert.deepEqual(_.last(clockEvents), lastTimeEvent, description);
+
+      expectedIndexes.forEach(index => {
+        const eventsWithGameIndex = clockEvents.filter(({ gameIndex }) => gameIndex === index);
+        assert.deepEqual(eventsWithGameIndex.length, goalPauseEventCount);
+      });
     };
 
     // Assert that last event is as expected without goal scoring times
-    assertLastEvent([], 0, 'last event without goal scoring times');
+    assertLastEvent([], 0, [], 'last event without goal scoring times');
 
     // Assert that last event is as expected with goal scoring times
     const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
-      { period: 1, min: 1, sec: 1 },
-      { period: 1, min: 2, sec: 2 },
-      { period: 2, min: 1, sec: 1 }
+      { period: 1, min: 1, sec: 1, gameIndex: 5 },
+      { period: 1, min: 2, sec: 2, gameIndex: 1 },
+      { period: 2, min: 1, sec: 1, gameIndex: 2 }
     ];
     assertLastEvent(
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
       2,
+      [5, 1],
       'last event with goal scoring times with goals at different times'
     );
 
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
-      { period: 1, min: 1, sec: 1 },
-      { period: 1, min: 1, sec: 1 },
-      { period: 2, min: 1, sec: 1 }
+      { period: 1, min: 1, sec: 1, gameIndex: 4 },
+      { period: 1, min: 1, sec: 1, gameIndex: 3 },
+      { period: 2, min: 1, sec: 1, gameIndex: 0 }
     ];
     assertLastEvent(
       allGoalsSortedWithMultipleGoalsAtTheSameTime,
       2,
+      [4, 3],
       'last event with goal scoring times with simultaneous goals'
     );
   });
