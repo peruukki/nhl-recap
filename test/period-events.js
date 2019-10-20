@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {assert} from 'chai';
+import { assert } from 'chai';
 
 import periodEvents from '../app/js/period-events';
 
@@ -10,7 +10,6 @@ const clockAdvanceStep = 3;
 const goalDelayMultiplier = 50;
 
 describe('periodEvents', () => {
-
   it('should include full period events if no end time is given', () => {
     const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalDelayMultiplier);
     assert.deepEqual(clockEvents.length, 61);
@@ -20,10 +19,19 @@ describe('periodEvents', () => {
   it('should stop at given end time', () => {
     const period = 1;
     const endTime = { minute: 2, second: 53 };
-    const clockEvents = periodEvents(period, periodLengthInMinutes, endTime, [], goalDelayMultiplier);
+    const clockEvents = periodEvents(
+      period,
+      periodLengthInMinutes,
+      endTime,
+      [],
+      goalDelayMultiplier
+    );
 
-    const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep)
-      .map(second => ({ period, minute: 2, second }));
+    const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map(second => ({
+      period,
+      minute: 2,
+      second
+    }));
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
     assert.deepEqual(clockEvents, expected);
@@ -31,14 +39,17 @@ describe('periodEvents', () => {
 
   it('should advance by three seconds for all minutes of a period but the last one', () => {
     const period = 1;
-    const clockEventCount = (((periodLengthInMinutes - 1) * 60) / clockAdvanceStep) + 1;
-    const clockEvents = _.take(periodEvents(period, periodLengthInMinutes, null, [], goalDelayMultiplier),
-      clockEventCount);
+    const clockEventCount = ((periodLengthInMinutes - 1) * 60) / clockAdvanceStep + 1;
+    const clockEvents = _.take(
+      periodEvents(period, periodLengthInMinutes, null, [], goalDelayMultiplier),
+      clockEventCount
+    );
 
     const minutes = _.range(periodLengthInMinutes - 1, 0, -1);
     const seconds = _.range(59, -1, -clockAdvanceStep);
-    const secondEvents = _.flatMap(minutes, (minute => seconds
-      .map(second => ({ period, minute, second }))));
+    const secondEvents = _.flatMap(minutes, minute =>
+      seconds.map(second => ({ period, minute, second }))
+    );
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
     assert.deepEqual(clockEvents, expected);
@@ -50,8 +61,11 @@ describe('periodEvents', () => {
       const periodLength = 1;
       const clockEvents = periodEvents(period, periodLength, null, [], goalDelayMultiplier);
 
-      const secondEvents = _.range(59, -1, -clockAdvanceStep)
-        .map(second => ({ period, minute: 0, second }));
+      const secondEvents = _.range(59, -1, -clockAdvanceStep).map(second => ({
+        period,
+        minute: 0,
+        second
+      }));
       const expected = [firstEvent(period, periodLength)].concat(secondEvents);
 
       assert.deepEqual(clockEvents, expected);
@@ -62,10 +76,17 @@ describe('periodEvents', () => {
     const period = 3;
     const periodLength = 1;
     // Take only the first second to speed up and simplify the test
-    const clockEvents = _.take(periodEvents(period, periodLength, null, [], goalDelayMultiplier), 5);
+    const clockEvents = _.take(
+      periodEvents(period, periodLength, null, [], goalDelayMultiplier),
+      5
+    );
 
-    const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep)
-      .map(tenthOfASecond => ({ period, minute: 0, second: 59, tenthOfASecond }));
+    const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep).map(tenthOfASecond => ({
+      period,
+      minute: 0,
+      second: 59,
+      tenthOfASecond
+    }));
     const expected = [firstEvent(period, periodLength)].concat(tenthOfASecondEvents);
 
     assert.deepEqual(clockEvents, expected);
@@ -77,8 +98,14 @@ describe('periodEvents', () => {
       const periodLength = 20;
       const eventMultiplier = 50;
 
-      const clockEvents = periodEvents(period, periodLength, null, goalScoringTimes, goalDelayMultiplier);
-      const eventCount = 401 + (expectedGoalScoreCount * (eventMultiplier - 1));
+      const clockEvents = periodEvents(
+        period,
+        periodLength,
+        null,
+        goalScoringTimes,
+        goalDelayMultiplier
+      );
+      const eventCount = 401 + expectedGoalScoreCount * (eventMultiplier - 1);
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
       assert.deepEqual(clockEvents.length, eventCount);
@@ -96,7 +123,6 @@ describe('periodEvents', () => {
     ];
     assertLastEvent(goalScoringTimes, 2, 'last event with goal scoring times');
   });
-
 });
 
 function firstEvent(period, minute) {

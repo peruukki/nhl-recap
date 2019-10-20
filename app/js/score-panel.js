@@ -1,14 +1,14 @@
-import {button, div, h1, header, section, span} from '@cycle/dom';
+import { button, div, h1, header, section, span } from '@cycle/dom';
 import xs from 'xstream';
 import _ from 'lodash';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
-import gameScore, {hasGameFinished} from './game-score';
-import {getGameAnimationIndexes} from './utils';
+import gameScore, { hasGameFinished } from './game-score';
+import { getGameAnimationIndexes } from './utils';
 
 export default function main(animations) {
-  return ({DOM, HTTP}) => {
+  return ({ DOM, HTTP }) => {
     const url = getApiUrl();
     return {
       DOM: view(model(intent(DOM, HTTP), animations)),
@@ -23,8 +23,7 @@ function getApiUrl() {
 }
 
 function intent(DOM, HTTP) {
-  const apiResponseWithErrors$ = HTTP
-    .select()
+  const apiResponseWithErrors$ = HTTP.select()
     .map(response$ => response$.replaceError(error => xs.of({ error })))
     .flatten()
     .map(response => {
@@ -34,16 +33,20 @@ function intent(DOM, HTTP) {
         const responseJson = JSON.parse(response.text);
         return responseJson.games.length > 0
           ? { success: responseJson }
-          : { error: { message: 'No latest scores available.', expected: true } };
+          : {
+              error: { message: 'No latest scores available.', expected: true }
+            };
       }
     });
   const successApiResponse$ = apiResponseWithErrors$
     .filter(scores => scores.success)
     .map(scores => scores.success);
 
-  const playClicks$ = DOM.select('.button--play').events('click')
+  const playClicks$ = DOM.select('.button--play')
+    .events('click')
     .mapTo(true);
-  const pauseClicks$ = DOM.select('.button--pause').events('click')
+  const pauseClicks$ = DOM.select('.button--pause')
+    .events('click')
     .mapTo(false);
   const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
   const playbackHasStarted$ = playClicks$.take(1);
@@ -54,9 +57,11 @@ function intent(DOM, HTTP) {
     playbackHasStarted$,
     status$: apiResponseWithErrors$
       .filter(scores => scores.error)
-      .map(scores => scores.error.expected ?
-        scores.error.message :
-        `Failed to fetch latest scores: ${scores.error.message}.`)
+      .map(scores =>
+        scores.error.expected
+          ? scores.error.message
+          : `Failed to fetch latest scores: ${scores.error.message}.`
+      )
   };
 }
 
@@ -82,34 +87,62 @@ function model(actions, animations) {
     props$: xs.of({ interval: 20 })
   });
 
-  actions.playbackHasStarted$.addListener({ next: () => animations.setInfoPanelsPlaybackHeight() });
+  actions.playbackHasStarted$.addListener({
+    next: () => animations.setInfoPanelsPlaybackHeight()
+  });
   actions.successApiResponse$
     .filter(({ games }) => games.some(game => hasGameFinished(game.status.state)))
-    .addListener({ next: () => gameClock.clock$.addListener({ complete: () => animations.setInfoPanelsFinalHeight() })});
+    .addListener({
+      next: () =>
+        gameClock.clock$.addListener({
+          complete: () => animations.setInfoPanelsFinalHeight()
+        })
+    });
 
-  return xs.combine(
-    scores$,
-    actions.isPlaying$.startWith(false),
-    actions.status$.startWith('Fetching latest scores...'),
-    gameClock.DOM.startWith(span('.clock')),
-    gameClock.clock$.startWith(null)
-  ).map(([scores, isPlaying, status, clockVtree, clock]) =>
-    ({ scores, isPlaying, status, clockVtree, clock, gameCount: scores.games.length })
-  );
+  return xs
+    .combine(
+      scores$,
+      actions.isPlaying$.startWith(false),
+      actions.status$.startWith('Fetching latest scores...'),
+      gameClock.DOM.startWith(span('.clock')),
+      gameClock.clock$.startWith(null)
+    )
+    .map(([scores, isPlaying, status, clockVtree, clock]) => ({
+      scores,
+      isPlaying,
+      status,
+      clockVtree,
+      clock,
+      gameCount: scores.games.length
+    }));
 }
 
 function createGoalCountSubject(classModifier, gameIndex, animations) {
   const subject$ = new xs.create();
-  subject$.fold((acc, curr) => ({ last: curr, changed: acc.last !== curr }), { last: 0 })
+  subject$
+    .fold((acc, curr) => ({ last: curr, changed: acc.last !== curr }), {
+      last: 0
+    })
     .filter(({ changed }) => changed)
-    .addListener({ next: () => animations.highlightGoal(classModifier, gameIndex) });
+    .addListener({
+      next: () => animations.highlightGoal(classModifier, gameIndex)
+    });
   return subject$;
 }
 
 function view(state$) {
-  return state$.map(({scores, isPlaying, status, clockVtree, clock, gameCount}) =>
+  return state$.map(({ scores, isPlaying, status, clockVtree, clock, gameCount }) =>
     div([
-      header('.header', renderHeader({ clockVtree, clock, gameCount, isPlaying, date: scores.date })),
+      header(
+        '.header',
+        renderHeader({
+          clockVtree,
+          clock,
+          gameCount,
+          isPlaying,
+          date: scores.date
+        })
+      ),
       section('.score-panel', renderScores({ games: scores.games, status, clock }))
     ])
   );
@@ -128,10 +161,7 @@ function renderHeader(state) {
   const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
-    h1('.header__title', [
-      span('.all-caps', 'NHL'),
-      ' Recap'
-    ]),
+    h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
     button(buttonClass),
     showDate ? renderDate(state.date) : state.clockVtree
   ]);
@@ -139,9 +169,12 @@ function renderHeader(state) {
 
 function renderScores(state) {
   const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
-  return state.games.length > 0 ?
-    div('.score-list', state.games.map((game, index) => gameScore(state.clock, game, gameAnimationIndexes[index]))) :
-    div('.status.fade-in', [state.status || 'No scores available.']);
+  return state.games.length > 0
+    ? div(
+        '.score-list',
+        state.games.map((game, index) => gameScore(state.clock, game, gameAnimationIndexes[index]))
+      )
+    : div('.status.fade-in', [state.status || 'No scores available.']);
 }
 
 function renderDate(date) {

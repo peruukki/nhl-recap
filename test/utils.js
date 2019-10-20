@@ -1,11 +1,9 @@
-import {assert} from 'chai';
+import { assert } from 'chai';
 
-import {getGameAnimationIndexes, truncatePlayerName} from '../app/js/utils';
+import { getGameAnimationIndexes, truncatePlayerName } from '../app/js/utils';
 
 describe('utils', () => {
-
   describe('truncatePlayerName', () => {
-
     it('should not truncate a name shorter than 21 characters', () => {
       const name = 'Ryan Nugent-Hopkinss';
       assert.equal(truncatePlayerName(name), name);
@@ -30,11 +28,9 @@ describe('utils', () => {
       const name = 'Pierre-Alexandre Jean Parenteau';
       assert.equal(truncatePlayerName(name), 'P.A.J. Parenteau');
     });
-
   });
 
   describe('getAnimationIndexes', () => {
-
     it('should return empty indexes for zero games', () => {
       assert.deepEqual(getGameAnimationIndexes(0), []);
     });
@@ -47,6 +43,5 @@ describe('utils', () => {
       // Both columns' animations finish at the same time at index 3
       assert.deepEqual(getGameAnimationIndexes(7), [0, 3, 1, 2, 2, 1, 3]);
     });
-
   });
 });

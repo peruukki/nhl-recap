@@ -4,7 +4,9 @@ function highlightGoal(classModifier, gameIndex) {
 }
 
 function highlightGoalCountChange(classModifier, gameIndex) {
-  const element = document.querySelectorAll(`.team-panel--${classModifier} > .team-panel__team-score`)[gameIndex];
+  const element = document.querySelectorAll(
+    `.team-panel--${classModifier} > .team-panel__team-score`
+  )[gameIndex];
   if (element) {
     const highlightDuration = 1000;
     element.animate([{ color: 'black' }, { color: '#fac02d' }], highlightDuration);
@@ -20,13 +22,17 @@ function highlightLatestGoalChange(gameIndex) {
 }
 
 function setInfoPanelsPlaybackHeight() {
-  document.querySelectorAll('.game__info-panel')
+  document
+    .querySelectorAll('.game__info-panel')
     .forEach(element => element.classList.add('increased-height'));
 }
 
 function setInfoPanelsFinalHeight() {
-  document.querySelectorAll('.game__info-panel')
-    .forEach(element => element.classList.add('final'));
+  document.querySelectorAll('.game__info-panel').forEach(element => element.classList.add('final'));
 }
 
-export default { highlightGoal, setInfoPanelsPlaybackHeight, setInfoPanelsFinalHeight };
+export default {
+  highlightGoal,
+  setInfoPanelsPlaybackHeight,
+  setInfoPanelsFinalHeight
+};

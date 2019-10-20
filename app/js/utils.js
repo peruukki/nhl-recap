@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-export function remainingTimeToElapsedTime({period, minute, second}) {
-  const periodLengthInMinutes = (period === 'OT') ? 5 : 20;
+export function remainingTimeToElapsedTime({ period, minute, second }) {
+  const periodLengthInMinutes = period === 'OT' ? 5 : 20;
   const secondsRemaining = 60 * (minute || 0) + (second || 0);
   const secondsElapsed = periodLengthInMinutes * 60 - secondsRemaining;
   const elapsedMinute = Math.floor(secondsElapsed / 60);
@@ -15,7 +15,7 @@ export function elapsedTimeToRemainingTime(time) {
 }
 
 export function hasGoalBeenScored(clock, goal) {
-  const {period, min: minute, sec: second} = goal;
+  const { period, min: minute, sec: second } = goal;
   return hasElapsedTimePassed(clock, { period, minute, second });
 }
 
@@ -34,11 +34,13 @@ export function hasClockPassedCurrentProgress(clock, status) {
 }
 
 function hasElapsedTimePassed(clock, elapsedTime) {
-  const {minute, second} = remainingTimeToElapsedTime(clock);
-  return (getPeriodOrdinal(elapsedTime.period) < getPeriodOrdinal(clock.period)) ||
+  const { minute, second } = remainingTimeToElapsedTime(clock);
+  return (
+    getPeriodOrdinal(elapsedTime.period) < getPeriodOrdinal(clock.period) ||
     (getPeriodOrdinal(elapsedTime.period) === getPeriodOrdinal(clock.period) &&
       (elapsedTime.minute < minute ||
-        (elapsedTime.minute === minute && elapsedTime.second <= second)));
+        (elapsedTime.minute === minute && elapsedTime.second <= second)))
+  );
 }
 
 function parseProgressTimeRemaining(progress) {
@@ -46,7 +48,7 @@ function parseProgressTimeRemaining(progress) {
     return null;
   }
 
-  const {min, sec} = progress.currentPeriodTimeRemaining;
+  const { min, sec } = progress.currentPeriodTimeRemaining;
   return { period: progress.currentPeriod, minute: min, second: sec };
 }
 
@@ -69,8 +71,7 @@ export function truncatePlayerName(name) {
     const names = name.split(' ');
     const firstNames = _.dropRight(names);
     const abbreviatedFirstNames = _.flatten(
-      firstNames.map(firstName => firstName.split('-')
-        .map(namePart => `${namePart[0]}.`))
+      firstNames.map(firstName => firstName.split('-').map(namePart => `${namePart[0]}.`))
     );
     return `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
   }
@@ -78,8 +79,8 @@ export function truncatePlayerName(name) {
 
 export function getGameAnimationIndexes(gameCount) {
   return _.times(gameCount, index => {
-    const isEven = (index % 2 === 0);
+    const isEven = index % 2 === 0;
     // Animate first column (evens) from top to bottom, second column (odds) from bottom to top
-    return isEven ? (index / 2) : Math.floor((gameCount - index) / 2);
+    return isEven ? index / 2 : Math.floor((gameCount - index) / 2);
   });
 }

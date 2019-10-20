@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import {span} from '@cycle/dom';
+import { span } from '@cycle/dom';
 
 import gameEvents from './game-events';
 
@@ -12,22 +12,24 @@ export default function GameClock(sources) {
 }
 
 function intent(sources) {
-  const {scores$, isPlaying$, props$} = sources;
+  const { scores$, isPlaying$, props$ } = sources;
   return { scores$, isPlaying$, props$ };
 }
 
 function model(actions) {
-  const ticks$ = actions.props$.map(props => xs.periodic(props.interval))
-    .flatten();
+  const ticks$ = actions.props$.map(props => xs.periodic(props.interval)).flatten();
   const events$ = actions.scores$.map(scores => gameEvents(scores));
-  const eventIndex$ = xs.combine(actions.isPlaying$, ticks$)
+  const eventIndex$ = xs
+    .combine(actions.isPlaying$, ticks$)
     .filter(([isPlaying]) => isPlaying)
     .fold(acc => acc + 1, 0)
     .drop(1);
-  const eventsEnd$ = xs.combine(events$, eventIndex$)
+  const eventsEnd$ = xs
+    .combine(events$, eventIndex$)
     .filter(([events, eventIndex]) => eventIndex >= events.length);
 
-  return xs.combine(events$, eventIndex$)
+  return xs
+    .combine(events$, eventIndex$)
     .endWhen(eventsEnd$)
     .map(([events, eventIndex]) => events[eventIndex]);
 }
@@ -47,9 +49,9 @@ function renderPeriod(clock) {
   if (clock.start) {
     return span('.fade-in', 'Starting...');
   } else if (clock.end) {
-    return clock.period ?
-      span('.fade-in', renderPeriodEnd(clock.period)) :
-      span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
+    return clock.period
+      ? span('.fade-in', renderPeriodEnd(clock.period))
+      : span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
   } else {
     return renderPeriodNumber(clock.period);
   }
@@ -86,9 +88,9 @@ export function renderTime(clock) {
     return '';
   }
 
-  const showTenthsOfASecond = (clock.tenthOfASecond !== undefined);
+  const showTenthsOfASecond = clock.tenthOfASecond !== undefined;
   const minute = !showTenthsOfASecond ? clock.minute + ':' : '';
-  const second = (clock.second >= 10 || showTenthsOfASecond) ? clock.second : '0' + clock.second;
+  const second = clock.second >= 10 || showTenthsOfASecond ? clock.second : '0' + clock.second;
   const tenthOfASecond = showTenthsOfASecond ? '.' + clock.tenthOfASecond : '';
   return minute + second + tenthOfASecond;
 }

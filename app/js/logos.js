@@ -1,4 +1,4 @@
-import {svg} from '@cycle/dom';
+import { svg } from '@cycle/dom';
 
 export function fetchTeamLogoSVGSymbols() {
   // Adapted from https://css-tricks.com/ajaxing-svg-sprite/
@@ -14,7 +14,7 @@ export function fetchTeamLogoSVGSymbols() {
 }
 
 export function renderTeamLogo(teamId, className) {
-  return svg({attrs: {class: className}}, [
-    svg.use({attrs: {'href': `#team-${teamId}-20192020-dark`}})
+  return svg({ attrs: { class: className } }, [
+    svg.use({ attrs: { href: `#team-${teamId}-20192020-dark` } })
   ]);
 }

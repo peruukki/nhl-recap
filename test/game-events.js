@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import {assert} from 'chai';
+import { assert } from 'chai';
 
-import gameEvents, {getGoalScoringTimes} from '../app/js/game-events';
+import gameEvents, { getGoalScoringTimes } from '../app/js/game-events';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -13,7 +13,6 @@ import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
 const periodStartMultiplier = 150;
 
 describe('gameEvents', () => {
-
   it('should include 3 periods if no games went to overtime or shootout', () => {
     const events = gameEvents(scoresAllRegularTime.games);
 
@@ -21,7 +20,11 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3]);
 
     // Check that there were no other period end events
-    assert.equal(getPeriodEndEvents(events).length, 3 * periodStartMultiplier, 'All period end events count');
+    assert.equal(
+      getPeriodEndEvents(events).length,
+      3 * periodStartMultiplier,
+      'All period end events count'
+    );
   });
 
   it('should include events until last overtime goal if games went to overtime and none went to shootout', () => {
@@ -123,7 +126,6 @@ describe('gameEvents', () => {
 
     assert.deepEqual(goalScoringTimes, expectedGoalScoringTimes);
   });
-
 });
 
 function assertPeriodEndEvents(events, periods) {
@@ -139,7 +141,11 @@ function assertPeriodEndEventsCount(events, periods) {
   const allPeriodEndEvents = events.filter(event => event.period && event.end);
   const periodEndEvents = period => allPeriodEndEvents.filter(event => event.period === period);
   periods.forEach(period => {
-    assert.equal(periodEndEvents(period).length, periodStartMultiplier, `Period ${period} end events count`);
+    assert.equal(
+      periodEndEvents(period).length,
+      periodStartMultiplier,
+      `Period ${period} end events count`
+    );
   });
 }
 

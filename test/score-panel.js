@@ -1,8 +1,8 @@
-import {div, span} from '@cycle/dom';
-import {mockDOMSource} from '@cycle/dom';
-import {makeHTTPDriver} from '@cycle/http';
+import { div, span } from '@cycle/dom';
+import { mockDOMSource } from '@cycle/dom';
+import { makeHTTPDriver } from '@cycle/http';
 import xs from 'xstream';
-import {assert} from 'chai';
+import { assert } from 'chai';
 import nock from 'nock';
 
 import scorePanel from '../app/js/score-panel';
@@ -10,42 +10,43 @@ import apiResponse from './data/latest.json';
 import animations from './animations';
 
 describe('scorePanel', () => {
-
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';
   const nhlScoreApiPath = '/api/scores/latest';
   const nhlScoreApiUrl = nhlScoreApiHost + nhlScoreApiPath;
 
-  it('should initially show a message about fetching latest scores', (done) => {
+  it('should initially show a message about fetching latest scores', done => {
     const sinks = run(xs.empty());
     addListener(done, sinks.DOM.take(1), vtree => {
       assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Fetching latest scores...'));
     });
   });
 
-  it('should fetch latest scores', (done) => {
+  it('should fetch latest scores', done => {
     const sinks = run(xs.empty());
     addListener(done, sinks.HTTP, request => {
       assert.deepEqual(request.url, nhlScoreApiUrl);
     });
   });
 
-  it('should render fetched latest scores', (done) => {
-    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+  it('should render fetched latest scores', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
       .reply(200, apiResponse);
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
-      assert.deepEqual(
-        gameScoreNodes.map(node => node.sel),
-        ['div.game.game--started.expand--0', 'div.game.game--started.expand--0']
-      );
+      assert.deepEqual(gameScoreNodes.map(node => node.sel), [
+        'div.game.game--started.expand--0',
+        'div.game.game--started.expand--0'
+      ]);
     });
   });
 
-  it('should show a delayed and animated play button', (done) => {
-    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+  it('should show a delayed and animated play button', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
       .reply(200, apiResponse);
 
@@ -56,8 +57,9 @@ describe('scorePanel', () => {
     });
   });
 
-  it('should show the date of the latest scores with a slow fade-in', (done) => {
-    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+  it('should show the date of the latest scores with a slow fade-in', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
       .reply(200, apiResponse);
 
@@ -67,8 +69,9 @@ describe('scorePanel', () => {
     });
   });
 
-  it('should show a message if there are no latest scores available', (done) => {
-    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+  it('should show a message if there are no latest scores available', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
       .reply(200, { date: {}, games: [] });
 
@@ -78,17 +81,20 @@ describe('scorePanel', () => {
     });
   });
 
-  it('should show a message if fetching latest scores fails', (done) => {
-    nock(nhlScoreApiHost).get(nhlScoreApiPath)
+  it('should show a message if fetching latest scores fails', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
       .reply(404, 'Fake error');
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
-      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Failed to fetch latest scores: Not Found.'));
+      assert.deepEqual(
+        getStatusNode(vtree),
+        expectedStatusVtree('Failed to fetch latest scores: Not Found.')
+      );
     });
   });
-
 });
 
 function run(httpRequest$) {

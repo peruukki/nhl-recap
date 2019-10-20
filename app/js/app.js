@@ -1,10 +1,10 @@
-import {run} from '@cycle/run';
-import {makeDOMDriver} from '@cycle/dom';
-import {makeHTTPDriver} from '@cycle/http';
+import { run } from '@cycle/run';
+import { makeDOMDriver } from '@cycle/dom';
+import { makeHTTPDriver } from '@cycle/http';
 
 import scorePanel from './score-panel';
 import animations from './animations';
-import {fetchTeamLogoSVGSymbols} from './logos';
+import { fetchTeamLogoSVGSymbols } from './logos';
 
 fetchTeamLogoSVGSymbols();
 
