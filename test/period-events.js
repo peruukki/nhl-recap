@@ -7,11 +7,11 @@ import periodEvents from '../app/js/period-events';
 const periodLengthInMinutes = 3;
 
 const clockAdvanceStep = 3;
-const goalDelayMultiplier = 50;
+const goalPauseEventCount = 50;
 
 describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
-    const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalDelayMultiplier);
+    const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalPauseEventCount);
     assert.deepEqual(clockEvents.length, 61);
     assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 2 });
   });
@@ -24,7 +24,7 @@ describe('periodEvents', () => {
       periodLengthInMinutes,
       endTime,
       [],
-      goalDelayMultiplier
+      goalPauseEventCount
     );
 
     const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map(second => ({
@@ -41,7 +41,7 @@ describe('periodEvents', () => {
     const period = 1;
     const clockEventCount = ((periodLengthInMinutes - 1) * 60) / clockAdvanceStep + 1;
     const clockEvents = _.take(
-      periodEvents(period, periodLengthInMinutes, null, [], goalDelayMultiplier),
+      periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCount),
       clockEventCount
     );
 
@@ -59,7 +59,7 @@ describe('periodEvents', () => {
     [1, 2, 'OT'].forEach(period => {
       // Use only one minute period length to speed up and simplify the test
       const periodLength = 1;
-      const clockEvents = periodEvents(period, periodLength, null, [], goalDelayMultiplier);
+      const clockEvents = periodEvents(period, periodLength, null, [], goalPauseEventCount);
 
       const secondEvents = _.range(59, -1, -clockAdvanceStep).map(second => ({
         period,
@@ -77,7 +77,7 @@ describe('periodEvents', () => {
     const periodLength = 1;
     // Take only the first second to speed up and simplify the test
     const clockEvents = _.take(
-      periodEvents(period, periodLength, null, [], goalDelayMultiplier),
+      periodEvents(period, periodLength, null, [], goalPauseEventCount),
       5
     );
 
@@ -96,16 +96,16 @@ describe('periodEvents', () => {
     const assertLastEvent = (allGoalsSorted, expectedGoalScoreCount, description) => {
       const period = 1;
       const periodLength = 20;
-      const eventMultiplier = 50;
+      const goalPauseEventCount = 50;
 
       const clockEvents = periodEvents(
         period,
         periodLength,
         null,
         allGoalsSorted,
-        goalDelayMultiplier
+        goalPauseEventCount
       );
-      const eventCount = 401 + expectedGoalScoreCount * eventMultiplier;
+      const eventCount = 401 + expectedGoalScoreCount * goalPauseEventCount;
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
       assert.deepEqual(clockEvents.length, eventCount);

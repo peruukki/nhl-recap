@@ -9,7 +9,7 @@ export default function periodEvents(
   durationInMinutes,
   endTime,
   allGoalsSorted,
-  goalDelayMultiplier
+  goalPauseEventCount
 ) {
   const lastMinute = endTime ? endTime.minute : -1;
   const lastSecond = endTime ? endTime.second : -1;
@@ -27,7 +27,7 @@ export default function periodEvents(
 
   const firstEvent = { period, minute: durationInMinutes, second: 0 };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
-  return multiplyGoalScoringTimeEvents(sequence, allGoalsSorted, goalDelayMultiplier);
+  return multiplyGoalScoringTimeEvents(sequence, allGoalsSorted, goalPauseEventCount);
 }
 
 function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
@@ -65,7 +65,7 @@ function secondRange(minute, lastMinute, lastSecond) {
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
-function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalDelayMultiplier) {
+function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
   return _.take(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
@@ -74,7 +74,7 @@ function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalDelayMul
           currentClock,
           allGoalsSorted
         );
-        const currentClockEventCount = 1 + goalsScoredCount * goalDelayMultiplier;
+        const currentClockEventCount = 1 + goalsScoredCount * goalPauseEventCount;
         return _.times(currentClockEventCount, () => currentClock);
       })
     )

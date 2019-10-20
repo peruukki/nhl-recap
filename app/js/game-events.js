@@ -4,17 +4,18 @@ import periodEvents from './period-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
 
 export default function gameEvents(scores) {
-  const gamesStartDelayMultiplier = 50;
-  const periodEndDelayMultiplier = 150;
-  const goalDelayMultiplier = 50;
+  // These event counts determine for how many number of extra events we pause the clock
+  const gamesStartPauseEventCount = 50;
+  const periodEndPauseEventCount = 150;
+  const goalPauseEventCount = 50;
 
   const endTime = getClockEndTime(scores);
-  const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalDelayMultiplier);
+  const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalPauseEventCount);
   const completedPeriodEvents = endTime.inProgress
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
   const periodEnds = completedPeriodEvents.map(onePeriodEvents =>
-    appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndDelayMultiplier)
+    appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount)
   );
   const allPeriodEvents = eventsByPeriod.map(onePeriodEvents => onePeriodEvents.events);
   const periodSequences = _.chain()
@@ -24,7 +25,7 @@ export default function gameEvents(scores) {
     .value();
 
   return _.concat(
-    appendDelay(getGamesStartElement(), gamesStartDelayMultiplier),
+    appendDelay(getGamesStartElement(), gamesStartPauseEventCount),
     ...periodSequences,
     getGamesEndElement(endTime.inProgress)
   );
@@ -46,28 +47,28 @@ function getGamesEndElement(inProgress) {
   return inProgress ? { end: true, inProgress } : { end: true };
 }
 
-function getAllPeriodEvents(scores, endTime, goalDelayMultiplier) {
+function getAllPeriodEvents(scores, endTime, goalPauseEventCount) {
   const allGoalsSorted = getAllGoalSorted(scores);
-  return getRegularPeriodClocks(endTime, allGoalsSorted, goalDelayMultiplier)
-    .concat(getOvertimeClock(endTime, allGoalsSorted, goalDelayMultiplier))
+  return getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount)
+    .concat(getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount))
     .concat(getShootoutClock(endTime))
     .filter(_.identity);
 }
 
-function getRegularPeriodClocks(endTime, allGoalsSorted, goalDelayMultiplier) {
+function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
   const partialPeriodNumber = getPartialPeriodNumber(endTime);
   const lastFullPeriodNumber = partialPeriodNumber
     ? partialPeriodNumber - 1
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map(period => ({
     period: period,
-    events: periodEvents(period, 20, null, allGoalsSorted, goalDelayMultiplier)
+    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount)
   }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalDelayMultiplier)
+      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalPauseEventCount)
     };
     return fullPeriods.concat(partialPeriod);
   } else {
@@ -87,14 +88,14 @@ function hasLastPeriodEnded(endTime) {
   return endTime.minute === undefined;
 }
 
-function getOvertimeClock(endTime, allGoalsSorted, goalDelayMultiplier) {
+function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
   if (endTime.period !== 'SO' && endTime.period !== 'OT') {
     return null;
   } else {
     const periodEnd = endTime.period === 'OT' ? endTime : null;
     return {
       period: 'OT',
-      events: periodEvents('OT', 5, periodEnd, allGoalsSorted, goalDelayMultiplier)
+      events: periodEvents('OT', 5, periodEnd, allGoalsSorted, goalPauseEventCount)
     };
   }
 }

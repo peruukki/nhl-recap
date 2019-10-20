@@ -10,7 +10,7 @@ import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
 import scoresLiveEndOfOT from './data/latest-live-end-of-ot.json';
 import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
 
-const periodStartMultiplier = 150;
+const periodStartPauseEventCount = 150;
 
 describe('gameEvents', () => {
   it('should include 3 periods if no games went to overtime or shootout', () => {
@@ -22,7 +22,7 @@ describe('gameEvents', () => {
     // Check that there were no other period end events
     assert.equal(
       getPeriodEndEvents(events).length,
-      3 * periodStartMultiplier,
+      3 * periodStartPauseEventCount,
       'All period end events count'
     );
   });
@@ -143,7 +143,7 @@ function assertPeriodEndEventsCount(events, periods) {
   periods.forEach(period => {
     assert.equal(
       periodEndEvents(period).length,
-      periodStartMultiplier,
+      periodStartPauseEventCount,
       `Period ${period} end events count`
     );
   });
