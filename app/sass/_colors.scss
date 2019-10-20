@@ -1,5 +1,5 @@
 // Color values
-$blue-dark: hsla(227, 77%, 25%, 0.5);
+$blue-dark-semi-transparent: hsla(227, 77%, 25%, 0.5);
 $blue-light: hsl(226, 47%, 49%);
 $blue-medium: hsl(227, 51%, 38%);
 $gray: hsl(198, 16%, 84%);
@@ -10,9 +10,9 @@ $yellow-medium: hsl(54, 100%, 67%);
 
 // Background colors
 $background-body: $blue-light;
-$background-game: $blue-dark;
-$background-game-stats-after-game: $blue-dark;
-$background-header: $blue-dark;
+$background-game: $blue-dark-semi-transparent;
+$background-game-stats-after-game: $blue-dark-semi-transparent;
+$background-header: $blue-dark-semi-transparent;
 
 // Foreground colors
 $color-highlight: $yellow-dark;
