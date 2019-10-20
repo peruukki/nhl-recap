@@ -5,9 +5,10 @@ import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
 
 export default function gameEvents(scores) {
   // These event counts determine for how many number of extra events we pause the clock
-  const gamesStartPauseEventCount = 50;
-  const periodEndPauseEventCount = 150;
-  const goalPauseEventCount = 50;
+  const pauseMultiplier = 50;
+  const gamesStartPauseEventCount = 1 * pauseMultiplier;
+  const periodEndPauseEventCount = 3 * pauseMultiplier;
+  const goalPauseEventCount = 1 * pauseMultiplier;
 
   const endTime = getClockEndTime(scores);
   const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalPauseEventCount);
