@@ -15,8 +15,8 @@ rules:
   no-mergeable-selectors:
     - 2
     - whitelist: ['from', 'to']
-  no-url-domains: false
-  no-url-protocols: false
+  no-url-domains: 0
+  no-url-protocols: 0
   property-sort-order:
     - 1
     - order: smacss
