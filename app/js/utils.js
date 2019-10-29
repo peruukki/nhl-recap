@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './game-events';
+
 export function remainingTimeToElapsedTime({ period, minute, second }) {
   const periodLengthInMinutes = period === 'OT' ? 5 : 20;
   const secondsRemaining = 60 * (minute || 0) + (second || 0);
@@ -54,9 +56,9 @@ function parseProgressTimeRemaining(progress) {
 
 export function getPeriodOrdinal(period) {
   switch (period) {
-    case 'SO':
+    case PERIOD_SHOOTOUT:
       return 5;
-    case 'OT':
+    case PERIOD_OVERTIME:
       return 4;
     default:
       return Number(period);

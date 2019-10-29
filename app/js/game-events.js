@@ -3,6 +3,9 @@ import _ from 'lodash';
 import periodEvents from './period-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
 
+export const PERIOD_OVERTIME = 'OT';
+export const PERIOD_SHOOTOUT = 'SO';
+
 export default function gameEvents(scores) {
   // These event counts determine for how many number of extra events we pause the clock
   const pauseMultiplier = 50;
@@ -90,19 +93,21 @@ function hasLastPeriodEnded(endTime) {
 }
 
 function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
-  if (endTime.period !== 'SO' && endTime.period !== 'OT') {
+  if (endTime.period !== PERIOD_SHOOTOUT && endTime.period !== PERIOD_OVERTIME) {
     return null;
   } else {
-    const periodEnd = endTime.period === 'OT' ? endTime : null;
+    const periodEnd = endTime.period === PERIOD_OVERTIME ? endTime : null;
     return {
-      period: 'OT',
-      events: periodEvents('OT', 5, periodEnd, allGoalsSorted, goalPauseEventCount)
+      period: PERIOD_OVERTIME,
+      events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount)
     };
   }
 }
 
 function getShootoutClock(endTime) {
-  return endTime.period === 'SO' ? { period: 'SO', events: [{ period: 'SO' }] } : null;
+  return endTime.period === PERIOD_SHOOTOUT
+    ? { period: PERIOD_SHOOTOUT, events: [{ period: PERIOD_SHOOTOUT }] }
+    : null;
 }
 
 function getClockEndTime(scores) {
@@ -141,7 +146,8 @@ function getGameEndTimeFromProgress(progress, isPlayoffGame) {
   const hasEnded = min === 0 && sec === 0;
   return {
     period:
-      !isPlayoffGame && _.includes(['OT', 'SO'], progress.currentPeriodOrdinal)
+      !isPlayoffGame &&
+      _.includes([PERIOD_OVERTIME, PERIOD_SHOOTOUT], progress.currentPeriodOrdinal)
         ? progress.currentPeriodOrdinal
         : progress.currentPeriod,
     minute: hasEnded ? undefined : min,
@@ -156,8 +162,8 @@ function getGameEndTimeFromGoals(goals) {
     return null;
   }
 
-  const isOverTime = lastGoal.period === 'OT' || lastGoal.period > 3;
-  const isShootout = lastGoal.period === 'SO';
+  const isOverTime = lastGoal.period === PERIOD_OVERTIME || lastGoal.period > 3;
+  const isShootout = lastGoal.period === PERIOD_SHOOTOUT;
 
   if (isOverTime) {
     return elapsedTimeToRemainingTime({
@@ -166,7 +172,7 @@ function getGameEndTimeFromGoals(goals) {
       second: lastGoal.sec
     });
   } else if (isShootout) {
-    return { period: 'SO' };
+    return { period: PERIOD_SHOOTOUT };
   } else {
     return { period: 3 };
   }

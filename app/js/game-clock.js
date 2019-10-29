@@ -1,7 +1,7 @@
 import xs from 'xstream';
 import { span } from '@cycle/dom';
 
-import gameEvents from './game-events';
+import gameEvents, { PERIOD_SHOOTOUT, PERIOD_OVERTIME } from './game-events';
 
 export default function GameClock(sources) {
   const state$ = model(intent(sources));
@@ -63,11 +63,11 @@ function renderPeriodEnd(period) {
 
 export function renderPeriodNumber(period) {
   switch (period) {
-    case 'OT':
+    case PERIOD_OVERTIME:
     case 4:
     case '4':
       return 'OT';
-    case 'SO':
+    case PERIOD_SHOOTOUT:
       return 'SO';
     case 1:
     case '1':
