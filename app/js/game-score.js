@@ -9,7 +9,7 @@ import { renderTeamLogo } from './logos';
 
 export default function gameScore(
   clock,
-  { status, startTime, teams, goals, preGameStats = {}, currentStats = {}, goalCounts },
+  { status, startTime, teams, goals, preGameStats = {}, currentStats = {} },
   gameAnimationIndex
 ) {
   const currentGoals = getCurrentGoals(clock, teams, goals, status);
@@ -37,11 +37,6 @@ export default function gameScore(
     updatePlayoffSeriesWins
   );
   const modifier = hasGameStarted(status.state) ? '.game--started' : '';
-
-  if (goalCounts) {
-    goalCounts.away$.shamefullySendNext(awayGoals.length);
-    goalCounts.home$.shamefullySendNext(homeGoals.length);
-  }
 
   return div(`.game${modifier}.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),

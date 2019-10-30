@@ -1,7 +1,10 @@
 import _ from 'lodash';
 
 import periodEvents from './period-events';
+import shootoutEvents from './shootout-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
+
+export const GAME_UPDATE_GOAL = 'GOAL';
 
 export const PERIOD_OVERTIME = 'OT';
 export const PERIOD_SHOOTOUT = 'SO';
@@ -11,7 +14,7 @@ export default function gameEvents(scores) {
   const pauseMultiplier = 50;
   const gamesStartPauseEventCount = 1 * pauseMultiplier;
   const periodEndPauseEventCount = 3 * pauseMultiplier;
-  const goalPauseEventCount = 1 * pauseMultiplier;
+  const goalPauseEventCount = 2 * pauseMultiplier;
 
   const endTime = getClockEndTime(scores);
   const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalPauseEventCount);
@@ -55,7 +58,7 @@ function getAllPeriodEvents(scores, endTime, goalPauseEventCount) {
   const allGoalsSorted = getAllGoalSorted(scores);
   return getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount)
     .concat(getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount))
-    .concat(getShootoutClock(endTime))
+    .concat(getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount))
     .filter(_.identity);
 }
 
@@ -104,9 +107,9 @@ function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
   }
 }
 
-function getShootoutClock(endTime) {
+function getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount) {
   return endTime.period === PERIOD_SHOOTOUT
-    ? { period: PERIOD_SHOOTOUT, events: [{ period: PERIOD_SHOOTOUT }] }
+    ? { period: PERIOD_SHOOTOUT, events: shootoutEvents(allGoalsSorted, goalPauseEventCount) }
     : null;
 }
 
@@ -179,7 +182,18 @@ function getGameEndTimeFromGoals(goals) {
 }
 
 export function getAllGoalSorted(scores) {
-  return _.chain(scores.map((game, gameIndex) => game.goals.map(goal => ({ ...goal, gameIndex }))))
+  return _.chain(
+    scores.map((game, gameIndex) =>
+      game.goals.map(goal => ({
+        ...goal,
+        update: {
+          gameIndex,
+          type: GAME_UPDATE_GOAL,
+          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
+        }
+      }))
+    )
+  )
     .flatten()
     .sortBy(['period', 'min', 'sec'])
     .value();

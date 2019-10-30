@@ -35,7 +35,12 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 'OT', minute: 2, second: 23, gameIndex: 1 });
+    assert.deepEqual(lastTimeEvent, {
+      period: 'OT',
+      minute: 2,
+      second: 23,
+      update: { classModifier: 'home', gameIndex: 1, type: 'GOAL' }
+    });
   });
 
   it('should include events until shootout if games went to shootout', () => {
@@ -45,7 +50,10 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3, 'OT', 'SO']);
 
     const lastClockElement = getLastNonEndEvent(events);
-    assert.deepEqual(lastClockElement, { period: 'SO' });
+    assert.deepEqual(lastClockElement, {
+      period: 'SO',
+      update: { classModifier: 'away', gameIndex: 2, type: 'GOAL' }
+    });
   });
 
   it('should include events until most progressed game if no games have finished', () => {
@@ -119,9 +127,18 @@ describe('gameEvents', () => {
     const allGoalsSorted = getAllGoalSorted(scoresMultipleOvertime.games);
 
     const expectedAllGoalsSorted = _.flatten([
-      _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({ ...goal, gameIndex: 1 })),
-      scoresMultipleOvertime.games[0].goals.map(goal => ({ ...goal, gameIndex: 0 })),
-      _.takeRight(scoresMultipleOvertime.games[1].goals).map(goal => ({ ...goal, gameIndex: 1 }))
+      _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
+        ...goal,
+        update: { classModifier: goal.team === 'ANA' ? 'away' : 'home', gameIndex: 1, type: 'GOAL' }
+      })),
+      scoresMultipleOvertime.games[0].goals.map(goal => ({
+        ...goal,
+        update: { classModifier: 'away', gameIndex: 0, type: 'GOAL' }
+      })),
+      _.takeRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
+        ...goal,
+        update: { classModifier: goal.team === 'ANA' ? 'away' : 'home', gameIndex: 1, type: 'GOAL' }
+      }))
     ]);
 
     assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);

@@ -76,8 +76,8 @@ function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalPauseEve
         );
         return _.flatten([
           currentClock,
-          ...goalsScoredSincePreviousTime.map(({ gameIndex }) =>
-            _.times(goalPauseEventCount, () => ({ ...currentClock, gameIndex }))
+          ...goalsScoredSincePreviousTime.map(({ update }) =>
+            _.times(goalPauseEventCount, () => ({ ...currentClock, update }))
           )
         ]);
       })

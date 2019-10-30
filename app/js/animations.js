@@ -1,3 +1,35 @@
+const gameInFocusClass = 'in-focus';
+
+function clearGameInFocus(element) {
+  element.style.transform = null;
+  element.classList.remove(gameInFocusClass);
+}
+
+function setGameInFocus(element, windowWidth, windowHeight) {
+  const { left, right, top, bottom } = element.getBoundingClientRect();
+
+  const windowCenterX = windowWidth / 2;
+  const windowCenterY = windowHeight / 2;
+  const elementCenterX = (left + right) / 2;
+  const elementCenterY = (top + bottom) / 2;
+
+  const translateX = windowCenterX - elementCenterX;
+  const translateY = windowCenterY - elementCenterY;
+  const scale = 1.2;
+  element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  element.classList.add(gameInFocusClass);
+}
+
+function highlightGame(gameIndex) {
+  const element = document.querySelectorAll('.game')[gameIndex];
+  setGameInFocus(element, window.innerWidth, window.innerHeight);
+}
+
+function stopGameHighlight(gameIndex) {
+  const element = document.querySelectorAll('.game')[gameIndex];
+  clearGameInFocus(element);
+}
+
 function highlightGoal(classModifier, gameIndex) {
   highlightGoalCountChange(classModifier, gameIndex);
   highlightLatestGoalChange(gameIndex);
@@ -16,7 +48,7 @@ function highlightGoalCountChange(classModifier, gameIndex) {
 function highlightLatestGoalChange(gameIndex) {
   const element = document.querySelectorAll('.game__info-panel')[gameIndex];
   if (element) {
-    const highlightDuration = 500;
+    const highlightDuration = 750;
     element.animate([{ opacity: 0 }, { opacity: 1 }], highlightDuration);
   }
 }
@@ -32,7 +64,9 @@ function setInfoPanelsFinalHeight() {
 }
 
 export default {
+  highlightGame,
   highlightGoal,
+  stopGameHighlight,
   setInfoPanelsPlaybackHeight,
   setInfoPanelsFinalHeight
 };

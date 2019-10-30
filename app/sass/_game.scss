@@ -2,10 +2,18 @@
   width: $game-card-width;
   margin: $game-card-margin;
   float: left;
+  transition: transform ($expand-duration / 2) $expand-timing-function;
   border-radius: 4px;
   background: $background-game;
   font-size: 1.4rem;
   box-sizing: border-box;
+
+  &.in-focus {
+    position: relative;
+    background: $background-game-in-focus;
+    box-shadow: $color-shadow 0 5px 10px;
+    z-index: 1;
+  }
 
   &__score-panel {
     display: flex;

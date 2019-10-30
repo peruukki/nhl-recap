@@ -112,7 +112,9 @@ describe('periodEvents', () => {
       assert.deepEqual(_.last(clockEvents), lastTimeEvent, description);
 
       expectedIndexes.forEach(index => {
-        const eventsWithGameIndex = clockEvents.filter(({ gameIndex }) => gameIndex === index);
+        const eventsWithGameIndex = clockEvents.filter(
+          ({ update }) => update && update.gameIndex === index
+        );
         assert.deepEqual(eventsWithGameIndex.length, goalPauseEventCount);
       });
     };
@@ -122,9 +124,9 @@ describe('periodEvents', () => {
 
     // Assert that last event is as expected with goal scoring times
     const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
-      { period: 1, min: 1, sec: 1, gameIndex: 5 },
-      { period: 1, min: 2, sec: 2, gameIndex: 1 },
-      { period: 2, min: 1, sec: 1, gameIndex: 2 }
+      { period: 1, min: 1, sec: 1, update: { gameIndex: 5 } },
+      { period: 1, min: 2, sec: 2, update: { gameIndex: 1 } },
+      { period: 2, min: 1, sec: 1, update: { gameIndex: 2 } }
     ];
     assertLastEvent(
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
@@ -134,9 +136,9 @@ describe('periodEvents', () => {
     );
 
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
-      { period: 1, min: 1, sec: 1, gameIndex: 4 },
-      { period: 1, min: 1, sec: 1, gameIndex: 3 },
-      { period: 2, min: 1, sec: 1, gameIndex: 0 }
+      { period: 1, min: 1, sec: 1, update: { gameIndex: 4 } },
+      { period: 1, min: 1, sec: 1, update: { gameIndex: 3 } },
+      { period: 2, min: 1, sec: 1, update: { gameIndex: 0 } }
     ];
     assertLastEvent(
       allGoalsSortedWithMultipleGoalsAtTheSameTime,

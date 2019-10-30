@@ -1,9 +1,9 @@
 import { button, div, h1, header, section, span } from '@cycle/dom';
 import xs from 'xstream';
-import _ from 'lodash';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
+import { GAME_UPDATE_GOAL } from './game-events';
 import gameScore, { hasGameFinished } from './game-score';
 import { getGameAnimationIndexes } from './utils';
 
@@ -67,19 +67,7 @@ function intent(DOM, HTTP) {
 
 function model(actions, animations) {
   const initialState = { date: {}, games: [] };
-  const successResponse$ = actions.successApiResponse$.startWith(initialState);
-
-  const scores$ = successResponse$.map(({ date, games }) => ({
-    date,
-    games: games.map((game, index) =>
-      _.extend({}, game, {
-        goalCounts: {
-          away$: createGoalCountSubject('away', index, animations),
-          home$: createGoalCountSubject('home', index, animations)
-        }
-      })
-    )
-  }));
+  const scores$ = actions.successApiResponse$.startWith(initialState);
 
   const gameClock = GameClock({
     scores$: actions.successApiResponse$.map(({ games }) => games),
@@ -98,6 +86,36 @@ function model(actions, animations) {
           complete: () => animations.setInfoPanelsFinalHeight()
         })
     });
+  const gameUpdate$ = gameClock.clock$
+    .map(({ update }) => update || {})
+    .fold((acc, curr) => ({ nextToLast: acc.last, last: curr }), {})
+    .filter(({ nextToLast = {}, last = {} }) => nextToLast.gameIndex !== last.gameIndex);
+  const startGameUpdateFocus$ = gameUpdate$
+    .filter(({ last }) => last.gameIndex !== undefined)
+    .map(({ last }) => last);
+  const stopGameUpdateFocus$ = gameUpdate$
+    .filter(({ nextToLast }) => nextToLast.gameIndex !== undefined)
+    .map(({ nextToLast }) => nextToLast);
+
+  stopGameUpdateFocus$.addListener({
+    next: gameUpdate => {
+      animations.stopGameHighlight(gameUpdate.gameIndex);
+    }
+  });
+
+  startGameUpdateFocus$.addListener({
+    next: gameUpdate => {
+      animations.highlightGame(gameUpdate.gameIndex);
+
+      switch (gameUpdate.type) {
+        case GAME_UPDATE_GOAL:
+          animations.highlightGoal(gameUpdate.classModifier, gameUpdate.gameIndex);
+          break;
+        default:
+          throw new Error(`Unknown game update type ${gameUpdate.type}`);
+      }
+    }
+  });
 
   return xs
     .combine(
@@ -115,19 +133,6 @@ function model(actions, animations) {
       clock,
       gameCount: scores.games.length
     }));
-}
-
-function createGoalCountSubject(classModifier, gameIndex, animations) {
-  const subject$ = new xs.create();
-  subject$
-    .fold((acc, curr) => ({ last: curr, changed: acc.last !== curr }), {
-      last: 0
-    })
-    .filter(({ changed }) => changed)
-    .addListener({
-      next: () => animations.highlightGoal(classModifier, gameIndex)
-    });
-  return subject$;
 }
 
 function view(state$) {
