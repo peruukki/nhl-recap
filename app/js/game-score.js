@@ -4,6 +4,7 @@ import { format } from 'timeago.js';
 
 import { hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName } from './utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
+import { PERIOD_SHOOTOUT, PERIOD_OVERTIME } from './game-events';
 import { renderTeamLogo } from './logos';
 
 export default function gameScore(
@@ -81,8 +82,8 @@ function getCurrentGoals(clock, teams, goals, status) {
   if (!clock || clock.start) {
     return [];
   }
-  if (!clock.period || clock.period === 'SO') {
-    const nonShootoutGoals = goals.filter(goal => goal.period !== 'SO');
+  if (!clock.period || clock.period === PERIOD_SHOOTOUT) {
+    const nonShootoutGoals = goals.filter(goal => goal.period !== PERIOD_SHOOTOUT);
     return nonShootoutGoals.length === goals.length
       ? goals
       : nonShootoutGoals.concat(getShootoutGoal(goals, teams, status));
@@ -133,8 +134,8 @@ function renderLogo(teamId, modifier) {
 }
 
 function renderDelimiter(period) {
-  return period === 'OT' || period === 'SO' || period > 3
-    ? span('.team-panel__delimiter-period', period === 'SO' ? 'SO' : 'OT')
+  return period === PERIOD_OVERTIME || period === PERIOD_SHOOTOUT || period > 3
+    ? span('.team-panel__delimiter-period', period === PERIOD_SHOOTOUT ? 'SO' : 'OT')
     : '';
 }
 
@@ -348,7 +349,7 @@ function renderCurrentProgress(progress) {
     return 'In progress';
   } else if (progress.currentPeriodTimeRemaining.pretty === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
-  } else if (progress.currentPeriodOrdinal === 'SO') {
+  } else if (progress.currentPeriodOrdinal === PERIOD_SHOOTOUT) {
     return 'In shootout';
   } else {
     return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
