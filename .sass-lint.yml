@@ -9,6 +9,7 @@ rules:
     - allow-leading-underscore: false
       convention: hyphenatedbem
   empty-line-between-blocks: 0
+  indentation: 0
   leading-zero:
     - 1
     - include: true
