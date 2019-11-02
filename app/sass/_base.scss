@@ -1,8 +1,10 @@
 $fade-duration: 1s;
 $expand-duration: 0.5s;
+$focus-duration: 0.25s;
 $height-duration: 0.25s;
 
 $expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
+$focus-timing-function: ease-out;
 $height-timing-function: ease-in-out;
 
 @import url('https://indestructibletype.com/fonts/Jost.css');
