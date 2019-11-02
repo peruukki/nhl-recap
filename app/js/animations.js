@@ -1,11 +1,13 @@
 const gameInFocusClass = 'in-focus';
+const gameInFrontClass = 'in-front';
 
 function clearGameInFocus(element) {
   element.style.transform = null;
-  // Keep element's "in focus" styling until it reaches its normal position
+  element.classList.remove(gameInFocusClass);
+  // Keep element's "in front" styling until it reaches its normal position
   // Use setTimeout instead of ontransitionend due to much better browser support
   // The delay should match $focus-duration in _base.scss
-  setTimeout(() => element.classList.remove(gameInFocusClass), 250);
+  setTimeout(() => element.classList.remove(gameInFrontClass), 250);
 }
 
 function setGameInFocus(element, windowWidth, windowHeight) {
@@ -20,6 +22,7 @@ function setGameInFocus(element, windowWidth, windowHeight) {
   const translateY = windowCenterY - elementCenterY;
   const scale = 1.2;
   element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  element.classList.add(gameInFrontClass);
   element.classList.add(gameInFocusClass);
 }
 

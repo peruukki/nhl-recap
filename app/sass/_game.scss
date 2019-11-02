@@ -8,11 +8,14 @@
   font-size: 1.4rem;
   box-sizing: border-box;
 
-  &.in-focus {
+  &.in-front {
     position: relative;
+    z-index: 1;
+  }
+
+  &.in-focus {
     background: $background-game-in-focus;
     box-shadow: $color-shadow 0 5px 10px;
-    z-index: 1;
   }
 
   &__score-panel {
