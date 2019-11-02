@@ -1,10 +1,13 @@
 const gameInFocusClass = 'in-focus';
 
+function removeGameInFocusClass(event) {
+  event.target.classList.remove(gameInFocusClass);
+}
+
 function clearGameInFocus(element) {
-  element.ontransitionend = () => {
-    // Keep element's "in focus" styling until it reaches its normal position
-    element.classList.remove(gameInFocusClass);
-  };
+  // Keep element's "in focus" styling until it reaches its normal position
+  element.ontransitionend = removeGameInFocusClass;
+  element.onwebkittransitionend = removeGameInFocusClass;
   element.style.transform = null;
 }
 
@@ -22,6 +25,7 @@ function setGameInFocus(element, windowWidth, windowHeight) {
   element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   // Clear 'ontransitionend' callback that is set in clearGameInFocus
   element.ontransitionend = null;
+  element.onwebkittransitionend = null;
   element.classList.add(gameInFocusClass);
 }
 
