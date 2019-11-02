@@ -1,8 +1,11 @@
 const gameInFocusClass = 'in-focus';
 
 function clearGameInFocus(element) {
+  element.ontransitionend = () => {
+    // Keep element's "in focus" styling until it reaches its normal position
+    element.classList.remove(gameInFocusClass);
+  };
   element.style.transform = null;
-  element.classList.remove(gameInFocusClass);
 }
 
 function setGameInFocus(element, windowWidth, windowHeight) {
@@ -17,6 +20,8 @@ function setGameInFocus(element, windowWidth, windowHeight) {
   const translateY = windowCenterY - elementCenterY;
   const scale = 1.2;
   element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  // Clear 'ontransitionend' callback that is set in clearGameInFocus
+  element.ontransitionend = null;
   element.classList.add(gameInFocusClass);
 }
 
