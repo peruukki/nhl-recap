@@ -61,7 +61,7 @@ function minuteRange(firstMinute, lastMinute) {
 }
 
 function secondRange(minute, lastMinute, lastSecond) {
-  const rangeEnd = minute === lastMinute ? lastSecond - 1 : -1;
+  const rangeEnd = minute === lastMinute ? lastSecond - advanceClockStep : -1;
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
