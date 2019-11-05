@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import { hasGoalBeenScored } from './utils';
+import { getPauseElement } from './game-events';
 
 const advanceClockStep = 3;
 
@@ -77,9 +78,10 @@ function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalPauseEve
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock]
           : _.flatten(
-              goalsScoredSincePreviousTime.map(({ update }) =>
-                _.times(goalPauseEventCount, () => ({ ...currentClock, update }))
-              )
+              goalsScoredSincePreviousTime.map(({ update }) => [
+                { ...currentClock, update },
+                ..._.times(goalPauseEventCount, getPauseElement)
+              ])
             );
       })
     )

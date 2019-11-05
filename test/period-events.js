@@ -92,7 +92,7 @@ describe('periodEvents', () => {
     assert.deepEqual(clockEvents, expected);
   });
 
-  it('should pause by extra clock events when goals were scored since last event', () => {
+  it('should generate pause events when goals were scored since last event', () => {
     const assertLastEvent = (
       allGoalsSorted,
       expectedGoalCount,
@@ -113,7 +113,7 @@ describe('periodEvents', () => {
       );
       const eventCount =
         401 +
-        expectedGoalCount * goalPauseEventCount -
+        expectedGoalCount * (goalPauseEventCount + 1) -
         (simultaneousGoals ? expectedGoalCount - 1 : expectedGoalCount);
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
@@ -121,10 +121,15 @@ describe('periodEvents', () => {
       assert.deepEqual(_.last(clockEvents), lastTimeEvent, description);
 
       expectedIndexes.forEach(index => {
-        const eventsWithGameIndex = clockEvents.filter(
+        const eventIndexWithGameIndex = _.findIndex(
+          clockEvents,
           ({ update }) => update && update.gameIndex === index
         );
-        assert.deepEqual(eventsWithGameIndex.length, goalPauseEventCount);
+        const pauseEventsAfterGameIndexEvent = _.takeWhile(
+          clockEvents.slice(eventIndexWithGameIndex + 1),
+          'pause'
+        );
+        assert.deepEqual(pauseEventsAfterGameIndexEvent.length, goalPauseEventCount);
       });
     };
 

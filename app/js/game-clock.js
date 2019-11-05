@@ -22,7 +22,7 @@ function model(actions) {
   const eventIndex$ = xs
     .combine(actions.isPlaying$, ticks$)
     .filter(([isPlaying]) => isPlaying)
-    .fold(acc => acc + 1, 0)
+    .fold(acc => acc + 1, -1)
     .drop(1);
   const eventsEnd$ = xs
     .combine(events$, eventIndex$)
@@ -31,7 +31,8 @@ function model(actions) {
   return xs
     .combine(events$, eventIndex$)
     .endWhen(eventsEnd$)
-    .map(([events, eventIndex]) => events[eventIndex]);
+    .map(([events, eventIndex]) => events[eventIndex])
+    .filter(event => !event.pause);
 }
 
 function view(state$) {

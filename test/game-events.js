@@ -10,7 +10,7 @@ import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
 import scoresLiveEndOfOT from './data/latest-live-end-of-ot.json';
 import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
 
-const periodStartPauseEventCount = 150;
+const periodEndPauseEventCount = 150;
 
 describe('gameEvents', () => {
   it('should include 3 periods if no games went to overtime or shootout', () => {
@@ -20,11 +20,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3]);
 
     // Check that there were no other period end events
-    assert.equal(
-      getPeriodEndEvents(events).length,
-      3 * periodStartPauseEventCount,
-      'All period end events count'
-    );
+    assert.equal(getPeriodEndEvents(events).length, 3, 'All period end events count');
   });
 
   it('should include events until last overtime goal if games went to overtime and none went to shootout', () => {
@@ -34,7 +30,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3, 'OT']);
 
     // Check the last event with time
-    const lastTimeEvent = getLastNonEndEvent(events);
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, {
       period: 'OT',
       minute: 2,
@@ -49,7 +45,7 @@ describe('gameEvents', () => {
     // Check that regulation periods, overtime and shootout were included
     assertPeriodEndEvents(events, [1, 2, 3, 'OT', 'SO']);
 
-    const lastClockElement = getLastNonEndEvent(events);
+    const lastClockElement = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastClockElement, {
       period: 'SO',
       update: { classModifier: 'away', gameIndex: 2, type: 'GOAL' }
@@ -63,7 +59,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2]);
 
     // Check the last event with time
-    const lastTimeEvent = getLastNonEndEvent(events);
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, { period: 3, minute: 0, second: 53, tenthOfASecond: 0 });
   });
 
@@ -74,7 +70,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3, 4]);
 
     // Check the last event with time
-    const lastTimeEvent = getLastNonEndEvent(events);
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, { period: 5, minute: 11, second: 2 });
   });
 
@@ -85,7 +81,7 @@ describe('gameEvents', () => {
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
 
     // Check the last event with time
-    const lastTimeEvent = getLastNonEndEvent(events);
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, { period: 4, minute: 0, second: 2 });
 
     // Check that the last period lasted 20 minutes
@@ -99,18 +95,18 @@ describe('gameEvents', () => {
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
 
     // Check the last event with time
-    const lastTimeEvent = getLastNonEndEvent(events);
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, { period: 5, minute: 0, second: 2 });
 
     // Check that the last period lasted 20 minutes
     assert.isTrue(_.some(events, { period: 5, minute: 20, second: 0 }));
   });
 
-  it('should pause by multiplying each period end event', () => {
+  it('should pause after each period end event', () => {
     const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
-    // Check period end event count
-    assertPeriodEndEventsCount(events, [1, 2, 3, 'OT', 'SO']);
+    // Check period pause event count after period end events
+    assertPeriodEndPauseEventsCount(events, [1, 2, 3, 'OT', 'SO']);
   });
 
   it('should have a final "end" event as the last event', () => {
@@ -154,14 +150,17 @@ function assertPeriodEndEvents(events, periods) {
   assert.deepEqual(periodsWithEndEvent, periods, `End events exist only for period(s) ${periods}`);
 }
 
-function assertPeriodEndEventsCount(events, periods) {
-  const allPeriodEndEvents = events.filter(event => event.period && event.end);
-  const periodEndEvents = period => allPeriodEndEvents.filter(event => event.period === period);
+function assertPeriodEndPauseEventsCount(events, periods) {
   periods.forEach(period => {
+    const periodEndEventIndex = _.findIndex(events, event => event.end && event.period === period);
+    const pauseEventsAfterPeriodEndEvent = _.takeWhile(
+      events.slice(periodEndEventIndex + 1),
+      'pause'
+    );
     assert.equal(
-      periodEndEvents(period).length,
-      periodStartPauseEventCount,
-      `Period ${period} end events count`
+      pauseEventsAfterPeriodEndEvent.length,
+      periodEndPauseEventCount,
+      `Period ${period} end pause events count`
     );
   });
 }
@@ -170,6 +169,6 @@ function getPeriodEndEvents(events) {
   return events.filter(event => event.period && event.end);
 }
 
-function getLastNonEndEvent(events) {
-  return _.findLast(events, event => !event.end);
+function getLastNonEndOrPauseEvent(events) {
+  return _.findLast(events, event => !event.end && !event.pause);
 }

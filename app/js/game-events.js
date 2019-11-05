@@ -39,7 +39,7 @@ export default function gameEvents(scores) {
 }
 
 function appendDelay(element, multiplier) {
-  return _.times(multiplier, () => element);
+  return [element, ..._.times(multiplier, getPauseElement)];
 }
 
 function getPeriodEndElement(period) {
@@ -48,6 +48,10 @@ function getPeriodEndElement(period) {
 
 function getGamesStartElement() {
   return { start: true };
+}
+
+export function getPauseElement() {
+  return { pause: true };
 }
 
 function getGamesEndElement(inProgress) {
