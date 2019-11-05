@@ -93,7 +93,13 @@ describe('periodEvents', () => {
   });
 
   it('should pause by extra clock events when goals were scored since last event', () => {
-    const assertLastEvent = (allGoalsSorted, expectedGoalCount, expectedIndexes, description) => {
+    const assertLastEvent = (
+      allGoalsSorted,
+      expectedGoalCount,
+      expectedIndexes,
+      description,
+      simultaneousGoals = false
+    ) => {
       const period = 1;
       const periodLength = 20;
       const goalPauseEventCount = 50;
@@ -105,10 +111,13 @@ describe('periodEvents', () => {
         allGoalsSorted,
         goalPauseEventCount
       );
-      const eventCount = 401 + expectedGoalCount * goalPauseEventCount;
+      const eventCount =
+        401 +
+        expectedGoalCount * goalPauseEventCount -
+        (simultaneousGoals ? expectedGoalCount - 1 : expectedGoalCount);
       const lastTimeEvent = { period: 1, minute: 0, second: 2 };
 
-      assert.deepEqual(clockEvents.length, eventCount);
+      assert.deepEqual(clockEvents.length, eventCount, description);
       assert.deepEqual(_.last(clockEvents), lastTimeEvent, description);
 
       expectedIndexes.forEach(index => {
@@ -120,7 +129,7 @@ describe('periodEvents', () => {
     };
 
     // Assert that last event is as expected without goal scoring times
-    assertLastEvent([], 0, [], 'last event without goal scoring times');
+    assertLastEvent([], 0, [], 'goal events without goal scoring times');
 
     // Assert that last event is as expected with goal scoring times
     const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
@@ -132,7 +141,7 @@ describe('periodEvents', () => {
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
       2,
       [5, 1],
-      'last event with goal scoring times with goals at different times'
+      'goal events with goal scoring times with goals at different times'
     );
 
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
@@ -144,7 +153,8 @@ describe('periodEvents', () => {
       allGoalsSortedWithMultipleGoalsAtTheSameTime,
       2,
       [4, 3],
-      'last event with goal scoring times with simultaneous goals'
+      'goal events with goal scoring times with simultaneous goals',
+      true
     );
   });
 });
