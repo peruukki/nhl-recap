@@ -4,7 +4,9 @@ import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
 
+export const GAME_UPDATE_START = 'START';
 export const GAME_UPDATE_GOAL = 'GOAL';
+export const GAME_UPDATE_END = 'END';
 
 export const PERIOD_OVERTIME = 'OT';
 export const PERIOD_SHOOTOUT = 'SO';
@@ -190,15 +192,21 @@ export function getAllGoalSorted(scores) {
     scores.map((game, gameIndex) =>
       game.goals.map(goal => ({
         ...goal,
-        update: {
-          gameIndex,
-          type: GAME_UPDATE_GOAL,
-          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
-        }
+        gameIndex,
+        classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
       }))
     )
   )
     .flatten()
     .sortBy(['period', 'min', 'sec'])
     .value();
+}
+
+export function getGoalEvents(currentClock, { gameIndex, classModifier }, goalPauseEventCount) {
+  return [
+    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_START } },
+    { ...currentClock, update: { gameIndex, classModifier, type: GAME_UPDATE_GOAL } },
+    ..._.times(goalPauseEventCount, getPauseElement),
+    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_END } }
+  ];
 }

@@ -3,7 +3,7 @@ import xs from 'xstream';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
-import { GAME_UPDATE_GOAL } from './game-events';
+import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from './game-events';
 import gameScore, { hasGameFinished } from './game-score';
 import { getGameAnimationIndexes } from './utils';
 
@@ -86,30 +86,19 @@ function model(actions, animations) {
           complete: () => animations.setInfoPanelsFinalHeight()
         })
     });
-  const gameUpdate$ = gameClock.clock$
-    .map(({ update }) => update || {})
-    .fold((acc, curr) => ({ nextToLast: acc.last, last: curr }), {})
-    .filter(({ nextToLast = {}, last = {} }) => nextToLast.gameIndex !== last.gameIndex);
-  const startGameUpdateFocus$ = gameUpdate$
-    .filter(({ last }) => last.gameIndex !== undefined)
-    .map(({ last }) => last);
-  const stopGameUpdateFocus$ = gameUpdate$
-    .filter(({ nextToLast }) => nextToLast.gameIndex !== undefined)
-    .map(({ nextToLast }) => nextToLast);
+  const gameUpdate$ = gameClock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
 
-  stopGameUpdateFocus$.addListener({
+  gameUpdate$.addListener({
     next: gameUpdate => {
-      animations.stopGameHighlight(gameUpdate.gameIndex);
-    }
-  });
-
-  startGameUpdateFocus$.addListener({
-    next: gameUpdate => {
-      animations.highlightGame(gameUpdate.gameIndex);
-
       switch (gameUpdate.type) {
+        case GAME_UPDATE_END:
+          animations.stopGameHighlight(gameUpdate.gameIndex);
+          break;
         case GAME_UPDATE_GOAL:
           animations.highlightGoal(gameUpdate.classModifier, gameUpdate.gameIndex);
+          break;
+        case GAME_UPDATE_START:
+          animations.highlightGame(gameUpdate.gameIndex);
           break;
         default:
           throw new Error(`Unknown game update type ${gameUpdate.type}`);

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
+import { getGoalEvents } from './game-events';
 import { hasGoalBeenScored } from './utils';
-import { getPauseElement } from './game-events';
 
 const advanceClockStep = 3;
 
@@ -28,7 +28,7 @@ export default function periodEvents(
 
   const firstEvent = { period, minute: durationInMinutes, second: 0 };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
-  return multiplyGoalScoringTimeEvents(sequence, allGoalsSorted, goalPauseEventCount);
+  return createGoalEvents(sequence, allGoalsSorted, goalPauseEventCount);
 }
 
 function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
@@ -66,7 +66,7 @@ function secondRange(minute, lastMinute, lastSecond) {
   return _.range(59, rangeEnd, -advanceClockStep);
 }
 
-function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
+function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
   return _.take(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
@@ -78,10 +78,9 @@ function multiplyGoalScoringTimeEvents(clockEvents, allGoalsSorted, goalPauseEve
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock]
           : _.flatten(
-              goalsScoredSincePreviousTime.map(({ update }) => [
-                { ...currentClock, update },
-                ..._.times(goalPauseEventCount, getPauseElement)
-              ])
+              goalsScoredSincePreviousTime.map(goal =>
+                getGoalEvents(currentClock, goal, goalPauseEventCount)
+              )
             );
       })
     )
