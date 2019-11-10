@@ -125,7 +125,7 @@ describe('periodEvents', () => {
         assert.deepEqual(
           clockEvents
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
-            .map(event => event.update || event),
+            .map(event => _.omit(event.update || event, 'goal')),
           [
             { gameIndex, type: GAME_UPDATE_START },
             { gameIndex, type: GAME_UPDATE_GOAL, classModifier: 'home' },

@@ -54,7 +54,12 @@ describe('shootoutEvents', () => {
       _.take(clockEvents, EVENT_COUNT_PER_GOAL).map(event => event.update || event),
       [
         { gameIndex: 0, type: GAME_UPDATE_START },
-        { gameIndex: 0, type: GAME_UPDATE_GOAL, classModifier: 'home' },
+        {
+          gameIndex: 0,
+          type: GAME_UPDATE_GOAL,
+          classModifier: 'home',
+          goal: _.omit(goals[2], ['classModifier', 'gameIndex'])
+        },
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
         { gameIndex: 0, type: GAME_UPDATE_END }
       ],
@@ -69,7 +74,12 @@ describe('shootoutEvents', () => {
         .value(),
       [
         { gameIndex: 1, type: GAME_UPDATE_START },
-        { gameIndex: 1, type: GAME_UPDATE_GOAL, classModifier: 'away' },
+        {
+          gameIndex: 1,
+          type: GAME_UPDATE_GOAL,
+          classModifier: 'away',
+          goal: _.omit(goals[4], ['classModifier', 'gameIndex'])
+        },
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
         { gameIndex: 1, type: GAME_UPDATE_END }
       ],

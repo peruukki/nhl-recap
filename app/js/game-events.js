@@ -202,10 +202,14 @@ export function getAllGoalSorted(scores) {
     .value();
 }
 
-export function getGoalEvents(currentClock, { gameIndex, classModifier }, goalPauseEventCount) {
+export function getGoalEvents(
+  currentClock,
+  { classModifier, gameIndex, ...goal },
+  goalPauseEventCount
+) {
   return [
     { ...currentClock, update: { gameIndex, type: GAME_UPDATE_START } },
-    { ...currentClock, update: { gameIndex, classModifier, type: GAME_UPDATE_GOAL } },
+    { ...currentClock, update: { gameIndex, classModifier, goal, type: GAME_UPDATE_GOAL } },
     ..._.times(goalPauseEventCount, getPauseElement),
     { ...currentClock, update: { gameIndex, type: GAME_UPDATE_END } }
   ];
