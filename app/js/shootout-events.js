@@ -3,10 +3,23 @@ import _ from 'lodash';
 import { getGoalEvents, PERIOD_SHOOTOUT } from './game-events';
 
 export default function shootoutEvents(allGoalsSorted, goalPauseEventCount) {
-  return _.chain(allGoalsSorted)
-    .filter({ period: PERIOD_SHOOTOUT })
-    .uniqBy('gameIndex')
+  const finalShootoutGoals = getShootoutGoalForEachGame(allGoalsSorted);
+  return _.chain(finalShootoutGoals)
     .map(goal => getGoalEvents({ period: PERIOD_SHOOTOUT }, goal, goalPauseEventCount))
     .flatten()
     .value();
+}
+
+function getShootoutGoalForEachGame(allGoalsSorted) {
+  return _.chain(allGoalsSorted)
+    .filter({ period: PERIOD_SHOOTOUT })
+    .groupBy('gameIndex')
+    .map(goalsByGame =>
+      _.chain(goalsByGame)
+        .groupBy('team')
+        .values()
+        .maxBy('length')
+        .last()
+        .value()
+    );
 }

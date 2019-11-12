@@ -9,6 +9,7 @@ import scoresAllLive from './data/latest-live.json';
 import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
 import scoresLiveEndOfOT from './data/latest-live-end-of-ot.json';
 import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
+import scoresLiveSO from './data/latest-live-so.json';
 
 const periodEndPauseEventCount = 150;
 
@@ -141,6 +142,11 @@ describe('gameEvents', () => {
     ]);
 
     assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);
+  });
+
+  it('should leave out shootout goals from unfinished games from all sorted goals', () => {
+    const allGoalsSorted = getAllGoalsSorted(scoresLiveSO.games);
+    assert.deepEqual(allGoalsSorted, []);
   });
 });
 

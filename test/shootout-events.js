@@ -58,7 +58,7 @@ describe('shootoutEvents', () => {
           gameIndex: 0,
           type: GAME_UPDATE_GOAL,
           classModifier: 'home',
-          goal: _.omit(goals[2], ['classModifier', 'gameIndex'])
+          goal: _.omit(goals[3], ['classModifier', 'gameIndex'])
         },
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
         { gameIndex: 0, type: GAME_UPDATE_END }

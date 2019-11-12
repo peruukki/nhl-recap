@@ -106,16 +106,35 @@ function model(actions, animations) {
     }
   });
 
+  const initialGoals$ = scores$
+    .filter(scores => scores.games.length > 0)
+    .map(scores => Array.from({ length: scores.games.length }, () => []));
+  const goalUpdate$ = gameUpdate$.filter(update => update.type === GAME_UPDATE_GOAL);
+  const currentGoals$ = initialGoals$
+    .map(initialGameGoals =>
+      goalUpdate$.fold(
+        (currentGoals, update) => [
+          ...currentGoals.slice(0, update.gameIndex),
+          currentGoals[update.gameIndex].concat(update.goal),
+          ...currentGoals.slice(update.gameIndex + 1)
+        ],
+        initialGameGoals
+      )
+    )
+    .flatten();
+
   return xs
     .combine(
       scores$,
+      currentGoals$.startWith([]),
       actions.isPlaying$.startWith(false),
       actions.status$.startWith('Fetching latest scores...'),
       gameClock.DOM.startWith(span('.clock')),
       gameClock.clock$.startWith(null)
     )
-    .map(([scores, isPlaying, status, clockVtree, clock]) => ({
+    .map(([scores, currentGoals, isPlaying, status, clockVtree, clock]) => ({
       scores,
+      currentGoals,
       isPlaying,
       status,
       clockVtree,
@@ -125,7 +144,7 @@ function model(actions, animations) {
 }
 
 function view(state$) {
-  return state$.map(({ scores, isPlaying, status, clockVtree, clock, gameCount }) =>
+  return state$.map(({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameCount }) =>
     div([
       header(
         '.header',
@@ -137,7 +156,7 @@ function view(state$) {
           date: scores.date
         })
       ),
-      section('.score-panel', renderScores({ games: scores.games, status, clock }))
+      section('.score-panel', renderScores({ games: scores.games, currentGoals, status, clock }))
     ])
   );
 }
@@ -166,7 +185,9 @@ function renderScores(state) {
   return state.games.length > 0
     ? div(
         '.score-list',
-        state.games.map((game, index) => gameScore(state.clock, game, gameAnimationIndexes[index]))
+        state.games.map((game, index) =>
+          gameScore(state.clock, game, state.currentGoals[index] || [], gameAnimationIndexes[index])
+        )
       )
     : div('.status.fade-in', [state.status || 'No scores available.']);
 }

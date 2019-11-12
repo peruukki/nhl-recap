@@ -38,16 +38,17 @@ describe('gameScore', () => {
   describe('goal counts', () => {
     it('should be hidden in the pre-game info', () => {
       const clock = null;
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 0, 0, '.team-panel__team-score--hidden');
+      const { teams } = scoresAllRegularTime.games[1];
+      assertGoalCounts(clock, { teams }, [], 0, 0, '.team-panel__team-score--hidden');
     });
 
     it('should be hidden if the game has not started', () => {
       const clock = { start: true };
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { teams } = scoresAllRegularTime.games[1];
       assertGoalCounts(
         clock,
-        { state: notStartedState, teams, goals },
+        { state: notStartedState, teams },
+        [],
         0,
         0,
         '.team-panel__team-score--hidden'
@@ -56,62 +57,44 @@ describe('gameScore', () => {
 
     it('should show zero goals in the beginning', () => {
       const clock = { start: true };
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 0, 0);
+      const { teams } = scoresAllRegularTime.games[1];
+      assertGoalCounts(clock, { teams }, [], 0, 0);
     });
 
     it('should show zero goals before the clock has reached the first goal scoring time', () => {
       const clock = { period: 1, minute: 10, second: 0 };
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 0, 0);
+      const { teams } = scoresAllRegularTime.games[1];
+      assertGoalCounts(clock, { teams }, [], 0, 0);
     });
 
     it('should increase the goal count when the clock reaches a goal scoring time', () => {
       const clock = { period: 1, minute: 8, second: 44 };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 1, 0);
+      assertGoalCounts(clock, { teams }, _.take(goals, 1), 1, 0);
     });
 
     it('should show all the goals of the period when the clock reaches the end of the period', () => {
       const clock = { period: 1, end: true, minute: 0, second: 0 };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 1, 1);
+      assertGoalCounts(clock, { teams }, _.take(goals, 2), 1, 1);
     });
 
     it('should show all the goals of the game when the clock reaches the end of the game', () => {
       const clock = { end: true };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 2, 3);
+      assertGoalCounts(clock, { teams }, goals, 2, 3);
     });
 
     it('should show all the goals of the first period when the clock is running in the second period', () => {
       const clock = { period: 2, minute: 10, second: 0 };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(clock, { teams, goals }, 1, 1);
+      assertGoalCounts(clock, { teams }, _.take(goals, 2), 1, 1);
     });
 
     it('should show goals scored in overtime', () => {
       const clock = { period: 'OT', minute: 2, second: 55 };
       const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertGoalCounts(clock, { teams, goals }, 1, 0);
-    });
-
-    it('should show only one shootout goal, for the winning (home) team', () => {
-      const clock = { period: 'SO' };
-      const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
-      assertGoalCounts(clock, { teams, goals }, 2, 3);
-    });
-
-    it('should show only one shootout goal, for the winning (away) team', () => {
-      const clock = { period: 'SO' };
-      const { teams, goals } = scoresOvertimeAndMultipleShootout.games[2];
-      assertGoalCounts(clock, { teams, goals }, 2, 1);
-    });
-
-    it('should not show shootout goals for in-progress games', () => {
-      const clock = { period: 'SO' };
-      const { teams, goals } = scoresOvertimeAndMultipleShootout.games[2];
-      assertGoalCounts(clock, { teams, goals, state: inProgressState }, 1, 1);
+      assertGoalCounts(clock, { teams }, goals, 1, 0);
     });
   });
 
@@ -119,69 +102,63 @@ describe('gameScore', () => {
     it('should show "at" in the pre-game info', () => {
       const clock = null;
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { teams, goals }, 'at', '');
+      assertDelimiter(clock, { teams }, goals, 'at', '');
     });
 
     it('should show "at" if the game has not started', () => {
       const clock = { start: true };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { state: notStartedState, teams, goals }, 'at', '');
+      assertDelimiter(clock, { state: notStartedState, teams }, goals, 'at', '');
     });
 
     it('should not be shown when the clock is running in regulation', () => {
       const clock = { period: 3, minute: 19, second: 2 };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { teams, goals }, '');
-    });
-
-    it('should not be shown when the clock is running in overtime but there has been no overtime goal', () => {
-      const clock = { period: 'OT', minute: 2, second: 56 };
-      const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertDelimiter(clock, { teams, goals }, '');
+      assertDelimiter(clock, { teams }, goals, '');
     });
 
     it('should show "OT" when the clock reaches the scoring time of an overtime goal', () => {
       const clock = { period: 'OT', minute: 2, second: 55 };
       const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertDelimiter(clock, { teams, goals }, span('.team-panel__delimiter-period', 'OT'));
+      assertDelimiter(clock, { teams }, goals, span('.team-panel__delimiter-period', 'OT'));
     });
 
     it('should not be shown when the clock reaches shootout but there is no shootout goal', () => {
       const clock = { period: 'SO' };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertDelimiter(clock, { teams, goals }, '');
+      assertDelimiter(clock, { teams }, goals, '');
     });
 
     it('should show "SO" when the clock reaches shootout and the game has a shootout goal', () => {
       const clock = { period: 'SO' };
       const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
-      assertDelimiter(clock, { teams, goals }, span('.team-panel__delimiter-period', 'SO'));
+      assertDelimiter(clock, { teams }, goals, span('.team-panel__delimiter-period', 'SO'));
     });
 
     it('should show the period of the last goal when the clock reaches the end of the game', () => {
       const clock = { end: true };
       const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
-      assertDelimiter(clock, { teams, goals }, span('.team-panel__delimiter-period', 'SO'));
+      assertDelimiter(clock, { teams }, goals, span('.team-panel__delimiter-period', 'SO'));
     });
   });
 
   describe('latest goal panel', () => {
     it('should show nothing in the beginning', () => {
       const clock = { start: true };
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(clock, teams, goals, null);
+      const { teams } = scoresAllRegularTime.games[1];
+      assertLatestGoal(clock, teams, [], null);
     });
 
     it('should show nothing before the clock has reached the first goal scoring time', () => {
       const clock = { period: 1, minute: 10, second: 0 };
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(clock, teams, goals, null);
+      const { teams } = scoresAllRegularTime.games[1];
+      assertLatestGoal(clock, teams, [], null);
     });
 
     it('should show the latest goal when the clock reaches a goal scoring time', () => {
       const clock = { period: 1, minute: 8, second: 44 };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(clock, teams, goals, _.first(goals));
+      assertLatestGoal(clock, teams, _.take(goals, 1), _.first(goals));
     });
 
     it('should show the last goal of the game when the clock reaches the end of the game', () => {
@@ -195,18 +172,6 @@ describe('gameScore', () => {
       const { teams, goals } = scoresMultipleOvertime.games[0];
       assertLatestGoal(clock, teams, goals, _.last(goals));
     });
-
-    it('should show the last shootout goal of the winning (home) team', () => {
-      const clock = { period: 'SO' };
-      const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
-      assertLatestGoal(clock, teams, goals, _.last(_.dropRight(goals)));
-    });
-
-    it('should show the last shootout goal of the winning (away) team', () => {
-      const clock = { period: 'SO' };
-      const { teams, goals } = scoresOvertimeAndMultipleShootout.games[2];
-      assertLatestGoal(clock, teams, goals, _.last(goals));
-    });
   });
 
   describe('pre-game stats', () => {
@@ -214,63 +179,63 @@ describe('gameScore', () => {
       const clock = null;
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it('should be shown after playback has started for not started games', () => {
       const clock = { start: true };
       const status = { state: notStartedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it('should be shown after playback has finished for not started games', () => {
       const clock = { end: true };
       const status = { state: notStartedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has started for in-progress games', () => {
       const clock = { start: true };
       const status = { state: inProgressState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown when playback has not reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 43 };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should be shown after playback has reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 42 };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it('should be shown after playback has finished for in-progress games', () => {
       const clock = { end: true };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(clock, { status, teams, goals });
+      assertPreGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has started for finished games', () => {
       const clock = { start: true };
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has finished for finished games', () => {
       const clock = { end: true };
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(clock, { status, teams, goals });
+      assertPreGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it("should show teams' point percentages, highlighting the better one", () => {
@@ -347,63 +312,63 @@ describe('gameScore', () => {
       const clock = null;
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has started for not started games', () => {
       const clock = { start: true };
       const status = { state: notStartedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has finished for not started games', () => {
       const clock = { end: true };
       const status = { state: notStartedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has started for in-progress games', () => {
       const clock = { start: true };
       const status = { state: inProgressState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown when playback has not reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 43 };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has reached current progress in in-progress games', () => {
       const clock = { period: 1, minute: 8, second: 42 };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has finished for in-progress games', () => {
       const clock = { end: true };
       const status = { state: inProgressState, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should not be shown after playback has started for finished games', () => {
       const clock = { start: true };
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreNotShown(clock, { status, teams }, goals);
     });
 
     it('should be shown after playback has finished for finished games', () => {
       const clock = { end: true };
       const status = { state: finishedState };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreShown(clock, { status, teams, goals });
+      assertAfterGameStatsAreShown(clock, { status, teams }, goals);
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
@@ -530,14 +495,14 @@ describe('gameScore', () => {
     it(`should show "Finished" description for game in ${finishedState} state`, () => {
       const clock = null;
       const { teams, goals, status } = scoresAllRegularTime.games[1];
-      assertPreGameDescription(clock, { status, teams, goals }, 'Finished');
+      assertPreGameDescription(clock, { status, teams }, goals, 'Finished');
     });
 
     it(`should show game without progress information in ${inProgressState} state as in progress`, () => {
       const clock = null;
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: inProgressState };
-      assertPreGameDescription(clock, { status, teams, goals }, 'In progress');
+      assertPreGameDescription(clock, { status, teams }, goals, 'In progress');
     });
 
     it(`should show time remaining progress for game in ${inProgressState} state`, () => {
@@ -553,7 +518,8 @@ describe('gameScore', () => {
       };
       assertPreGameDescription(
         clock,
-        { status, teams, goals },
+        { status, teams },
+        goals,
         `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
       );
     });
@@ -571,7 +537,8 @@ describe('gameScore', () => {
       };
       assertPreGameDescription(
         clock,
-        { status, teams, goals },
+        { status, teams },
+        goals,
         `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
       );
     });
@@ -589,7 +556,8 @@ describe('gameScore', () => {
       };
       assertPreGameDescription(
         clock,
-        { status, teams, goals },
+        { status, teams },
+        goals,
         `End of ${status.progress.currentPeriodOrdinal}`
       );
     });
@@ -605,14 +573,14 @@ describe('gameScore', () => {
           currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 }
         }
       };
-      assertPreGameDescription(clock, { status, teams, goals }, 'In shootout');
+      assertPreGameDescription(clock, { status, teams }, goals, 'In shootout');
     });
 
     it(`should show game in ${notStartedState} state and start time in the past as starting soon`, () => {
       const clock = null;
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: notStartedState };
-      assertPreGameDescription(clock, { status, teams, goals }, 'Starts soon');
+      assertPreGameDescription(clock, { status, teams }, goals, 'Starts soon');
     });
 
     it(`should show game in ${notStartedState} state and start time in the future as starting in some time`, () => {
@@ -625,7 +593,7 @@ describe('gameScore', () => {
       time.setMinutes(time.getMinutes() + 1);
       const startTime = time.toISOString();
 
-      assertPreGameDescription(clock, { status, startTime, teams, goals }, 'Starts in 3 hours');
+      assertPreGameDescription(clock, { status, startTime, teams }, goals, 'Starts in 3 hours');
     });
   });
 
@@ -729,69 +697,75 @@ describe('gameScore', () => {
 
 function assertGoalCounts(
   clock,
-  { state = finishedState, teams, goals },
+  { state = finishedState, teams },
+  currentGoals,
   awayGoals,
   homeGoals,
   visibilityClass = '.fade-in'
 ) {
-  const teamPanels = getTeamPanels(gameScore(clock, { status: { state }, teams, goals }));
+  const teamPanels = getTeamPanels(gameScore(clock, { status: { state }, teams }, currentGoals));
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
 }
 
 function assertDelimiter(
   clock,
-  { state = finishedState, teams, goals },
+  { state = finishedState, teams },
+  currentGoals,
   delimiter,
   visibilityClass = '.fade-in'
 ) {
-  const delimiterNode = getDelimiter(gameScore(clock, { status: { state }, teams, goals }));
+  const delimiterNode = getDelimiter(gameScore(clock, { status: { state }, teams }, currentGoals));
   const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
 }
 
 function assertLatestGoal(clock, teams, goals, expectedLatestGoal) {
   const latestGoalPanel = getLatestGoalPanel(
-    gameScore(clock, { status: { state: finishedState }, teams, goals })
+    gameScore(clock, { status: { state: finishedState }, teams }, goals)
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
 }
 
-function assertPreGameStatsAreShown(clock, { status, teams, goals }) {
+function assertPreGameStatsAreShown(clock, { status, teams }, goals) {
   assertGameStatsExistence(
     clock,
-    { status, teams, goals },
+    { status, teams },
+    goals,
     assert.deepEqual,
     'div.game-stats.fade-in'
   );
 }
-function assertPreGameStatsAreNotShown(clock, { status, teams, goals }) {
+function assertPreGameStatsAreNotShown(clock, { status, teams }, goals) {
   assertGameStatsExistence(
     clock,
-    { status, teams, goals },
+    { status, teams },
+    goals,
     assert.notDeepEqual,
     'div.game-stats.fade-in'
   );
 }
-function assertAfterGameStatsAreShown(clock, { status, teams, goals }) {
+function assertAfterGameStatsAreShown(clock, { status, teams }, goals) {
   assertGameStatsExistence(
     clock,
-    { status, teams, goals },
+    { status, teams },
+    goals,
     assert.deepEqual,
     'div.game-stats.game-stats--after-game.fade-in'
   );
 }
-function assertAfterGameStatsAreNotShown(clock, { status, teams, goals }) {
+function assertAfterGameStatsAreNotShown(clock, { status, teams }, goals) {
   assertGameStatsExistence(
     clock,
-    { status, teams, goals },
+    { status, teams },
+    goals,
     assert.notDeepEqual,
     'div.game-stats.game-stats--after-game.fade-in'
   );
 }
-function assertGameStatsExistence(clock, { status, teams, goals }, assertFn, selector) {
-  const gameStats = getGameStats(gameScore(clock, { status, teams, goals }));
+function assertGameStatsExistence(clock, { status, teams }, goals, assertFn, selector) {
+  const gameStats = getGameStats(gameScore(clock, { status, teams }, goals));
   assertFn(gameStats && gameStats.sel, selector);
 }
 
@@ -802,15 +776,15 @@ function assertGameStats(
   renderedRecords
 ) {
   const renderedStats = getGameStats(
-    gameScore(clock, { status: { state }, teams, goals, preGameStats, currentStats })
+    gameScore(clock, { status: { state }, teams, preGameStats, currentStats }, goals)
   ).children[statIndex];
   const expected = expectedTeamStats(renderedRecords);
   assert.deepEqual(renderedStats, expected);
 }
 
-function assertPreGameDescription(clock, { status, startTime, teams, goals }, description) {
+function assertPreGameDescription(clock, { status, startTime, teams }, goals, description) {
   const preGameDescription = getPreGameDescription(
-    gameScore(clock, { status, startTime, teams, goals })
+    gameScore(clock, { status, startTime, teams }, goals)
   );
   const expected = expectedPreGameDescription(description);
   assert.deepEqual(preGameDescription, expected);
@@ -857,7 +831,7 @@ function assertPlayoffSeriesWins(
   expectedSeriesWinsVtree
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    gameScore(clock, { status: { state }, teams, goals, preGameStats })
+    gameScore(clock, { status: { state }, teams, preGameStats }, goals)
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);

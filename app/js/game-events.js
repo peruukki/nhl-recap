@@ -3,6 +3,7 @@ import _ from 'lodash';
 import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
+import { hasGameFinished } from './game-score';
 
 export const GAME_UPDATE_START = 'START';
 export const GAME_UPDATE_GOAL = 'GOAL';
@@ -190,11 +191,17 @@ function getGameEndTimeFromGoals(goals) {
 export function getAllGoalsSorted(scores) {
   return _.chain(
     scores.map((game, gameIndex) =>
-      game.goals.map(goal => ({
-        ...goal,
-        gameIndex,
-        classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
-      }))
+      _.chain(game.goals)
+        .reject(
+          goal =>
+            goal.period === PERIOD_SHOOTOUT && game.status && !hasGameFinished(game.status.state)
+        )
+        .map(goal => ({
+          ...goal,
+          gameIndex,
+          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
+        }))
+        .value()
     )
   )
     .flatten()

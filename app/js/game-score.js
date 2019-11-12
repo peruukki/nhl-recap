@@ -2,17 +2,17 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { format } from 'timeago.js';
 
-import { hasClockPassedCurrentProgress, hasGoalBeenScored, truncatePlayerName } from './utils';
+import { hasClockPassedCurrentProgress, truncatePlayerName } from './utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
 import { PERIOD_SHOOTOUT, PERIOD_OVERTIME } from './game-events';
 import { renderTeamLogo } from './logos';
 
 export default function gameScore(
   clock,
-  { status, startTime, teams, goals, preGameStats = {}, currentStats = {} },
+  { status, startTime, teams, preGameStats = {}, currentStats = {} },
+  currentGoals,
   gameAnimationIndex
 ) {
-  const currentGoals = getCurrentGoals(clock, teams, goals, status);
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
@@ -71,31 +71,6 @@ function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) 
       ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }
       : { [teams.home.abbreviation]: seriesWins[teams.home.abbreviation] + 1 };
   return _.merge({}, seriesWins, updatedWinCount);
-}
-
-function getCurrentGoals(clock, teams, goals, status) {
-  if (!clock || clock.start) {
-    return [];
-  }
-  if (!clock.period || clock.period === PERIOD_SHOOTOUT) {
-    const nonShootoutGoals = goals.filter(goal => goal.period !== PERIOD_SHOOTOUT);
-    return nonShootoutGoals.length === goals.length
-      ? goals
-      : nonShootoutGoals.concat(getShootoutGoal(goals, teams, status));
-  }
-
-  return goals.filter(_.partial(hasGoalBeenScored, clock));
-}
-
-function getShootoutGoal(goals, teams, status) {
-  if (isGameInProgress(status.state)) {
-    return [];
-  }
-
-  const awayGoals = goals.filter(goal => goal.team === teams.away.abbreviation);
-  const homeGoals = goals.filter(goal => goal.team === teams.home.abbreviation);
-  const winnersGoals = awayGoals.length > homeGoals.length ? awayGoals : homeGoals;
-  return _.last(winnersGoals);
 }
 
 function renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame) {
