@@ -61,7 +61,7 @@ function getGamesEndElement(inProgress) {
 }
 
 function getAllPeriodEvents(scores, endTime, goalPauseEventCount) {
-  const allGoalsSorted = getAllGoalSorted(scores);
+  const allGoalsSorted = getAllGoalsSorted(scores);
   return getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount)
     .concat(getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount))
     .concat(getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount))
@@ -187,7 +187,7 @@ function getGameEndTimeFromGoals(goals) {
   }
 }
 
-export function getAllGoalSorted(scores) {
+export function getAllGoalsSorted(scores) {
   return _.chain(
     scores.map((game, gameIndex) =>
       game.goals.map(goal => ({

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getAllGoalSorted } from '../app/js/game-events';
+import gameEvents, { getAllGoalsSorted } from '../app/js/game-events';
 import scoresAllRegularTime from './data/latest.json';
 import scoresMultipleOvertime from './data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
@@ -120,7 +120,7 @@ describe('gameEvents', () => {
   });
 
   it('should sort all goals correctly', () => {
-    const allGoalsSorted = getAllGoalSorted(scoresMultipleOvertime.games);
+    const allGoalsSorted = getAllGoalsSorted(scoresMultipleOvertime.games);
 
     const expectedAllGoalsSorted = _.flatten([
       _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
