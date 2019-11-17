@@ -2,19 +2,16 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { format } from 'timeago.js';
 
-import { truncatePlayerName } from './utils';
+import {
+  truncatePlayerName,
+  GAME_DISPLAY_IN_PROGRESS,
+  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_PRE_GAME,
+  PERIOD_OVERTIME,
+  PERIOD_SHOOTOUT
+} from './utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
-import { PERIOD_SHOOTOUT, PERIOD_OVERTIME } from './game-events';
 import { renderTeamLogo } from './logos';
-
-export const PLAYBACK_NOT_STARTED = 'PLAYBACK_NOT_STARTED';
-export const PLAYBACK_IN_PROGRESS = 'PLAYBACK_IN_PROGRESS';
-export const PLAYBACK_FINISHED = 'PLAYBACK_FINISHED';
-
-export const GAME_DISPLAY_PRE_GAME = 'GAME_DISPLAY_PRE_GAME';
-export const GAME_DISPLAY_PLAYBACK = 'GAME_DISPLAY_PLAYBACK';
-export const GAME_DISPLAY_IN_PROGRESS = 'GAME_DISPLAY_IN_PROGRESS';
-export const GAME_DISPLAY_POST_GAME = 'GAME_DISPLAY_POST_GAME';
 
 export default function gameScore(
   gameDisplay,

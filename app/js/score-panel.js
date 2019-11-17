@@ -3,9 +3,14 @@ import xs from 'xstream';
 import classNames from 'classnames';
 
 import GameClock from './game-clock';
-import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from './game-events';
 import gameScore from './game-score';
-import { getGameAnimationIndexes, hasGameFinished } from './utils';
+import {
+  getGameAnimationIndexes,
+  hasGameFinished,
+  GAME_UPDATE_END,
+  GAME_UPDATE_GOAL,
+  GAME_UPDATE_START
+} from './utils';
 import gameDisplays from './game-displays';
 
 export default function main(animations) {

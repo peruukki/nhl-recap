@@ -7,11 +7,7 @@ import {
   delimiter,
   renderLatestGoalTime,
   renderLatestGoalScorer,
-  renderLatestGoalAssists,
-  GAME_DISPLAY_PRE_GAME,
-  GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME,
-  GAME_DISPLAY_IN_PROGRESS
+  renderLatestGoalAssists
 } from '../app/js/game-score';
 import { renderTeamLogo } from '../app/js/logos';
 import scoresAllRegularTime from './data/latest.json';
@@ -21,6 +17,10 @@ import scoresAllRegularTimePlayoffs from './data/latest-playoffs.json';
 import scoresRegularTimeAndOvertimePlayoffs from './data/latest-playoffs-ot.json';
 
 import {
+  GAME_DISPLAY_IN_PROGRESS,
+  GAME_DISPLAY_PLAYBACK,
+  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED

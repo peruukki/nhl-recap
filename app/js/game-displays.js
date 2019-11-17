@@ -1,19 +1,17 @@
 import xs from 'xstream';
 
 import {
-  PLAYBACK_FINISHED,
-  PLAYBACK_IN_PROGRESS,
-  PLAYBACK_NOT_STARTED,
-  GAME_DISPLAY_PRE_GAME,
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_POST_GAME,
-  GAME_DISPLAY_PLAYBACK
-} from './game-score';
-import {
   hasClockPassedCurrentProgress,
   hasGameFinished,
   hasGameStarted,
-  isGameInProgress
+  isGameInProgress,
+  GAME_DISPLAY_IN_PROGRESS,
+  GAME_DISPLAY_PLAYBACK,
+  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_PRE_GAME,
+  PLAYBACK_FINISHED,
+  PLAYBACK_IN_PROGRESS,
+  PLAYBACK_NOT_STARTED
 } from './utils';
 
 export default function gameDisplays(clock$, scores$) {

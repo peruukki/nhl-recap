@@ -2,14 +2,16 @@ import _ from 'lodash';
 
 import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
-import { elapsedTimeToRemainingTime, getPeriodOrdinal, hasGameFinished } from './utils';
-
-export const GAME_UPDATE_START = 'START';
-export const GAME_UPDATE_GOAL = 'GOAL';
-export const GAME_UPDATE_END = 'END';
-
-export const PERIOD_OVERTIME = 'OT';
-export const PERIOD_SHOOTOUT = 'SO';
+import {
+  elapsedTimeToRemainingTime,
+  getPeriodOrdinal,
+  hasGameFinished,
+  GAME_UPDATE_END,
+  GAME_UPDATE_GOAL,
+  GAME_UPDATE_START,
+  PERIOD_OVERTIME,
+  PERIOD_SHOOTOUT
+} from './utils';
 
 export default function gameEvents(scores) {
   // These event counts determine for how many number of extra events we pause the clock

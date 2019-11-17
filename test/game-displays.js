@@ -4,12 +4,10 @@ import xs from 'xstream';
 import gameDisplays from '../app/js/game-displays';
 import { addListener } from './test-utils';
 import {
-  GAME_DISPLAY_PRE_GAME,
+  GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME,
-  GAME_DISPLAY_IN_PROGRESS
-} from '../app/js/game-score';
-import {
+  GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED
