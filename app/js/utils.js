@@ -2,6 +2,10 @@ import _ from 'lodash';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './game-events';
 
+export const GAME_STATE_FINISHED = 'FINAL';
+export const GAME_STATE_IN_PROGRESS = 'LIVE';
+export const GAME_STATE_NOT_STARTED = 'PREVIEW';
+
 export function remainingTimeToElapsedTime({ period, minute, second }) {
   const periodLengthInMinutes = period === 'OT' ? 5 : 20;
   const secondsRemaining = 60 * (minute || 0) + (second || 0);
@@ -14,6 +18,18 @@ export function remainingTimeToElapsedTime({ period, minute, second }) {
 
 export function elapsedTimeToRemainingTime(time) {
   return remainingTimeToElapsedTime(time);
+}
+
+export function hasGameFinished(state) {
+  return state === GAME_STATE_FINISHED;
+}
+
+export function hasGameStarted(state) {
+  return state !== GAME_STATE_NOT_STARTED;
+}
+
+export function isGameInProgress(state) {
+  return state === GAME_STATE_IN_PROGRESS;
 }
 
 export function hasGoalBeenScored(clock, goal) {

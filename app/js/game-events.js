@@ -2,8 +2,7 @@ import _ from 'lodash';
 
 import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
-import { elapsedTimeToRemainingTime, getPeriodOrdinal } from './utils';
-import { hasGameFinished } from './game-score';
+import { elapsedTimeToRemainingTime, getPeriodOrdinal, hasGameFinished } from './utils';
 
 export const GAME_UPDATE_START = 'START';
 export const GAME_UPDATE_GOAL = 'GOAL';

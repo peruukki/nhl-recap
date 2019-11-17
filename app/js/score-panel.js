@@ -4,8 +4,9 @@ import classNames from 'classnames';
 
 import GameClock from './game-clock';
 import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from './game-events';
-import gameScore, { hasGameFinished } from './game-score';
-import { getGameAnimationIndexes } from './utils';
+import gameScore from './game-score';
+import { getGameAnimationIndexes, hasGameFinished } from './utils';
+import gameDisplays from './game-displays';
 
 export default function main(animations) {
   return ({ DOM, HTTP }) => {
@@ -86,8 +87,8 @@ function model(actions, animations) {
           complete: () => animations.setInfoPanelsFinalHeight()
         })
     });
-  const gameUpdate$ = gameClock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
 
+  const gameUpdate$ = gameClock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
   gameUpdate$.addListener({
     next: gameUpdate => {
       switch (gameUpdate.type) {
@@ -123,6 +124,8 @@ function model(actions, animations) {
     )
     .flatten();
 
+  const gameDisplays$ = gameDisplays(gameClock.clock$, scores$);
+
   return xs
     .combine(
       scores$,
@@ -130,34 +133,40 @@ function model(actions, animations) {
       actions.isPlaying$.startWith(false),
       actions.status$.startWith('Fetching latest scores...'),
       gameClock.DOM.startWith(span('.clock')),
-      gameClock.clock$.startWith(null)
+      gameClock.clock$.startWith(null),
+      gameDisplays$.startWith([])
     )
-    .map(([scores, currentGoals, isPlaying, status, clockVtree, clock]) => ({
+    .map(([scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays]) => ({
       scores,
       currentGoals,
       isPlaying,
       status,
       clockVtree,
       clock,
+      gameDisplays,
       gameCount: scores.games.length
     }));
 }
 
 function view(state$) {
-  return state$.map(({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameCount }) =>
-    div([
-      header(
-        '.header',
-        renderHeader({
-          clockVtree,
-          clock,
-          gameCount,
-          isPlaying,
-          date: scores.date
-        })
-      ),
-      section('.score-panel', renderScores({ games: scores.games, currentGoals, status, clock }))
-    ])
+  return state$.map(
+    ({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays, gameCount }) =>
+      div([
+        header(
+          '.header',
+          renderHeader({
+            clockVtree,
+            clock,
+            gameCount,
+            isPlaying,
+            date: scores.date
+          })
+        ),
+        section(
+          '.score-panel',
+          renderScores({ games: scores.games, currentGoals, status, gameDisplays })
+        )
+      ])
   );
 }
 
@@ -186,7 +195,12 @@ function renderScores(state) {
     ? div(
         '.score-list',
         state.games.map((game, index) =>
-          gameScore(state.clock, game, state.currentGoals[index] || [], gameAnimationIndexes[index])
+          gameScore(
+            state.gameDisplays[index],
+            game,
+            state.currentGoals[index] || [],
+            gameAnimationIndexes[index]
+          )
         )
       )
     : div('.status.fade-in', [state.status || 'No scores available.']);

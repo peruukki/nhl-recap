@@ -2,13 +2,22 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { format } from 'timeago.js';
 
-import { hasClockPassedCurrentProgress, truncatePlayerName } from './utils';
+import { truncatePlayerName } from './utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
 import { PERIOD_SHOOTOUT, PERIOD_OVERTIME } from './game-events';
 import { renderTeamLogo } from './logos';
 
+export const PLAYBACK_NOT_STARTED = 'PLAYBACK_NOT_STARTED';
+export const PLAYBACK_IN_PROGRESS = 'PLAYBACK_IN_PROGRESS';
+export const PLAYBACK_FINISHED = 'PLAYBACK_FINISHED';
+
+export const GAME_DISPLAY_PRE_GAME = 'GAME_DISPLAY_PRE_GAME';
+export const GAME_DISPLAY_PLAYBACK = 'GAME_DISPLAY_PLAYBACK';
+export const GAME_DISPLAY_IN_PROGRESS = 'GAME_DISPLAY_IN_PROGRESS';
+export const GAME_DISPLAY_POST_GAME = 'GAME_DISPLAY_POST_GAME';
+
 export default function gameScore(
-  clock,
+  gameDisplay,
   { status, startTime, teams, preGameStats = {}, currentStats = {} },
   currentGoals,
   gameAnimationIndex
@@ -17,16 +26,11 @@ export default function gameScore(
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
   const period = latestGoal ? latestGoal.period : null;
-  const allGamesEnded = !!clock && !!clock.end && !clock.period;
-  const showPreGameStats =
-    !clock ||
-    !hasGameStarted(status.state) ||
-    (isGameInProgress(status.state) &&
-      (hasClockPassedCurrentProgress(clock, status) || allGamesEnded));
-  const showAfterGameStats = hasGameFinished(status.state) && allGamesEnded;
+  const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_IN_PROGRESS].includes(gameDisplay);
+  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME;
   const updatePlayoffSeriesWins = showAfterGameStats;
   const showProgressInfo = showPreGameStats;
-  const isBeforeGame = !clock || !hasGameStarted(status.state);
+  const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
 
   const stats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   const playoffSeriesWins = getPlayoffSeriesWins(
@@ -36,9 +40,8 @@ export default function gameScore(
     preGameStats.playoffSeries,
     updatePlayoffSeriesWins
   );
-  const modifier = hasGameStarted(status.state) ? '.game--started' : '';
 
-  return div(`.game${modifier}.expand--${gameAnimationIndex}`, [
+  return div(`.game.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
     renderInfoPanel(
       showPreGameStats,
@@ -324,18 +327,6 @@ function renderCurrentProgress(progress) {
   } else {
     return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
   }
-}
-
-export function hasGameFinished(state) {
-  return state === 'FINAL';
-}
-
-function hasGameStarted(state) {
-  return state !== 'PREVIEW';
-}
-
-function isGameInProgress(state) {
-  return state === 'LIVE';
 }
 
 export function renderLatestGoalTime(latestGoal) {

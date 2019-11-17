@@ -8,6 +8,7 @@ import nock from 'nock';
 import scorePanel from '../app/js/score-panel';
 import apiResponse from './data/latest.json';
 import animations from './animations';
+import { addListener } from './test-utils';
 
 describe('scorePanel', () => {
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';
@@ -38,8 +39,8 @@ describe('scorePanel', () => {
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
       assert.deepEqual(gameScoreNodes.map(node => node.sel), [
-        'div.game.game--started.expand--0',
-        'div.game.game--started.expand--0'
+        'div.game.expand--0',
+        'div.game.expand--0'
       ]);
     });
   });
@@ -100,14 +101,6 @@ describe('scorePanel', () => {
 function run(httpRequest$) {
   const driver = makeHTTPDriver();
   return scorePanel(animations)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
-}
-
-function addListener(done, stream$, assertFn) {
-  stream$.addListener({
-    next: value => assertFn(value),
-    error: err => done(err),
-    complete: done
-  });
 }
 
 function expectedStatusVtree(message) {
