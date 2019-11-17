@@ -4,11 +4,9 @@ import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
 import {
   elapsedTimeToRemainingTime,
+  getPauseElement,
   getPeriodOrdinal,
   hasGameFinished,
-  GAME_UPDATE_END,
-  GAME_UPDATE_GOAL,
-  GAME_UPDATE_START,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT
 } from './utils';
@@ -52,10 +50,6 @@ function getPeriodEndElement(period) {
 
 function getGamesStartElement() {
   return { start: true };
-}
-
-export function getPauseElement() {
-  return { pause: true };
 }
 
 function getGamesEndElement(inProgress) {
@@ -203,17 +197,4 @@ export function getAllGoalsSorted(scores) {
     .flatten()
     .sortBy(['period', 'min', 'sec'])
     .value();
-}
-
-export function getGoalEvents(
-  currentClock,
-  { classModifier, gameIndex, ...goal },
-  goalPauseEventCount
-) {
-  return [
-    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_START } },
-    { ...currentClock, update: { gameIndex, classModifier, goal, type: GAME_UPDATE_GOAL } },
-    ..._.times(goalPauseEventCount, getPauseElement),
-    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_END } }
-  ];
 }

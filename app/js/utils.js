@@ -116,3 +116,20 @@ export function getGameAnimationIndexes(gameCount) {
     return isEven ? index / 2 : Math.floor((gameCount - index) / 2);
   });
 }
+
+export function getGoalEvents(
+  currentClock,
+  { classModifier, gameIndex, ...goal },
+  goalPauseEventCount
+) {
+  return [
+    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_START } },
+    { ...currentClock, update: { gameIndex, classModifier, goal, type: GAME_UPDATE_GOAL } },
+    ..._.times(goalPauseEventCount, getPauseElement),
+    { ...currentClock, update: { gameIndex, type: GAME_UPDATE_END } }
+  ];
+}
+
+export function getPauseElement() {
+  return { pause: true };
+}

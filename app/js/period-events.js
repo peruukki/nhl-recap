@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
-import { getGoalEvents } from './game-events';
-import { hasGoalBeenScored } from './utils';
+import { getGoalEvents, hasGoalBeenScored } from './utils';
 
 const advanceClockStep = 3;
 
