@@ -8,7 +8,7 @@ import {
   getPeriodOrdinal,
   hasGameFinished,
   PERIOD_OVERTIME,
-  PERIOD_SHOOTOUT
+  PERIOD_SHOOTOUT,
 } from './utils';
 
 export default function gameEvents(scores) {
@@ -71,13 +71,13 @@ function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map(period => ({
     period,
-    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount)
+    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount),
   }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalPauseEventCount)
+      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalPauseEventCount),
     };
     return fullPeriods.concat(partialPeriod);
   }
@@ -103,7 +103,7 @@ function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
   const periodEnd = endTime.period === PERIOD_OVERTIME ? endTime : null;
   return {
     period: PERIOD_OVERTIME,
-    events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount)
+    events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount),
   };
 }
 
@@ -155,7 +155,7 @@ function getGameEndTimeFromProgress(progress, isPlayoffGame) {
         : progress.currentPeriod,
     minute: hasEnded ? undefined : min,
     second: hasEnded ? undefined : sec,
-    inProgress: true
+    inProgress: true,
   };
 }
 
@@ -172,7 +172,7 @@ function getGameEndTimeFromGoals(goals) {
     return elapsedTimeToRemainingTime({
       period: lastGoal.period,
       minute: lastGoal.min,
-      second: lastGoal.sec
+      second: lastGoal.sec,
     });
   }
   return isShootout ? { period: PERIOD_SHOOTOUT } : { period: 3 };
@@ -189,7 +189,7 @@ export function getAllGoalsSorted(scores) {
         .map(goal => ({
           ...goal,
           gameIndex,
-          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home'
+          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home',
         }))
         .value()
     )

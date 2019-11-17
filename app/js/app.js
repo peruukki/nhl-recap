@@ -10,5 +10,5 @@ fetchTeamLogoSVGSymbols();
 
 run(scorePanel(animations), {
   DOM: makeDOMDriver('#app'),
-  HTTP: makeHTTPDriver()
+  HTTP: makeHTTPDriver(),
 });

@@ -6,7 +6,7 @@ import gameScore, {
   delimiter as renderedDelimiter,
   renderLatestGoalTime,
   renderLatestGoalScorer,
-  renderLatestGoalAssists
+  renderLatestGoalAssists,
 } from '../app/js/game-score';
 import { renderTeamLogo } from '../app/js/logos';
 import scoresAllRegularTime from './data/latest.json';
@@ -22,13 +22,13 @@ import {
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED
+  GAME_STATE_NOT_STARTED,
 } from '../app/js/utils';
 
 const inProgressGameProgress = {
   currentPeriod: 1,
   currentPeriodOrdinal: '1st',
-  currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
+  currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 },
 };
 
 const statIndexes = {
@@ -36,7 +36,7 @@ const statIndexes = {
   pointPct: 1,
   record: 2,
   streak: 3,
-  playoffSpotPts: 4
+  playoffSpotPts: 4,
 };
 
 describe('gameScore', () => {
@@ -181,13 +181,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.654' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.692', className: '--highlight' },
-        label
+        label,
       });
     });
 
@@ -198,13 +198,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
         away: { value: '.700' },
         home: { value: '.700' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
         away: { value: '.583', className: '--highlight' },
         home: { value: '.357' },
-        label
+        label,
       });
     });
 
@@ -215,13 +215,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: { value: [7, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
-        label
+        label,
       });
     });
 
@@ -232,13 +232,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 3] },
         home: { value: [7, renderedDelimiter, 3] },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
         home: { value: [5, renderedDelimiter, 9] },
-        label
+        label,
       });
     });
   });
@@ -287,13 +287,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
         away: { value: '11' },
         home: { value: '8', className: '--highlight' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
         away: { value: '4', className: '--highlight' },
         home: { value: '26' },
-        label
+        label,
       });
     });
 
@@ -304,13 +304,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.679', className: '--highlight' },
         home: { value: '.607' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.607' },
         home: { value: '.714', className: '--highlight' },
-        label
+        label,
       });
     });
 
@@ -321,13 +321,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
         away: { value: '.727', className: '--highlight' },
         home: { value: '.636' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
         away: { value: '.538', className: '--highlight' },
         home: { value: '.400' },
-        label
+        label,
       });
     });
 
@@ -338,13 +338,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [9, renderedDelimiter, 4, renderedDelimiter, 1], className: '--highlight' },
         home: { value: [7, renderedDelimiter, 4, renderedDelimiter, 3] },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
         home: { value: [8, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
-        label
+        label,
       });
     });
 
@@ -355,13 +355,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
         home: { value: [7, renderedDelimiter, 4] },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
         home: { value: [6, renderedDelimiter, 9] },
-        label
+        label,
       });
     });
 
@@ -372,13 +372,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.streak, {
         away: { value: '2 W', className: '--highlight' },
         home: { value: '1 L' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
         away: { value: '2 L' },
         home: { value: '2 W', className: '--highlight' },
-        label
+        label,
       });
     });
 
@@ -389,13 +389,13 @@ describe('gameScore', () => {
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
         away: { value: '+4' },
         home: { value: '+4' },
-        label
+        label,
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
         away: { value: '+2', className: '--highlight' },
         home: { value: '-2' },
-        label
+        label,
       });
     });
   });
@@ -419,8 +419,8 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
-        }
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 },
+        },
       };
       assertPreGameDescription(
         GAME_DISPLAY_PRE_GAME,
@@ -437,8 +437,8 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 }
-        }
+          currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 },
+        },
       };
       assertPreGameDescription(
         GAME_DISPLAY_IN_PROGRESS,
@@ -455,8 +455,8 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
-          currentPeriodTimeRemaining: { pretty: 'END', min: 0, sec: 0 }
-        }
+          currentPeriodTimeRemaining: { pretty: 'END', min: 0, sec: 0 },
+        },
       };
       assertPreGameDescription(
         GAME_DISPLAY_PRE_GAME,
@@ -473,8 +473,8 @@ describe('gameScore', () => {
         progress: {
           currentPeriod: 5,
           currentPeriodOrdinal: 'SO',
-          currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 }
-        }
+          currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 },
+        },
       };
       assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In shootout');
     });
@@ -736,7 +736,7 @@ function assertPlayoffSeriesLead(
     ' leads ',
     span('.series-wins__leading-count', String(leadingWins)),
     span('.series-wins__delimiter', '–'),
-    span('.series-wins__trailing-count', String(trailingWins))
+    span('.series-wins__trailing-count', String(trailingWins)),
   ]);
 }
 
@@ -755,7 +755,7 @@ function assertPlayoffSeriesTied(
     ' ',
     span('.series-wins__tied-count', String(wins)),
     span('.series-wins__delimiter', '–'),
-    span('.series-wins__tied-count', String(wins))
+    span('.series-wins__tied-count', String(wins)),
   ]);
 }
 
@@ -813,10 +813,10 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
         renderTeamLogo(
           teams.away.id,
           `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`
-        )
+        ),
       ]),
       span('.team-panel__team-name', teams.away.abbreviation),
-      span(`.team-panel__team-score${visibilityClass}`, [awayGoals])
+      span(`.team-panel__team-score${visibilityClass}`, [awayGoals]),
     ]),
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${visibilityClass}`, [homeGoals]),
@@ -825,9 +825,9 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
         renderTeamLogo(
           teams.home.id,
           `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`
-        )
-      ])
-    ])
+        ),
+      ]),
+    ]),
   ];
 }
 
@@ -839,7 +839,7 @@ function expectedLatestGoalPanel(latestGoal) {
   return div('.latest-goal', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
-    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : '')
+    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : ''),
   ]);
 }
 
@@ -854,7 +854,7 @@ function expectedTeamStats({ away, home, label }) {
     span(
       `${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`,
       home.value
-    )
+    ),
   ]);
 }
 

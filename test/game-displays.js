@@ -10,7 +10,7 @@ import {
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED
+  GAME_STATE_NOT_STARTED,
 } from '../app/js/utils';
 
 const CLOCK_STATE_NOT_STARTED = 'CLOCK_STATE_NOT_STARTED';
@@ -23,7 +23,7 @@ describe('gameDisplays', () => {
     CLOCK_STATE_NOT_STARTED,
     CLOCK_STATE_IN_PROGRESS,
     CLOCK_STATE_PASSED_IN_PROGRESS_GAMES,
-    CLOCK_STATE_END
+    CLOCK_STATE_END,
   ].forEach(clockState => {
     [GAME_STATE_NOT_STARTED, GAME_STATE_IN_PROGRESS, GAME_STATE_FINISHED].forEach(gameState => {
       const expected = getExpectedGameDisplay(clockState, gameState);
@@ -49,12 +49,12 @@ describe('gameDisplays', () => {
       [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
       [
         `${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_IN_PROGRESS}`,
-        GAME_DISPLAY_IN_PROGRESS
+        GAME_DISPLAY_IN_PROGRESS,
       ],
       [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_FINISHED}`, GAME_DISPLAY_PLAYBACK],
       [`${CLOCK_STATE_END},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
       [`${CLOCK_STATE_END},${GAME_STATE_IN_PROGRESS}`, GAME_DISPLAY_IN_PROGRESS],
-      [`${CLOCK_STATE_END},${GAME_STATE_FINISHED}`, GAME_DISPLAY_POST_GAME]
+      [`${CLOCK_STATE_END},${GAME_STATE_FINISHED}`, GAME_DISPLAY_POST_GAME],
     ]);
     return expectedValues.get(`${clockState},${gameState}`);
   }
@@ -83,10 +83,10 @@ describe('gameDisplays', () => {
             progress:
               gameState === GAME_STATE_IN_PROGRESS
                 ? { currentPeriod: 1, currentPeriodTimeRemaining: { min: 1, sec: 5 } }
-                : undefined
-          }
-        }
-      ]
+                : undefined,
+          },
+        },
+      ],
     });
   }
 });

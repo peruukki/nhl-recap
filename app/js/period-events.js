@@ -36,7 +36,7 @@ function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond)
       secondRange(minute, lastMinute, lastSecond).map(second => ({
         period,
         minute,
-        second
+        second,
       }))
     )
   );
@@ -50,7 +50,7 @@ function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
         period,
         minute,
         second,
-        tenthOfASecond
+        tenthOfASecond,
       }))
     )
   );

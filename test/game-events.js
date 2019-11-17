@@ -36,7 +36,7 @@ describe('gameEvents', () => {
       period: 'OT',
       minute: 2,
       second: 23,
-      update: { gameIndex: 1, type: 'END' }
+      update: { gameIndex: 1, type: 'END' },
     });
   });
 
@@ -49,7 +49,7 @@ describe('gameEvents', () => {
     const lastClockElement = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastClockElement, {
       period: 'SO',
-      update: { gameIndex: 2, type: 'END' }
+      update: { gameIndex: 2, type: 'END' },
     });
   });
 
@@ -127,18 +127,18 @@ describe('gameEvents', () => {
       _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
         ...goal,
         classModifier: goal.team === 'ANA' ? 'away' : 'home',
-        gameIndex: 1
+        gameIndex: 1,
       })),
       scoresMultipleOvertime.games[0].goals.map(goal => ({
         ...goal,
         classModifier: 'away',
-        gameIndex: 0
+        gameIndex: 0,
       })),
       _.takeRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
         ...goal,
         classModifier: goal.team === 'ANA' ? 'away' : 'home',
-        gameIndex: 1
-      }))
+        gameIndex: 1,
+      })),
     ]);
 
     assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);

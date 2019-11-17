@@ -9,7 +9,7 @@ import {
   hasGameFinished,
   GAME_UPDATE_END,
   GAME_UPDATE_GOAL,
-  GAME_UPDATE_START
+  GAME_UPDATE_START,
 } from './utils';
 import getGameDisplays$ from './game-displays';
 
@@ -18,7 +18,7 @@ export default function main(animations) {
     const url = getApiUrl();
     return {
       DOM: view(model(intent(DOM, HTTP), animations)),
-      HTTP: xs.of({ url })
+      HTTP: xs.of({ url }),
     };
   };
 }
@@ -64,7 +64,7 @@ function intent(DOM, HTTP) {
         scores.error.expected
           ? scores.error.message
           : `Failed to fetch latest scores: ${scores.error.message}.`
-      )
+      ),
   };
 }
 
@@ -75,19 +75,19 @@ function model(actions, animations) {
   const gameClock = GameClock({
     scores$: actions.successApiResponse$.map(({ games }) => games),
     isPlaying$: actions.isPlaying$,
-    props$: xs.of({ interval: 20 })
+    props$: xs.of({ interval: 20 }),
   });
 
   actions.playbackHasStarted$.addListener({
-    next: () => animations.setInfoPanelsPlaybackHeight()
+    next: () => animations.setInfoPanelsPlaybackHeight(),
   });
   actions.successApiResponse$
     .filter(({ games }) => games.some(game => hasGameFinished(game.status.state)))
     .addListener({
       next: () =>
         gameClock.clock$.addListener({
-          complete: () => animations.setInfoPanelsFinalHeight()
-        })
+          complete: () => animations.setInfoPanelsFinalHeight(),
+        }),
     });
 
   const gameUpdate$ = gameClock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
@@ -106,7 +106,7 @@ function model(actions, animations) {
         default:
           throw new Error(`Unknown game update type ${gameUpdate.type}`);
       }
-    }
+    },
   });
 
   const initialGoals$ = scores$
@@ -119,7 +119,7 @@ function model(actions, animations) {
         (currentGoals, update) => [
           ...currentGoals.slice(0, update.gameIndex),
           currentGoals[update.gameIndex].concat(update.goal),
-          ...currentGoals.slice(update.gameIndex + 1)
+          ...currentGoals.slice(update.gameIndex + 1),
         ],
         initialGameGoals
       )
@@ -146,7 +146,7 @@ function model(actions, animations) {
       clockVtree,
       clock,
       gameDisplays,
-      gameCount: scores.games.length
+      gameCount: scores.games.length,
     }));
 }
 
@@ -161,13 +161,13 @@ function view(state$) {
             clock,
             gameCount,
             isPlaying,
-            date: scores.date
+            date: scores.date,
           })
         ),
         section(
           '.score-panel',
           renderScores({ games: scores.games, currentGoals, status, gameDisplays })
-        )
+        ),
       ])
   );
 }
@@ -180,14 +180,14 @@ function renderHeader(state) {
     '.button': true,
     [`.button--${buttonType}`]: state.gameCount > 0,
     [`.expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
-    '.button--hidden': isFinished
+    '.button--hidden': isFinished,
   }).replace(/\s/g, '');
   const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
     button(buttonClass),
-    showDate ? renderDate(state.date) : state.clockVtree
+    showDate ? renderDate(state.date) : state.clockVtree,
   ]);
 }
 

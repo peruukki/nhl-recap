@@ -12,36 +12,36 @@ describe('shootoutEvents', () => {
       team: 'FLA',
       scorer: { player: 'Alexander Barkov' },
       gameIndex: 2,
-      classModifier: 'home'
+      classModifier: 'home',
     },
     {
       period: 'OT',
       team: 'CHI',
       scorer: { player: 'Patrik Kane' },
       gameIndex: 3,
-      classModifier: 'home'
+      classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'TOR',
       scorer: { player: 'Leo Komarov' },
       gameIndex: 0,
-      classModifier: 'home'
+      classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'TOR',
       scorer: { player: 'Martin Marincin' },
       gameIndex: 0,
-      classModifier: 'home'
+      classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'SJS',
       scorer: { player: 'Joe Pavelski' },
       gameIndex: 1,
-      classModifier: 'away'
-    }
+      classModifier: 'away',
+    },
   ];
   const goalPauseEventCount = 50;
 
@@ -58,10 +58,10 @@ describe('shootoutEvents', () => {
           gameIndex: 0,
           type: GAME_UPDATE_GOAL,
           classModifier: 'home',
-          goal: _.omit(goals[3], ['classModifier', 'gameIndex'])
+          goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
         },
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
-        { gameIndex: 0, type: GAME_UPDATE_END }
+        { gameIndex: 0, type: GAME_UPDATE_END },
       ],
       'First shootout game goal events'
     );
@@ -78,10 +78,10 @@ describe('shootoutEvents', () => {
           gameIndex: 1,
           type: GAME_UPDATE_GOAL,
           classModifier: 'away',
-          goal: _.omit(goals[4], ['classModifier', 'gameIndex'])
+          goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
         },
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
-        { gameIndex: 1, type: GAME_UPDATE_END }
+        { gameIndex: 1, type: GAME_UPDATE_END },
       ],
       'Second shootout game goal events'
     );

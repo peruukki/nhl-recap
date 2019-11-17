@@ -11,7 +11,7 @@ import {
   GAME_DISPLAY_PRE_GAME,
   PLAYBACK_FINISHED,
   PLAYBACK_IN_PROGRESS,
-  PLAYBACK_NOT_STARTED
+  PLAYBACK_NOT_STARTED,
 } from './utils';
 
 export default function getGameDisplays$(clock$, scores$) {

@@ -39,7 +39,7 @@ describe('scorePanel', () => {
       const gameScoreNodes = getScoreListNode(vtree).children;
       assert.deepEqual(gameScoreNodes.map(node => node.sel), [
         'div.game.expand--0',
-        'div.game.expand--0'
+        'div.game.expand--0',
       ]);
     });
   });

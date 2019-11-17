@@ -15,6 +15,6 @@ export function fetchTeamLogoSVGSymbols() {
 
 export function renderTeamLogo(teamId, className) {
   return svg({ attrs: { class: className } }, [
-    svg.use({ attrs: { href: `#team-${teamId}-20192020-dark` } })
+    svg.use({ attrs: { href: `#team-${teamId}-20192020-dark` } }),
   ]);
 }

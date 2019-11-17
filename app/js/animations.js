@@ -79,5 +79,5 @@ export default {
   highlightGoal,
   stopGameHighlight,
   setInfoPanelsPlaybackHeight,
-  setInfoPanelsFinalHeight
+  setInfoPanelsFinalHeight,
 };

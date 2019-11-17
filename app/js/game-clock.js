@@ -8,7 +8,7 @@ export default function GameClock(sources) {
   const state$ = model(intent(sources));
   return {
     DOM: view(state$),
-    clock$: state$
+    clock$: state$,
   };
 }
 
@@ -42,7 +42,7 @@ function view(state$) {
     const animationClass = time ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
       span('.clock__period', clock ? renderPeriod(clock) : ''),
-      time ? span('.clock__time', time) : ''
+      time ? span('.clock__time', time) : '',
     ]);
   });
 }

@@ -8,7 +8,7 @@ export const EVENT_COUNTS = {
   start: 1,
   goal: 1,
   pause: 50,
-  end: 1
+  end: 1,
 };
 export const EVENT_COUNT_PER_GOAL =
   EVENT_COUNTS.start + EVENT_COUNTS.goal + EVENT_COUNTS.pause + EVENT_COUNTS.end;
@@ -40,7 +40,7 @@ describe('periodEvents', () => {
     const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map(second => ({
       period,
       minute: 2,
-      second
+      second,
     }));
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
@@ -74,7 +74,7 @@ describe('periodEvents', () => {
       const secondEvents = _.range(59, -1, -clockAdvanceStep).map(second => ({
         period,
         minute: 0,
-        second
+        second,
       }));
       const expected = [firstEvent(period, periodLength)].concat(secondEvents);
 
@@ -95,7 +95,7 @@ describe('periodEvents', () => {
       period,
       minute: 0,
       second: 59,
-      tenthOfASecond
+      tenthOfASecond,
     }));
     const expected = [firstEvent(period, periodLength)].concat(tenthOfASecondEvents);
 
@@ -130,7 +130,7 @@ describe('periodEvents', () => {
             { gameIndex, type: GAME_UPDATE_START },
             { gameIndex, type: GAME_UPDATE_GOAL, classModifier: 'home' },
             ..._.times(EVENT_COUNTS.pause, () => ({ pause: true })),
-            { gameIndex, type: GAME_UPDATE_END }
+            { gameIndex, type: GAME_UPDATE_END },
           ],
           description
         );
@@ -144,7 +144,7 @@ describe('periodEvents', () => {
     const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
       { period: 1, min: 1, sec: 1, gameIndex: 5, classModifier: 'home' },
       { period: 1, min: 2, sec: 2, gameIndex: 1, classModifier: 'home' },
-      { period: 2, min: 1, sec: 1, gameIndex: 2, classModifier: 'home' }
+      { period: 2, min: 1, sec: 1, gameIndex: 2, classModifier: 'home' },
     ];
     assertGoalEvents(
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
@@ -155,7 +155,7 @@ describe('periodEvents', () => {
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
       { period: 1, min: 1, sec: 1, gameIndex: 4, classModifier: 'home' },
       { period: 1, min: 1, sec: 1, gameIndex: 3, classModifier: 'home' },
-      { period: 2, min: 1, sec: 1, gameIndex: 0, classModifier: 'home' }
+      { period: 2, min: 1, sec: 1, gameIndex: 0, classModifier: 'home' },
     ];
     assertGoalEvents(
       allGoalsSortedWithMultipleGoalsAtTheSameTime,

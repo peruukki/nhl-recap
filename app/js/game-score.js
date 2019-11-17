@@ -8,7 +8,7 @@ import {
   GAME_DISPLAY_POST_GAME,
   GAME_DISPLAY_PRE_GAME,
   PERIOD_OVERTIME,
-  PERIOD_SHOOTOUT
+  PERIOD_SHOOTOUT,
 } from './utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
 import { renderTeamLogo } from './logos';
@@ -51,7 +51,7 @@ export default function gameScore(
       !!playoffSeriesWins,
       latestGoal
     ),
-    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null
+    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null,
   ]);
 }
 
@@ -79,7 +79,7 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame) {
     div('.team-panel.team-panel--away', [
       renderLogo(teams.away.id, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),
-      span(`.team-panel__team-score${scoreVisibilityClass}`, [awayGoals.length])
+      span(`.team-panel__team-score${scoreVisibilityClass}`, [awayGoals.length]),
     ]),
     div(
       `.team-panel__delimiter${delimiterVisibilityClass}`,
@@ -88,8 +88,8 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame) {
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),
       span('.team-panel__team-name', teams.home.abbreviation),
-      renderLogo(teams.home.id, 'home')
-    ])
+      renderLogo(teams.home.id, 'home'),
+    ]),
   ]);
 }
 
@@ -98,7 +98,7 @@ function renderLogo(teamId, modifier) {
     renderTeamLogo(
       teamId,
       `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`
-    )
+    ),
   ]);
 }
 
@@ -127,7 +127,7 @@ function renderInfoPanel(
     showProgressInfo ? div('.game-description.fade-in', renderGameStatus(status, startTime)) : null,
     showPreGameStats || isAfterGame
       ? renderGameStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, stats)
-      : null
+      : null,
   ]);
 }
 
@@ -153,7 +153,7 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
           getPlayoffSpotRating,
           renderPlayoffSpot
         )
-      : null
+      : null,
   ]);
 }
 
@@ -169,7 +169,7 @@ function renderTeamStats(teams, values, label, ratingFn, renderFn) {
     span(
       `${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
       values ? renderFn(values[teams.home.abbreviation]) : ''
-    )
+    ),
   ]);
 }
 
@@ -264,7 +264,7 @@ function renderLatestGoal(latestGoal) {
   return div('.latest-goal', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
-    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : '')
+    div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : ''),
   ]);
 }
 
@@ -286,7 +286,7 @@ function getSeriesWinsDescription(seriesWins) {
       ' ',
       span('.series-wins__tied-count', String(leading.wins)),
       span('.series-wins__delimiter', '–'),
-      span('.series-wins__tied-count', String(trailing.wins))
+      span('.series-wins__tied-count', String(trailing.wins)),
     ];
   }
   const seriesWinCount = 4;
@@ -295,7 +295,7 @@ function getSeriesWinsDescription(seriesWins) {
     leading.wins === seriesWinCount ? ' wins ' : ' leads ',
     span('.series-wins__leading-count', String(leading.wins)),
     span('.series-wins__delimiter', '–'),
-    span('.series-wins__trailing-count', String(trailing.wins))
+    span('.series-wins__trailing-count', String(trailing.wins)),
   ];
 }
 
@@ -331,7 +331,7 @@ export function renderLatestGoalTime(latestGoal) {
     span(`${period} ${time}`),
     span('.latest-goal__team', latestGoal.team),
     latestGoal.strength ? span('.latest-goal__strength', latestGoal.strength) : null,
-    latestGoal.emptyNet ? span('.latest-goal__empty-net', 'EN') : null
+    latestGoal.emptyNet ? span('.latest-goal__empty-net', 'EN') : null,
   ];
 }
 
@@ -341,7 +341,7 @@ export function renderLatestGoalScorer(latestGoal) {
   return seasonTotal
     ? [
         span('.latest-goal__scorer', `${scorer} `),
-        span('.latest-goal__goal-count', `(${seasonTotal})`)
+        span('.latest-goal__goal-count', `(${seasonTotal})`),
       ]
     : span('.latest-goal__scorer', scorer);
 }
@@ -358,8 +358,8 @@ export function renderLatestGoalAssists(latestGoal) {
     ...latestGoal.assists.map(assist =>
       div('.latest-goal__assist', [
         span('.latest-goal__assister', `${truncatePlayerName(assist.player)} `),
-        span('.latest-goal__assist-count', `(${assist.seasonTotal})`)
+        span('.latest-goal__assist-count', `(${assist.seasonTotal})`),
       ])
-    )
+    ),
   ];
 }
