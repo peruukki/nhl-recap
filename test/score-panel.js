@@ -1,5 +1,4 @@
-import { div, span } from '@cycle/dom';
-import { mockDOMSource } from '@cycle/dom';
+import { div, mockDOMSource, span } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
 import xs from 'xstream';
 import { assert } from 'chai';

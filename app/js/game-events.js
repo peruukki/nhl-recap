@@ -76,7 +76,7 @@ function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
     ? partialPeriodNumber - 1
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map(period => ({
-    period: period,
+    period,
     events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount)
   }));
 
@@ -86,9 +86,8 @@ function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
       events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalPauseEventCount)
     };
     return fullPeriods.concat(partialPeriod);
-  } else {
-    return fullPeriods;
   }
+  return fullPeriods;
 }
 
 function getPartialPeriodNumber(endTime) {
@@ -106,13 +105,12 @@ function hasLastPeriodEnded(endTime) {
 function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
   if (endTime.period !== PERIOD_SHOOTOUT && endTime.period !== PERIOD_OVERTIME) {
     return null;
-  } else {
-    const periodEnd = endTime.period === PERIOD_OVERTIME ? endTime : null;
-    return {
-      period: PERIOD_OVERTIME,
-      events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount)
-    };
   }
+  const periodEnd = endTime.period === PERIOD_OVERTIME ? endTime : null;
+  return {
+    period: PERIOD_OVERTIME,
+    events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount)
+  };
 }
 
 function getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount) {
@@ -182,11 +180,8 @@ function getGameEndTimeFromGoals(goals) {
       minute: lastGoal.min,
       second: lastGoal.sec
     });
-  } else if (isShootout) {
-    return { period: PERIOD_SHOOTOUT };
-  } else {
-    return { period: 3 };
   }
+  return isShootout ? { period: PERIOD_SHOOTOUT } : { period: 3 };
 }
 
 export function getAllGoalsSorted(scores) {

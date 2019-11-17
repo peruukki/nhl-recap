@@ -14,7 +14,7 @@ import {
   PLAYBACK_NOT_STARTED
 } from './utils';
 
-export default function gameDisplays(clock$, scores$) {
+export default function getGameDisplays$(clock$, scores$) {
   const playbackState$ = clock$
     .map(clock => (clock.end && !clock.period ? PLAYBACK_FINISHED : PLAYBACK_IN_PROGRESS))
     .startWith(PLAYBACK_NOT_STARTED);

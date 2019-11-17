@@ -11,10 +11,14 @@
   "globals": {
     "process": false
   },
-  "extends": "eslint:recommended",
+  "extends": ["airbnb-base", "prettier"],
   "rules": {
-    "no-console": 1,
-    "no-unused-vars": 1,
-    "semi": 2
+    "import/prefer-default-export": "off",
+    "no-console": "warn",
+    "no-nested-ternary": "off",
+    "no-unused-vars": "warn",
+    "no-restricted-globals": "off",
+    "no-use-before-define": "off",
+    "semi": "off"
   }
 }

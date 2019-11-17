@@ -50,17 +50,17 @@ function view(state$) {
 function renderPeriod(clock) {
   if (clock.start) {
     return span('.fade-in', 'Starting...');
-  } else if (clock.end) {
+  }
+  if (clock.end) {
     return clock.period
       ? span('.fade-in', renderPeriodEnd(clock.period))
       : span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
-  } else {
-    return renderPeriodNumber(clock.period);
   }
+  return renderPeriodNumber(clock.period);
 }
 
 function renderPeriodEnd(period) {
-  return 'End of ' + renderPeriodNumber(period);
+  return `End of ${renderPeriodNumber(period)}`;
 }
 
 export function renderPeriodNumber(period) {
@@ -91,8 +91,8 @@ export function renderTime(clock) {
   }
 
   const showTenthsOfASecond = clock.tenthOfASecond !== undefined;
-  const minute = !showTenthsOfASecond ? clock.minute + ':' : '';
-  const second = clock.second >= 10 || showTenthsOfASecond ? clock.second : '0' + clock.second;
-  const tenthOfASecond = showTenthsOfASecond ? '.' + clock.tenthOfASecond : '';
+  const minute = !showTenthsOfASecond ? `${clock.minute}:` : '';
+  const second = clock.second >= 10 || showTenthsOfASecond ? clock.second : `0${clock.second}`;
+  const tenthOfASecond = showTenthsOfASecond ? `.${clock.tenthOfASecond}` : '';
   return minute + second + tenthOfASecond;
 }

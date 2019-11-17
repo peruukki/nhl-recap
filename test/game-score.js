@@ -2,9 +2,8 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import {
-  default as gameScore,
-  delimiter,
+import gameScore, {
+  delimiter as renderedDelimiter,
   renderLatestGoalTime,
   renderLatestGoalScorer,
   renderLatestGoalAssists
@@ -214,14 +213,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
-        away: { value: [8, delimiter, 4, delimiter, 1] },
-        home: { value: [7, delimiter, 3, delimiter, 3] },
+        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+        home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
         label
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
-        away: { value: [8, delimiter, 4, delimiter, 1] },
-        home: { value: [7, delimiter, 2, delimiter, 4], className: '--highlight' },
+        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+        home: { value: [7, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
         label
       });
     });
@@ -231,14 +230,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
-        away: { value: [7, delimiter, 3] },
-        home: { value: [7, delimiter, 3] },
+        away: { value: [7, renderedDelimiter, 3] },
+        home: { value: [7, renderedDelimiter, 3] },
         label
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
-        away: { value: [7, delimiter, 5], className: '--highlight' },
-        home: { value: [5, delimiter, 9] },
+        away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
+        home: { value: [5, renderedDelimiter, 9] },
         label
       });
     });
@@ -337,14 +336,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
-        away: { value: [9, delimiter, 4, delimiter, 1], className: '--highlight' },
-        home: { value: [7, delimiter, 4, delimiter, 3] },
+        away: { value: [9, renderedDelimiter, 4, renderedDelimiter, 1], className: '--highlight' },
+        home: { value: [7, renderedDelimiter, 4, renderedDelimiter, 3] },
         label
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
-        away: { value: [8, delimiter, 5, delimiter, 1] },
-        home: { value: [8, delimiter, 2, delimiter, 4], className: '--highlight' },
+        away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
+        home: { value: [8, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
         label
       });
     });
@@ -354,14 +353,14 @@ describe('gameScore', () => {
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
-        away: { value: [8, delimiter, 3], className: '--highlight' },
-        home: { value: [7, delimiter, 4] },
+        away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
+        home: { value: [7, renderedDelimiter, 4] },
         label
       });
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
-        away: { value: [7, delimiter, 6], className: '--highlight' },
-        home: { value: [6, delimiter, 9] },
+        away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
+        home: { value: [6, renderedDelimiter, 9] },
         label
       });
     });
@@ -817,10 +816,10 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
         )
       ]),
       span('.team-panel__team-name', teams.away.abbreviation),
-      span('.team-panel__team-score' + visibilityClass, [awayGoals])
+      span(`.team-panel__team-score${visibilityClass}`, [awayGoals])
     ]),
     div('.team-panel.team-panel--home', [
-      span('.team-panel__team-score' + visibilityClass, [homeGoals]),
+      span(`.team-panel__team-score${visibilityClass}`, [homeGoals]),
       span('.team-panel__team-name', teams.home.abbreviation),
       span('.team-logo', [
         renderTeamLogo(
@@ -833,7 +832,7 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
 }
 
 function expectedDelimiter(delimiter, visibilityClass) {
-  return div('.team-panel__delimiter' + visibilityClass, delimiter);
+  return div(`.team-panel__delimiter${visibilityClass}`, delimiter);
 }
 
 function expectedLatestGoalPanel(latestGoal) {

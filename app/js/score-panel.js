@@ -11,7 +11,7 @@ import {
   GAME_UPDATE_GOAL,
   GAME_UPDATE_START
 } from './utils';
-import gameDisplays from './game-displays';
+import getGameDisplays$ from './game-displays';
 
 export default function main(animations) {
   return ({ DOM, HTTP }) => {
@@ -35,14 +35,11 @@ function intent(DOM, HTTP) {
     .map(response => {
       if (response.error) {
         return response;
-      } else {
-        const responseJson = JSON.parse(response.text);
-        return responseJson.games.length > 0
-          ? { success: responseJson }
-          : {
-              error: { message: 'No latest scores available.', expected: true }
-            };
       }
+      const responseJson = JSON.parse(response.text);
+      return responseJson.games.length > 0
+        ? { success: responseJson }
+        : { error: { message: 'No latest scores available.', expected: true } };
     });
   const successApiResponse$ = apiResponseWithErrors$
     .filter(scores => scores.success)
@@ -129,7 +126,7 @@ function model(actions, animations) {
     )
     .flatten();
 
-  const gameDisplays$ = gameDisplays(gameClock.clock$, scores$);
+  const gameDisplays$ = getGameDisplays$(gameClock.clock$, scores$);
 
   return xs
     .combine(

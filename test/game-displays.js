@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import xs from 'xstream';
 
-import gameDisplays from '../app/js/game-displays';
+import getGameDisplays$ from '../app/js/game-displays';
 import { addListener } from './test-utils';
 import {
   GAME_DISPLAY_IN_PROGRESS,
@@ -29,7 +29,7 @@ describe('gameDisplays', () => {
       const expected = getExpectedGameDisplay(clockState, gameState);
 
       it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, done => {
-        const gameDisplays$ = gameDisplays(getClock$(clockState), getScores$(gameState));
+        const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
         // Ignore intermediate values and assert the last one
         addListener(done, gameDisplays$.last(), gameDisplays => {
           assert.deepEqual(gameDisplays, [expected]);

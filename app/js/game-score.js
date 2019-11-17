@@ -60,9 +60,8 @@ function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, update
     return updatePlayoffSeriesWins
       ? getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals)
       : playoffSeries.wins;
-  } else {
-    return null;
   }
+  return null;
 }
 
 function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) {
@@ -80,14 +79,14 @@ function renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame) {
     div('.team-panel.team-panel--away', [
       renderLogo(teams.away.id, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),
-      span('.team-panel__team-score' + scoreVisibilityClass, [awayGoals.length])
+      span(`.team-panel__team-score${scoreVisibilityClass}`, [awayGoals.length])
     ]),
     div(
-      '.team-panel__delimiter' + delimiterVisibilityClass,
+      `.team-panel__delimiter${delimiterVisibilityClass}`,
       isBeforeGame ? 'at' : renderDelimiter(period)
     ),
     div('.team-panel.team-panel--home', [
-      span('.team-panel__team-score' + scoreVisibilityClass, [homeGoals.length]),
+      span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),
       span('.team-panel__team-name', teams.home.abbreviation),
       renderLogo(teams.home.id, 'home')
     ])
@@ -184,11 +183,11 @@ function getHighlightClassNames(baseClassName, teams, values, ratingFn) {
 
   if (awayRating > homeRating) {
     return { away: `${baseClassName}--highlight`, home: '' };
-  } else if (homeRating > awayRating) {
-    return { away: '', home: `${baseClassName}--highlight` };
-  } else {
-    return { away: '', home: '' };
   }
+  if (homeRating > awayRating) {
+    return { away: '', home: `${baseClassName}--highlight` };
+  }
+  return { away: '', home: '' };
 }
 
 function getPointPercentage({ wins, losses, ot = 0 }) {
@@ -213,11 +212,11 @@ function getStreakMultiplier(type) {
 }
 
 function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
-  return parseInt(pointsFromPlayoffSpot);
+  return parseInt(pointsFromPlayoffSpot, 10);
 }
 
 function getLeagueRankRating({ leagueRank }) {
-  return -parseInt(leagueRank);
+  return -parseInt(leagueRank, 10);
 }
 
 function renderWinPercentage(record) {
@@ -289,16 +288,15 @@ function getSeriesWinsDescription(seriesWins) {
       span('.series-wins__delimiter', '–'),
       span('.series-wins__tied-count', String(trailing.wins))
     ];
-  } else {
-    const seriesWinCount = 4;
-    return [
-      span('.series-wins__leading-team', leading.team),
-      leading.wins === seriesWinCount ? ' wins ' : ' leads ',
-      span('.series-wins__leading-count', String(leading.wins)),
-      span('.series-wins__delimiter', '–'),
-      span('.series-wins__trailing-count', String(trailing.wins))
-    ];
   }
+  const seriesWinCount = 4;
+  return [
+    span('.series-wins__leading-team', leading.team),
+    leading.wins === seriesWinCount ? ' wins ' : ' leads ',
+    span('.series-wins__leading-count', String(leading.wins)),
+    span('.series-wins__delimiter', '–'),
+    span('.series-wins__trailing-count', String(trailing.wins))
+  ];
 }
 
 function renderGameStatus(status, startTime) {
@@ -317,13 +315,13 @@ function renderGameStatus(status, startTime) {
 function renderCurrentProgress(progress) {
   if (!progress || !progress.currentPeriodOrdinal) {
     return 'In progress';
-  } else if (progress.currentPeriodTimeRemaining.pretty === 'END') {
-    return `End of ${progress.currentPeriodOrdinal}`;
-  } else if (progress.currentPeriodOrdinal === PERIOD_SHOOTOUT) {
-    return 'In shootout';
-  } else {
-    return `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
   }
+  if (progress.currentPeriodTimeRemaining.pretty === 'END') {
+    return `End of ${progress.currentPeriodOrdinal}`;
+  }
+  return progress.currentPeriodOrdinal === PERIOD_SHOOTOUT
+    ? 'In shootout'
+    : `${progress.currentPeriodOrdinal} ${progress.currentPeriodTimeRemaining.pretty}`;
 }
 
 export function renderLatestGoalTime(latestGoal) {
