@@ -83,7 +83,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 4, minute: 0, second: 2 });
+    assert.deepEqual(lastTimeEvent, { period: 4, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
     assert.isTrue(_.some(events, { period: 4, minute: 20, second: 0 }));
@@ -97,7 +97,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 5, minute: 0, second: 2 });
+    assert.deepEqual(lastTimeEvent, { period: 5, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
     assert.isTrue(_.some(events, { period: 5, minute: 20, second: 0 }));

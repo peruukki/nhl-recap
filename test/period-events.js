@@ -22,8 +22,8 @@ const goalPauseEventCount = 50;
 describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
     const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalPauseEventCount);
-    assert.deepEqual(clockEvents.length, 61);
-    assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 2 });
+    assert.deepEqual(clockEvents.length, 62);
+    assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 });
   });
 
   it('should stop at given end time', () => {
@@ -71,11 +71,13 @@ describe('periodEvents', () => {
       const periodLength = 1;
       const clockEvents = periodEvents(period, periodLength, null, [], goalPauseEventCount);
 
-      const secondEvents = _.range(59, -1, -clockAdvanceStep).map(second => ({
-        period,
-        minute: 0,
-        second,
-      }));
+      const secondEvents = _.range(59, -1, -clockAdvanceStep)
+        .concat(0)
+        .map(second => ({
+          period,
+          minute: 0,
+          second,
+        }));
       const expected = [firstEvent(period, periodLength)].concat(secondEvents);
 
       assert.deepEqual(clockEvents, expected);
@@ -115,7 +117,7 @@ describe('periodEvents', () => {
         EVENT_COUNTS.pause
       );
 
-      assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 2 }, description);
+      assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 }, description);
 
       expectedGameIndexes.forEach(gameIndex => {
         const eventIndexWithGameIndex = _.findIndex(
@@ -163,6 +165,17 @@ describe('periodEvents', () => {
       'goal events with goal scoring times with simultaneous goals',
       true
     );
+  });
+
+  it('should include goals scored on the last second of the period', () => {
+    const clockEvents = periodEvents(
+      1,
+      20,
+      null,
+      [{ period: 1, min: 19, sec: 59, gameIndex: 1, classModifier: 'home' }],
+      goalPauseEventCount
+    );
+    assert.deepEqual(_.filter(clockEvents, { update: { type: GAME_UPDATE_GOAL } }).length, 1);
   });
 });
 
