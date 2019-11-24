@@ -39,7 +39,8 @@ function model(actions) {
 function view(state$) {
   return state$.map(clock => {
     const time = clock ? renderTime(clock) : '';
-    const animationClass = time ? '.fade-in-fast' : '';
+    const animationClass =
+      time || (clock.period === PERIOD_SHOOTOUT && !clock.end) ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
       span('.clock__period', clock ? renderPeriod(clock) : ''),
       time ? span('.clock__time', time) : '',
