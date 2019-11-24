@@ -86,7 +86,7 @@ export function renderPeriodNumber(period) {
 }
 
 export function renderTime(clock) {
-  if (!clock.minute && !clock.second) {
+  if (isNaN(clock.minute) && isNaN(clock.second)) {
     return '';
   }
 
