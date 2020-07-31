@@ -39,12 +39,8 @@
     line-height: 1.5rem;
     box-sizing: border-box;
 
-    &--playoff {
-      height: 4.1rem;
-    }
-
     &.increased-height {
-      height: 8.5rem;
+      height: 8.25rem;
     }
 
     &.final {
@@ -55,10 +51,18 @@
         bottom: 0;
       }
     }
+
+    &--playoff {
+      height: 5rem;
+
+      &.final {
+        height: 12.5rem;
+      }
+    }
   }
 
   &__series-wins {
-    padding-top: 0.2rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     color: $color-main;
     font-size: 1rem;
