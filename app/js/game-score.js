@@ -51,7 +51,13 @@ export default function gameScore(
       !!playoffSeriesWins,
       latestGoal
     ),
-    playoffSeriesWins ? renderSeriesWins(playoffSeriesWins, updatePlayoffSeriesWins) : null,
+    playoffSeriesWins
+      ? renderSeriesWins(
+          playoffSeriesWins,
+          preGameStats.playoffSeries.round,
+          updatePlayoffSeriesWins
+        )
+      : null,
   ]);
 }
 
@@ -268,12 +274,15 @@ function renderLatestGoal(latestGoal) {
   ]);
 }
 
-function renderSeriesWins(seriesWins, isChanged) {
+function renderSeriesWins(seriesWins, playoffRound, isChanged) {
   const animationClass = isChanged ? '.fade-in' : '';
-  return div(`.game__series-wins${animationClass}`, getSeriesWinsDescription(seriesWins));
+  return div(
+    `.game__series-wins${animationClass}`,
+    getSeriesWinsDescription(seriesWins, playoffRound)
+  );
 }
 
-function getSeriesWinsDescription(seriesWins) {
+function getSeriesWinsDescription(seriesWins, playoffRound) {
   const teamsWithWins = _.map(seriesWins, (wins, team) => ({ team, wins }));
   const sortedByWins = _.sortBy(teamsWithWins, 'wins');
   const leading = _.last(sortedByWins);
@@ -289,7 +298,7 @@ function getSeriesWinsDescription(seriesWins) {
       span('.series-wins__tied-count', String(trailing.wins)),
     ];
   }
-  const seriesWinCount = 4;
+  const seriesWinCount = playoffRound === 0 ? 3 : 4;
   return [
     span('.series-wins__leading-team', leading.team),
     leading.wins === seriesWinCount ? ' wins ' : ' leads ',

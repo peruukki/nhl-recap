@@ -543,6 +543,42 @@ describe('gameScore', () => {
       );
     });
 
+    it('should show the team that has reached 3 wins winning the series in round 0', () => {
+      const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
+      preGameStats.playoffSeries.round = 0;
+      preGameStats.playoffSeries.wins.NYR = 3;
+      assertPlayoffSeriesLead(
+        GAME_DISPLAY_PLAYBACK,
+        teams,
+        goals,
+        preGameStats,
+        GAME_STATE_FINISHED,
+        'NYR',
+        3,
+        1,
+        undefined,
+        'wins'
+      );
+    });
+
+    it('should show the team that has reached 4 wins winning the series in round 1', () => {
+      const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
+      preGameStats.playoffSeries.round = 1;
+      preGameStats.playoffSeries.wins.NYR = 4;
+      assertPlayoffSeriesLead(
+        GAME_DISPLAY_PLAYBACK,
+        teams,
+        goals,
+        preGameStats,
+        GAME_STATE_FINISHED,
+        'NYR',
+        4,
+        1,
+        undefined,
+        'wins'
+      );
+    });
+
     it("should not increase the winning teams' win counts until all games have ended", () => {
       const gameDisplay = GAME_DISPLAY_PLAYBACK;
       const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
@@ -729,11 +765,12 @@ function assertPlayoffSeriesLead(
   leadingTeam,
   leadingWins,
   trailingWins,
-  animationClass
+  animationClass,
+  leadingText = 'leads'
 ) {
   return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
-    ' leads ',
+    ` ${leadingText} `,
     span('.series-wins__leading-count', String(leadingWins)),
     span('.series-wins__delimiter', '–'),
     span('.series-wins__trailing-count', String(trailingWins)),
