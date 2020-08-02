@@ -17,7 +17,7 @@ npm start
 
 Open http://localhost:8000/ in your browser once you see a message like this in the console:
 ```
-1087061 bytes written to public/app.js (5.39 seconds)
+1087061 bytes written to public/main.js (5.39 seconds)
 ```
 
 ## Running the app with local API server

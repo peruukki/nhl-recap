@@ -17,12 +17,12 @@
     "node": ">=4.1 <7.0"
   },
   "config": {
-    "browserify_args": "app/js/app.js -t babelify -t [ envify purge ]",
+    "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
     "autoprefix": "postcss --use autoprefixer --replace public/app.css",
-    "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/app.js",
+    "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
     "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js'",
     "build:assets": "cp -r app/assets/** public",
     "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
@@ -34,7 +34,7 @@
     "copy:dist": "cp -r public/* dist",
     "copy:normalize": "mkdir -p app/sass/vendor && cp node_modules/normalize.css/normalize.css app/sass/vendor",
     "hash:css": "hashmark -n public/app.css $npm_package_config_hashmark_args",
-    "hash:js": "hashmark -n public/app.js $npm_package_config_hashmark_args",
+    "hash:js": "hashmark -n public/main.js $npm_package_config_hashmark_args",
     "hash:inject": "replaceinfiles -S -r public/assets.json -s public/*.html -d {dir}/{base}",
     "lint": "npm run lint:css && npm run lint:format && npm run lint:js",
     "lint:css": "sass-lint -v",
@@ -57,7 +57,7 @@
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
     "watch:css": "npm run sass && npm run autoprefix && npm run sass -- -w app/sass/*.scss",
-    "watch:js": "watchify $npm_package_config_browserify_args -o public/app.js -v",
+    "watch:js": "watchify $npm_package_config_browserify_args -o public/main.js -v",
     "watch:lint:js": "esw -w *.js app/js/*.js test/*.js",
     "watch:lint:css": "watch 'npm run lint:css' app/sass"
   },
