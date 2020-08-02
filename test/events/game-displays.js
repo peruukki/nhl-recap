@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import xs from 'xstream';
 
-import getGameDisplays$ from '../../app/js/events/game-displays';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -10,7 +9,8 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
-} from '../../app/js/utils/utils';
+} from '../../app/js/events/constants';
+import getGameDisplays$ from '../../app/js/events/game-displays';
 import { addListener } from '../test-utils';
 
 const CLOCK_STATE_NOT_STARTED = 'CLOCK_STATE_NOT_STARTED';

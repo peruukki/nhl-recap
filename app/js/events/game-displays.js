@@ -1,10 +1,6 @@
 import xs from 'xstream';
 
 import {
-  hasClockPassedCurrentProgress,
-  hasGameFinished,
-  hasGameStarted,
-  isGameInProgress,
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME,
@@ -12,7 +8,13 @@ import {
   PLAYBACK_FINISHED,
   PLAYBACK_IN_PROGRESS,
   PLAYBACK_NOT_STARTED,
-} from '../utils/utils';
+} from './constants';
+import {
+  hasClockPassedCurrentProgress,
+  hasGameFinished,
+  hasGameStarted,
+  isGameInProgress,
+} from './utils';
 
 export default function getGameDisplays$(clock$, scores$) {
   const playbackState$ = clock$

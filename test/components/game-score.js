@@ -8,7 +8,6 @@ import gameScore, {
   renderLatestGoalScorer,
   renderLatestGoalAssists,
 } from '../../app/js/components/game-score';
-import { renderTeamLogo } from '../../app/js/utils/logos';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -17,7 +16,8 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
-} from '../../app/js/utils/utils';
+} from '../../app/js/events/constants';
+import { renderTeamLogo } from '../../app/js/utils/logos';
 import scoresAllRegularTime from '../data/latest.json';
 import scoresMultipleOvertime from '../data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';

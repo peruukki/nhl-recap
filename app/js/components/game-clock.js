@@ -2,7 +2,7 @@ import xs from 'xstream';
 import { span } from '@cycle/dom';
 
 import gameEvents from '../events/game-events';
-import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../utils/utils';
+import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 
 export default function GameClock(sources) {
   const state$ = model(intent(sources));

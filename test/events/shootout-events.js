@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
+import {
+  GAME_UPDATE_END,
+  GAME_UPDATE_GOAL,
+  GAME_UPDATE_START,
+} from '../../app/js/events/constants';
 import shootoutEvents from '../../app/js/events/shootout-events';
-import { GAME_UPDATE_START, GAME_UPDATE_GOAL, GAME_UPDATE_END } from '../../app/js/utils/utils';
 import { EVENT_COUNT_PER_GOAL } from './period-events';
 
 describe('shootoutEvents', () => {

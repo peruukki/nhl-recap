@@ -2,15 +2,15 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { format } from 'timeago.js';
 
-import { renderTeamLogo } from '../utils/logos';
 import {
-  truncatePlayerName,
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_POST_GAME,
   GAME_DISPLAY_PRE_GAME,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
-} from '../utils/utils';
+} from '../events/constants';
+import { renderTeamLogo } from '../utils/logos';
+import { truncatePlayerName } from '../utils/utils';
 import { renderPeriodNumber, renderTime } from './game-clock';
 
 export default function gameScore(
