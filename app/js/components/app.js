@@ -134,13 +134,13 @@ function model(actions, animations) {
       clock.clock$.startWith(null),
       gameDisplays$.startWith([])
     )
-    .map(([scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays]) => ({
+    .map(([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
       scores,
       currentGoals,
       isPlaying,
       status,
       clockVtree,
-      clock,
+      clock: clockEvent,
       gameDisplays,
       gameCount: scores.games.length,
     }));

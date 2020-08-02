@@ -39,7 +39,7 @@
     "lint": "npm run lint:css && npm run lint:format && npm run lint:js",
     "lint:css": "sass-lint -v",
     "lint:format": "prettier --write *.js app/js/*.js{,x} test/*.js",
-    "lint:js": "eslint *.js app/js/*.js test/*.js",
+    "lint:js": "eslint *.js app/js test",
     "postcopy:dist": "rm -f dist/assets.json",
     "postinstall": "npm run copy:normalize",
     "prebuild": "npm run clean:build",
