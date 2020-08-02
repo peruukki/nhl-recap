@@ -6,7 +6,7 @@ import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from '../events/
 import getGameDisplays$ from '../events/game-displays';
 import { hasGameFinished } from '../events/utils';
 import { getGameAnimationIndexes } from '../utils/utils';
-import GameClock from './game-clock';
+import Clock from './clock';
 import gameScore from './game-score';
 
 export default function main(animations) {
@@ -68,7 +68,7 @@ function model(actions, animations) {
   const initialState = { date: {}, games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 
-  const gameClock = GameClock({
+  const clock = Clock({
     scores$: actions.successApiResponse$.map(({ games }) => games),
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 }),
@@ -81,12 +81,12 @@ function model(actions, animations) {
     .filter(({ games }) => games.some(game => hasGameFinished(game.status.state)))
     .addListener({
       next: () =>
-        gameClock.clock$.addListener({
+        clock.clock$.addListener({
           complete: () => animations.setInfoPanelsFinalHeight(),
         }),
     });
 
-  const gameUpdate$ = gameClock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
+  const gameUpdate$ = clock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
   gameUpdate$.addListener({
     next: gameUpdate => {
       switch (gameUpdate.type) {
@@ -122,7 +122,7 @@ function model(actions, animations) {
     )
     .flatten();
 
-  const gameDisplays$ = getGameDisplays$(gameClock.clock$, scores$);
+  const gameDisplays$ = getGameDisplays$(clock.clock$, scores$);
 
   return xs
     .combine(
@@ -130,8 +130,8 @@ function model(actions, animations) {
       currentGoals$.startWith([]),
       actions.isPlaying$.startWith(false),
       actions.status$.startWith('Fetching latest scores...'),
-      gameClock.DOM.startWith(span('.clock')),
-      gameClock.clock$.startWith(null),
+      clock.DOM.startWith(span('.clock')),
+      clock.clock$.startWith(null),
       gameDisplays$.startWith([])
     )
     .map(([scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays]) => ({

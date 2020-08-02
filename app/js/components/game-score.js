@@ -11,7 +11,7 @@ import {
 } from '../events/constants';
 import { renderTeamLogo } from '../utils/logos';
 import { truncatePlayerName } from '../utils/utils';
-import { renderPeriodNumber, renderTime } from './game-clock';
+import { renderPeriodNumber, renderTime } from './clock';
 
 export default function gameScore(
   gameDisplay,

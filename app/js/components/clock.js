@@ -4,7 +4,7 @@ import { span } from '@cycle/dom';
 import gameEvents from '../events/game-events';
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 
-export default function GameClock(sources) {
+export default function Clock(sources) {
   const state$ = model(intent(sources));
   return {
     DOM: view(state$),
