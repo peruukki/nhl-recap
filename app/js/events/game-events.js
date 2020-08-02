@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-import periodEvents from './period-events';
-import shootoutEvents from './shootout-events';
 import {
   elapsedTimeToRemainingTime,
   getPauseElement,
@@ -9,7 +7,9 @@ import {
   hasGameFinished,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
-} from './utils';
+} from '../utils/utils';
+import periodEvents from './period-events';
+import shootoutEvents from './shootout-events';
 
 export default function gameEvents(scores) {
   // These event counts determine for how many number of extra events we pause the clock

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import { getGameAnimationIndexes, truncatePlayerName } from '../app/js/utils';
+import { getGameAnimationIndexes, truncatePlayerName } from '../../app/js/utils/utils';
 
 describe('utils', () => {
   describe('truncatePlayerName', () => {

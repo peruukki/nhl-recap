@@ -1,5 +1,4 @@
-/* eslint no-unused-vars: 0 */
-
+// eslint-disable-next-line no-unused-vars
 function highlightGoal(classModifier, gameIndex) {}
 
 export default { highlightGoal };

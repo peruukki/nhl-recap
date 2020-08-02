@@ -7,14 +7,8 @@ import gameScore, {
   renderLatestGoalTime,
   renderLatestGoalScorer,
   renderLatestGoalAssists,
-} from '../app/js/game-score';
-import { renderTeamLogo } from '../app/js/logos';
-import scoresAllRegularTime from './data/latest.json';
-import scoresMultipleOvertime from './data/latest-2-ot.json';
-import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
-import scoresAllRegularTimePlayoffs from './data/latest-playoffs.json';
-import scoresRegularTimeAndOvertimePlayoffs from './data/latest-playoffs-ot.json';
-
+} from '../../app/js/components/game-score';
+import { renderTeamLogo } from '../../app/js/utils/logos';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -23,7 +17,12 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
-} from '../app/js/utils';
+} from '../../app/js/utils/utils';
+import scoresAllRegularTime from '../data/latest.json';
+import scoresMultipleOvertime from '../data/latest-2-ot.json';
+import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
+import scoresAllRegularTimePlayoffs from '../data/latest-playoffs.json';
+import scoresRegularTimeAndOvertimePlayoffs from '../data/latest-playoffs-ot.json';
 
 const inProgressGameProgress = {
   currentPeriod: 1,

@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import periodEvents from '../app/js/period-events';
-import { GAME_UPDATE_GOAL, GAME_UPDATE_START, GAME_UPDATE_END } from '../app/js/utils';
+import periodEvents from '../../app/js/events/period-events';
+import { GAME_UPDATE_GOAL, GAME_UPDATE_START, GAME_UPDATE_END } from '../../app/js/utils/utils';
 
 export const EVENT_COUNTS = {
   start: 1,

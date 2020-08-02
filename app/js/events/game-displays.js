@@ -12,7 +12,7 @@ import {
   PLAYBACK_FINISHED,
   PLAYBACK_IN_PROGRESS,
   PLAYBACK_NOT_STARTED,
-} from './utils';
+} from '../utils/utils';
 
 export default function getGameDisplays$(clock$, scores$) {
   const playbackState$ = clock$

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { getGoalEvents, PERIOD_SHOOTOUT } from './utils';
+import { getGoalEvents, PERIOD_SHOOTOUT } from '../utils/utils';
 
 export default function shootoutEvents(allGoalsSorted, goalPauseEventCount) {
   const finalShootoutGoals = getShootoutGoalForEachGame(allGoalsSorted);

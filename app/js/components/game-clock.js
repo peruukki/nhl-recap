@@ -1,8 +1,8 @@
 import xs from 'xstream';
 import { span } from '@cycle/dom';
 
-import gameEvents from './game-events';
-import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './utils';
+import gameEvents from '../events/game-events';
+import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../utils/utils';
 
 export default function GameClock(sources) {
   const state$ = model(intent(sources));

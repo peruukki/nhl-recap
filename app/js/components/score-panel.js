@@ -2,16 +2,16 @@ import { button, div, h1, header, section, span } from '@cycle/dom';
 import xs from 'xstream';
 import classNames from 'classnames';
 
-import GameClock from './game-clock';
-import gameScore from './game-score';
+import getGameDisplays$ from '../events/game-displays';
 import {
   getGameAnimationIndexes,
   hasGameFinished,
   GAME_UPDATE_END,
   GAME_UPDATE_GOAL,
   GAME_UPDATE_START,
-} from './utils';
-import getGameDisplays$ from './game-displays';
+} from '../utils/utils';
+import GameClock from './game-clock';
+import gameScore from './game-score';
 
 export default function main(animations) {
   return ({ DOM, HTTP }) => {

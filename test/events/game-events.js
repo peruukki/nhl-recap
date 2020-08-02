@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getAllGoalsSorted } from '../app/js/game-events';
-import scoresAllRegularTime from './data/latest.json';
-import scoresMultipleOvertime from './data/latest-2-ot.json';
-import scoresOvertimeAndMultipleShootout from './data/latest-ot-2-so.json';
-import scoresAllLive from './data/latest-live.json';
-import scoresLiveProgressedMoreThanFinished from './data/latest-live-2-ot.json';
-import scoresLiveEndOfOT from './data/latest-live-end-of-ot.json';
-import scoresLiveEndOf2OT from './data/latest-live-end-of-2-ot.json';
-import scoresLiveSO from './data/latest-live-so.json';
+import gameEvents, { getAllGoalsSorted } from '../../app/js/events/game-events';
+import scoresAllRegularTime from '../data/latest.json';
+import scoresMultipleOvertime from '../data/latest-2-ot.json';
+import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
+import scoresAllLive from '../data/latest-live.json';
+import scoresLiveProgressedMoreThanFinished from '../data/latest-live-2-ot.json';
+import scoresLiveEndOfOT from '../data/latest-live-end-of-ot.json';
+import scoresLiveEndOf2OT from '../data/latest-live-end-of-2-ot.json';
+import scoresLiveSO from '../data/latest-live-so.json';
 
 const periodEndPauseEventCount = 150;
 

@@ -4,10 +4,10 @@ import xs from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
-import scorePanel from '../app/js/score-panel';
-import apiResponse from './data/latest.json';
-import animations from './animations';
-import { addListener } from './test-utils';
+import scorePanel from '../../app/js/components/score-panel';
+import apiResponse from '../data/latest.json';
+import animations from '../test-animations';
+import { addListener } from '../test-utils';
 
 describe('scorePanel', () => {
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';
