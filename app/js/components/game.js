@@ -145,6 +145,13 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
   const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
 
   return div(`.game-stats${afterGameModifier}${fadeInModifier}`, [
+    renderTeamStats(
+      teams,
+      stats.standings,
+      'Conf. rank',
+      getConferenceRankRating,
+      renderConferenceRank
+    ),
     renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
     renderTeamStats(teams, stats.records, winPctLabel, renderWinPercentage, renderWinPercentage),
     renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
@@ -221,6 +228,10 @@ function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot, 10);
 }
 
+function getConferenceRankRating({ conferenceRank }) {
+  return -parseInt(conferenceRank, 10);
+}
+
 function getLeagueRankRating({ leagueRank }) {
   return -parseInt(leagueRank, 10);
 }
@@ -260,6 +271,10 @@ function renderStreakType({ type }) {
 
 function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
   return pointsFromPlayoffSpot || '';
+}
+
+function renderConferenceRank({ conferenceRank }) {
+  return conferenceRank || '';
 }
 
 function renderLeagueRank({ leagueRank }) {

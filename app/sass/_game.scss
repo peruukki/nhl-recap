@@ -32,7 +32,7 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    height: 7.5rem;
+    height: 9rem;
     padding-bottom: 0.5rem;
     transition: height $height-duration $height-timing-function;
     font-size: 1.2rem;
@@ -40,7 +40,7 @@
     box-sizing: border-box;
 
     .game--started &.increased-height {
-      height: 8.25rem;
+      height: 9rem;
     }
 
     &.final {
@@ -53,8 +53,6 @@
     }
 
     &--playoff {
-      height: 7.5rem;
-
       &.final {
         height: 14rem;
       }

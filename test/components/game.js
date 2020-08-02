@@ -31,11 +31,12 @@ const inProgressGameProgress = {
 };
 
 const statIndexes = {
-  leagueRank: 0,
-  pointPct: 1,
-  record: 2,
-  streak: 3,
-  playoffSpotPts: 4,
+  conferenceRank: 0,
+  leagueRank: 1,
+  pointPct: 2,
+  record: 3,
+  streak: 4,
+  playoffSpotPts: 5,
 };
 
 describe('game', () => {
@@ -173,6 +174,23 @@ describe('game', () => {
       assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
     });
 
+    it("should show teams' conference ranks, highlighting the better one", () => {
+      const gameDisplay = GAME_DISPLAY_PRE_GAME;
+      const label = 'Conf. rank';
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.conferenceRank, {
+        away: { value: '7' },
+        home: { value: '3', className: '--highlight' },
+        label,
+      });
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.conferenceRank, {
+        away: { value: '2', className: '--highlight' },
+        home: { value: '14' },
+        label,
+      });
+    });
+
     it("should show teams' league ranks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'NHL rank';
@@ -294,6 +312,23 @@ describe('game', () => {
       const status = { state: GAME_STATE_FINISHED };
       const { teams, goals } = scoresAllRegularTime.games[1];
       assertAfterGameStatsAreShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
+    });
+
+    it("should show teams' conference ranks, highlighting the better one", () => {
+      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const label = 'Conf. rank';
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.conferenceRank, {
+        away: { value: '7' },
+        home: { value: '3', className: '--highlight' },
+        label,
+      });
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.conferenceRank, {
+        away: { value: '2', className: '--highlight' },
+        home: { value: '14' },
+        label,
+      });
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
