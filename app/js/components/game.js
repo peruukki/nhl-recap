@@ -13,7 +13,7 @@ import { renderTeamLogo } from '../utils/logos';
 import { truncatePlayerName } from '../utils/utils';
 import { renderPeriodNumber, renderTime } from './clock';
 
-export default function gameScore(
+export default function renderGame(
   gameDisplay,
   { status, startTime, teams, preGameStats = {}, currentStats = {} },
   currentGoals,

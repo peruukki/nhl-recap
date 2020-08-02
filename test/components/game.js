@@ -2,12 +2,12 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameScore, {
+import renderGame, {
   delimiter as renderedDelimiter,
   renderLatestGoalTime,
   renderLatestGoalScorer,
   renderLatestGoalAssists,
-} from '../../app/js/components/game-score';
+} from '../../app/js/components/game';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -38,7 +38,7 @@ const statIndexes = {
   playoffSpotPts: 4,
 };
 
-describe('gameScore', () => {
+describe('game', () => {
   describe('goal counts', () => {
     it('should be hidden in the pre-game info', () => {
       const { teams } = scoresAllRegularTime.games[1];
@@ -665,7 +665,7 @@ function assertGoalCounts(
   visibilityClass = '.fade-in'
 ) {
   const teamPanels = getTeamPanels(
-    gameScore(gameDisplay, { status: { state }, teams }, currentGoals)
+    renderGame(gameDisplay, { status: { state }, teams }, currentGoals)
   );
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
@@ -679,7 +679,7 @@ function assertDelimiter(
   visibilityClass = '.fade-in'
 ) {
   const delimiterNode = getDelimiter(
-    gameScore(gameDisplay, { status: { state }, teams }, currentGoals)
+    renderGame(gameDisplay, { status: { state }, teams }, currentGoals)
   );
   const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
@@ -687,7 +687,7 @@ function assertDelimiter(
 
 function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
   const latestGoalPanel = getLatestGoalPanel(
-    gameScore(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals)
+    renderGame(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals)
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
@@ -730,7 +730,7 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
   );
 }
 function assertGameStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
-  const gameStats = getGameStats(gameScore(gameDisplay, { status, teams }, goals));
+  const gameStats = getGameStats(renderGame(gameDisplay, { status, teams }, goals));
   assertFn(gameStats && gameStats.sel, selector);
 }
 
@@ -741,7 +741,7 @@ function assertGameStats(
   renderedRecords
 ) {
   const renderedStats = getGameStats(
-    gameScore(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
+    renderGame(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
   ).children[statIndex];
   const expected = expectedTeamStats(renderedRecords);
   assert.deepEqual(renderedStats, expected);
@@ -749,7 +749,7 @@ function assertGameStats(
 
 function assertPreGameDescription(gameDisplay, { status, startTime, teams }, goals, description) {
   const preGameDescription = getPreGameDescription(
-    gameScore(gameDisplay, { status, startTime, teams }, goals)
+    renderGame(gameDisplay, { status, startTime, teams }, goals)
   );
   const expected = expectedPreGameDescription(description);
   assert.deepEqual(preGameDescription, expected);
@@ -805,7 +805,7 @@ function assertPlayoffSeriesWins(
   expectedSeriesWinsVtree
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    gameScore(gameDisplay, { status: { state }, teams, preGameStats }, goals)
+    renderGame(gameDisplay, { status: { state }, teams, preGameStats }, goals)
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
