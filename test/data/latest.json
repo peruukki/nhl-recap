@@ -42,6 +42,14 @@
             "losses": 3,
             "ot": 3
           }
+        },
+        "standings": {
+          "STL": {
+            "leagueRank": "11"
+          },
+          "BOS": {
+            "leagueRank": "8"
+          }
         }
       },
       "currentStats": {
@@ -160,6 +168,14 @@
             "wins": 7,
             "losses": 2,
             "ot": 4
+          }
+        },
+        "standings": {
+          "ANA": {
+            "leagueRank": "4"
+          },
+          "NYR": {
+            "leagueRank": "26"
           }
         }
       },

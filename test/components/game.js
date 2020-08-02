@@ -173,6 +173,23 @@ describe('game', () => {
       assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
     });
 
+    it("should show teams' league ranks, highlighting the better one", () => {
+      const gameDisplay = GAME_DISPLAY_PRE_GAME;
+      const label = 'NHL rank';
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
+        away: { value: '11' },
+        home: { value: '8', className: '--highlight' },
+        label,
+      });
+
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
+        away: { value: '4', className: '--highlight' },
+        home: { value: '26' },
+        label,
+      });
+    });
+
     it("should show teams' point percentages, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Point-%';
