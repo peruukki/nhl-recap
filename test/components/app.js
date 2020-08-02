@@ -4,12 +4,12 @@ import xs from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
-import scorePanel from '../../app/js/components/score-panel';
+import app from '../../app/js/components/app';
 import apiResponse from '../data/latest.json';
 import animations from '../test-animations';
 import { addListener } from '../test-utils';
 
-describe('scorePanel', () => {
+describe('app', () => {
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';
   const nhlScoreApiPath = '/api/scores/latest';
   const nhlScoreApiUrl = nhlScoreApiHost + nhlScoreApiPath;
@@ -99,7 +99,7 @@ describe('scorePanel', () => {
 
 function run(httpRequest$) {
   const driver = makeHTTPDriver();
-  return scorePanel(animations)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
+  return app(animations)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
 }
 
 function expectedStatusVtree(message) {
