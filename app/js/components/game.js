@@ -143,7 +143,7 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
   const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
 
   return div(`.game-stats${afterGameModifier}${fadeInModifier}`, [
-    showAfterGameStats
+    showAfterGameStats || isPlayoffGame
       ? renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank)
       : null,
     renderTeamStats(teams, stats.records, winPctLabel, renderWinPercentage, renderWinPercentage),
