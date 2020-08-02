@@ -38,8 +38,8 @@ describe('app', () => {
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const gameScoreNodes = getScoreListNode(vtree).children;
       assert.deepEqual(gameScoreNodes.map(node => node.sel), [
-        'div.game.expand--0',
-        'div.game.expand--0',
+        'div.game.game--started.expand--0',
+        'div.game.game--started.expand--0',
       ]);
     });
   });

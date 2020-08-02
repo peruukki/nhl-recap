@@ -39,7 +39,7 @@
     line-height: 1.5rem;
     box-sizing: border-box;
 
-    &.increased-height {
+    .game--started &.increased-height {
       height: 8.25rem;
     }
 

@@ -9,6 +9,7 @@ import {
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
 } from '../events/constants';
+import { hasGameStarted } from '../events/utils';
 import { renderTeamLogo } from '../utils/logos';
 import { truncatePlayerName } from '../utils/utils';
 import { renderPeriodNumber, renderTime } from './clock';
@@ -37,8 +38,9 @@ export default function renderGame(
     preGameStats.playoffSeries,
     updatePlayoffSeriesWins
   );
+  const gameStateClass = hasGameStarted(status.state) ? 'started' : 'not-started';
 
-  return div(`.game.expand--${gameAnimationIndex}`, [
+  return div(`.game.game--${gameStateClass}.expand--${gameAnimationIndex}`, [
     renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
     renderInfoPanel(
       showPreGameStats,
