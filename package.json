@@ -21,7 +21,7 @@
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
-    "autoprefix": "postcss --use autoprefixer --replace public/app.css",
+    "autoprefix": "postcss --use autoprefixer --replace public/main.css",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
     "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js'",
     "build:assets": "cp -r app/assets/** public",
@@ -33,7 +33,7 @@
     "commit:dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
     "copy:dist": "cp -r public/* dist",
     "copy:normalize": "mkdir -p app/sass/vendor && cp node_modules/normalize.css/normalize.css app/sass/vendor",
-    "hash:css": "hashmark -n public/app.css $npm_package_config_hashmark_args",
+    "hash:css": "hashmark -n public/main.css $npm_package_config_hashmark_args",
     "hash:js": "hashmark -n public/main.js $npm_package_config_hashmark_args",
     "hash:inject": "replaceinfiles -S -r public/assets.json -s public/*.html -d {dir}/{base}",
     "lint": "npm run lint:css && npm run lint:format && npm run lint:js",
@@ -46,7 +46,7 @@
     "prewatch": "npm run clean:build",
     "publish": "npm run build && npm run clone:dist && npm run clean:dist && npm run copy:dist && npm run commit:dist && npm run push:dist",
     "push:dist": "cd dist && git push origin gh-pages",
-    "sass": "node-sass app/sass/app.scss public/app.css --output-style compressed",
+    "sass": "node-sass app/sass/main.scss public/main.css --output-style compressed",
     "server": "http-server public -p 8000",
     "spec": "mocha",
     "start": "parallelshell 'npm run watch' 'npm run server'",
