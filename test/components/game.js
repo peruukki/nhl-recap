@@ -34,9 +34,9 @@ const statIndexes = {
   conferenceRank: 0,
   leagueRank: 1,
   pointPct: 2,
-  record: 3,
-  streak: 4,
-  playoffSpotPts: 5,
+  record: 2,
+  streak: 3,
+  playoffSpotPts: 4,
 };
 
 describe('game', () => {
@@ -208,7 +208,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' point percentages, highlighting the better one", () => {
+    // TODO: Enable this when normal regular season resumes
+    it.skip("should show teams' point percentages, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Point-%';
 
@@ -225,7 +226,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' playoff win percentages, highlighting the better one", () => {
+    // TODO: Not showing win percentages for playoff games anymore, consider removing altogether
+    it.skip("should show teams' playoff win percentages, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Win-%';
 
@@ -348,7 +350,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' point percentages, highlighting the better one", () => {
+    // TODO: Enable this when normal regular season resumes
+    it.skip("should show teams' point percentages, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
       const label = 'Point-%';
 
@@ -365,7 +368,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' playoff win percentages, highlighting the better one", () => {
+    // TODO: Not showing win percentages for playoff games anymore, consider removing altogether
+    it.skip("should show teams' playoff win percentages, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
       const label = 'Win-%';
 

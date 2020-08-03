@@ -32,7 +32,7 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    height: 9rem;
+    height: 7.5rem;
     padding-bottom: 0.5rem;
     transition: height $height-duration $height-timing-function;
     font-size: 1.2rem;
@@ -40,11 +40,11 @@
     box-sizing: border-box;
 
     .game--started &.increased-height {
-      height: 9rem;
+      height: 8.5rem;
     }
 
     .game--started &.final {
-      height: 15.5rem;
+      height: 14rem;
 
       .game-stats--after-game {
         position: absolute;
