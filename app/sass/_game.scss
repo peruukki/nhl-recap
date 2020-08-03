@@ -43,18 +43,12 @@
       height: 9rem;
     }
 
-    &.final {
-      height: 17rem;
+    .game--started &.final {
+      height: 15.5rem;
 
       .game-stats--after-game {
         position: absolute;
         bottom: 0;
-      }
-    }
-
-    &--playoff {
-      &.final {
-        height: 14rem;
       }
     }
   }

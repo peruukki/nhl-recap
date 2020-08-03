@@ -416,7 +416,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' streaks, highlighting the better one", () => {
+    // TODO: Enable this when normal regular season resumes and the streaks are updated
+    it.skip("should show teams' streaks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
       const label = 'Streak';
 
@@ -433,7 +434,8 @@ describe('game', () => {
       });
     });
 
-    it("should show teams' playoff spot point differences, highlighting the better one", () => {
+    // TODO: Enable this when the backend returns 'pointsFromPlayoffSpot' again
+    it.skip("should show teams' playoff spot point differences, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
       const label = 'PO spot pts';
 

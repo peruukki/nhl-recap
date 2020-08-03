@@ -155,18 +155,6 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
     renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
     renderTeamStats(teams, stats.records, winPctLabel, renderWinPercentage, renderWinPercentage),
     renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
-    showAfterGameStats
-      ? renderTeamStats(teams, stats.streaks, 'Streak', getStreakRating, renderStreak)
-      : null,
-    showAfterGameStats && !isPlayoffGame
-      ? renderTeamStats(
-          teams,
-          stats.standings,
-          'PO spot pts',
-          getPlayoffSpotRating,
-          renderPlayoffSpot
-        )
-      : null,
   ]);
 }
 
@@ -209,6 +197,8 @@ function getPointPercentage({ wins, losses, ot = 0 }) {
   return points / maxPoints;
 }
 
+// TODO: Use this when normal regular season resumes and the streaks are updated
+// eslint-disable-next-line no-unused-vars
 function getStreakRating(streak) {
   return streak ? streak.count * getStreakMultiplier(streak.type) : 0;
 }
@@ -224,6 +214,8 @@ function getStreakMultiplier(type) {
   }
 }
 
+// TODO: Use this when the backend returns 'pointsFromPlayoffSpot' again
+// eslint-disable-next-line no-unused-vars
 function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot, 10);
 }
@@ -252,6 +244,8 @@ function renderRecord({ wins, losses, ot }) {
   return ot !== undefined ? [wins, delimiter, losses, delimiter, ot] : [wins, delimiter, losses];
 }
 
+// TODO: Use this when normal regular season resumes and the streaks are updated
+// eslint-disable-next-line no-unused-vars
 function renderStreak(streak) {
   return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
 }
@@ -269,6 +263,8 @@ function renderStreakType({ type }) {
   }
 }
 
+// TODO: Use this when the backend returns 'pointsFromPlayoffSpot' again
+// eslint-disable-next-line no-unused-vars
 function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
   return pointsFromPlayoffSpot || '';
 }
