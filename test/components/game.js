@@ -879,25 +879,29 @@ function getDelimiter(vtree) {
 
 function getGameChildrenWithClass(vtree, className) {
   const stripHtmlElement = sel => sel.replace(/^\w\./, '');
-  return vtree.children[0].children.filter(node =>
+  return getGameCard(vtree).children[0].children.filter(node =>
     _.includes(stripHtmlElement(node.sel).split('.'), className)
   );
 }
 
 function getLatestGoalPanel(vtree) {
-  return vtree.children[1].children[0];
+  return getGameCard(vtree).children[1].children[0];
 }
 
 function getGameStats(vtree) {
-  return vtree.children[1].children[2];
+  return getGameCard(vtree).children[1].children[2];
 }
 
 function getPreGameDescription(vtree) {
-  return vtree.children[1].children[1];
+  return getGameCard(vtree).children[1].children[1];
 }
 
 function getPlayoffSeriesWinsPanel(vtree) {
-  return vtree.children[2];
+  return getGameCard(vtree).children[2];
+}
+
+function getGameCard(vtree) {
+  return vtree.children[0];
 }
 
 function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {

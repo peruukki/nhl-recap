@@ -1,5 +1,6 @@
 .score-list {
-  display: inline-block;
+  display: grid;
   max-width: $content-width;
   margin: auto;
+  grid-template-columns: repeat(2, 1fr);
 }

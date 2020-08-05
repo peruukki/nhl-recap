@@ -40,26 +40,28 @@ export default function renderGame(
   );
   const gameStateClass = hasGameStarted(status.state) ? 'started' : 'not-started';
 
-  return div(`.game.game--${gameStateClass}.expand--${gameAnimationIndex}`, [
-    renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
-    renderInfoPanel(
-      showPreGameStats,
-      showAfterGameStats,
-      showProgressInfo,
-      startTime,
-      teams,
-      stats,
-      status,
-      !!playoffSeriesWins,
-      latestGoal
-    ),
-    playoffSeriesWins
-      ? renderSeriesWins(
-          playoffSeriesWins,
-          preGameStats.playoffSeries.round,
-          updatePlayoffSeriesWins
-        )
-      : null,
+  return div('.game-container', [
+    div(`.game.game--${gameStateClass}.expand--${gameAnimationIndex}`, [
+      renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
+      renderInfoPanel(
+        showPreGameStats,
+        showAfterGameStats,
+        showProgressInfo,
+        startTime,
+        teams,
+        stats,
+        status,
+        !!playoffSeriesWins,
+        latestGoal
+      ),
+      playoffSeriesWins
+        ? renderSeriesWins(
+            playoffSeriesWins,
+            preGameStats.playoffSeries.round,
+            updatePlayoffSeriesWins
+          )
+        : null,
+    ]),
   ]);
 }
 
