@@ -189,9 +189,13 @@ function renderHeader(state) {
 
 function renderScores(state) {
   const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
+  const scoreListClass = classNames({
+    '.score-list': true,
+    '.score-list--single-game': state.games.length === 1,
+  }).replace(/\s/g, '');
   return state.games.length > 0
     ? div(
-        '.score-list',
+        scoreListClass,
         state.games.map((game, index) =>
           renderGame(
             state.gameDisplays[index],

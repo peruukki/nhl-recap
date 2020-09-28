@@ -36,11 +36,27 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
-      const gameScoreNodes = getScoreListNode(vtree).children;
+      const scoreListNode = getScoreListNode(vtree);
+      assert.deepEqual(scoreListNode.sel, 'div.score-list');
+
+      const gameScoreNodes = scoreListNode.children;
       assert.deepEqual(gameScoreNodes.map(node => node.sel), [
         'div.game-container',
         'div.game-container',
       ]);
+    });
+  });
+
+  it('should set single game classname', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, { ...apiResponse, games: apiResponse.games.slice(0, 1) });
+
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
+      const scoreListNode = getScoreListNode(vtree);
+      assert.deepEqual(scoreListNode.sel, 'div.score-list.score-list--single-game');
     });
   });
 
