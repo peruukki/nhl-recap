@@ -45,11 +45,11 @@
         },
         "standings": {
           "STL": {
-            "conferenceRank": "7",
+            "divisionRank": "7",
             "leagueRank": "11"
           },
           "BOS": {
-            "conferenceRank": "3",
+            "divisionRank": "3",
             "leagueRank": "8"
           }
         }
@@ -79,12 +79,12 @@
         },
         "standings": {
           "STL": {
-            "conferenceRank": "7",
+            "divisionRank": "7",
             "leagueRank": "11",
             "pointsFromPlayoffSpot": "+4"
           },
           "BOS": {
-            "conferenceRank": "3",
+            "divisionRank": "3",
             "leagueRank": "8",
             "pointsFromPlayoffSpot": "+4"
           }
@@ -176,11 +176,11 @@
         },
         "standings": {
           "ANA": {
-            "conferenceRank": "2",
+            "divisionRank": "2",
             "leagueRank": "4"
           },
           "NYR": {
-            "conferenceRank": "14",
+            "divisionRank": "8",
             "leagueRank": "26"
           }
         }
@@ -210,12 +210,12 @@
         },
         "standings": {
           "ANA": {
-            "conferenceRank": "2",
+            "divisionRank": "2",
             "leagueRank": "4",
             "pointsFromPlayoffSpot": "+2"
           },
           "NYR": {
-            "conferenceRank": "14",
+            "divisionRank": "8",
             "leagueRank": "26",
             "pointsFromPlayoffSpot": "-2"
           }

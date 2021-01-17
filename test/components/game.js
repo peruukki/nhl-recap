@@ -33,7 +33,7 @@ const inProgressGameProgress = {
 };
 
 const statIndexes = {
-  conferenceRank: 0,
+  divisionRank: 0,
   leagueRank: 1,
   pointPct: 2,
   record: 2,
@@ -176,19 +176,19 @@ describe('game', () => {
       assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
     });
 
-    it("should show teams' conference ranks, highlighting the better one", () => {
+    it("should show teams' division ranks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
-      const label = 'Conf. rank';
+      const label = 'Div. rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.conferenceRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
         away: { value: '7' },
         home: { value: '3', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.conferenceRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
         away: { value: '2', className: '--highlight' },
-        home: { value: '14' },
+        home: { value: '8' },
         label,
       });
     });
@@ -318,19 +318,19 @@ describe('game', () => {
       assertAfterGameStatsAreShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
     });
 
-    it("should show teams' conference ranks, highlighting the better one", () => {
+    it("should show teams' division ranks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
-      const label = 'Conf. rank';
+      const label = 'Div. rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.conferenceRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
         away: { value: '7' },
         home: { value: '3', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.conferenceRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
         away: { value: '2', className: '--highlight' },
-        home: { value: '14' },
+        home: { value: '8' },
         label,
       });
     });
