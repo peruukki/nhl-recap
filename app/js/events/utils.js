@@ -4,6 +4,7 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
+  GAME_STATE_POSTPONED,
   GAME_UPDATE_END,
   GAME_UPDATE_GOAL,
   GAME_UPDATE_START,
@@ -30,7 +31,7 @@ export function hasGameFinished(state) {
 }
 
 export function hasGameStarted(state) {
-  return state !== GAME_STATE_NOT_STARTED;
+  return ![GAME_STATE_NOT_STARTED, GAME_STATE_POSTPONED].includes(state);
 }
 
 export function isGameInProgress(state) {

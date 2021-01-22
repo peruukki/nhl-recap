@@ -18,6 +18,7 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
+  GAME_STATE_POSTPONED,
 } from '../../app/js/events/constants';
 import { renderTeamLogo } from '../../app/js/utils/logos';
 import scoresAllRegularTime from '../data/latest.json';
@@ -559,6 +560,12 @@ describe('game', () => {
         goals,
         'Starts in 3 hours'
       );
+    });
+
+    it(`should show game in ${GAME_STATE_POSTPONED} state as postponed`, () => {
+      const { teams, goals } = scoresAllRegularTime.games[1];
+      const status = { state: GAME_STATE_POSTPONED };
+      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Postponed');
     });
   });
 

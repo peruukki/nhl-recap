@@ -9,6 +9,7 @@ export const GAME_DISPLAY_POST_GAME = 'GAME_DISPLAY_POST_GAME';
 export const GAME_STATE_FINISHED = 'FINAL';
 export const GAME_STATE_IN_PROGRESS = 'LIVE';
 export const GAME_STATE_NOT_STARTED = 'PREVIEW';
+export const GAME_STATE_POSTPONED = 'POSTPONED';
 
 export const GAME_UPDATE_START = 'START';
 export const GAME_UPDATE_GOAL = 'GOAL';

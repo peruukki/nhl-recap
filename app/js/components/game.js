@@ -8,6 +8,9 @@ import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_POST_GAME,
   GAME_DISPLAY_PRE_GAME,
+  GAME_STATE_IN_PROGRESS,
+  GAME_STATE_NOT_STARTED,
+  GAME_STATE_POSTPONED,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
 } from '../events/constants';
@@ -339,12 +342,14 @@ function getErrorText({ error, details = {} }) {
 
 function renderGameStatus(status, startTime) {
   switch (status.state) {
-    case 'LIVE':
+    case GAME_STATE_IN_PROGRESS:
       return renderCurrentProgress(status.progress);
-    case 'PREVIEW': {
+    case GAME_STATE_NOT_STARTED: {
       const isInFuture = new Date(startTime) - new Date() > 0;
       return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
     }
+    case GAME_STATE_POSTPONED:
+      return 'Postponed';
     default:
       return 'Finished';
   }
