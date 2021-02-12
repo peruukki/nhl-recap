@@ -421,8 +421,7 @@ describe('game', () => {
       });
     });
 
-    // TODO: Enable this when normal regular season resumes and the streaks are updated
-    it.skip("should show teams' streaks, highlighting the better one", () => {
+    it("should show teams' streaks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME;
       const label = 'Streak';
 
