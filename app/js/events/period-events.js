@@ -61,7 +61,7 @@ function minuteRange(firstMinute, lastMinute) {
 }
 
 function secondRange(minute, lastMinute, lastSecond) {
-  const rangeEnd = minute === lastMinute ? lastSecond - advanceClockStep : -1;
+  const rangeEnd = minute === lastMinute ? Math.max(lastSecond - advanceClockStep, -1) : -1;
   const initialRange = _.range(59, rangeEnd, -advanceClockStep);
   // Ensure the final second of a period is included if the full period should be included
   return minute === 0 && rangeEnd < 0 && _.last(initialRange) !== 0

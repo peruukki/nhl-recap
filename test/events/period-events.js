@@ -5,6 +5,7 @@ import {
   GAME_UPDATE_END,
   GAME_UPDATE_GOAL,
   GAME_UPDATE_START,
+  PERIOD_OVERTIME,
 } from '../../app/js/events/constants';
 import periodEvents from '../../app/js/events/period-events';
 
@@ -171,17 +172,46 @@ describe('periodEvents', () => {
     );
   });
 
-  it('should include goals scored on the last second of the period', () => {
-    const clockEvents = periodEvents(
-      1,
-      20,
-      null,
-      [{ period: 1, min: 19, sec: 59, gameIndex: 1, classModifier: 'home' }],
-      goalPauseEventCount
-    );
-    assert.deepEqual(_.filter(clockEvents, { update: { type: GAME_UPDATE_GOAL } }).length, 1);
+  it('should include goal scored on the last second of a regular period', () => {
+    assertLastSecondGoal({ period: 1, min: 19, sec: 59 }, 20, null);
+  });
+
+  it('should include non-clock-stopping goal scored on the last second of an OT period', () => {
+    assertLastSecondGoal({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, null);
+  });
+
+  it('should include clock-stopping goal scored on the last second of an OT period', () => {
+    assertLastSecondGoal({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, {
+      period: PERIOD_OVERTIME,
+      minute: 0,
+      second: 1,
+    });
   });
 });
+
+function assertLastSecondGoal(goalTime, periodLength, gameEndTime) {
+  const goal = { ...goalTime, gameIndex: 1, classModifier: 'home' };
+  const clockEvents = periodEvents(
+    goalTime.period,
+    periodLength,
+    gameEndTime,
+    [goal],
+    goalPauseEventCount
+  );
+
+  const expected = {
+    period: goalTime.period,
+    minute: 0,
+    second: 0,
+    update: {
+      type: GAME_UPDATE_GOAL,
+      gameIndex: goal.gameIndex,
+      classModifier: goal.classModifier,
+      goal: _.pick(goal, ['period', 'min', 'sec']),
+    },
+  };
+  assert.deepEqual(_.filter(clockEvents, { update: { type: GAME_UPDATE_GOAL } }), [expected]);
+}
 
 function firstEvent(period, minute) {
   return { period, minute, second: 0 };
