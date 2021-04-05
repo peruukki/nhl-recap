@@ -148,6 +148,16 @@
             "player": "Mats Zuccarello",
             "seasonTotal": 15
           },
+          "assists": [
+            {
+              "player": "Derick Brassard",
+              "seasonTotal": 24
+            },
+            {
+              "player": "Kaapo Kakko",
+              "seasonTotal": 18
+            }
+          ],
           "period": "3"
         }
       ],

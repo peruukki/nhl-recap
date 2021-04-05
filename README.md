@@ -16,10 +16,10 @@ To run the app and re-build on file changes:
 npm start
 ```
 
-Open http://localhost:8000/ in your browser once you see a message like this in the console:
+Open http://localhost:8000/ in your browser once you see a message like this in the terminal:
 
 ```
-1087061 bytes written to public/main.js (5.39 seconds)
+1087061 bytes written to public/main.js (5.39 seconds) at 5:59:06 PM
 ```
 
 ## Running the app with local API server
@@ -38,6 +38,23 @@ npm run start:server
 ```
 
 Then you can run the app connecting to the local server with `npm run start:local` as described above.
+
+## Component gallery
+
+This project has its own poor man’s component gallery that currently just shows the game component in all
+its possible states, so that you don’t need to play back games in different states to see them.
+
+To see the gallery, first start the development server as described above, then run this in another terminal:
+
+```
+npm run start:gallery
+```
+
+Open http://localhost:8000/gallery.html in your browser once you see a message like this in the terminal:
+
+```
+806766 bytes written to public/main-gallery.js (0.24 seconds) at 7:48:36 PM
+```
 
 ## Formatting with Prettier
 

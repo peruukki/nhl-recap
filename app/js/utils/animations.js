@@ -64,14 +64,16 @@ function highlightLatestGoalChange(gameIndex) {
   }
 }
 
-function setInfoPanelsPlaybackHeight() {
+function setInfoPanelsPlaybackHeight(parentSelector = '') {
   document
-    .querySelectorAll('.game__info-panel')
+    .querySelectorAll(`${parentSelector} .game__info-panel`)
     .forEach(element => element.classList.add('increased-height'));
 }
 
-function setInfoPanelsFinalHeight() {
-  document.querySelectorAll('.game__info-panel').forEach(element => element.classList.add('final'));
+function setInfoPanelsFinalHeight(parentSelector = '') {
+  document
+    .querySelectorAll(`${parentSelector} .game__info-panel`)
+    .forEach(element => element.classList.add('final'));
 }
 
 export default {
