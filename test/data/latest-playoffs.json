@@ -38,6 +38,16 @@
             "losses": 3
           }
         },
+        "standings": {
+          "STL": {
+            "divisionRank": "7",
+            "leagueRank": "11"
+          },
+          "BOS": {
+            "divisionRank": "3",
+            "leagueRank": "8"
+          }
+        },
         "playoffSeries": {
           "wins": {
             "STL": 1,
@@ -140,6 +150,16 @@
           "NYR": {
             "wins": 5,
             "losses": 9
+          }
+        },
+        "standings": {
+          "ANA": {
+            "divisionRank": "2",
+            "leagueRank": "4"
+          },
+          "NYR": {
+            "divisionRank": "8",
+            "leagueRank": "26"
           }
         },
         "playoffSeries": {

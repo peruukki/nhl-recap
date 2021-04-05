@@ -181,30 +181,40 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Div. rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
-        away: { value: '7' },
-        home: { value: '3', className: '--highlight' },
-        label,
-      });
+      assertGameStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[0],
+        statIndexes.divisionRank,
+        {
+          away: { value: '7' },
+          home: { value: '3', className: '--highlight' },
+          label,
+        }
+      );
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
-        away: { value: '2', className: '--highlight' },
-        home: { value: '8' },
-        label,
-      });
+      assertGameStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[1],
+        statIndexes.divisionRank,
+        {
+          away: { value: '2', className: '--highlight' },
+          home: { value: '8' },
+          label,
+        }
+      );
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'NHL rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.leagueRank, {
         away: { value: '11' },
         home: { value: '8', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
+      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.leagueRank, {
         away: { value: '4', className: '--highlight' },
         home: { value: '26' },
         label,
