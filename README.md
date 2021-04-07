@@ -41,7 +41,7 @@ Then you can run the app connecting to the local server with `npm run start:loca
 
 ## Component gallery
 
-This project has its own poor man’s component gallery that currently just shows the game component in all
+This project has its own poor person’s component gallery that currently just shows the game component in all
 its possible states, so that you don’t need to play back games in different states to see them.
 
 To see the gallery, first start the development server as described above, then run this in another terminal:
