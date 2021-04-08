@@ -72,7 +72,7 @@
   "dependencies": {
     "@cycle/dom": "^22.8.0",
     "@cycle/http": "^15.4.0",
-    "@cycle/run": "^5.3.0",
+    "@cycle/run": "^5.5.0",
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
