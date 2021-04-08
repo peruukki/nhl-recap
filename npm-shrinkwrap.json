@@ -11662,18 +11662,12 @@
       "dev": true
     },
     "xstream": {
-      "version": "11.11.0",
-      "resolved": "https://registry.npmjs.org/xstream/-/xstream-11.11.0.tgz",
-      "integrity": "sha512-0zF3PLsHrmbToPBgX1jYZFNw+t5octSFJgVRH44HGlGBBjY7gscvDQOZvty8IQV15Snia1RcLPECWDfEaE4aXg==",
+      "version": "11.14.0",
+      "resolved": "https://registry.npmjs.org/xstream/-/xstream-11.14.0.tgz",
+      "integrity": "sha512-1bLb+kKKtKPbgTK6i/BaoAn03g47PpFstlbe1BA+y3pNS/LfvcaghS5BFf9+EE1J+KwSQsEpfJvFN5GqFtiNmw==",
       "requires": {
-        "symbol-observable": "1.2.0"
-      },
-      "dependencies": {
-        "symbol-observable": {
-          "version": "1.2.0",
-          "resolved": "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz",
-          "integrity": "sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ=="
-        }
+        "globalthis": "^1.0.1",
+        "symbol-observable": "^2.0.3"
       }
     },
     "xtend": {
