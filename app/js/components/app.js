@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from '../events/constants';
 import getGameDisplays$ from '../events/game-displays';
-import { hasGameFinished } from '../events/utils';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import renderGame from './game';
@@ -73,18 +72,6 @@ function model(actions, animations) {
     isPlaying$: actions.isPlaying$,
     props$: xs.of({ interval: 20 }),
   });
-
-  actions.playbackHasStarted$.addListener({
-    next: () => animations.setInfoPanelsPlaybackHeight(),
-  });
-  actions.successApiResponse$
-    .filter(({ games }) => games.some(game => hasGameFinished(game.status.state)))
-    .addListener({
-      next: () =>
-        clock.clock$.addListener({
-          complete: () => animations.setInfoPanelsFinalHeight(),
-        }),
-    });
 
   const gameUpdate$ = clock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
   gameUpdate$.addListener({

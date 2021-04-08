@@ -14,7 +14,6 @@ import {
   PLAYBACK_IN_PROGRESS,
   PLAYBACK_NOT_STARTED,
 } from '../../app/js/events/constants';
-import animations from '../../app/js/utils/animations';
 import scoresAllRegularTime from '../../test/data/latest.json';
 
 export default function main() {
@@ -69,21 +68,6 @@ function model() {
       currentGoals: game.goals,
     }))
   );
-  games$.addListener({
-    complete: () => {
-      setTimeout(() => {
-        // Height adjustments are made separately due to animations
-        stateCombinations.forEach(([, playbackState], index) => {
-          if (playbackState !== PLAYBACK_NOT_STARTED) {
-            animations.setInfoPanelsPlaybackHeight(`.gallery-game:nth-child(${index + 1})`);
-          }
-          if (playbackState === PLAYBACK_FINISHED) {
-            animations.setInfoPanelsFinalHeight(`.gallery-game:nth-child(${index + 1})`);
-          }
-        });
-      });
-    },
-  });
   return { games$ };
 }
 

@@ -64,22 +64,8 @@ function highlightLatestGoalChange(gameIndex) {
   }
 }
 
-function setInfoPanelsPlaybackHeight(parentSelector = '') {
-  document
-    .querySelectorAll(`${parentSelector} .game__info-panel`)
-    .forEach(element => element.classList.add('playback-started'));
-}
-
-function setInfoPanelsFinalHeight(parentSelector = '') {
-  document
-    .querySelectorAll(`${parentSelector} .game__info-panel`)
-    .forEach(element => element.classList.add('playback-finished'));
-}
-
 export default {
   highlightGame,
   highlightGoal,
   stopGameHighlight,
-  setInfoPanelsPlaybackHeight,
-  setInfoPanelsFinalHeight,
 };

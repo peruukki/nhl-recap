@@ -39,12 +39,11 @@
     line-height: 1.5rem;
     box-sizing: border-box;
 
-    .game--LIVE &.playback-started,
-    .game--FINAL &.playback-started {
+    .game--GAME_DISPLAY_PLAYBACK & {
       height: 8.5rem;
     }
 
-    .game--FINAL &.playback-finished {
+    .game--GAME_DISPLAY_POST_GAME & {
       height: 17rem;
 
       .game-stats--after-game {

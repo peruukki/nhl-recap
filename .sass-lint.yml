@@ -8,7 +8,7 @@ rules:
     - 2
     - allow-leading-underscore: false
       convention: hyphenatedbem
-      ignore: ['game--FINAL', 'game--LIVE']
+      ignore: ['game--GAME_DISPLAY_PLAYBACK', 'game--GAME_DISPLAY_POST_GAME']
   empty-line-between-blocks: 0
   indentation: 0
   leading-zero:
