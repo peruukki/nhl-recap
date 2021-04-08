@@ -1149,25 +1149,14 @@
       }
     },
     "@cycle/dom": {
-      "version": "22.4.0",
-      "resolved": "https://registry.npmjs.org/@cycle/dom/-/dom-22.4.0.tgz",
-      "integrity": "sha512-tJQA+i+iK4L2Z0wy+bVTE3agsq1xAuGK2TjKalb51bIP5lHxffoFFb+RYAxwwcLDPxejruSSVUcg3GQn8lp7Lw==",
+      "version": "22.8.0",
+      "resolved": "https://registry.npmjs.org/@cycle/dom/-/dom-22.8.0.tgz",
+      "integrity": "sha512-YnB4zUGOXVdPFXaVzYEUHXNqJlz1190Qfj1UpEBSiiJMPw+jskrNPrlhzqpE1MVjtpNlBJVoe+Vq73d2MnP3Bw==",
       "requires": {
         "@cycle/run": "^5.2.0",
-        "snabbdom": "^0.7.2",
+        "snabbdom": "^0.7.4",
         "snabbdom-selector": "^4.2.0",
         "xstream": "*"
-      },
-      "dependencies": {
-        "@cycle/run": {
-          "version": "5.3.0",
-          "resolved": "https://registry.npmjs.org/@cycle/run/-/run-5.3.0.tgz",
-          "integrity": "sha512-rAkDrfireTCakTrH6AQZvRw6PhXjbkJVWrKPiaC2sPCvWW/rX2jtMwgM1qO8ipROBxwAOTyq3zEIlEQiRa+qbg==",
-          "requires": {
-            "quicktask": "1.1.0",
-            "xstream": "10.x || 11.x"
-          }
-        }
       }
     },
     "@cycle/http": {
@@ -10026,9 +10015,9 @@
       "dev": true
     },
     "snabbdom": {
-      "version": "0.7.3",
-      "resolved": "https://registry.npmjs.org/snabbdom/-/snabbdom-0.7.3.tgz",
-      "integrity": "sha512-XNh90GQiV36hWdfSL46fIVrSSvmBuZlWk3++qaEgBeQWQJCqTphcbjTODPv8/vyZHJaB3VhePsWfGxi/zBxXyw=="
+      "version": "0.7.4",
+      "resolved": "https://registry.npmjs.org/snabbdom/-/snabbdom-0.7.4.tgz",
+      "integrity": "sha512-nnN+7uZ2NTIiu7EPMNwSDhmrYXqwlfCP/j72RdzvDPujXyvQxOW7Jl9yuLayzxMHDNWQR7FM6Pcn4wnDpKRe6Q=="
     },
     "snabbdom-selector": {
       "version": "4.2.0",
