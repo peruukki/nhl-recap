@@ -39,11 +39,12 @@
     line-height: 1.5rem;
     box-sizing: border-box;
 
-    .game--started &.increased-height {
+    .game--live &.increased-height,
+    .game--final &.increased-height {
       height: 8.5rem;
     }
 
-    .game--started &.final {
+    .game--final &.final {
       height: 17rem;
 
       .game-stats--after-game {
