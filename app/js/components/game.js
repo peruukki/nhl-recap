@@ -43,7 +43,7 @@ export default function renderGame(
     updatePlayoffSeriesWins
   );
   return div('.game-container', [
-    div(`.game.game--${status.state.toLowerCase()}.expand--${gameAnimationIndex}`, [
+    div(`.game.game--${status.state}.expand--${gameAnimationIndex}`, [
       renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
       renderInfoPanel(
         showPreGameStats,
