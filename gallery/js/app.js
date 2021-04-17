@@ -9,7 +9,6 @@ import {
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
   PLAYBACK_FINISHED,
   PLAYBACK_IN_PROGRESS,
   PLAYBACK_NOT_STARTED,
@@ -31,7 +30,7 @@ function model() {
       'Playback not started',
       PLAYBACK_NOT_STARTED,
       GAME_DISPLAY_PRE_GAME,
-      { state: GAME_STATE_NOT_STARTED },
+      { state: GAME_STATE_IN_PROGRESS, progress },
     ],
     [
       'Playback in progress, hasn’t passed game’s current progress',
