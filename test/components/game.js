@@ -472,16 +472,16 @@ describe('game', () => {
     });
   });
 
-  describe('pre-game description', () => {
+  describe('game description', () => {
     it(`should show "Finished" description for game in ${GAME_STATE_FINISHED} state`, () => {
       const { teams, goals, status } = scoresAllRegularTime.games[1];
-      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Finished');
+      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Finished');
     });
 
     it(`should show game without progress information in ${GAME_STATE_IN_PROGRESS} state as in progress`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: GAME_STATE_IN_PROGRESS };
-      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In progress');
+      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In progress');
     });
 
     it(`should show time remaining progress for game in ${GAME_STATE_IN_PROGRESS} state`, () => {
@@ -494,7 +494,7 @@ describe('game', () => {
           currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 },
         },
       };
-      assertPreGameDescription(
+      assertGameDescription(
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
@@ -514,7 +514,7 @@ describe('game', () => {
           currentPeriodTimeRemaining: { pretty: '08:42', min: 8, sec: 42 },
         },
       };
-      assertPreGameDescription(
+      assertGameDescription(
         GAME_DISPLAY_IN_PROGRESS,
         { status, teams },
         goals,
@@ -534,7 +534,7 @@ describe('game', () => {
           currentPeriodTimeRemaining: { pretty: 'END', min: 0, sec: 0 },
         },
       };
-      assertPreGameDescription(
+      assertGameDescription(
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
@@ -552,7 +552,7 @@ describe('game', () => {
           currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 },
         },
       };
-      assertPreGameDescription(
+      assertGameDescription(
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
@@ -563,7 +563,7 @@ describe('game', () => {
     it(`should show game in ${GAME_STATE_NOT_STARTED} state and start time in the past as starting soon`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: GAME_STATE_NOT_STARTED };
-      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Starts soon');
+      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Starts soon');
     });
 
     it(`should show game in ${GAME_STATE_NOT_STARTED} state and start time in the future as starting in some time`, () => {
@@ -575,7 +575,7 @@ describe('game', () => {
       time.setMinutes(time.getMinutes() + 1);
       const startTime = time.toISOString();
 
-      assertPreGameDescription(
+      assertGameDescription(
         GAME_DISPLAY_PRE_GAME,
         { status, startTime, teams },
         goals,
@@ -586,7 +586,7 @@ describe('game', () => {
     it(`should show game in ${GAME_STATE_POSTPONED} state as postponed`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: GAME_STATE_POSTPONED };
-      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Postponed');
+      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Postponed');
     });
   });
 
@@ -859,12 +859,12 @@ function assertGameStats(
   assert.deepEqual(renderedStats, expected);
 }
 
-function assertPreGameDescription(gameDisplay, { status, startTime, teams }, goals, description) {
-  const preGameDescription = getPreGameDescription(
+function assertGameDescription(gameDisplay, { status, startTime, teams }, goals, description) {
+  const gameDescription = getGameDescription(
     renderGame(gameDisplay, { status, startTime, teams }, goals)
   );
-  const expected = expectedPreGameDescription(description);
-  assert.deepEqual(preGameDescription, expected);
+  const expected = expectedGameDescription(description);
+  assert.deepEqual(gameDescription, expected);
 }
 
 function assertPlayoffSeriesLead(
@@ -954,7 +954,7 @@ function getGameStats(vtree) {
   return getGameCard(vtree).children[1].children[2];
 }
 
-function getPreGameDescription(vtree) {
+function getGameDescription(vtree) {
   return getGameCard(vtree).children[1].children[1];
 }
 
@@ -1026,7 +1026,7 @@ function expectedCurrentProgressDescription(progressTime) {
   return ['In progress:', span('.game-description__value', progressTime)];
 }
 
-function expectedPreGameDescription(description) {
+function expectedGameDescription(description) {
   return div('.game-description.fade-in', description);
 }
 
