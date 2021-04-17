@@ -351,9 +351,15 @@ function renderGameStatus(status, startTime) {
 }
 
 function renderCurrentProgress(progress) {
+  const label = 'In progress';
   if (!progress || !progress.currentPeriodOrdinal) {
-    return 'In progress';
+    return label;
   }
+  const progressTime = renderCurrentProgressTime(progress);
+  return [`${label}:`, span('.game-description__value', progressTime)];
+}
+
+function renderCurrentProgressTime(progress) {
   if (progress.currentPeriodTimeRemaining.pretty === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
   }

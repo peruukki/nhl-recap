@@ -493,7 +493,9 @@ describe('game', () => {
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
-        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
+        expectedCurrentProgressDescription(
+          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
+        )
       );
     });
 
@@ -511,7 +513,9 @@ describe('game', () => {
         GAME_DISPLAY_IN_PROGRESS,
         { status, teams },
         goals,
-        `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
+        expectedCurrentProgressDescription(
+          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
+        )
       );
     });
 
@@ -529,7 +533,7 @@ describe('game', () => {
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
-        `End of ${status.progress.currentPeriodOrdinal}`
+        expectedCurrentProgressDescription(`End of ${status.progress.currentPeriodOrdinal}`)
       );
     });
 
@@ -543,7 +547,12 @@ describe('game', () => {
           currentPeriodTimeRemaining: { pretty: '00:00', min: 0, sec: 0 },
         },
       };
-      assertPreGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In shootout');
+      assertPreGameDescription(
+        GAME_DISPLAY_PRE_GAME,
+        { status, teams },
+        goals,
+        expectedCurrentProgressDescription('In shootout')
+      );
     });
 
     it(`should show game in ${GAME_STATE_NOT_STARTED} state and start time in the past as starting soon`, () => {
@@ -1006,6 +1015,10 @@ function expectedTeamStats({ away, home, label }) {
       home.value
     ),
   ]);
+}
+
+function expectedCurrentProgressDescription(progressTime) {
+  return ['In progress:', span('.game-description__value', progressTime)];
 }
 
 function expectedPreGameDescription(description) {

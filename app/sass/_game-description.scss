@@ -2,4 +2,9 @@
   padding-bottom: 0.5rem;
   color: $color-main;
   text-align: center;
+
+  &__value {
+    padding-left: 0.25rem;
+    color: $color-accent-light;
+  }
 }
