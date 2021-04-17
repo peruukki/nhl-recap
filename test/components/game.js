@@ -140,6 +140,11 @@ describe('game', () => {
       assertLatestGoal(GAME_DISPLAY_POST_GAME, teams, goals, _.last(goals));
     });
 
+    it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
+      const { teams, goals } = scoresAllRegularTime.games[1];
+      assertLatestGoal(GAME_DISPLAY_IN_PROGRESS, teams, goals, _.last(goals));
+    });
+
     it('should show goals scored in overtime', () => {
       const { teams, goals } = scoresMultipleOvertime.games[0];
       assertLatestGoal(GAME_DISPLAY_PLAYBACK, teams, goals, _.last(goals));
@@ -165,10 +170,10 @@ describe('game', () => {
       assertPreGameStatsAreNotShown(GAME_DISPLAY_PLAYBACK, { status, teams }, goals);
     });
 
-    it('should be shown after playback has reached current progress in in-progress games', () => {
+    it('should not be shown after playback has reached current progress in in-progress games', () => {
       const status = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown(GAME_DISPLAY_IN_PROGRESS, { status, teams }, goals);
+      assertPreGameStatsAreNotShown(GAME_DISPLAY_IN_PROGRESS, { status, teams }, goals);
     });
 
     it('should not be shown after playback has finished for finished games', () => {

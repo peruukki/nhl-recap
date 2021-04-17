@@ -28,10 +28,10 @@ export default function renderGame(
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
   const period = latestGoal ? latestGoal.period : null;
-  const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_IN_PROGRESS].includes(gameDisplay);
+  const showPreGameStats = gameDisplay === GAME_DISPLAY_PRE_GAME;
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME;
   const updatePlayoffSeriesWins = showAfterGameStats;
-  const showProgressInfo = showPreGameStats;
+  const showProgressInfo = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_IN_PROGRESS].includes(gameDisplay);
   const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
 
   const stats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
@@ -132,7 +132,7 @@ function renderInfoPanel(
   isPlayoffGame,
   latestGoal
 ) {
-  const showLatestGoal = !showPreGameStats && !showProgressInfo;
+  const showLatestGoal = !showPreGameStats;
   const modifierClass = isPlayoffGame ? '.game__info-panel--playoff' : '';
 
   return div(`.game__info-panel${modifierClass}`, [
