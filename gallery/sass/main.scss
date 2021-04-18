@@ -21,7 +21,7 @@
 .score-list {
   max-width: unset;
   grid-template-columns: auto repeat(3, 1fr);
-  gap: 3rem 1rem;
+  grid-gap: 3rem 1rem;
 }
 
 .gallery-heading {
