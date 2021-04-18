@@ -5,7 +5,7 @@ import renderGame from '../../app/js/components/game';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
@@ -53,7 +53,7 @@ function model() {
     [
       'Playback finished, game finished',
       PLAYBACK_FINISHED,
-      GAME_DISPLAY_POST_GAME,
+      GAME_DISPLAY_POST_GAME_FINISHED,
       { state: GAME_STATE_FINISHED },
     ],
   ];

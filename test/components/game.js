@@ -13,7 +13,7 @@ import {
   ERROR_MISSING_ALL_GOALS,
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
@@ -68,7 +68,7 @@ describe('game', () => {
 
     it('should show all the goals of the game when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertGoalCounts(GAME_DISPLAY_POST_GAME, { teams }, goals, 2, 3);
+      assertGoalCounts(GAME_DISPLAY_POST_GAME_FINISHED, { teams }, goals, 2, 3);
     });
 
     it('should show goals scored in overtime', () => {
@@ -116,7 +116,7 @@ describe('game', () => {
     it('should show the period of the last goal when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
       assertDelimiter(
-        GAME_DISPLAY_POST_GAME,
+        GAME_DISPLAY_POST_GAME_FINISHED,
         { teams },
         goals,
         span('.team-panel__delimiter-period', 'SO')
@@ -137,7 +137,7 @@ describe('game', () => {
 
     it('should show the last goal of the game when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_POST_GAME, teams, goals, _.last(goals));
+      assertLatestGoal(GAME_DISPLAY_POST_GAME_FINISHED, teams, goals, _.last(goals));
     });
 
     it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
@@ -179,7 +179,7 @@ describe('game', () => {
     it('should not be shown after playback has finished for finished games', () => {
       const status = { state: GAME_STATE_FINISHED };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
+      assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams }, goals);
     });
 
     it("should show teams' division ranks, highlighting the better one", () => {
@@ -330,11 +330,11 @@ describe('game', () => {
     it('should be shown after playback has finished for finished games', () => {
       const status = { state: GAME_STATE_FINISHED };
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreShown(GAME_DISPLAY_POST_GAME, { status, teams }, goals);
+      assertAfterGameStatsAreShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams }, goals);
     });
 
     it("should show teams' division ranks, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Div. rank';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
@@ -351,7 +351,7 @@ describe('game', () => {
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'NHL rank';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
@@ -368,7 +368,7 @@ describe('game', () => {
     });
 
     it("should show teams' point percentages, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Point-%';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
@@ -386,7 +386,7 @@ describe('game', () => {
 
     // TODO: Not showing win percentages for playoff games anymore, consider removing altogether
     it.skip("should show teams' playoff win percentages, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Win-%';
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
@@ -403,7 +403,7 @@ describe('game', () => {
     });
 
     it("should show teams' regular season records, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
@@ -420,7 +420,7 @@ describe('game', () => {
     });
 
     it("should show teams' playoff records, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Record';
 
       assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
@@ -437,7 +437,7 @@ describe('game', () => {
     });
 
     it("should show teams' streaks, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Streak';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.streak, {
@@ -455,7 +455,7 @@ describe('game', () => {
 
     // TODO: Enable this when the backend returns 'pointsFromPlayoffSpot' again
     it.skip("should show teams' playoff spot point differences, highlighting the better one", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'PO spot pts';
 
       assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
@@ -716,7 +716,7 @@ describe('game', () => {
     });
 
     it("should increase the winning teams' win counts after all games have ended", () => {
-      const gameDisplay = GAME_DISPLAY_POST_GAME;
+      const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
       assertPlayoffSeriesLead(
         gameDisplay,

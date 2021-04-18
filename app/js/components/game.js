@@ -6,7 +6,7 @@ import {
   ERROR_MISSING_ALL_GOALS,
   ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
   GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_POST_GAME,
+  GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
@@ -29,7 +29,7 @@ export default function renderGame(
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
   const period = latestGoal ? latestGoal.period : null;
   const showPreGameStats = gameDisplay === GAME_DISPLAY_PRE_GAME;
-  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME;
+  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
   const updatePlayoffSeriesWins = showAfterGameStats;
   const showProgressInfo = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_IN_PROGRESS].includes(gameDisplay);
   const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
