@@ -9,8 +9,8 @@
 
 .header {
   &__container {
-    padding: 1rem 0;
     justify-content: center;
+    padding: 1rem 0;
   }
   &__title {
     flex-basis: auto;
@@ -36,12 +36,12 @@
 
   &__description {
     @include gallery-description;
-    text-align: left;
     font-size: 1.2rem;
+    text-align: left;
   }
 
   &__states {
-    text-align: left;
     font-size: 0.9rem;
+    text-align: left;
   }
 }
