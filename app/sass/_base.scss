@@ -13,10 +13,13 @@ html {
   font-size: 62.5%;
 
   @media (min-width: 360px) {
-    font-size: 70%;
+    font-size: 68.75%;
   }
-  @media (min-width: 400px) {
-    font-size: 80%;
+  @media (min-width: 420px) {
+    font-size: 81.25%;
+  }
+  @media (min-width: 500px) {
+    font-size: 87.5%;
   }
 }
 
