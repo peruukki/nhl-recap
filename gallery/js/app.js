@@ -6,6 +6,7 @@ import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
+  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
@@ -47,7 +48,7 @@ function model() {
     [
       'Playback finished, game still in progress',
       PLAYBACK_FINISHED,
-      GAME_DISPLAY_IN_PROGRESS,
+      GAME_DISPLAY_POST_GAME_IN_PROGRESS,
       { state: GAME_STATE_IN_PROGRESS, progress },
     ],
     [

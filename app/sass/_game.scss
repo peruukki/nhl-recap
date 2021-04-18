@@ -46,8 +46,15 @@
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED & {
       height: 17rem;
+    }
 
-      .game-stats--after-game {
+    .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
+      height: 14.5rem;
+    }
+
+    .game--GAME_DISPLAY_POST_GAME_FINISHED &,
+    .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
+      .game-stats {
         position: absolute;
         bottom: 0;
       }

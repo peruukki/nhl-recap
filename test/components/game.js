@@ -19,6 +19,7 @@ import {
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
   GAME_STATE_POSTPONED,
+  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
 } from '../../app/js/events/constants';
 import { renderTeamLogo } from '../../app/js/utils/logos';
 import scoresAllRegularTime from '../data/latest.json';
@@ -145,6 +146,11 @@ describe('game', () => {
       assertLatestGoal(GAME_DISPLAY_IN_PROGRESS, teams, goals, _.last(goals));
     });
 
+    it('should show the last goal of an in-progress game when playback has finished', () => {
+      const { teams, goals } = scoresAllRegularTime.games[1];
+      assertLatestGoal(GAME_DISPLAY_POST_GAME_IN_PROGRESS, teams, goals, _.last(goals));
+    });
+
     it('should show goals scored in overtime', () => {
       const { teams, goals } = scoresMultipleOvertime.games[0];
       assertLatestGoal(GAME_DISPLAY_PLAYBACK, teams, goals, _.last(goals));
@@ -180,6 +186,12 @@ describe('game', () => {
       const status = { state: GAME_STATE_FINISHED };
       const { teams, goals } = scoresAllRegularTime.games[1];
       assertPreGameStatsAreNotShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams }, goals);
+    });
+
+    it('should be shown after playback has finished for in-progress games', () => {
+      const status = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
+      const { teams, goals } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreShown(GAME_DISPLAY_POST_GAME_IN_PROGRESS, { status, teams }, goals);
     });
 
     it("should show teams' division ranks, highlighting the better one", () => {
@@ -331,6 +343,12 @@ describe('game', () => {
       const status = { state: GAME_STATE_FINISHED };
       const { teams, goals } = scoresAllRegularTime.games[1];
       assertAfterGameStatsAreShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams }, goals);
+    });
+
+    it('should not be shown after playback has finished for in-progress games', () => {
+      const status = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
+      const { teams, goals } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown(GAME_DISPLAY_POST_GAME_IN_PROGRESS, { status, teams }, goals);
     });
 
     it("should show teams' division ranks, highlighting the better one", () => {

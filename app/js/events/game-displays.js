@@ -4,6 +4,7 @@ import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
+  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
   PLAYBACK_FINISHED,
   PLAYBACK_IN_PROGRESS,
@@ -32,12 +33,14 @@ export default function getGameDisplays$(clock$, scores$) {
         }
         if (
           isGameInProgress(game.status.state) &&
-          (hasClockPassedCurrentProgress(clock, game.status) || playbackState === PLAYBACK_FINISHED)
+          hasClockPassedCurrentProgress(clock, game.status)
         ) {
           return GAME_DISPLAY_IN_PROGRESS;
         }
-        if (playbackState === PLAYBACK_FINISHED && hasGameFinished(game.status.state)) {
-          return GAME_DISPLAY_POST_GAME_FINISHED;
+        if (playbackState === PLAYBACK_FINISHED) {
+          return hasGameFinished(game.status.state)
+            ? GAME_DISPLAY_POST_GAME_FINISHED
+            : GAME_DISPLAY_POST_GAME_IN_PROGRESS;
         }
         return GAME_DISPLAY_PLAYBACK;
       })

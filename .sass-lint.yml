@@ -13,6 +13,7 @@ rules:
           'game--GAME_DISPLAY_IN_PROGRESS',
           'game--GAME_DISPLAY_PLAYBACK',
           'game--GAME_DISPLAY_POST_GAME_FINISHED',
+          'game--GAME_DISPLAY_POST_GAME_IN_PROGRESS',
         ]
   empty-line-between-blocks: 0
   indentation: 0
