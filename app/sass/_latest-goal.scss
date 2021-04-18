@@ -25,7 +25,9 @@
   }
 
   &__assists {
-    margin-top: 0.5rem;
+    &:not(:empty) {
+      margin-top: 0.5rem;
+    }
   }
 
   &__assists-label {
