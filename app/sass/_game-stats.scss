@@ -1,10 +1,6 @@
 .game-stats {
+  @include delayed-animation;
   width: 100%;
   padding: 0.5rem 0;
   background-color: $background-game-stats;
-
-  &--after-game {
-    animation-fill-mode: both;
-    animation-delay: ($fade-duration / 4);
-  }
 }

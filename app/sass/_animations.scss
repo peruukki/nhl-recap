@@ -62,3 +62,8 @@ $height-timing-function: ease-in-out;
     opacity: 0;
   }
 }
+
+@mixin delayed-animation {
+  animation-fill-mode: both;
+  animation-delay: ($fade-duration / 4);
+}

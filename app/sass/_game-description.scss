@@ -3,6 +3,10 @@
   color: $color-main;
   text-align: center;
 
+  .game--GAME_DISPLAY_IN_PROGRESS & {
+    @include delayed-animation;
+  }
+
   &__value {
     padding-left: 0.25rem;
     color: $color-accent-light;
