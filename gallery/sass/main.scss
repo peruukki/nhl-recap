@@ -1,3 +1,12 @@
+@import '../../app/sass/colors';
+
+@mixin gallery-description {
+  display: table-cell;
+  height: 3rem;
+  font-size: 1.2rem;
+  vertical-align: bottom;
+}
+
 .header {
   &__container {
     padding: 1rem 0;
@@ -11,15 +20,22 @@
 
 .score-list {
   max-width: unset;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: auto repeat(3, 1fr);
   gap: 3rem 1rem;
+}
+
+.gallery-heading {
+  &__description {
+    @include gallery-description;
+    color: $color-accent-light;
+  }
 }
 
 .gallery-game {
   width: 16.5rem;
 
   &__description {
-    height: 3rem;
+    @include gallery-description;
     text-align: left;
     font-size: 1.2rem;
   }
