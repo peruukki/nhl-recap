@@ -32,15 +32,18 @@ function intent() {
       states: [
         {
           description: 'Playback not started',
-          gameDisplay: GAME_DISPLAY_PRE_GAME,
+          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          goalCount: 4,
         },
         {
           description: 'Playback has passed game’s current progress',
-          gameDisplay: GAME_DISPLAY_IN_PROGRESS,
+          gameDisplays: [GAME_DISPLAY_PLAYBACK, GAME_DISPLAY_IN_PROGRESS],
+          goalCount: 4,
         },
         {
           description: 'Playback finished',
-          gameDisplay: GAME_DISPLAY_POST_GAME_IN_PROGRESS,
+          gameDisplays: [GAME_DISPLAY_IN_PROGRESS, GAME_DISPLAY_POST_GAME_IN_PROGRESS],
+          goalCount: 4,
         },
       ],
     },
@@ -52,35 +55,43 @@ function intent() {
       states: [
         {
           description: 'Playback not started',
-          gameDisplay: GAME_DISPLAY_PRE_GAME,
+          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          goalCount: 5,
         },
         {
           description: 'Playback in progress',
-          gameDisplay: GAME_DISPLAY_PLAYBACK,
+          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PLAYBACK],
+          goalCount: 0,
         },
         {
           description: 'Playback finished',
-          gameDisplay: GAME_DISPLAY_POST_GAME_FINISHED,
+          gameDisplays: [GAME_DISPLAY_PLAYBACK, GAME_DISPLAY_POST_GAME_FINISHED],
+          goalCount: 5,
         },
       ],
     },
   ];
 }
 
-function model(gameStates) {
+function model(stateDefinitions) {
   const gameData = scoresAllRegularTime.games[1];
-  const gameStates$ = xs.of(
-    gameStates.map(({ game, states }, index) => ({
+  const gameDisplayIndex$ = xs
+    .periodic(1000)
+    .startWith(-1)
+    .map(index => index + 1)
+    .take(2);
+  const transitionedGameStates$ = gameDisplayIndex$.map(gameDisplayIndex =>
+    stateDefinitions.map(({ game, states }) => ({
       gameDescription: game.description,
       games: states.map(state => ({
         description: state.description,
-        gameDisplay: state.gameDisplay,
+        gameDisplay: state.gameDisplays[gameDisplayIndex],
         gameState: { ...gameData, status: game.status },
-        currentGoals: gameData.goals.slice(0, index % 2 === 0 ? -1 : undefined),
+        currentGoals: gameData.goals.slice(0, state.goalCount),
       })),
     }))
   );
-  return { gameStates$ };
+  return { gameStates$: transitionedGameStates$ };
 }
 
 function view({ gameStates$ }) {
