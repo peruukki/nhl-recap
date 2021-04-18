@@ -59,12 +59,12 @@ function model() {
   ];
   const game = scoresAllRegularTime.games[1];
   const games$ = xs.of(
-    stateCombinations.map(([description, playbackState, gameDisplay, status]) => ({
+    stateCombinations.map(([description, playbackState, gameDisplay, status], index) => ({
       description,
       playbackState,
       gameDisplay,
       gameState: { ...game, status },
-      currentGoals: game.goals,
+      currentGoals: game.goals.slice(0, index % 2 === 0 ? -1 : undefined),
     }))
   );
   return { games$ };
