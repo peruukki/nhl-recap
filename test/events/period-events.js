@@ -173,15 +173,15 @@ describe('periodEvents', () => {
   });
 
   it('should include goal scored on the last second of a regular period', () => {
-    assertLastSecondGoal({ period: 1, min: 19, sec: 59 }, 20, null);
+    assertGoalUpdate({ period: 1, min: 19, sec: 59 }, 20, null);
   });
 
   it('should include non-clock-stopping goal scored on the last second of an OT period', () => {
-    assertLastSecondGoal({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, null);
+    assertGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, null);
   });
 
   it('should include clock-stopping goal scored on the last second of an OT period', () => {
-    assertLastSecondGoal({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, {
+    assertGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, {
       period: PERIOD_OVERTIME,
       minute: 0,
       second: 1,
@@ -189,7 +189,25 @@ describe('periodEvents', () => {
   });
 });
 
-function assertLastSecondGoal(goalTime, periodLength, gameEndTime) {
+it('should include clock-stopping goal scored on the second that the clock stops', () => {
+  assertGoalUpdate(
+    { period: PERIOD_OVERTIME, min: 2, sec: 0 },
+    5,
+    {
+      period: PERIOD_OVERTIME,
+      minute: 3,
+      second: 0,
+    },
+    { minute: 3, second: 0 }
+  );
+});
+
+function assertGoalUpdate(
+  goalTime,
+  periodLength,
+  gameEndTime,
+  updateTime = { minute: 0, second: 0 }
+) {
   const goal = { ...goalTime, gameIndex: 1, classModifier: 'home' };
   const clockEvents = periodEvents(
     goalTime.period,
@@ -201,8 +219,8 @@ function assertLastSecondGoal(goalTime, periodLength, gameEndTime) {
 
   const expected = {
     period: goalTime.period,
-    minute: 0,
-    second: 0,
+    minute: updateTime.minute,
+    second: updateTime.second,
     update: {
       type: GAME_UPDATE_GOAL,
       gameIndex: goal.gameIndex,

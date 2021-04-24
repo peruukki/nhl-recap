@@ -63,10 +63,11 @@ function minuteRange(firstMinute, lastMinute) {
 function secondRange(minute, lastMinute, lastSecond) {
   const rangeEnd = minute === lastMinute ? Math.max(lastSecond - advanceClockStep, -1) : -1;
   const initialRange = _.range(59, rangeEnd, -advanceClockStep);
-  // Ensure the final second of a period is included if the full period should be included
-  return minute === 0 && rangeEnd < 0 && _.last(initialRange) !== 0
-    ? initialRange.concat(0)
-    : initialRange;
+  // Ensure the final seconds of the last minute are included
+  const isLastMinute = minute === lastMinute || (minute === 0 && lastMinute === -1);
+  const lastIncludedSecond = _.last(initialRange);
+  const areFinalSecondsExcluded = isLastMinute && lastSecond < lastIncludedSecond;
+  return areFinalSecondsExcluded ? initialRange.concat(0) : initialRange;
 }
 
 function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
