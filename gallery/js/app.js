@@ -100,10 +100,10 @@ function view({ gameStates$ }) {
       '.score-list',
       gameStates.flatMap(({ gameDescription, games }) => [
         div('.gallery-heading', span('.gallery-heading__description', gameDescription)),
-        ...games.map(game =>
+        ...games.map((game, gameIndex) =>
           div('.gallery-game', [
             div('.gallery-game__description', [game.description]),
-            renderGame(game.gameDisplay, game.gameState, game.currentGoals),
+            renderGame(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
           ])
         ),
       ])
