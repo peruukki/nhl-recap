@@ -173,15 +173,15 @@ describe('periodEvents', () => {
   });
 
   it('should include goal scored on the last second of a regular period', () => {
-    assertGoalUpdate({ period: 1, min: 19, sec: 59 }, 20, null);
+    assertFinalSecondsGoalUpdate({ period: 1, min: 19, sec: 59 }, 20, null);
   });
 
   it('should include non-clock-stopping goal scored on the last second of an OT period', () => {
-    assertGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, null);
+    assertFinalSecondsGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, null);
   });
 
   it('should include clock-stopping goal scored on the last second of an OT period', () => {
-    assertGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, {
+    assertFinalSecondsGoalUpdate({ period: PERIOD_OVERTIME, min: 4, sec: 59 }, 5, {
       period: PERIOD_OVERTIME,
       minute: 0,
       second: 1,
@@ -190,7 +190,7 @@ describe('periodEvents', () => {
 });
 
 it('should include clock-stopping goal scored on the second that the clock stops', () => {
-  assertGoalUpdate(
+  assertFinalSecondsGoalUpdate(
     { period: PERIOD_OVERTIME, min: 2, sec: 0 },
     5,
     {
@@ -202,7 +202,7 @@ it('should include clock-stopping goal scored on the second that the clock stops
   );
 });
 
-function assertGoalUpdate(
+function assertFinalSecondsGoalUpdate(
   goalTime,
   periodLength,
   gameEndTime,
