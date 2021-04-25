@@ -51,16 +51,14 @@ function highlightGoalCountChange(classModifier, gameIndex) {
     `.team-panel--${classModifier} > .team-panel__team-score`
   )[gameIndex];
   if (element) {
-    const highlightDuration = 1000;
-    element.animate([{ color: 'black' }, { color: '#fac02d' }], highlightDuration);
+    element.animate([{ color: 'black' }, { color: '#fac02d' }], { duration: 1000 });
   }
 }
 
 function highlightLatestGoalChange(gameIndex) {
   const element = document.querySelectorAll('.game__info-panel')[gameIndex];
   if (element) {
-    const highlightDuration = 750;
-    element.animate([{ opacity: 0 }, { opacity: 1 }], highlightDuration);
+    element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 750 });
   }
 }
 
