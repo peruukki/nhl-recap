@@ -59,6 +59,15 @@
         bottom: 0;
       }
     }
+
+    &--playoff {
+      height: 9rem;
+
+      .game--GAME_DISPLAY_POST_GAME_FINISHED &,
+      .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
+        height: 15.5rem;
+      }
+    }
   }
 
   &__series-wins {
