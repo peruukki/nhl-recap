@@ -241,6 +241,104 @@
           "id": 3
         }
       }
+    },
+    {
+      "goals": [
+        {
+          "team": "STL",
+          "min": 7,
+          "sec": 35,
+          "scorer": {
+            "player": "Vladimir Tarasenko",
+            "seasonTotal": 22
+          },
+          "assists": [],
+          "period": "3"
+        },
+        {
+          "team": "STL",
+          "min": 12,
+          "sec": 50,
+          "scorer": {
+            "player": "Robby Fabbri",
+            "seasonTotal": 7
+          },
+          "assists": [],
+          "period": "3"
+        }
+      ],
+      "preGameStats": {
+        "records": {
+          "STL": {
+            "wins": 7,
+            "losses": 3
+          },
+          "BOS": {
+            "wins": 7,
+            "losses": 3
+          }
+        },
+        "standings": {
+          "STL": {
+            "divisionRank": "7",
+            "leagueRank": "11"
+          },
+          "BOS": {
+            "divisionRank": "3",
+            "leagueRank": "8"
+          }
+        },
+        "playoffSeries": {
+          "round": 1,
+          "wins": {
+            "STL": 0,
+            "BOS": 0
+          }
+        }
+      },
+      "currentStats": {
+        "records": {
+          "STL": {
+            "wins": 8,
+            "losses": 3
+          },
+          "BOS": {
+            "wins": 7,
+            "losses": 4
+          }
+        },
+        "standings": {
+          "STL": {
+            "divisionRank": "7",
+            "leagueRank": "11"
+          },
+          "BOS": {
+            "divisionRank": "3",
+            "leagueRank": "8"
+          }
+        },
+        "playoffSeries": {
+          "round": 1,
+          "wins": {
+            "STL": 1,
+            "BOS": 0
+          }
+        }
+      },
+      "scores": {
+        "STL": 2,
+        "BOS": 0
+      },
+      "teams": {
+        "away": {
+          "abbreviation": "STL",
+          "id": 19
+        },
+        "home": {
+          "abbreviation": "BOS",
+          "id": 6
+        }
+      }
     }
   ]
 }

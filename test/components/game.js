@@ -258,7 +258,7 @@ describe('game', () => {
     it("should not show teams' playoff win percentages", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
 
-      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 2);
+      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach(game => {
         assertGameStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
@@ -400,7 +400,7 @@ describe('game', () => {
     it("should not show teams' playoff win percentages", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
 
-      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 2);
+      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach(game => {
         assertGameStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
@@ -613,10 +613,7 @@ describe('game', () => {
     });
 
     it('should show "Round <X> - Game 1" for first game of the series', () => {
-      const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
-      preGameStats.playoffSeries.wins.STL = 0;
-      preGameStats.playoffSeries.wins.BOS = 0;
-
+      const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[2];
       assertPlayoffSeriesWins(
         GAME_DISPLAY_PLAYBACK,
         teams,
