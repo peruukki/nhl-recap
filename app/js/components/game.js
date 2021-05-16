@@ -309,6 +309,10 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
   const leading = _.last(sortedByWins);
   const trailing = _.first(sortedByWins);
 
+  if (leading.wins === 0 && trailing.wins === 0) {
+    return 'Game 1';
+  }
+
   if (leading.wins === trailing.wins) {
     return [
       'Series ',
@@ -319,6 +323,7 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
       span('.series-wins__tied-count', String(trailing.wins)),
     ];
   }
+
   const seriesWinCount = playoffRound === 0 ? 3 : 4;
   return [
     span('.series-wins__leading-team', leading.team),

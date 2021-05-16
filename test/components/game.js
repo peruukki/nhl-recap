@@ -612,6 +612,22 @@ describe('game', () => {
       );
     });
 
+    it('should show "Game 1" for first game of the series', () => {
+      const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
+      preGameStats.playoffSeries.wins.STL = 0;
+      preGameStats.playoffSeries.wins.BOS = 0;
+
+      assertPlayoffSeriesWins(
+        GAME_DISPLAY_PLAYBACK,
+        teams,
+        goals,
+        preGameStats,
+        GAME_STATE_FINISHED,
+        undefined,
+        'Game 1'
+      );
+    });
+
     it('should show the series tied when teams have the same amount of wins', () => {
       const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
       assertPlayoffSeriesTied(
