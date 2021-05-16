@@ -12,6 +12,7 @@ import {
   GAME_STATE_IN_PROGRESS,
 } from '../../app/js/events/constants';
 import scoresAllRegularTime from '../../test/data/latest.json';
+import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
 
 export default function main() {
   return () => ({ DOM: view(model(intent())) });
@@ -25,8 +26,8 @@ function intent() {
   };
   return [
     {
-      game: {
-        description: 'Game in progress',
+      gameStatus: {
+        description: 'in progress',
         status: { state: GAME_STATE_IN_PROGRESS, progress },
       },
       states: [
@@ -48,8 +49,8 @@ function intent() {
       ],
     },
     {
-      game: {
-        description: 'Game finished',
+      gameStatus: {
+        description: 'finished',
         status: { state: GAME_STATE_FINISHED },
       },
       states: [
@@ -74,22 +75,27 @@ function intent() {
 }
 
 function model(stateDefinitions) {
-  const gameData = scoresAllRegularTime.games[1];
+  const gamesData = [
+    { description: 'Regular season game', data: scoresAllRegularTime.games[1] },
+    { description: 'Playoff game', data: scoresAllRegularTimePlayoffs.games[1] },
+  ];
   const gameDisplayIndex$ = xs
     .periodic(1000)
     .startWith(-1)
     .map(index => index + 1)
     .take(2);
   const transitionedGameStates$ = gameDisplayIndex$.map(gameDisplayIndex =>
-    stateDefinitions.map(({ game, states }) => ({
-      gameDescription: game.description,
-      games: states.map(state => ({
-        description: state.description,
-        gameDisplay: state.gameDisplays[gameDisplayIndex],
-        gameState: { ...gameData, status: game.status },
-        currentGoals: gameData.goals.slice(0, state.goalCount),
-      })),
-    }))
+    gamesData.flatMap(gameData =>
+      stateDefinitions.map(({ gameStatus, states }) => ({
+        gameDescription: `${gameData.description} ${gameStatus.description}`,
+        games: states.map(state => ({
+          description: state.description,
+          gameDisplay: state.gameDisplays[gameDisplayIndex],
+          gameState: { ...gameData.data, status: gameStatus.status },
+          currentGoals: gameData.data.goals.slice(0, state.goalCount),
+        })),
+      }))
+    )
   );
   return { gameStates$: transitionedGameStates$ };
 }
