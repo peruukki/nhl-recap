@@ -63,9 +63,12 @@
     &--playoff {
       height: 7.5rem;
 
-      .game--GAME_DISPLAY_POST_GAME_FINISHED &,
-      .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
+      .game--GAME_DISPLAY_POST_GAME_FINISHED & {
         height: 14rem;
+      }
+
+      .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
+        height: 16rem;
       }
     }
   }
