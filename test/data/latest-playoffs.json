@@ -51,6 +51,7 @@
           }
         },
         "playoffSeries": {
+          "round": 1,
           "wins": {
             "STL": 1,
             "BOS": 1
@@ -79,6 +80,7 @@
           }
         },
         "playoffSeries": {
+          "round": 1,
           "wins": {
             "STL": 1,
             "BOS": 1
@@ -189,6 +191,7 @@
           }
         },
         "playoffSeries": {
+          "round": 2,
           "wins": {
             "ANA": 1,
             "NYR": 2
@@ -217,6 +220,7 @@
           }
         },
         "playoffSeries": {
+          "round": 2,
           "wins": {
             "ANA": 1,
             "NYR": 2

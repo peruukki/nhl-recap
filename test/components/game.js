@@ -612,7 +612,7 @@ describe('game', () => {
       );
     });
 
-    it('should show "Game 1" for first game of the series', () => {
+    it('should show "Round <X> - Game 1" for first game of the series', () => {
       const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
       preGameStats.playoffSeries.wins.STL = 0;
       preGameStats.playoffSeries.wins.BOS = 0;
@@ -624,7 +624,7 @@ describe('game', () => {
         preGameStats,
         GAME_STATE_FINISHED,
         undefined,
-        'Game 1'
+        'Round 1 - Game 1'
       );
     });
 
