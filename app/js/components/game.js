@@ -160,7 +160,13 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
   return div(`.game-stats${afterGameModifier}${fadeInModifier}`, [
     renderTeamStats(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-    renderTeamStats(teams, stats.records, 'Point-%', renderWinPercentage, renderWinPercentage),
+    renderTeamStats(
+      teams,
+      isPlayoffGame ? null : stats.records,
+      'Point-%',
+      renderWinPercentage,
+      renderWinPercentage
+    ),
     renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
     renderTeamStats(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
   ]);

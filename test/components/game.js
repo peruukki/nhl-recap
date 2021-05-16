@@ -255,21 +255,16 @@ describe('game', () => {
       });
     });
 
-    // TODO: Not showing win percentages for playoff games anymore, consider removing altogether
-    it.skip("should show teams' playoff win percentages, highlighting the better one", () => {
+    it("should not show teams' playoff win percentages", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
-      const label = 'Win-%';
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
-        away: { value: '.700' },
-        home: { value: '.700' },
-        label,
-      });
-
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
-        away: { value: '.583', className: '--highlight' },
-        home: { value: '.357' },
-        label,
+      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 2);
+      scoresAllRegularTimePlayoffs.games.forEach(game => {
+        assertGameStats(gameDisplay, game, statIndexes.pointPct, {
+          away: { value: '' },
+          home: { value: '' },
+          label: '',
+        });
       });
     });
 
@@ -402,21 +397,16 @@ describe('game', () => {
       });
     });
 
-    // TODO: Not showing win percentages for playoff games anymore, consider removing altogether
-    it.skip("should show teams' playoff win percentages, highlighting the better one", () => {
+    it("should not show teams' playoff win percentages", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
-      const label = 'Win-%';
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.pointPct, {
-        away: { value: '.727', className: '--highlight' },
-        home: { value: '.636' },
-        label,
-      });
-
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.pointPct, {
-        away: { value: '.538', className: '--highlight' },
-        home: { value: '.400' },
-        label,
+      assert.lengthOf(scoresAllRegularTimePlayoffs.games, 2);
+      scoresAllRegularTimePlayoffs.games.forEach(game => {
+        assertGameStats(gameDisplay, game, statIndexes.pointPct, {
+          away: { value: '' },
+          home: { value: '' },
+          label: '',
+        });
       });
     });
 
