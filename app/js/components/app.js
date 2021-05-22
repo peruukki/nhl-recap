@@ -111,6 +111,10 @@ function model(actions, animations) {
 
   const gameDisplays$ = getGameDisplays$(clock.clock$, scores$);
 
+  actions.isPlaying$.addListener({
+    next: animations.highlightPlayPauseButtonChange,
+  });
+
   return xs
     .combine(
       scores$,
@@ -160,17 +164,20 @@ function renderHeader(state) {
   const isFinished = !!(state.clock && state.clock.end && !state.clock.period);
   const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
-  const buttonClass = classNames({
-    '.button': true,
-    [`.button--${buttonType}`]: state.gameCount > 0,
-    [`.expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
-    '.button--hidden': isFinished,
-  }).replace(/\s/g, '');
+  const dynamicClassNames = {
+    [`button--${buttonType}`]: state.gameCount > 0,
+    [`expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
+    'button--hidden': isFinished,
+  };
   const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button(buttonClass, span('.visible-button', span('.visually-hidden', buttonText))),
+    button(
+      '.button.play-pause-button',
+      { class: dynamicClassNames },
+      span('.visible-button', span('.visually-hidden', buttonText))
+    ),
     showDate ? renderDate(state.date) : state.clockVtree,
   ]);
 }

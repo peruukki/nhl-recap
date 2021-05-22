@@ -62,8 +62,16 @@ function highlightLatestGoalChange(gameIndex) {
   }
 }
 
+function highlightPlayPauseButtonChange() {
+  const element = document.querySelector('.play-pause-button');
+  if (element) {
+    element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250 });
+  }
+}
+
 export default {
   highlightGame,
   highlightGoal,
+  highlightPlayPauseButtonChange,
   stopGameHighlight,
 };

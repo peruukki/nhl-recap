@@ -69,7 +69,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
       const playButtonNode = getPlayButtonNode(vtree);
-      assert.deepEqual(playButtonNode.sel, 'button.button.button--play.expand--2');
+      assert.deepEqual(playButtonNode.sel, 'button.button.play-pause-button');
     });
   });
 
