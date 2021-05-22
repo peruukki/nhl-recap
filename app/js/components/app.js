@@ -158,6 +158,7 @@ function view(state$) {
 function renderHeader(state) {
   const hasNotStarted = !state.clock;
   const isFinished = !!(state.clock && state.clock.end && !state.clock.period);
+  const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
   const buttonClass = classNames({
     '.button': true,
@@ -169,7 +170,7 @@ function renderHeader(state) {
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button(buttonClass, span('.visible-button')),
+    button(buttonClass, span('.visible-button', span('.visually-hidden', buttonText))),
     showDate ? renderDate(state.date) : state.clockVtree,
   ]);
 }

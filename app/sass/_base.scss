@@ -24,6 +24,18 @@ body {
   text-align: center;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
 @mixin stretch {
   flex-basis: 0;
   flex-grow: 1;
