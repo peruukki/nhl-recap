@@ -169,7 +169,7 @@ function renderHeader(state) {
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button(buttonClass),
+    button(buttonClass, span('.visible-button')),
     showDate ? renderDate(state.date) : state.clockVtree,
   ]);
 }
