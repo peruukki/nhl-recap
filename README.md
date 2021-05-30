@@ -2,11 +2,14 @@
 
 [![Build Status](https://travis-ci.org/peruukki/nhl-recap.svg?branch=master)](https://travis-ci.org/peruukki/nhl-recap)
 
-A web app playing back the latest NHL scores fetched from [nhl-score-api](https://github.com/peruukki/nhl-score-api).
-Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts.
+A web app playing back the goal information from the latest NHL games. I made this to have a more exciting way of checking
+the scores while I brush my teeth in the morning, as the games are usually played at night time in Finland.
 
 The app is running at [GitHub pages](https://peruukki.github.io/nhl-recap/). Add it to your home screen on an Android
 or iOS device for a more app-like, chromeless experience.
+
+Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
+as its backed.
 
 ## Running the app
 
