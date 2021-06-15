@@ -310,7 +310,8 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
   const trailing = _.first(sortedByWins);
 
   if (leading.wins === 0 && trailing.wins === 0) {
-    return `Round ${playoffRound} - Game 1`;
+    const roundDescriptions = ['Qualifier', '1st round', '2nd round', 'Semifinal', 'Final'];
+    return `${roundDescriptions[playoffRound]} - Game 1`;
   }
 
   if (leading.wins === trailing.wins) {
