@@ -904,7 +904,7 @@ function assertPlayoffSeriesLead(
     span('.series-wins__leading-team', leadingTeam),
     ` ${leadingText} `,
     span('.series-wins__leading-count', String(leadingWins)),
-    span('.series-wins__delimiter', '–'),
+    span('.series-wins__delimiter', '-'),
     span('.series-wins__trailing-count', String(trailingWins)),
   ]);
 }
@@ -923,7 +923,7 @@ function assertPlayoffSeriesTied(
     span('.series-wins__tied', 'tied'),
     ' ',
     span('.series-wins__tied-count', String(wins)),
-    span('.series-wins__delimiter', '–'),
+    span('.series-wins__delimiter', '-'),
     span('.series-wins__tied-count', String(wins)),
   ]);
 }

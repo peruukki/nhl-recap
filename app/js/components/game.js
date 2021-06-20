@@ -320,7 +320,7 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
       span('.series-wins__tied', 'tied'),
       ' ',
       span('.series-wins__tied-count', String(leading.wins)),
-      span('.series-wins__delimiter', '–'),
+      span('.series-wins__delimiter', '-'),
       span('.series-wins__tied-count', String(trailing.wins)),
     ];
   }
@@ -330,7 +330,7 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
     span('.series-wins__leading-team', leading.team),
     leading.wins === seriesWinCount ? ' wins ' : ' leads ',
     span('.series-wins__leading-count', String(leading.wins)),
-    span('.series-wins__delimiter', '–'),
+    span('.series-wins__delimiter', '-'),
     span('.series-wins__trailing-count', String(trailing.wins)),
   ];
 }
