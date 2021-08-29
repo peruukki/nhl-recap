@@ -40,7 +40,7 @@ registerRoute(
 
 // Cache First strategy: images
 registerRoute(
-  ({ request: { destination } }) => destination === 'image',
+  ({ request: { destination }, url }) => destination === 'image' || url.pathname.endsWith('.svg'),
   new CacheFirst({
     cacheName: 'images',
     plugins: [
