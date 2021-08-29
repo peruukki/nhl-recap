@@ -10,7 +10,7 @@ export default {
     }),
     workbox({
       globDirectory: 'public',
-      globPatterns: ['**/*.{css,html,ico,js,json,png,svg,ttf,xml}'],
+      globPatterns: ['**/*.{css,html,ico,js,png,svg,ttf,xml}'],
     }),
     nodeResolve(),
   ],
