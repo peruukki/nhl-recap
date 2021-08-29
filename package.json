@@ -26,7 +26,7 @@
     "autoprefix": "postcss --use autoprefixer --replace public/main.css",
     "autoprefix:gallery": "postcss --use autoprefixer --replace public/main-gallery.css",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
-    "build": "npm run build:assets && NODE_ENV=production parallelshell 'npm run build:css' 'npm run build:js' 'npm run build:sw'",
+    "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js' && npm run build:sw",
     "build:assets": "cp -r app/assets/** public",
     "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
     "build:js": "npm run browserify | npm run hash:js && npm run hash:inject",
