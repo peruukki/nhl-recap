@@ -97,7 +97,22 @@ describe('app', () => {
     });
   });
 
-  it('should show a message if fetching latest scores fails', done => {
+  it('should show a message if fetching latest scores fails due to network offline', done => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(404, 'Fake error');
+
+    const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
+    addListener(done, sinks.DOM.drop(1).take(1), vtree => {
+      assert.deepEqual(
+        getStatusNode(vtree),
+        expectedStatusVtree('Failed to fetch latest scores: the network is offline.')
+      );
+    });
+  });
+
+  it('should show a message if fetching latest scores fails due to unknown error', done => {
     nock(nhlScoreApiHost)
       .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
@@ -105,17 +120,15 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), vtree => {
-      assert.deepEqual(
-        getStatusNode(vtree),
-        expectedStatusVtree('Failed to fetch latest scores: Not Found.')
-      );
+      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Failed to fetch latest scores.'));
     });
   });
 });
 
-function run(httpRequest$) {
+function run(httpRequest$, options = { isOnline: true }) {
   const driver = makeHTTPDriver();
-  return app(animations)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
+  const $window = { navigator: { onLine: options.isOnline } };
+  return app(animations, $window)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
 }
 
 function expectedStatusVtree(message) {

@@ -11,7 +11,7 @@ registerServiceWorker();
 
 fetchTeamLogoSVGSymbols();
 
-run(app(animations), {
+run(app(animations, window), {
   DOM: makeDOMDriver('#app'),
   HTTP: makeHTTPDriver(),
 });

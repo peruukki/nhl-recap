@@ -8,11 +8,11 @@ import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import renderGame from './game';
 
-export default function main(animations) {
+export default function main(animations, $window) {
   return ({ DOM, HTTP }) => {
     const url = getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP), animations)),
+      DOM: view(model(intent(DOM, HTTP, $window), animations)),
       HTTP: xs.of({ url }),
     };
   };
@@ -23,7 +23,7 @@ function getApiUrl() {
   return `${host}/api/scores/latest`;
 }
 
-function intent(DOM, HTTP) {
+function intent(DOM, HTTP, $window) {
   const apiResponseWithErrors$ = HTTP.select()
     .map(response$ => response$.replaceError(error => xs.of({ error })))
     .flatten()
@@ -49,17 +49,19 @@ function intent(DOM, HTTP) {
   const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
   const playbackHasStarted$ = playClicks$.take(1);
 
+  const getUnexpectedErrorMessage = () => {
+    const baseMessage = 'Failed to fetch latest scores';
+    const details = !$window.navigator.onLine ? ': the network is offline' : '';
+    return `${baseMessage}${details}.`;
+  };
+
   return {
     successApiResponse$,
     isPlaying$,
     playbackHasStarted$,
     status$: apiResponseWithErrors$
       .filter(scores => scores.error)
-      .map(scores =>
-        scores.error.expected
-          ? scores.error.message
-          : `Failed to fetch latest scores: ${scores.error.message}.`
-      ),
+      .map(scores => (scores.error.expected ? scores.error.message : getUnexpectedErrorMessage())),
   };
 }
 
