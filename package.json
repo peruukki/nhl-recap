@@ -19,14 +19,14 @@
   "config": {
     "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
     "browserify_gallery_args": "gallery/js/main.js -t babelify",
-    "rollup_sw_args": "app/js/service-worker/service-worker.js --file public/service-worker.js",
+    "rollup_sw_args": "app/js/service-worker/service-worker.js -c --file public/service-worker.js",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
     "autoprefix": "postcss --use autoprefixer --replace public/main.css",
     "autoprefix:gallery": "postcss --use autoprefixer --replace public/main-gallery.css",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
-    "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js' 'npm run build:sw'",
+    "build": "npm run build:assets && NODE_ENV=production parallelshell 'npm run build:css' 'npm run build:js' 'npm run build:sw'",
     "build:assets": "cp -r app/assets/** public",
     "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
     "build:js": "npm run browserify | npm run hash:js && npm run hash:inject",
@@ -54,7 +54,7 @@
     "sass:gallery": "node-sass gallery/sass/main.scss public/main-gallery.css --output-style compressed",
     "server": "http-server public -p 8000",
     "spec": "mocha",
-    "start": "parallelshell 'npm run watch' 'npm run server'",
+    "start": "NODE_ENV=dev parallelshell 'npm run watch' 'npm run server'",
     "start:gallery": "npm run watch:gallery",
     "start:local": "SCORE_API_HOST=http://localhost:8080 npm start",
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
@@ -80,12 +80,17 @@
     "lodash": "^4.17.21",
     "normalize.css": "^5.0.0",
     "timeago.js": "^4.0.2",
+    "workbox-expiration": "^6.2.4",
+    "workbox-routing": "^6.2.4",
+    "workbox-strategies": "^6.2.4",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-replace": "^3.0.0",
     "autoprefixer": "^6.3.1",
     "babelify": "^10.0.0",
     "browserify": "^14.1.0",
