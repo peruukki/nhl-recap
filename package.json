@@ -19,16 +19,18 @@
   "config": {
     "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
     "browserify_gallery_args": "gallery/js/main.js -t babelify",
+    "browserify_sw_args": "app/js/service-worker/service-worker.js -t babelify -t [ envify purge ]",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
     "autoprefix": "postcss --use autoprefixer --replace public/main.css",
     "autoprefix:gallery": "postcss --use autoprefixer --replace public/main-gallery.css",
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
-    "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js'",
+    "build": "npm run build:assets && parallelshell 'npm run build:css' 'npm run build:js' 'npm run build:sw'",
     "build:assets": "cp -r app/assets/** public",
     "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
     "build:js": "npm run browserify | npm run hash:js && npm run hash:inject",
+    "build:sw": "browserify $npm_package_config_browserify_sw_args -o public/service-worker.js",
     "clean:build": "rm -rf public; mkdir public",
     "clean:dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
     "clone:dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
@@ -58,7 +60,7 @@
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
     "svg": "node generate-svg-data.js",
     "test": "npm run lint && npm run spec",
-    "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js'",
+    "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js' 'npm run watch:sw'",
     "watch:gallery": "parallelshell 'npm run watch:assets:gallery' 'npm run watch:css:gallery' 'npm run watch:js:gallery'",
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
     "watch:assets:gallery": "watch 'cp -r gallery/assets/** public' gallery/assets",
@@ -67,7 +69,8 @@
     "watch:js": "watchify $npm_package_config_browserify_args -o public/main.js -v",
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
     "watch:lint:js": "esw -w *.js app/js/*.js test/*.js",
-    "watch:lint:css": "watch 'npm run lint:css' app/sass"
+    "watch:lint:css": "watch 'npm run lint:css' app/sass",
+    "watch:sw": "watchify $npm_package_config_browserify_sw_args -o public/service-worker.js -v"
   },
   "dependencies": {
     "@cycle/dom": "^22.8.0",
