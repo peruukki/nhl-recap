@@ -1,8 +1,12 @@
 import { ExpirationPlugin } from 'workbox-expiration';
+import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 // Adapted from https://developers.google.com/web/tools/workbox/guides/get-started#routing_and_caching_strategies
+
+// eslint-disable-next-line no-underscore-dangle
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Network First strategy: page navigations (HTML)
 registerRoute(
