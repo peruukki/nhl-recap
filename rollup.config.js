@@ -1,5 +1,6 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import { terser } from 'rollup-plugin-terser';
 import workbox from 'rollup-plugin-workbox-inject';
 
 export default {
@@ -13,5 +14,6 @@ export default {
       globPatterns: ['**/*.{css,html,ico,js,png,svg,ttf,xml}'],
     }),
     nodeResolve(),
+    terser(),
   ],
 };
