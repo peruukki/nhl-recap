@@ -19,7 +19,7 @@
   "config": {
     "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
     "browserify_gallery_args": "gallery/js/main.js -t babelify",
-    "browserify_sw_args": "app/js/service-worker/service-worker.js -t babelify -t [ envify purge ]",
+    "rollup_sw_args": "app/js/service-worker/service-worker.js --file public/service-worker.js",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
@@ -30,7 +30,7 @@
     "build:assets": "cp -r app/assets/** public",
     "build:css": "npm run sass && npm run autoprefix | npm run hash:css && npm run hash:inject",
     "build:js": "npm run browserify | npm run hash:js && npm run hash:inject",
-    "build:sw": "browserify $npm_package_config_browserify_sw_args -o public/service-worker.js",
+    "build:sw": "rollup $npm_package_config_rollup_sw_args",
     "clean:build": "rm -rf public; mkdir public",
     "clean:dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
     "clone:dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
@@ -70,7 +70,7 @@
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
     "watch:lint:js": "esw -w *.js app/js/*.js test/*.js",
     "watch:lint:css": "watch 'npm run lint:css' app/sass",
-    "watch:sw": "watchify $npm_package_config_browserify_sw_args -o public/service-worker.js -v"
+    "watch:sw": "rollup $npm_package_config_rollup_sw_args -w"
   },
   "dependencies": {
     "@cycle/dom": "^22.8.0",
@@ -106,6 +106,7 @@
     "postcss-cli": "^3.0.0",
     "prettier": "^1.18.2",
     "replaceinfiles": "^1.1.3",
+    "rollup": "^2.56.3",
     "sass-lint": "^1.5.0",
     "uglify-js": "^2.6.1",
     "uglifyify": "^3.0.1",
