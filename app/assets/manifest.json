@@ -15,5 +15,6 @@
   "theme_color": "#284094",
   "background_color": "#284094",
   "start_url": "/",
-  "display": "standalone"
+  "display": "standalone",
+  "description": "Play back the goal information from the latest NHL games."
 }
