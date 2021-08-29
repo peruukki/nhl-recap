@@ -3341,7 +3341,7 @@ class StaleWhileRevalidate extends Strategy {
 // Adapted from https://developers.google.com/web/tools/workbox/guides/get-started#routing_and_caching_strategies
 
 // eslint-disable-next-line no-underscore-dangle
-precacheAndRoute([{"revision":"0f5ecaf6daf3b2584f95e6925a623db3","url":"android-chrome-192x192.png"},{"revision":"b054cfeb19a6217e788517ec0dde5f94","url":"android-chrome-384x384.png"},{"revision":"798cc7479705898ae5692b2024daa231","url":"android-chrome-512x512.png"},{"revision":"38ba0d1229fa887a048b41aedade766b","url":"apple-touch-icon.png"},{"revision":"42de0222a2d9624fea0a5eb037ab07f9","url":"browserconfig.xml"},{"revision":"6e7ea0bf7ac01b5bf49ce0a61308d7f1","url":"favicon-16x16.png"},{"revision":"8374ba6e41aedbe92cf3aab1924a17ca","url":"favicon-32x32.png"},{"revision":"be3ae276a4329434ea164d8e87efdecf","url":"favicon.ico"},{"revision":"0b452aceac54108154e7ad49cbed8f32","url":"ice.svg"},{"revision":"a1bd9da6ef94ddd57cac41181cbed6b2","url":"index.html"},{"revision":"323fc349c7f1184a72c148cef00637e2","url":"main-054b84fb.js"},{"revision":"036cb3b6c7fc937b0cb8e777af79cfe2","url":"main-96af8fc5.css"},{"revision":"c59f563247078254e8ba117a64b635e7","url":"mstile-150x150.png"},{"revision":"c9d730f4171ba6f3fa84b4bb03894909","url":"safari-pinned-tab.svg"},{"revision":"ce6f2739bb595ed75a364a4e0cc22c84","url":"web-animations.min.js"}]);
+precacheAndRoute([{"revision":"0f5ecaf6daf3b2584f95e6925a623db3","url":"android-chrome-192x192.png"},{"revision":"b054cfeb19a6217e788517ec0dde5f94","url":"android-chrome-384x384.png"},{"revision":"798cc7479705898ae5692b2024daa231","url":"android-chrome-512x512.png"},{"revision":"38ba0d1229fa887a048b41aedade766b","url":"apple-touch-icon.png"},{"revision":"42de0222a2d9624fea0a5eb037ab07f9","url":"browserconfig.xml"},{"revision":"6e7ea0bf7ac01b5bf49ce0a61308d7f1","url":"favicon-16x16.png"},{"revision":"8374ba6e41aedbe92cf3aab1924a17ca","url":"favicon-32x32.png"},{"revision":"be3ae276a4329434ea164d8e87efdecf","url":"favicon.ico"},{"revision":"0b452aceac54108154e7ad49cbed8f32","url":"ice.svg"},{"revision":"4a1252ecb021b9b0609591aec7885202","url":"index.html"},{"revision":"036cb3b6c7fc937b0cb8e777af79cfe2","url":"main-c7e00138.css"},{"revision":"323fc349c7f1184a72c148cef00637e2","url":"main-f4f74a71.js"},{"revision":"c59f563247078254e8ba117a64b635e7","url":"mstile-150x150.png"},{"revision":"c9d730f4171ba6f3fa84b4bb03894909","url":"safari-pinned-tab.svg"},{"revision":"ce6f2739bb595ed75a364a4e0cc22c84","url":"web-animations.min.js"}]);
 
 // Network First strategy: page navigations (HTML)
 registerRoute(
@@ -3375,7 +3375,7 @@ registerRoute(
 
 // Cache First strategy: images
 registerRoute(
-  ({ request: { destination } }) => destination === 'image',
+  ({ request: { destination }, url }) => destination === 'image' || url.pathname.endsWith('.svg'),
   new CacheFirst({
     cacheName: 'images',
     plugins: [
