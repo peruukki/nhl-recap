@@ -1,7 +1,7 @@
 {
   "name": "nhl-recap",
   "version": "1.56.4",
-  "description": "Check the latest NHL scores.",
+  "description": "Play back the goal information from the latest NHL games.",
   "keywords": [
     "NHL",
     "scores",
