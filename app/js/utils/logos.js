@@ -1,9 +1,15 @@
 import { svg } from '@cycle/dom';
 
+const season = '20202021';
+
 export function fetchTeamLogoSVGSymbols() {
   // Adapted from https://css-tricks.com/ajaxing-svg-sprite/
   const ajax = new XMLHttpRequest();
-  ajax.open('GET', 'https://www-league.nhlstatic.com/images/logos/team-sprites/20192020.svg', true);
+  ajax.open(
+    'GET',
+    `https://www-league.nhlstatic.com/images/logos/team-sprites/${season}.svg`,
+    true
+  );
   ajax.send();
   ajax.onload = () => {
     const div = document.createElement('div');
@@ -15,6 +21,6 @@ export function fetchTeamLogoSVGSymbols() {
 
 export function renderTeamLogo(teamId, className) {
   return svg({ attrs: { class: className } }, [
-    svg.use({ attrs: { href: `#team-${teamId}-20192020-dark` } }),
+    svg.use({ attrs: { href: `#team-${teamId}-${season}-dark` } }),
   ]);
 }
