@@ -52,7 +52,7 @@
     "push:dist": "cd dist && git push origin gh-pages",
     "sass": "node-sass app/sass/main.scss public/main.css --output-style compressed",
     "sass:gallery": "node-sass gallery/sass/main.scss public/main-gallery.css --output-style compressed",
-    "server": "http-server public -p 8000",
+    "server": "http-server public -p 8008",
     "spec": "mocha",
     "start": "NODE_ENV=dev parallelshell 'npm run watch' 'npm run server'",
     "start:gallery": "npm run watch:gallery",

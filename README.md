@@ -19,7 +19,7 @@ To run the app and re-build on file changes:
 npm start
 ```
 
-Open http://localhost:8000/ in your browser once you see a message like this in the terminal:
+Open http://localhost:8008/ in your browser once you see a message like this in the terminal:
 
 ```
 1087061 bytes written to public/main.js (5.39 seconds) at 5:59:06 PM
@@ -53,7 +53,7 @@ To see the gallery, first start the development server as described above, then 
 npm run start:gallery
 ```
 
-Open http://localhost:8000/gallery.html in your browser once you see a message like this in the terminal:
+Open http://localhost:8008/gallery.html in your browser once you see a message like this in the terminal:
 
 ```
 806766 bytes written to public/main-gallery.js (0.24 seconds) at 7:48:36 PM
