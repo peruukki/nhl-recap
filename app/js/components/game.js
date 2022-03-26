@@ -169,6 +169,13 @@ function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats
     ),
     renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
     renderTeamStats(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
+    renderTeamStats(
+      teams,
+      isPlayoffGame ? null : stats.standings,
+      'PO spot pts',
+      getPlayoffSpotRating,
+      renderPlayoffSpot
+    ),
   ]);
 }
 
@@ -226,8 +233,6 @@ function getStreakMultiplier(type) {
   }
 }
 
-// TODO: Use this when the backend returns 'pointsFromPlayoffSpot' again
-// eslint-disable-next-line no-unused-vars
 function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
   return parseInt(pointsFromPlayoffSpot, 10);
 }
@@ -273,8 +278,6 @@ function renderStreakType({ type }) {
   }
 }
 
-// TODO: Use this when the backend returns 'pointsFromPlayoffSpot' again
-// eslint-disable-next-line no-unused-vars
 function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
   return pointsFromPlayoffSpot || '';
 }

@@ -461,8 +461,7 @@ describe('game', () => {
       });
     });
 
-    // TODO: Enable this when the backend returns 'pointsFromPlayoffSpot' again
-    it.skip("should show teams' playoff spot point differences, highlighting the better one", () => {
+    it("should show teams' playoff spot point differences, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'PO spot pts';
 
