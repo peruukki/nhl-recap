@@ -29,7 +29,7 @@
 
   &__info-panel {
     position: relative;
-    height: 6rem;
+    height: $game-description-height + $game-stats-padding-height + 2 * $game-stats-line-height;
     padding-bottom: 0.5rem;
     transition: height $height-duration $height-timing-function;
     font-size: 1.2rem;
@@ -37,19 +37,20 @@
     box-sizing: border-box;
 
     .game--GAME_DISPLAY_PLAYBACK & {
-      height: 8.5rem;
+      height: $latest-goal-height;
     }
 
     .game--GAME_DISPLAY_IN_PROGRESS & {
-      height: 10.5rem;
+      height: $latest-goal-height + $game-description-height;
     }
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED & {
-      height: 18.5rem;
+      height: $latest-goal-height + $game-stats-padding-height + 6 * $game-stats-line-height;
     }
 
     .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
-      height: 14.5rem;
+      height: $latest-goal-height + $game-description-height + $game-stats-padding-height + 2 *
+        $game-stats-line-height;
     }
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED &,
@@ -61,14 +62,15 @@
     }
 
     &--playoff {
-      height: 7.5rem;
+      height: $game-description-height + $game-stats-padding-height + 3 * $game-stats-line-height;
 
       .game--GAME_DISPLAY_POST_GAME_FINISHED & {
-        height: 14rem;
+        height: $latest-goal-height + $game-stats-padding-height + 3 * $game-stats-line-height;
       }
 
       .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
-        height: 16rem;
+        height: $latest-goal-height + $game-description-height + $game-stats-padding-height + 3 *
+          $game-stats-line-height;
       }
     }
   }

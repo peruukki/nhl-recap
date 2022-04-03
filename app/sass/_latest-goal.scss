@@ -1,6 +1,6 @@
 .latest-goal {
-  height: 8rem;
-  padding-bottom: 0.5rem;
+  height: $latest-goal-height - $latest-goal-padding-height;
+  padding-bottom: $latest-goal-padding-height;
   &__time,
   &__goal-count {
     color: $color-main;
