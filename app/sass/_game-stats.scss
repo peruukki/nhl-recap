@@ -3,4 +3,10 @@
   width: 100%;
   padding: ($game-stats-padding-height / 2) 0;
   background-color: $background-game-stats;
+
+  &__heading {
+    color: $color-accent-light;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
 }

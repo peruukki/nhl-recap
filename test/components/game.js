@@ -35,12 +35,12 @@ const inProgressGameProgress = {
 };
 
 const statIndexes = {
-  divisionRank: 0,
-  leagueRank: 1,
-  pointPct: 2,
-  record: 3,
-  streak: 4,
-  playoffSpotPts: 5,
+  divisionRank: 1,
+  leagueRank: 2,
+  pointPct: 3,
+  record: 4,
+  streak: 5,
+  playoffSpotPts: 6,
 };
 
 describe('game', () => {
