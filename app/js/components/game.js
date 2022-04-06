@@ -148,39 +148,46 @@ function renderInfoPanel(
     showLatestGoal ? renderLatestGoal(latestGoal) : null,
     showProgressInfo ? div('.game-description.fade-in', renderGameStatus(status, startTime)) : null,
     showPreGameStats || isAfterGame
-      ? renderGameStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, stats)
+      ? renderStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, stats)
       : null,
   ]);
 }
 
-function renderGameStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
+function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
   const fadeInModifier = fadeIn ? '.fade-in' : '';
   const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
 
-  return div(`.game-stats${afterGameModifier}${fadeInModifier}`, [
+  return div(
+    `.game-stats${afterGameModifier}${fadeInModifier}`,
+    renderTeamStats(teams, isPlayoffGame, stats)
+  );
+}
+
+function renderTeamStats(teams, isPlayoffGame, stats) {
+  return [
     div('.game-stats__heading', 'Team stats'),
-    renderTeamStats(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
-    renderTeamStats(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-    renderTeamStats(
+    renderTeamStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
+    renderTeamStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
+    renderTeamStat(
       teams,
       isPlayoffGame ? null : stats.records,
       'Point-%',
       renderWinPercentage,
       renderWinPercentage
     ),
-    renderTeamStats(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
-    renderTeamStats(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
-    renderTeamStats(
+    renderTeamStat(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
+    renderTeamStat(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
+    renderTeamStat(
       teams,
       isPlayoffGame ? null : stats.standings,
       'PO spot pts',
       getPlayoffSpotRating,
       renderPlayoffSpot
     ),
-  ]);
+  ];
 }
 
-function renderTeamStats(teams, values, label, ratingFn, renderFn) {
+function renderTeamStat(teams, values, label, ratingFn, renderFn) {
   const valueClassName = '.team-stats__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
   return div('.team-stats', [
