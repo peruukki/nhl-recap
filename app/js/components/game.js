@@ -167,18 +167,18 @@ function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats
 function renderTeamStats(teams, isPlayoffGame, stats) {
   return [
     div('.game-stats__heading', 'Team stats'),
-    renderTeamStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
-    renderTeamStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-    renderTeamStat(
+    renderStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
+    renderStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
+    renderStat(
       teams,
       isPlayoffGame ? null : stats.records,
       'Point-%',
       renderWinPercentage,
       renderWinPercentage
     ),
-    renderTeamStat(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
-    renderTeamStat(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
-    renderTeamStat(
+    renderStat(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
+    renderStat(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
+    renderStat(
       teams,
       isPlayoffGame ? null : stats.standings,
       'PO spot pts',
@@ -188,15 +188,15 @@ function renderTeamStats(teams, isPlayoffGame, stats) {
   ];
 }
 
-function renderTeamStat(teams, values, label, ratingFn, renderFn) {
-  const valueClassName = '.team-stats__value';
+function renderStat(teams, values, label, ratingFn, renderFn) {
+  const valueClassName = '.stat__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
-  return div('.team-stats', [
+  return div('.stat', [
     span(
       `${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
       values ? renderFn(values[teams.away.abbreviation]) : ''
     ),
-    span('.team-stats__label', values ? label : ''),
+    span('.stat__label', values ? label : ''),
     span(
       `${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
       values ? renderFn(values[teams.home.abbreviation]) : ''
@@ -264,7 +264,7 @@ function renderWinPercentage(record) {
   return percentage.toFixed(3).slice(sliceIndex);
 }
 
-export const delimiter = span('.team-stats__delimiter', ['-']);
+export const delimiter = span('.stat__delimiter', ['-']);
 
 function renderRecord({ wins, losses, ot }) {
   return ot !== undefined ? [wins, delimiter, losses, delimiter, ot] : [wins, delimiter, losses];

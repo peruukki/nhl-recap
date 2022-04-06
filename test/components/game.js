@@ -875,7 +875,7 @@ function assertGameStats(
   const renderedStats = getGameStats(
     renderGame(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
   ).children[statIndex];
-  const expected = expectedTeamStats(renderedRecords);
+  const expected = expectedStat(renderedRecords);
   assert.deepEqual(renderedStats, expected);
 }
 
@@ -1027,14 +1027,14 @@ function expectedLatestGoalPanel(latestGoal) {
   ]);
 }
 
-function expectedTeamStats({ away, home, label }) {
-  const valueClass = '.team-stats__value';
-  return div('.team-stats', [
+function expectedStat({ away, home, label }) {
+  const valueClass = '.stat__value';
+  return div('.stat', [
     span(
       `${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`,
       away.value
     ),
-    span('.team-stats__label', label),
+    span('.stat__label', label),
     span(
       `${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`,
       home.value
