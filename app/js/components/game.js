@@ -42,7 +42,7 @@ export default function renderGame(
   ].includes(gameDisplay);
   const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
 
-  const stats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
+  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   const playoffSeriesWins = getPlayoffSeriesWins(
     teams,
     awayGoals,
@@ -60,7 +60,7 @@ export default function renderGame(
         showProgressInfo,
         startTime,
         teams,
-        stats,
+        teamStats,
         status,
         !!playoffSeriesWins,
         latestGoal
@@ -137,7 +137,7 @@ function renderInfoPanel(
   showProgressInfo,
   startTime,
   teams,
-  stats,
+  teamStats,
   status,
   isPlayoffGame,
   latestGoal
@@ -148,18 +148,18 @@ function renderInfoPanel(
     showLatestGoal ? renderLatestGoal(latestGoal) : null,
     showProgressInfo ? div('.game-description.fade-in', renderGameStatus(status, startTime)) : null,
     showPreGameStats || isAfterGame
-      ? renderStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, stats)
+      ? renderStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, teamStats)
       : null,
   ]);
 }
 
-function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
+function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats) {
   const fadeInModifier = fadeIn ? '.fade-in' : '';
   const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
 
   return div(
     `.game-stats${afterGameModifier}${fadeInModifier}`,
-    renderTeamStats(teams, isPlayoffGame, stats)
+    renderTeamStats(teams, isPlayoffGame, teamStats)
   );
 }
 
