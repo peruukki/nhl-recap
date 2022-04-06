@@ -826,22 +826,10 @@ function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
 }
 
 function assertPreGameStatsAreShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(
-    gameDisplay,
-    { status, teams },
-    goals,
-    assert.deepEqual,
-    'div.stats.fade-in'
-  );
+  assertGameStatsExistence(gameDisplay, { status, teams }, goals, assert.deepEqual, 'div.stats');
 }
 function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(
-    gameDisplay,
-    { status, teams },
-    goals,
-    assert.notDeepEqual,
-    'div.stats.fade-in'
-  );
+  assertGameStatsExistence(gameDisplay, { status, teams }, goals, assert.notDeepEqual, 'div.stats');
 }
 function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
   assertGameStatsExistence(
@@ -849,7 +837,7 @@ function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.deepEqual,
-    'div.stats.stats--after-game.fade-in'
+    'div.stats.stats--after-game'
   );
 }
 function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
@@ -858,7 +846,7 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
     { status, teams },
     goals,
     assert.notDeepEqual,
-    'div.stats.stats--after-game.fade-in'
+    'div.stats.stats--after-game'
   );
 }
 function assertGameStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
