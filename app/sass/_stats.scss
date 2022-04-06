@@ -1,8 +1,8 @@
-.game-stats {
+.stats {
   @include delayed-animation;
   width: 100%;
-  padding: ($game-stats-padding-height / 2) 0;
-  background-color: $background-game-stats;
+  padding: ($stats-padding-height / 2) 0;
+  background-color: $background-stats;
 
   &__heading {
     color: $color-accent-light;

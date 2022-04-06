@@ -156,8 +156,8 @@ function renderInfoPanel({
 
 function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats) {
   const selector = classNames({
-    '.game-stats': true,
-    '.game-stats--after-game': showAfterGameStats,
+    '.stats': true,
+    '.stats--after-game': showAfterGameStats,
     '.fade-in': fadeIn,
   }).replace(/\s/g, '');
 
@@ -166,7 +166,7 @@ function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats
 
 function renderTeamStats(teams, isPlayoffGame, stats) {
   return [
-    div('.game-stats__heading', 'Team stats'),
+    div('.stats__heading', 'Team stats'),
     renderStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
     renderStat(
