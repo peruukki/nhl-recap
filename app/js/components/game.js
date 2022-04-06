@@ -1,4 +1,5 @@
 import { div, span } from '@cycle/dom';
+import classNames from 'classnames';
 import _ from 'lodash';
 import { format } from 'timeago.js';
 
@@ -154,13 +155,13 @@ function renderInfoPanel({
 }
 
 function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats) {
-  const fadeInModifier = fadeIn ? '.fade-in' : '';
-  const afterGameModifier = showAfterGameStats ? '.game-stats--after-game' : '';
+  const selector = classNames({
+    '.game-stats': true,
+    '.game-stats--after-game': showAfterGameStats,
+    '.fade-in': fadeIn,
+  }).replace(/\s/g, '');
 
-  return div(
-    `.game-stats${afterGameModifier}${fadeInModifier}`,
-    renderTeamStats(teams, isPlayoffGame, teamStats)
-  );
+  return div(selector, renderTeamStats(teams, isPlayoffGame, teamStats));
 }
 
 function renderTeamStats(teams, isPlayoffGame, stats) {
