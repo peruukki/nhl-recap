@@ -53,18 +53,18 @@ export default function renderGame(
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
       renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
-      renderInfoPanel(
+      renderInfoPanel({
         showPreGameStats,
-        showAfterGameStats,
         showLatestGoal,
         showProgressInfo,
         startTime,
         teams,
         teamStats,
         status,
-        !!playoffSeriesWins,
-        latestGoal
-      ),
+        isAfterGame: showAfterGameStats,
+        isPlayoffGame: !!playoffSeriesWins,
+        latestGoal,
+      }),
       playoffSeriesWins
         ? renderSeriesWins(
             playoffSeriesWins,
@@ -130,18 +130,18 @@ function renderDelimiter(period) {
     : '';
 }
 
-function renderInfoPanel(
+function renderInfoPanel({
   showPreGameStats,
-  isAfterGame,
   showLatestGoal,
   showProgressInfo,
   startTime,
   teams,
   teamStats,
   status,
+  isAfterGame,
   isPlayoffGame,
-  latestGoal
-) {
+  latestGoal,
+}) {
   const modifierClass = isPlayoffGame ? '.game__info-panel--playoff' : '';
 
   return div(`.game__info-panel${modifierClass}`, [
