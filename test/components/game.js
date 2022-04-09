@@ -198,40 +198,30 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Div. rank';
 
-      assertGameStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[0],
-        statIndexes.divisionRank,
-        {
-          away: { value: '7' },
-          home: { value: '3', className: '--highlight' },
-          label,
-        }
-      );
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.divisionRank, {
+        away: { value: '7' },
+        home: { value: '3', className: '--highlight' },
+        label,
+      });
 
-      assertGameStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[1],
-        statIndexes.divisionRank,
-        {
-          away: { value: '2', className: '--highlight' },
-          home: { value: '8' },
-          label,
-        }
-      );
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.divisionRank, {
+        away: { value: '2', className: '--highlight' },
+        home: { value: '8' },
+        label,
+      });
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'NHL rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.leagueRank, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.leagueRank, {
         away: { value: '11' },
         home: { value: '8', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.leagueRank, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.leagueRank, {
         away: { value: '4', className: '--highlight' },
         home: { value: '26' },
         label,
@@ -242,13 +232,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Point-%';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.654' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.654' },
         home: { value: '.692', className: '--highlight' },
         label,
@@ -260,7 +250,7 @@ describe('game', () => {
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach(game => {
-        assertGameStats(gameDisplay, game, statIndexes.pointPct, {
+        assertStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },
           label: '',
@@ -272,13 +262,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Record';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: { value: [7, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
         label,
@@ -289,13 +279,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
       const label = 'Record';
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 3] },
         home: { value: [7, renderedDelimiter, 3] },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
         home: { value: [5, renderedDelimiter, 9] },
         label,
@@ -350,13 +340,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Div. rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
         away: { value: '7' },
         home: { value: '3', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
         away: { value: '2', className: '--highlight' },
         home: { value: '8' },
         label,
@@ -367,13 +357,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'NHL rank';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
         away: { value: '11' },
         home: { value: '8', className: '--highlight' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
         away: { value: '4', className: '--highlight' },
         home: { value: '26' },
         label,
@@ -384,13 +374,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Point-%';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
         away: { value: '.679', className: '--highlight' },
         home: { value: '.607' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
         away: { value: '.607' },
         home: { value: '.714', className: '--highlight' },
         label,
@@ -402,7 +392,7 @@ describe('game', () => {
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach(game => {
-        assertGameStats(gameDisplay, game, statIndexes.pointPct, {
+        assertStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },
           label: '',
@@ -414,13 +404,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Record';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
         away: { value: [9, renderedDelimiter, 4, renderedDelimiter, 1], className: '--highlight' },
         home: { value: [7, renderedDelimiter, 4, renderedDelimiter, 3] },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
         home: { value: [8, renderedDelimiter, 2, renderedDelimiter, 4], className: '--highlight' },
         label,
@@ -431,13 +421,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Record';
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
         away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
         home: { value: [7, renderedDelimiter, 4] },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
+      assertStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
         away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
         home: { value: [6, renderedDelimiter, 9] },
         label,
@@ -448,13 +438,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'Streak';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.streak, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.streak, {
         away: { value: '2 W', className: '--highlight' },
         home: { value: '1 L' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
         away: { value: '2 L' },
         home: { value: '2 W', className: '--highlight' },
         label,
@@ -465,13 +455,13 @@ describe('game', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
       const label = 'PO spot pts';
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
         away: { value: '+4' },
         home: { value: '+4' },
         label,
       });
 
-      assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
+      assertStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
         away: { value: '+2', className: '--highlight' },
         home: { value: '-2' },
         label,
@@ -826,13 +816,13 @@ function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
 }
 
 function assertPreGameStatsAreShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(gameDisplay, { status, teams }, goals, assert.deepEqual, 'div.stats');
+  assertStatsExistence(gameDisplay, { status, teams }, goals, assert.deepEqual, 'div.stats');
 }
 function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(gameDisplay, { status, teams }, goals, assert.notDeepEqual, 'div.stats');
+  assertStatsExistence(gameDisplay, { status, teams }, goals, assert.notDeepEqual, 'div.stats');
 }
 function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(
+  assertStatsExistence(
     gameDisplay,
     { status, teams },
     goals,
@@ -841,7 +831,7 @@ function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
   );
 }
 function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
-  assertGameStatsExistence(
+  assertStatsExistence(
     gameDisplay,
     { status, teams },
     goals,
@@ -849,18 +839,18 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
     'div.stats.stats--after-game'
   );
 }
-function assertGameStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
-  const gameStats = getGameStats(renderGame(gameDisplay, { status, teams }, goals));
-  assertFn(gameStats && gameStats.sel, selector);
+function assertStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
+  const stats = getStats(renderGame(gameDisplay, { status, teams }, goals));
+  assertFn(stats && stats.sel, selector);
 }
 
-function assertGameStats(
+function assertStats(
   gameDisplay,
   { state = GAME_STATE_FINISHED, teams, goals, preGameStats, currentStats },
   statIndex,
   renderedRecords
 ) {
-  const renderedStats = getGameStats(
+  const renderedStats = getStats(
     renderGame(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
   ).children[statIndex];
   const expected = expectedStat(renderedRecords);
@@ -958,7 +948,7 @@ function getLatestGoalPanel(vtree) {
   return getGameCard(vtree).children[1].children[0];
 }
 
-function getGameStats(vtree) {
+function getStats(vtree) {
   return getGameCard(vtree).children[1].children[2];
 }
 
