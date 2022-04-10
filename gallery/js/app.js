@@ -10,6 +10,7 @@ import {
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
+  GAME_STATE_NOT_STARTED,
 } from '../../app/js/events/constants';
 import scoresAllRegularTime from '../../test/data/latest.json';
 import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
@@ -71,6 +72,22 @@ function intent() {
         },
       ],
     },
+    {
+      gameStatus: {
+        description: 'not started',
+        status: { state: GAME_STATE_NOT_STARTED },
+        gameStats: undefined,
+      },
+      states: [
+        {
+          description: 'Playback in any state',
+          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          goalCount: 0,
+        },
+        null,
+        null,
+      ],
+    },
   ];
 }
 
@@ -88,12 +105,23 @@ function model(stateDefinitions) {
     gamesData.flatMap(gameData =>
       stateDefinitions.map(({ gameStatus, states }) => ({
         gameDescription: `${gameData.description} ${gameStatus.description}`,
-        games: states.map(state => ({
-          description: state.description,
-          gameDisplay: state.gameDisplays[gameDisplayIndex],
-          gameState: { ...gameData.data, status: gameStatus.status },
-          currentGoals: gameData.data.goals.slice(0, state.goalCount),
-        })),
+        games: states.map(state =>
+          state
+            ? {
+                description: state.description,
+                gameDisplay: state.gameDisplays[gameDisplayIndex],
+                gameState: {
+                  ...gameData.data,
+                  status: gameStatus.status,
+                  // eslint-disable-next-line no-prototype-builtins
+                  gameStats: gameStatus.hasOwnProperty('gameStats')
+                    ? gameStatus.gameStats
+                    : gameData.data.gameStats,
+                },
+                currentGoals: gameData.data.goals.slice(0, state.goalCount),
+              }
+            : null
+        ),
       }))
     )
   );
@@ -107,10 +135,12 @@ function view({ gameStates$ }) {
       gameStates.flatMap(({ gameDescription, games }) => [
         div('.gallery-heading', span('.gallery-heading__description', gameDescription)),
         ...games.map((game, gameIndex) =>
-          div('.gallery-game', [
-            div('.gallery-game__description', [game.description]),
-            renderGame(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
-          ])
+          game
+            ? div('.gallery-game', [
+                div('.gallery-game__description', [game.description]),
+                renderGame(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
+              ])
+            : div()
         ),
       ])
     )
