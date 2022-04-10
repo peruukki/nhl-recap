@@ -652,13 +652,14 @@ describe('game', () => {
 
     it('should show the team that has reached 3 wins winning the series in round 0', () => {
       const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
-      preGameStats.playoffSeries.round = 0;
-      preGameStats.playoffSeries.wins.NYR = 3;
+      const modifiedPreGameStats = _.cloneDeep(preGameStats);
+      modifiedPreGameStats.playoffSeries.round = 0;
+      modifiedPreGameStats.playoffSeries.wins.NYR = 3;
       assertPlayoffSeriesLead(
         GAME_DISPLAY_PLAYBACK,
         teams,
         goals,
-        preGameStats,
+        modifiedPreGameStats,
         GAME_STATE_FINISHED,
         'NYR',
         3,
@@ -670,13 +671,14 @@ describe('game', () => {
 
     it('should show the team that has reached 4 wins winning the series in round 1', () => {
       const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
-      preGameStats.playoffSeries.round = 1;
-      preGameStats.playoffSeries.wins.NYR = 4;
+      const modifiedPreGameStats = _.cloneDeep(preGameStats);
+      modifiedPreGameStats.playoffSeries.round = 1;
+      modifiedPreGameStats.playoffSeries.wins.NYR = 4;
       assertPlayoffSeriesLead(
         GAME_DISPLAY_PLAYBACK,
         teams,
         goals,
-        preGameStats,
+        modifiedPreGameStats,
         GAME_STATE_FINISHED,
         'NYR',
         4,
