@@ -169,6 +169,48 @@
           "period": "3"
         }
       ],
+      "gameStats": {
+        "blocked": {
+          "ANA": 5,
+          "NYR": 7
+        },
+        "faceOffWinPercentage": {
+          "ANA": "51.1",
+          "NYR": "48.9"
+        },
+        "giveaways": {
+          "ANA": 11,
+          "NYR": 8
+        },
+        "hits": {
+          "ANA": 26,
+          "NYR": 22
+        },
+        "pim": {
+          "ANA": 13,
+          "NYR": 6
+        },
+        "powerPlay": {
+          "ANA": {
+            "goals": 2,
+            "opportunities": 4,
+            "percentage": "50.0"
+          },
+          "NYR": {
+            "goals": 1,
+            "opportunities": 3,
+            "percentage": "33.3"
+          }
+        },
+        "shots": {
+          "ANA": 25,
+          "NYR": 32
+        },
+        "takeaways": {
+          "ANA": 5,
+          "NYR": 10
+        }
+      },
       "preGameStats": {
         "records": {
           "ANA": {

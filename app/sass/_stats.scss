@@ -1,12 +1,20 @@
 .stats {
   @include delayed-animation;
   width: 100%;
-  padding: ($stats-padding-height / 2) 0;
-  background-color: $background-stats;
 
   &__heading {
     color: $color-accent-light;
     font-size: 1rem;
     text-transform: uppercase;
+  }
+
+  &--game-stats {
+    padding: ($stats-padding-height / 2) 0;
+    background-color: $background-game-stats;
+  }
+
+  &--team-stats {
+    padding: ($stats-padding-height / 2) 0;
+    background-color: $background-team-stats;
   }
 }

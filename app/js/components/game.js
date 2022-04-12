@@ -21,7 +21,7 @@ import { renderPeriodNumber, renderTime } from './clock';
 
 export default function renderGame(
   gameDisplay,
-  { status, startTime, teams, preGameStats = {}, currentStats = {}, errors },
+  { status, startTime, teams, gameStats, preGameStats = {}, currentStats = {}, errors },
   currentGoals,
   gameAnimationIndex
 ) {
@@ -29,6 +29,9 @@ export default function renderGame(
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
   const period = latestGoal ? latestGoal.period : null;
+  const showGameStats =
+    gameStats &&
+    [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
   const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(
     gameDisplay
   );
@@ -54,11 +57,13 @@ export default function renderGame(
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
       renderScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
       renderInfoPanel({
+        showGameStats,
         showPreGameStats,
         showLatestGoal,
         showProgressInfo,
         startTime,
         teams,
+        gameStats,
         teamStats,
         status,
         isAfterGame: showAfterGameStats,
@@ -131,37 +136,70 @@ function renderDelimiter(period) {
 }
 
 function renderInfoPanel({
+  showGameStats,
   showPreGameStats,
   showLatestGoal,
   showProgressInfo,
   startTime,
   teams,
+  gameStats,
   teamStats,
   status,
   isAfterGame,
   isPlayoffGame,
   latestGoal,
 }) {
-  const modifierClass = isPlayoffGame ? '.game__info-panel--playoff' : '';
+  return div(
+    '.game__info-panel',
+    {
+      class: {
+        'game__info-panel--playoff': isPlayoffGame,
+        'game__info-panel--with-game-stats': !isPlayoffGame && gameStats,
+        'game__info-panel--playoff--with-game-stats': isPlayoffGame && gameStats,
+      },
+    },
+    [
+      showLatestGoal ? renderLatestGoal(latestGoal) : null,
+      showProgressInfo
+        ? div('.game-description.fade-in', renderGameStatus(status, startTime))
+        : null,
+      showGameStats ? renderGameStats(teams, gameStats) : null,
+      showPreGameStats || isAfterGame
+        ? renderTeamStats(
+            teams,
+            showProgressInfo || isAfterGame,
+            isAfterGame,
+            isPlayoffGame,
+            teamStats
+          )
+        : null,
+    ]
+  );
+}
 
-  return div(`.game__info-panel${modifierClass}`, [
-    showLatestGoal ? renderLatestGoal(latestGoal) : null,
-    showProgressInfo ? div('.game-description.fade-in', renderGameStatus(status, startTime)) : null,
-    showPreGameStats || isAfterGame
-      ? renderStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, teamStats)
-      : null,
+function renderGameStats(teams, stats) {
+  return div('.stats--game-stats', { class: { 'fade-in': true } }, [
+    div('.stats__heading', 'Game stats'),
+    renderStat(teams, stats.shots, 'Shots', getPositiveNumericalRating, renderPlainValue),
+    renderStat(teams, stats.blocked, 'Blocked', getPositiveNumericalRating, renderPlainValue),
+    renderStat(teams, stats.pim, 'Penalty min', getNegativeNumericalRating, renderPlainValue),
+    renderStat(teams, stats.hits, 'Hits', getPositiveNumericalRating, renderPlainValue),
+    renderStat(teams, stats.giveaways, 'Giveaways', getNegativeNumericalRating, renderPlainValue),
+    renderStat(teams, stats.takeaways, 'Takeaways', getPositiveNumericalRating, renderPlainValue),
+    renderStat(teams, stats.powerPlay, 'Power play', getPowerPlayRating, renderPowerPlay),
+    renderStat(
+      teams,
+      stats.faceOffWinPercentage,
+      'Faceoff-%',
+      getPositiveNumericalRating,
+      renderPlainValue
+    ),
   ]);
 }
 
-function renderStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, teamStats) {
+function renderTeamStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
   const modifierClass = showAfterGameStats ? '.stats--after-game' : '';
-  return div(`.stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
-    renderTeamStats(teams, isPlayoffGame, teamStats),
-  ]);
-}
-
-function renderTeamStats(teams, isPlayoffGame, stats) {
-  return [
+  return div(`.stats--team-stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
     renderStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
@@ -181,7 +219,7 @@ function renderTeamStats(teams, isPlayoffGame, stats) {
       getPlayoffSpotRating,
       renderPlayoffSpot
     ),
-  ];
+  ]);
 }
 
 function renderStat(teams, values, label, ratingFn, renderFn) {
@@ -217,6 +255,18 @@ function getHighlightClassNames(baseClassName, teams, values, ratingFn) {
   return { away: '', home: '' };
 }
 
+function getPositiveNumericalRating(value) {
+  return Number(value);
+}
+
+function getNegativeNumericalRating(value) {
+  return -Number(value);
+}
+
+function getPowerPlayRating({ percentage }) {
+  return percentage;
+}
+
 function getPointPercentage({ wins, losses, ot = 0 }) {
   const points = 2 * wins + ot;
   const maxPoints = 2 * (wins + losses + ot);
@@ -248,6 +298,10 @@ function getDivisionRankRating({ divisionRank }) {
 
 function getLeagueRankRating({ leagueRank }) {
   return -parseInt(leagueRank, 10);
+}
+
+function renderPlainValue(value) {
+  return value;
 }
 
 function renderWinPercentage(record) {
@@ -293,6 +347,10 @@ function renderDivisionRank({ divisionRank }) {
 
 function renderLeagueRank({ leagueRank }) {
   return leagueRank || '';
+}
+
+function renderPowerPlay({ goals, opportunities }) {
+  return `${goals}/${opportunities}`;
 }
 
 function renderLatestGoal(latestGoal) {

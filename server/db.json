@@ -98,6 +98,48 @@
           "away": { "abbreviation": "OTT", "id": 9 },
           "home": { "abbreviation": "TOR", "id": 10 }
         },
+        "gameStats": {
+          "blocked": {
+            "OTT": 5,
+            "TOR": 7
+          },
+          "faceOffWinPercentage": {
+            "OTT": "51.1",
+            "TOR": "48.9"
+          },
+          "giveaways": {
+            "OTT": 11,
+            "TOR": 8
+          },
+          "hits": {
+            "OTT": 26,
+            "TOR": 22
+          },
+          "pim": {
+            "OTT": 13,
+            "TOR": 6
+          },
+          "powerPlay": {
+            "OTT": {
+              "goals": 2,
+              "opportunities": 4,
+              "percentage": "50.0"
+            },
+            "TOR": {
+              "goals": 1,
+              "opportunities": 3,
+              "percentage": "33.3"
+            }
+          },
+          "shots": {
+            "OTT": 25,
+            "TOR": 32
+          },
+          "takeaways": {
+            "OTT": 5,
+            "TOR": 10
+          }
+        },
         "preGameStats": {
           "records": {
             "TOR": { "wins": 3, "losses": 3, "ot": 1 },
@@ -186,6 +228,48 @@
           "away": { "abbreviation": "WSH", "id": 15 },
           "home": { "abbreviation": "STL", "id": 19 }
         },
+        "gameStats": {
+          "blocked": {
+            "WSH": 6,
+            "STL": 6
+          },
+          "faceOffWinPercentage": {
+            "WSH": "45.5",
+            "STL": "54.5"
+          },
+          "giveaways": {
+            "WSH": 7,
+            "STL": 2
+          },
+          "hits": {
+            "WSH": 12,
+            "STL": 34
+          },
+          "pim": {
+            "WSH": 2,
+            "STL": 2
+          },
+          "powerPlay": {
+            "WSH": {
+              "goals": 1,
+              "opportunities": 1,
+              "percentage": "100.0"
+            },
+            "STL": {
+              "goals": 0,
+              "opportunities": 1,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "WSH": 27,
+            "STL": 21
+          },
+          "takeaways": {
+            "WSH": 5,
+            "STL": 7
+          }
+        },
         "preGameStats": {
           "records": {
             "WSH": { "wins": 3, "losses": 2, "ot": 2 },
@@ -272,6 +356,48 @@
           "away": { "abbreviation": "VAN", "id": 23 },
           "home": { "abbreviation": "EDM", "id": 22 }
         },
+        "gameStats": {
+          "blocked": {
+            "EDM": 3,
+            "VAN": 5
+          },
+          "faceOffWinPercentage": {
+            "EDM": "48.0",
+            "VAN": "52.0"
+          },
+          "giveaways": {
+            "EDM": 6,
+            "VAN": 6
+          },
+          "hits": {
+            "EDM": 16,
+            "VAN": 18
+          },
+          "pim": {
+            "EDM": 7,
+            "VAN": 6
+          },
+          "powerPlay": {
+            "EDM": {
+              "goals": 1,
+              "opportunities": 3,
+              "percentage": "33.3"
+            },
+            "VAN": {
+              "goals": 1,
+              "opportunities": 2,
+              "percentage": "50.0"
+            }
+          },
+          "shots": {
+            "EDM": 32,
+            "VAN": 35
+          },
+          "takeaways": {
+            "EDM": 6,
+            "VAN": 4
+          }
+        },
         "preGameStats": {
           "records": {
             "EDM": { "wins": 5, "losses": 1, "ot": 0 },
@@ -350,6 +476,48 @@
         "teams": {
           "away": { "abbreviation": "SJS", "id": 28 },
           "home": { "abbreviation": "VGK", "id": 54 }
+        },
+        "gameStats": {
+          "blocked": {
+            "SJS": 2,
+            "VGK": 3
+          },
+          "faceOffWinPercentage": {
+            "SJS": "51.1",
+            "VGK": "48.9"
+          },
+          "giveaways": {
+            "SJS": 13,
+            "VGK": 15
+          },
+          "hits": {
+            "SJS": 13,
+            "VGK": 16
+          },
+          "pim": {
+            "SJS": 6,
+            "VGK": 12
+          },
+          "powerPlay": {
+            "SJS": {
+              "goals": 0,
+              "opportunities": 5,
+              "percentage": "0.0"
+            },
+            "VGK": {
+              "goals": 0,
+              "opportunities": 2,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "SJS": 23,
+            "VGK": 23
+          },
+          "takeaways": {
+            "SJS": 9,
+            "VGK": 3
+          }
         },
         "preGameStats": {
           "records": {
@@ -455,6 +623,48 @@
         "teams": {
           "away": { "abbreviation": "FLA", "id": 13 },
           "home": { "abbreviation": "TBL", "id": 14 }
+        },
+        "gameStats": {
+          "blocked": {
+            "FLA": 8,
+            "TBL": 9
+          },
+          "faceOffWinPercentage": {
+            "FLA": "50.0",
+            "TBL": "50.0"
+          },
+          "giveaways": {
+            "FLA": 5,
+            "TBL": 12
+          },
+          "hits": {
+            "FLA": 22,
+            "TBL": 22
+          },
+          "pim": {
+            "FLA": 0,
+            "TBL": 0
+          },
+          "powerPlay": {
+            "FLA": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            },
+            "TBL": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "FLA": 37,
+            "TBL": 25
+          },
+          "takeaways": {
+            "FLA": 8,
+            "TBL": 9
+          }
         },
         "preGameStats": {
           "records": {
@@ -595,6 +805,48 @@
           "away": { "abbreviation": "WPG", "id": 52 },
           "home": { "abbreviation": "NYR", "id": 3 }
         },
+        "gameStats": {
+          "blocked": {
+            "WPG": 8,
+            "NYR": 12
+          },
+          "faceOffWinPercentage": {
+            "WPG": "58.2",
+            "NYR": "41.8"
+          },
+          "giveaways": {
+            "WPG": 5,
+            "NYR": 5
+          },
+          "hits": {
+            "WPG": 18,
+            "NYR": 24
+          },
+          "pim": {
+            "WPG": 7,
+            "NYR": 15
+          },
+          "powerPlay": {
+            "WPG": {
+              "goals": 3,
+              "opportunities": 4,
+              "percentage": "75.0"
+            },
+            "NYR": {
+              "goals": 1,
+              "opportunities": 1,
+              "percentage": "100.0"
+            }
+          },
+          "shots": {
+            "WPG": 33,
+            "NYR": 28
+          },
+          "takeaways": {
+            "WPG": 9,
+            "NYR": 14
+          }
+        },
         "preGameStats": {
           "records": {
             "NYR": { "wins": 1, "losses": 1, "ot": 0 },
@@ -668,6 +920,48 @@
         "teams": {
           "away": { "abbreviation": "BUF", "id": 7 },
           "home": { "abbreviation": "PIT", "id": 5 }
+        },
+        "gameStats": {
+          "blocked": {
+            "BUF": 7,
+            "PIT": 4
+          },
+          "faceOffWinPercentage": {
+            "BUF": "44.6",
+            "PIT": "55.4"
+          },
+          "giveaways": {
+            "BUF": 5,
+            "PIT": 3
+          },
+          "hits": {
+            "BUF": 25,
+            "PIT": 24
+          },
+          "pim": {
+            "BUF": 6,
+            "PIT": 4
+          },
+          "powerPlay": {
+            "BUF": {
+              "goals": 0,
+              "opportunities": 1,
+              "percentage": "0.0"
+            },
+            "PIT": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "BUF": 18,
+            "PIT": 25
+          },
+          "takeaways": {
+            "BUF": 7,
+            "PIT": 2
+          }
         },
         "preGameStats": {
           "records": {
@@ -766,6 +1060,48 @@
         "teams": {
           "away": { "abbreviation": "MTL", "id": 8 },
           "home": { "abbreviation": "CAR", "id": 12 }
+        },
+        "gameStats": {
+          "blocked": {
+            "MTL": 7,
+            "CAR": 8
+          },
+          "faceOffWinPercentage": {
+            "MTL": "41.4",
+            "CAR": "58.6"
+          },
+          "giveaways": {
+            "MTL": 7,
+            "CAR": 7
+          },
+          "hits": {
+            "MTL": 23,
+            "CAR": 17
+          },
+          "pim": {
+            "MTL": 6,
+            "CAR": 6
+          },
+          "powerPlay": {
+            "MTL": {
+              "goals": 1,
+              "opportunities": 3,
+              "percentage": "33.3"
+            },
+            "CAR": {
+              "goals": 2,
+              "opportunities": 3,
+              "percentage": "66.7"
+            }
+          },
+          "shots": {
+            "MTL": 28,
+            "CAR": 37
+          },
+          "takeaways": {
+            "MTL": 6,
+            "CAR": 13
+          }
         },
         "preGameStats": {
           "records": {
@@ -877,6 +1213,48 @@
           "away": { "abbreviation": "MIN", "id": 30 },
           "home": { "abbreviation": "NSH", "id": 18 }
         },
+        "gameStats": {
+          "blocked": {
+            "MIN": 8,
+            "NSH": 6
+          },
+          "faceOffWinPercentage": {
+            "MIN": "49.9",
+            "NSH": "50.1"
+          },
+          "giveaways": {
+            "MIN": 13,
+            "NSH": 7
+          },
+          "hits": {
+            "MIN": 16,
+            "NSH": 14
+          },
+          "pim": {
+            "MIN": 4,
+            "NSH": 0
+          },
+          "powerPlay": {
+            "MIN": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            },
+            "NSH": {
+              "goals": 0,
+              "opportunities": 2,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "MIN": 28,
+            "NSH": 28
+          },
+          "takeaways": {
+            "MIN": 7,
+            "NSH": 8
+          }
+        },
         "preGameStats": {
           "records": {
             "NSH": { "wins": 3, "losses": 2, "ot": 0 },
@@ -938,6 +1316,48 @@
         "teams": {
           "away": { "abbreviation": "BOS", "id": 6 },
           "home": { "abbreviation": "DAL", "id": 25 }
+        },
+        "gameStats": {
+          "blocked": {
+            "BOS": 11,
+            "DAL": 3
+          },
+          "faceOffWinPercentage": {
+            "WSH": "40.0",
+            "STL": "60.0"
+          },
+          "giveaways": {
+            "BOS": 4,
+            "DAL": 5
+          },
+          "hits": {
+            "BOS": 12,
+            "DAL": 17
+          },
+          "pim": {
+            "BOS": 8,
+            "DAL": 4
+          },
+          "powerPlay": {
+            "BOS": {
+              "goals": 1,
+              "opportunities": 2,
+              "percentage": "50.0"
+            },
+            "DAL": {
+              "goals": 2,
+              "opportunities": 4,
+              "percentage": "50.0"
+            }
+          },
+          "shots": {
+            "BOS": 37,
+            "DAL": 26
+          },
+          "takeaways": {
+            "BOS": 2,
+            "DAL": 6
+          }
         },
         "preGameStats": {
           "records": {
@@ -1060,6 +1480,48 @@
           "away": { "abbreviation": "CGY", "id": 20 },
           "home": { "abbreviation": "COL", "id": 21 }
         },
+        "gameStats": {
+          "blocked": {
+            "CGY": 8,
+            "COL": 7
+          },
+          "faceOffWinPercentage": {
+            "CGY": "40.6",
+            "COL": "59.4"
+          },
+          "giveaways": {
+            "CGY": 6,
+            "COL": 8
+          },
+          "hits": {
+            "CGY": 17,
+            "COL": 11
+          },
+          "pim": {
+            "CGY": 4,
+            "COL": 4
+          },
+          "powerPlay": {
+            "CGY": {
+              "goals": 1,
+              "opportunities": 1,
+              "percentage": "100.0"
+            },
+            "COL": {
+              "goals": 0,
+              "opportunities": 1,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "CGY": 23,
+            "COL": 22
+          },
+          "takeaways": {
+            "CGY": 4,
+            "COL": 6
+          }
+        },
         "preGameStats": {
           "records": {
             "COL": { "wins": 4, "losses": 0, "ot": 1 },
@@ -1112,6 +1574,48 @@
         "teams": {
           "away": { "abbreviation": "ARI", "id": 53 },
           "home": { "abbreviation": "ANA", "id": 24 }
+        },
+        "gameStats": {
+          "blocked": {
+            "ARI": 0,
+            "ANA": 1
+          },
+          "faceOffWinPercentage": {
+            "ARI": "57.0",
+            "ANA": "43.0"
+          },
+          "giveaways": {
+            "ARI": 0,
+            "ANA": 0
+          },
+          "hits": {
+            "ARI": 2,
+            "ANA": 1
+          },
+          "pim": {
+            "ARI": 0,
+            "ANA": 2
+          },
+          "powerPlay": {
+            "ARI": {
+              "goals": 0,
+              "opportunities": 1,
+              "percentage": "0.0"
+            },
+            "ANA": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "ARI": 2,
+            "ANA": 0
+          },
+          "takeaways": {
+            "ARI": 1,
+            "ANA": 0
+          }
         },
         "preGameStats": {
           "records": {
@@ -1170,6 +1674,48 @@
         "teams": {
           "away": { "abbreviation": "CHI", "id": 16 },
           "home": { "abbreviation": "PHI", "id": 4 }
+        },
+        "gameStats": {
+          "blocked": {
+            "CHI": 1,
+            "PHI": 0
+          },
+          "faceOffWinPercentage": {
+            "CHI": "46.4",
+            "PHI": "53.6"
+          },
+          "giveaways": {
+            "CHI": 1,
+            "PHI": 2
+          },
+          "hits": {
+            "CHI": 4,
+            "PHI": 2
+          },
+          "pim": {
+            "CHI": 0,
+            "PHI": 0
+          },
+          "powerPlay": {
+            "CHI": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            },
+            "PHI": {
+              "goals": 0,
+              "opportunities": 0,
+              "percentage": "0.0"
+            }
+          },
+          "shots": {
+            "CHI": 4,
+            "PHI": 2
+          },
+          "takeaways": {
+            "CHI": 1,
+            "PHI": 0
+          }
         },
         "preGameStats": {
           "records": {

@@ -27,9 +27,18 @@
     font-size: 1.2rem;
   }
 
+  $game-stats-line-count: 9;
+  $team-stats-line-count-not-finished: 3;
+  $team-stats-line-count-finished: 7;
+  $team-stats-line-count-playoff: 4;
+
+  @function get-stats-height($line-count) {
+    @return $stats-padding-height + $line-count * $stats-line-height;
+  }
+
   &__info-panel {
     position: relative;
-    height: $game-description-height + $stats-padding-height + 3 * $stats-line-height;
+    height: $game-description-height + get-stats-height($team-stats-line-count-not-finished);
     padding-bottom: 0.5rem;
     transition: height $height-duration $height-timing-function;
     font-size: 1.2rem;
@@ -45,12 +54,21 @@
     }
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED & {
-      height: $latest-goal-height + $stats-padding-height + 7 * $stats-line-height;
+      height: $latest-goal-height + get-stats-height($team-stats-line-count-finished);
+    }
+    .game--GAME_DISPLAY_POST_GAME_FINISHED &--with-game-stats {
+      height: $latest-goal-height + get-stats-height($team-stats-line-count-finished) +
+        get-stats-height($game-stats-line-count);
     }
 
     .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
-      height: $latest-goal-height + $game-description-height + $stats-padding-height + 3 *
-        $stats-line-height;
+      height: $latest-goal-height + $game-description-height +
+        get-stats-height($team-stats-line-count-not-finished);
+    }
+    .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS &--with-game-stats {
+      height: $latest-goal-height + $game-description-height +
+        get-stats-height($team-stats-line-count-not-finished) +
+        get-stats-height($game-stats-line-count);
     }
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED &,
@@ -62,21 +80,31 @@
     }
 
     &--playoff {
-      height: $game-description-height + $stats-padding-height + 4 * $stats-line-height;
+      height: $game-description-height + get-stats-height($team-stats-line-count-playoff);
 
       .game--GAME_DISPLAY_POST_GAME_FINISHED & {
-        height: $latest-goal-height + $stats-padding-height + 4 * $stats-line-height;
+        height: $latest-goal-height + get-stats-height($team-stats-line-count-playoff);
+      }
+      .game--GAME_DISPLAY_POST_GAME_FINISHED &--with-game-stats {
+        height: $latest-goal-height + get-stats-height($team-stats-line-count-playoff) +
+          get-stats-height($game-stats-line-count);
       }
 
       .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
-        height: $latest-goal-height + $game-description-height + $stats-padding-height + 4 *
-          $stats-line-height;
+        height: $latest-goal-height + $game-description-height +
+          get-stats-height($team-stats-line-count-playoff);
+      }
+      .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS &--with-game-stats {
+        height: $latest-goal-height + $game-description-height +
+          get-stats-height($team-stats-line-count-playoff) +
+          get-stats-height($game-stats-line-count);
       }
     }
   }
 
   &__series-wins {
     padding: 0.5rem 0;
+    background-color: $background-series-wins;
     color: $color-main;
     font-size: 1rem;
     text-transform: uppercase;
