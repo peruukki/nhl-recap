@@ -95,6 +95,8 @@
 
   &__series-wins {
     padding: 0.5rem 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
     background-color: $background-series-wins;
     color: $color-main;
     font-size: 1rem;
