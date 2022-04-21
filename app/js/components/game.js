@@ -178,7 +178,7 @@ function renderInfoPanel({
 }
 
 function renderGameStats(teams, stats) {
-  return div('.stats--game-stats', { class: { 'fade-in': true } }, [
+  return div('.stats.stats--game-stats', { class: { 'fade-in': true } }, [
     div('.stats__heading', 'Game stats'),
     renderStat(teams, stats.shots, 'Shots', getPositiveNumericalRating, renderPlainValue),
     renderStat(teams, stats.blocked, 'Blocked', getPositiveNumericalRating, renderPlainValue),
@@ -199,7 +199,7 @@ function renderGameStats(teams, stats) {
 
 function renderTeamStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
   const modifierClass = showAfterGameStats ? '.stats--after-game' : '';
-  return div(`.stats--team-stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
+  return div(`.stats.stats--team-stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
     renderStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),

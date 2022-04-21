@@ -27,15 +27,6 @@
     font-size: 1.2rem;
   }
 
-  $game-stats-line-count: 9;
-  $team-stats-line-count-not-finished: 3;
-  $team-stats-line-count-finished: 7;
-  $team-stats-line-count-playoff: 4;
-
-  @function get-stats-height($line-count) {
-    @return $stats-padding-height + $line-count * $stats-line-height;
-  }
-
   &__info-panel {
     position: relative;
     height: $game-description-height + get-stats-height($team-stats-line-count-not-finished);
@@ -73,7 +64,7 @@
 
     .game--GAME_DISPLAY_POST_GAME_FINISHED &,
     .game--GAME_DISPLAY_POST_GAME_IN_PROGRESS & {
-      .stats {
+      .stats--team-stats {
         position: absolute;
         bottom: 0;
       }

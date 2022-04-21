@@ -1,6 +1,10 @@
 .stats {
   @include delayed-animation;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
+  box-sizing: border-box;
 
   &__heading {
     color: $color-accent-light;
@@ -9,12 +13,20 @@
   }
 
   &--game-stats {
-    padding: ($stats-padding-height / 2) 0;
+    height: get-stats-height($game-stats-line-count);
     background-color: $background-game-stats;
   }
 
   &--team-stats {
-    padding: ($stats-padding-height / 2) 0;
+    height: get-stats-height($team-stats-line-count-not-finished);
     background-color: $background-team-stats;
+
+    .game--GAME_DISPLAY_POST_GAME_FINISHED & {
+      height: get-stats-height($team-stats-line-count-finished);
+    }
+
+    .game__info-panel--playoff & {
+      height: get-stats-height($team-stats-line-count-playoff);
+    }
   }
 }

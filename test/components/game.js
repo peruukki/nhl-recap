@@ -1026,7 +1026,7 @@ function assertPreGameStatsAreShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.deepEqual,
-    'div.stats--team-stats'
+    'div.stats.stats--team-stats'
   );
 }
 function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
@@ -1035,7 +1035,7 @@ function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.notDeepEqual,
-    'div.stats--team-stats'
+    'div.stats.stats--team-stats'
   );
 }
 function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
@@ -1044,7 +1044,7 @@ function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.deepEqual,
-    'div.stats--team-stats.stats--after-game'
+    'div.stats.stats--team-stats.stats--after-game'
   );
 }
 function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
@@ -1053,7 +1053,7 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
     { status, teams },
     goals,
     assert.notDeepEqual,
-    'div.stats--team-stats.stats--after-game'
+    'div.stats.stats--team-stats.stats--after-game'
   );
 }
 function assertStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
@@ -1067,7 +1067,7 @@ function assertGameStatsAreShown(gameDisplay, { status, teams, gameStats }, goal
     { status, teams, gameStats },
     goals,
     assert.deepEqual,
-    'div.stats--game-stats'
+    'div.stats.stats--game-stats'
   );
 }
 function assertGameStatsAreNotShown(gameDisplay, { status, teams, gameStats }, goals) {
@@ -1076,7 +1076,7 @@ function assertGameStatsAreNotShown(gameDisplay, { status, teams, gameStats }, g
     { status, teams, gameStats },
     goals,
     assert.notDeepEqual,
-    'div.stats--game-stats'
+    'div.stats.stats--game-stats'
   );
 }
 function assertGameStatsExistence(
