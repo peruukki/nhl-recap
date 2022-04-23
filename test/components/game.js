@@ -7,8 +7,8 @@ import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
   renderLatestGoalTime,
-} from '../../app/js/components/info-panel';
-import { delimiter as renderedDelimiter } from '../../app/js/components/stats/team-stats';
+} from '../../app/js/components/info-panel/info-panel';
+import { delimiter as renderedDelimiter } from '../../app/js/components/info-panel/stats/team-stats';
 import {
   ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
   ERROR_MISSING_ALL_GOALS,

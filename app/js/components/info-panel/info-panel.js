@@ -6,9 +6,9 @@ import {
   GAME_STATE_NOT_STARTED,
   GAME_STATE_POSTPONED,
   PERIOD_SHOOTOUT,
-} from '../events/constants';
-import { truncatePlayerName } from '../utils/utils';
-import { renderPeriodNumber, renderTime } from './clock';
+} from '../../events/constants';
+import { truncatePlayerName } from '../../utils/utils';
+import { renderPeriodNumber, renderTime } from '../clock';
 import GameStats from './stats/game-stats';
 import TeamStats from './stats/team-stats';
 
