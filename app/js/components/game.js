@@ -2,13 +2,12 @@ import { div } from '@cycle/dom';
 import _ from 'lodash';
 
 import {
-  ERROR_MISSING_ALL_GOALS,
-  ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
 } from '../events/constants';
+import ErrorsPanel from './errors-panel';
 import InfoPanel from './info-panel';
 import ScorePanel from './score-panel';
 import SeriesWinsPanel from './series-wins-panel';
@@ -71,7 +70,7 @@ export default function renderGame(
             updatePlayoffSeriesWins
           )
         : null,
-      errors ? renderErrors(errors) : null,
+      errors ? ErrorsPanel(errors) : null,
     ]),
   ]);
 }
@@ -91,25 +90,4 @@ function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) 
       ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }
       : { [teams.home.abbreviation]: seriesWins[teams.home.abbreviation] + 1 };
   return _.merge({}, seriesWins, updatedWinCount);
-}
-
-function renderErrors(errors) {
-  return div('.game__errors', errors.map(getErrorText));
-}
-
-function getErrorText({ error, details = {} }) {
-  switch (error) {
-    case ERROR_MISSING_ALL_GOALS:
-      return 'Missing all goal data';
-    case ERROR_SCORE_AND_GOAL_COUNT_MISMATCH: {
-      const { goalCount, scoreCount } = details;
-      const difference = Math.abs(goalCount - scoreCount);
-      const pluralSuffix = difference === 1 ? '' : 's';
-      return goalCount < scoreCount
-        ? `Missing ${difference} goal${pluralSuffix} from data`
-        : `${difference} too many goals in data`;
-    }
-    default:
-      return `Unknown error ${error}`;
-  }
 }
