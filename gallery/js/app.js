@@ -1,7 +1,7 @@
 import { div, span } from '@cycle/dom';
 import xs from 'xstream';
 
-import renderGame from '../../app/js/components/game';
+import Game from '../../app/js/components/game';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -138,7 +138,7 @@ function view({ gameStates$ }) {
           game
             ? div('.gallery-game', [
                 div('.gallery-game__description', [game.description]),
-                renderGame(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
+                Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
               ])
             : div()
         ),

@@ -12,7 +12,7 @@ import InfoPanel from './info-panel';
 import ScorePanel from './score-panel';
 import SeriesWinsPanel from './series-wins-panel';
 
-export default function renderGame(
+export default function Game(
   gameDisplay,
   { status, startTime, teams, gameStats, preGameStats = {}, currentStats = {}, errors },
   currentGoals,

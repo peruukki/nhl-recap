@@ -6,7 +6,7 @@ import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from '../events/
 import getGameDisplays$ from '../events/game-displays';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
-import renderGame from './game';
+import Game from './game';
 
 export default function main(animations, $window) {
   return ({ DOM, HTTP }) => {
@@ -194,7 +194,7 @@ function renderScores(state) {
     ? div(
         scoreListClass,
         state.games.map((game, index) =>
-          renderGame(
+          Game(
             state.gameDisplays[index],
             game,
             state.currentGoals[index] || [],

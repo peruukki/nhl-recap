@@ -2,7 +2,7 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import renderGame from '../../app/js/components/game';
+import Game from '../../app/js/components/game';
 import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
@@ -992,9 +992,7 @@ function assertGoalCounts(
   homeGoals,
   visibilityClass = '.fade-in'
 ) {
-  const teamPanels = getTeamPanels(
-    renderGame(gameDisplay, { status: { state }, teams }, currentGoals)
-  );
+  const teamPanels = getTeamPanels(Game(gameDisplay, { status: { state }, teams }, currentGoals));
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
 }
@@ -1006,16 +1004,14 @@ function assertDelimiter(
   delimiter,
   visibilityClass = '.fade-in'
 ) {
-  const delimiterNode = getDelimiter(
-    renderGame(gameDisplay, { status: { state }, teams }, currentGoals)
-  );
+  const delimiterNode = getDelimiter(Game(gameDisplay, { status: { state }, teams }, currentGoals));
   const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
 }
 
 function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
   const latestGoalPanel = getLatestGoalPanel(
-    renderGame(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals)
+    Game(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals)
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
@@ -1058,7 +1054,7 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
   );
 }
 function assertStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
-  const stats = getTeamStats(renderGame(gameDisplay, { status, teams }, goals));
+  const stats = getTeamStats(Game(gameDisplay, { status, teams }, goals));
   assertFn(stats && stats.sel, selector);
 }
 
@@ -1087,7 +1083,7 @@ function assertGameStatsExistence(
   assertFn,
   selector
 ) {
-  const stats = getGameStats(renderGame(gameDisplay, { status, teams, gameStats }, goals));
+  const stats = getGameStats(Game(gameDisplay, { status, teams, gameStats }, goals));
   assertFn(stats && stats.sel, selector);
 }
 
@@ -1098,7 +1094,7 @@ function assertGameStats(
   renderedRecords
 ) {
   const renderedStats = getGameStats(
-    renderGame(gameDisplay, { status: { state }, teams, gameStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, gameStats }, goals)
   ).children[statIndex];
   const expected = expectedStat(renderedRecords);
   assert.deepEqual(renderedStats, expected);
@@ -1111,7 +1107,7 @@ function assertTeamStats(
   renderedRecords
 ) {
   const renderedStats = getTeamStats(
-    renderGame(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
   ).children[statIndex];
   const expected = expectedStat(renderedRecords);
   assert.deepEqual(renderedStats, expected);
@@ -1119,7 +1115,7 @@ function assertTeamStats(
 
 function assertGameDescription(gameDisplay, { status, startTime, teams }, goals, description) {
   const gameDescription = getGameDescription(
-    renderGame(gameDisplay, { status, startTime, teams }, goals)
+    Game(gameDisplay, { status, startTime, teams }, goals)
   );
   const expected = expectedGameDescription(description);
   assert.deepEqual(gameDescription, expected);
@@ -1175,7 +1171,7 @@ function assertPlayoffSeriesWins(
   expectedSeriesWinsVtree
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    renderGame(gameDisplay, { status: { state }, teams, preGameStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, preGameStats }, goals)
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
@@ -1183,7 +1179,7 @@ function assertPlayoffSeriesWins(
 
 function assertErrors(gameErrors, expectedErrors) {
   const errorsPanel = getErrorsPanel(
-    renderGame(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, [])
+    Game(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, [])
   );
   const expected = expectedErrorsPanel(expectedErrors);
   assert.deepEqual(errorsPanel, expected);
