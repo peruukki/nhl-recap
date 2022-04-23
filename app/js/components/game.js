@@ -18,6 +18,8 @@ import {
 import { renderTeamLogo } from '../utils/logos';
 import { truncatePlayerName } from '../utils/utils';
 import { renderPeriodNumber, renderTime } from './clock';
+import GameStats from './stats/game-stats';
+import TeamStats from './stats/team-stats';
 
 export default function renderGame(
   gameDisplay,
@@ -163,194 +165,12 @@ function renderInfoPanel({
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
-      showGameStats ? renderGameStats(teams, gameStats) : null,
+      showGameStats ? GameStats(teams, gameStats) : null,
       showPreGameStats || isAfterGame
-        ? renderTeamStats(
-            teams,
-            showProgressInfo || isAfterGame,
-            isAfterGame,
-            isPlayoffGame,
-            teamStats
-          )
+        ? TeamStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, teamStats)
         : null,
     ]
   );
-}
-
-function renderGameStats(teams, stats) {
-  return div('.stats.stats--game-stats', { class: { 'fade-in': true } }, [
-    div('.stats__heading', 'Game stats'),
-    renderStat(teams, stats.shots, 'Shots', getPositiveNumericalRating, renderPlainValue),
-    renderStat(teams, stats.blocked, 'Blocked', getPositiveNumericalRating, renderPlainValue),
-    renderStat(teams, stats.pim, 'Penalty min', getNegativeNumericalRating, renderPlainValue),
-    renderStat(teams, stats.hits, 'Hits', getPositiveNumericalRating, renderPlainValue),
-    renderStat(teams, stats.giveaways, 'Giveaways', getNegativeNumericalRating, renderPlainValue),
-    renderStat(teams, stats.takeaways, 'Takeaways', getPositiveNumericalRating, renderPlainValue),
-    renderStat(teams, stats.powerPlay, 'Power play', getPowerPlayRating, renderPowerPlay),
-    renderStat(
-      teams,
-      stats.faceOffWinPercentage,
-      'Faceoff-%',
-      getPositiveNumericalRating,
-      renderPlainValue
-    ),
-  ]);
-}
-
-function renderTeamStats(teams, fadeIn, showAfterGameStats, isPlayoffGame, stats) {
-  const modifierClass = showAfterGameStats ? '.stats--after-game' : '';
-  return div(`.stats.stats--team-stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
-    div('.stats__heading', 'Team stats'),
-    renderStat(teams, stats.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
-    renderStat(teams, stats.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-    renderStat(
-      teams,
-      isPlayoffGame ? null : stats.records,
-      'Point-%',
-      renderWinPercentage,
-      renderWinPercentage
-    ),
-    renderStat(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
-    renderStat(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
-    renderStat(
-      teams,
-      isPlayoffGame ? null : stats.standings,
-      'PO spot pts',
-      getPlayoffSpotRating,
-      renderPlayoffSpot
-    ),
-  ]);
-}
-
-function renderStat(teams, values, label, ratingFn, renderFn) {
-  const valueClassName = '.stat__value';
-  const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
-  return div('.stat', [
-    span(
-      `${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
-      values ? renderFn(values[teams.away.abbreviation]) : ''
-    ),
-    span('.stat__label', values ? label : ''),
-    span(
-      `${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
-      values ? renderFn(values[teams.home.abbreviation]) : ''
-    ),
-  ]);
-}
-
-function getHighlightClassNames(baseClassName, teams, values, ratingFn) {
-  if (!values) {
-    return { away: '', home: '' };
-  }
-
-  const awayRating = ratingFn(values[teams.away.abbreviation]);
-  const homeRating = ratingFn(values[teams.home.abbreviation]);
-
-  if (awayRating > homeRating) {
-    return { away: `${baseClassName}--highlight`, home: '' };
-  }
-  if (homeRating > awayRating) {
-    return { away: '', home: `${baseClassName}--highlight` };
-  }
-  return { away: '', home: '' };
-}
-
-function getPositiveNumericalRating(value) {
-  return Number(value);
-}
-
-function getNegativeNumericalRating(value) {
-  return -Number(value);
-}
-
-function getPowerPlayRating({ percentage }) {
-  return percentage;
-}
-
-function getPointPercentage({ wins, losses, ot = 0 }) {
-  const points = 2 * wins + ot;
-  const maxPoints = 2 * (wins + losses + ot);
-  return points / maxPoints;
-}
-
-function getStreakRating(streak) {
-  return streak ? streak.count * getStreakMultiplier(streak.type) : 0;
-}
-
-function getStreakMultiplier(type) {
-  switch (type) {
-    case 'WINS':
-      return 1;
-    case 'LOSSES':
-      return -1;
-    default:
-      return 0;
-  }
-}
-
-function getPlayoffSpotRating({ pointsFromPlayoffSpot }) {
-  return parseInt(pointsFromPlayoffSpot, 10);
-}
-
-function getDivisionRankRating({ divisionRank }) {
-  return -parseInt(divisionRank, 10);
-}
-
-function getLeagueRankRating({ leagueRank }) {
-  return -parseInt(leagueRank, 10);
-}
-
-function renderPlainValue(value) {
-  return value;
-}
-
-function renderWinPercentage(record) {
-  const percentage = getPointPercentage(record);
-  if (isNaN(percentage)) {
-    return '-';
-  }
-
-  const sliceIndex = percentage < 1 ? 1 : 0;
-  return percentage.toFixed(3).slice(sliceIndex);
-}
-
-export const delimiter = span('.stat__delimiter', ['-']);
-
-function renderRecord({ wins, losses, ot }) {
-  return ot !== undefined ? [wins, delimiter, losses, delimiter, ot] : [wins, delimiter, losses];
-}
-
-function renderStreak(streak) {
-  return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
-}
-
-function renderStreakType({ type }) {
-  switch (type) {
-    case 'WINS':
-      return 'W';
-    case 'LOSSES':
-      return 'L';
-    case 'OT':
-      return 'OT L';
-    default:
-      return '';
-  }
-}
-
-function renderPlayoffSpot({ pointsFromPlayoffSpot }) {
-  return pointsFromPlayoffSpot || '';
-}
-
-function renderDivisionRank({ divisionRank }) {
-  return divisionRank || '';
-}
-
-function renderLeagueRank({ leagueRank }) {
-  return leagueRank || '';
-}
-
-function renderPowerPlay({ goals, opportunities }) {
-  return `${goals}/${opportunities}`;
 }
 
 function renderLatestGoal(latestGoal) {

@@ -3,11 +3,11 @@ import _ from 'lodash';
 import { assert } from 'chai';
 
 import renderGame, {
-  delimiter as renderedDelimiter,
   renderLatestGoalTime,
   renderLatestGoalScorer,
   renderLatestGoalAssists,
 } from '../../app/js/components/game';
+import { delimiter as renderedDelimiter } from '../../app/js/components/stats/team-stats';
 import {
   ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
   ERROR_MISSING_ALL_GOALS,
