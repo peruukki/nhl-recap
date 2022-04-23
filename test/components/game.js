@@ -2,11 +2,12 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import renderGame, {
-  renderLatestGoalTime,
-  renderLatestGoalScorer,
+import renderGame from '../../app/js/components/game';
+import {
   renderLatestGoalAssists,
-} from '../../app/js/components/game';
+  renderLatestGoalScorer,
+  renderLatestGoalTime,
+} from '../../app/js/components/info-panel';
 import { delimiter as renderedDelimiter } from '../../app/js/components/stats/team-stats';
 import {
   ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
