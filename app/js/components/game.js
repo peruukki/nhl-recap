@@ -63,7 +63,7 @@ export default function Game(
         playoffSeries: preGameStats.playoffSeries,
         addCurrentGameToWins: updatePlayoffSeriesWins,
       }),
-      errors ? ErrorsPanel(errors) : null,
+      ErrorsPanel(errors),
     ]),
   ]);
 }

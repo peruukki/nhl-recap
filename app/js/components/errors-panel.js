@@ -3,7 +3,7 @@ import { div } from '@cycle/dom';
 import { ERROR_MISSING_ALL_GOALS, ERROR_SCORE_AND_GOAL_COUNT_MISMATCH } from '../events/constants';
 
 export default function ErrorsPanel(errors) {
-  return div('.game__errors', errors.map(getErrorText));
+  return errors ? div('.game__errors', errors.map(getErrorText)) : null;
 }
 
 function getErrorText({ error, details = {} }) {
