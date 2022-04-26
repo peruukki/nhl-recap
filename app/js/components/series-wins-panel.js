@@ -1,11 +1,29 @@
 import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 
-export default function SeriesWinsPanel(seriesWins, playoffRound, isChanged) {
-  const animationClass = isChanged ? '.fade-in' : '';
+export default function SeriesWinsPanel({
+  teams,
+  awayGoals,
+  homeGoals,
+  playoffSeries,
+  addCurrentGameToWins,
+}) {
+  if (!playoffSeries) {
+    return null;
+  }
+
+  const playoffSeriesWins = getPlayoffSeriesWins(
+    teams,
+    awayGoals,
+    homeGoals,
+    playoffSeries,
+    addCurrentGameToWins
+  );
+  const animationClass = addCurrentGameToWins ? '.fade-in' : '';
+
   return div(
     `.game__series-wins${animationClass}`,
-    getSeriesWinsDescription(seriesWins, playoffRound)
+    getSeriesWinsDescription(playoffSeriesWins, playoffSeries.round)
   );
 }
 
@@ -39,4 +57,18 @@ function getSeriesWinsDescription(seriesWins, playoffRound) {
     span('.series-wins__delimiter', '-'),
     span('.series-wins__trailing-count', String(trailing.wins)),
   ];
+}
+
+function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, addCurrentGameToWins) {
+  return addCurrentGameToWins
+    ? getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals)
+    : playoffSeries.wins;
+}
+
+function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) {
+  const updatedWinCount =
+    awayGoals.length > homeGoals.length
+      ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }
+      : { [teams.home.abbreviation]: seriesWins[teams.home.abbreviation] + 1 };
+  return _.merge({}, seriesWins, updatedWinCount);
 }

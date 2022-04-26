@@ -39,13 +39,6 @@ export default function Game(
   const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
 
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
-  const playoffSeriesWins = getPlayoffSeriesWins(
-    teams,
-    awayGoals,
-    homeGoals,
-    preGameStats.playoffSeries,
-    updatePlayoffSeriesWins
-  );
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
       ScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
@@ -60,34 +53,17 @@ export default function Game(
         teamStats,
         status,
         isAfterGame: showAfterGameStats,
-        isPlayoffGame: !!playoffSeriesWins,
+        isPlayoffGame: !!preGameStats.playoffSeries,
         latestGoal,
       }),
-      playoffSeriesWins
-        ? SeriesWinsPanel(
-            playoffSeriesWins,
-            preGameStats.playoffSeries.round,
-            updatePlayoffSeriesWins
-          )
-        : null,
+      SeriesWinsPanel({
+        teams,
+        awayGoals,
+        homeGoals,
+        playoffSeries: preGameStats.playoffSeries,
+        addCurrentGameToWins: updatePlayoffSeriesWins,
+      }),
       errors ? ErrorsPanel(errors) : null,
     ]),
   ]);
-}
-
-function getPlayoffSeriesWins(teams, awayGoals, homeGoals, playoffSeries, updatePlayoffSeriesWins) {
-  if (playoffSeries) {
-    return updatePlayoffSeriesWins
-      ? getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals)
-      : playoffSeries.wins;
-  }
-  return null;
-}
-
-function getPlayoffSeriesWinsAfterGame(seriesWins, teams, awayGoals, homeGoals) {
-  const updatedWinCount =
-    awayGoals.length > homeGoals.length
-      ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }
-      : { [teams.home.abbreviation]: seriesWins[teams.home.abbreviation] + 1 };
-  return _.merge({}, seriesWins, updatedWinCount);
 }
