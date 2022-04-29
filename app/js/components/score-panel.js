@@ -3,7 +3,13 @@ import { div, span } from '@cycle/dom';
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 import { renderTeamLogo } from '../utils/logos';
 
-export default function ScorePanel({ teams, awayGoals, homeGoals, period, isBeforeGame }) {
+export default function ScorePanel({
+  teams,
+  awayGoals,
+  homeGoals,
+  latestGoalPeriod,
+  isBeforeGame,
+}) {
   const scoreVisibilityClass = isBeforeGame ? '.team-panel__team-score--hidden' : '.fade-in';
   const delimiterVisibilityClass = isBeforeGame ? '' : '.fade-in';
   return div('.game__score-panel', [
@@ -14,7 +20,7 @@ export default function ScorePanel({ teams, awayGoals, homeGoals, period, isBefo
     ]),
     div(
       `.team-panel__delimiter${delimiterVisibilityClass}`,
-      isBeforeGame ? 'at' : renderDelimiter(period)
+      isBeforeGame ? 'at' : renderDelimiter(latestGoalPeriod)
     ),
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),

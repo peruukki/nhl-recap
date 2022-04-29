@@ -21,7 +21,6 @@ export default function Game(
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
-  const period = latestGoal ? latestGoal.period : null;
   const showGameStats =
     gameStats &&
     [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
@@ -29,22 +28,26 @@ export default function Game(
     gameDisplay
   );
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
-  const showLatestGoal = gameDisplay !== GAME_DISPLAY_PRE_GAME;
   const showProgressInfo = [
     GAME_DISPLAY_PRE_GAME,
     GAME_DISPLAY_IN_PROGRESS,
     GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   ].includes(gameDisplay);
-  const isBeforeGame = gameDisplay === GAME_DISPLAY_PRE_GAME;
 
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
-      ScorePanel({ teams, awayGoals, homeGoals, period, isBeforeGame }),
+      ScorePanel({
+        teams,
+        awayGoals,
+        homeGoals,
+        latestGoalPeriod: latestGoal ? latestGoal.period : null,
+        isBeforeGame: gameDisplay === GAME_DISPLAY_PRE_GAME,
+      }),
       InfoPanel({
         showGameStats,
         showPreGameStats,
-        showLatestGoal,
+        showLatestGoal: gameDisplay !== GAME_DISPLAY_PRE_GAME,
         showProgressInfo,
         startTime,
         teams,
