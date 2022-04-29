@@ -29,7 +29,6 @@ export default function Game(
     gameDisplay
   );
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
-  const updatePlayoffSeriesWins = showAfterGameStats;
   const showLatestGoal = gameDisplay !== GAME_DISPLAY_PRE_GAME;
   const showProgressInfo = [
     GAME_DISPLAY_PRE_GAME,
@@ -61,7 +60,7 @@ export default function Game(
         awayGoals,
         homeGoals,
         playoffSeries: preGameStats.playoffSeries,
-        addCurrentGameToWins: updatePlayoffSeriesWins,
+        addCurrentGameToWins: showAfterGameStats,
       }),
       ErrorsPanel(errors),
     ]),
