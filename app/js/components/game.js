@@ -40,7 +40,7 @@ export default function Game(
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
-      ScorePanel(teams, awayGoals, homeGoals, period, isBeforeGame),
+      ScorePanel({ teams, awayGoals, homeGoals, period, isBeforeGame }),
       InfoPanel({
         showGameStats,
         showPreGameStats,
