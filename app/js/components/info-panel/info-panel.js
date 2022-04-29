@@ -3,6 +3,7 @@ import { format } from 'timeago.js';
 
 import {
   GAME_DISPLAY_IN_PROGRESS,
+  GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
   GAME_STATE_IN_PROGRESS,
@@ -17,14 +18,12 @@ import TeamStats from './stats/team-stats';
 
 export default function InfoPanel({
   gameDisplay,
-  showGameStats,
-  showPreGameStats,
   startTime,
   teams,
   gameStats,
-  teamStats,
+  preGameStats,
+  currentStats,
   status,
-  isAfterGame,
   isPlayoffGame,
   latestGoal,
 }) {
@@ -33,6 +32,14 @@ export default function InfoPanel({
     GAME_DISPLAY_IN_PROGRESS,
     GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   ].includes(gameDisplay);
+  const showGameStats =
+    gameStats &&
+    [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
+  const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(
+    gameDisplay
+  );
+  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
+  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
 
   return div(
     '.game__info-panel',
@@ -49,8 +56,14 @@ export default function InfoPanel({
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
       showGameStats ? GameStats(teams, gameStats) : null,
-      showPreGameStats || isAfterGame
-        ? TeamStats(teams, showProgressInfo || isAfterGame, isAfterGame, isPlayoffGame, teamStats)
+      showPreGameStats || showAfterGameStats
+        ? TeamStats(
+            teams,
+            showProgressInfo || showAfterGameStats,
+            showAfterGameStats,
+            isPlayoffGame,
+            teamStats
+          )
         : null,
     ]
   );

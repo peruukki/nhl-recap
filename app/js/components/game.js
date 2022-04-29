@@ -1,11 +1,7 @@
 import { div } from '@cycle/dom';
 import _ from 'lodash';
 
-import {
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  GAME_DISPLAY_PRE_GAME,
-} from '../events/constants';
+import { GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_PRE_GAME } from '../events/constants';
 import ErrorsPanel from './errors-panel';
 import InfoPanel from './info-panel';
 import ScorePanel from './score-panel';
@@ -20,15 +16,7 @@ export default function Game(
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
-  const showGameStats =
-    gameStats &&
-    [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
-  const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(
-    gameDisplay
-  );
-  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
 
-  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [
       ScorePanel({
@@ -40,14 +28,12 @@ export default function Game(
       }),
       InfoPanel({
         gameDisplay,
-        showGameStats,
-        showPreGameStats,
         startTime,
         teams,
         gameStats,
-        teamStats,
+        preGameStats,
+        currentStats,
         status,
-        isAfterGame: showAfterGameStats,
         isPlayoffGame: !!preGameStats.playoffSeries,
         latestGoal,
       }),
@@ -56,7 +42,7 @@ export default function Game(
         awayGoals,
         homeGoals,
         playoffSeries: preGameStats.playoffSeries,
-        addCurrentGameToWins: showAfterGameStats,
+        addCurrentGameToWins: gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED,
       }),
       ErrorsPanel(errors),
     ]),
