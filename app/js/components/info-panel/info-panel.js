@@ -2,6 +2,9 @@ import { div, span } from '@cycle/dom';
 import { format } from 'timeago.js';
 
 import {
+  GAME_DISPLAY_IN_PROGRESS,
+  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
+  GAME_DISPLAY_PRE_GAME,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
   GAME_STATE_POSTPONED,
@@ -13,10 +16,9 @@ import GameStats from './stats/game-stats';
 import TeamStats from './stats/team-stats';
 
 export default function InfoPanel({
+  gameDisplay,
   showGameStats,
   showPreGameStats,
-  showLatestGoal,
-  showProgressInfo,
   startTime,
   teams,
   gameStats,
@@ -26,6 +28,12 @@ export default function InfoPanel({
   isPlayoffGame,
   latestGoal,
 }) {
+  const showProgressInfo = [
+    GAME_DISPLAY_PRE_GAME,
+    GAME_DISPLAY_IN_PROGRESS,
+    GAME_DISPLAY_POST_GAME_IN_PROGRESS,
+  ].includes(gameDisplay);
+
   return div(
     '.game__info-panel',
     {
@@ -36,7 +44,7 @@ export default function InfoPanel({
       },
     },
     [
-      showLatestGoal ? renderLatestGoal(latestGoal) : null,
+      gameDisplay !== GAME_DISPLAY_PRE_GAME ? renderLatestGoal(latestGoal) : null,
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,

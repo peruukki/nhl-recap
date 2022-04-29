@@ -2,7 +2,6 @@ import { div } from '@cycle/dom';
 import _ from 'lodash';
 
 import {
-  GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
@@ -28,11 +27,6 @@ export default function Game(
     gameDisplay
   );
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
-  const showProgressInfo = [
-    GAME_DISPLAY_PRE_GAME,
-    GAME_DISPLAY_IN_PROGRESS,
-    GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  ].includes(gameDisplay);
 
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
   return div('.game-container', [
@@ -45,10 +39,9 @@ export default function Game(
         isBeforeGame: gameDisplay === GAME_DISPLAY_PRE_GAME,
       }),
       InfoPanel({
+        gameDisplay,
         showGameStats,
         showPreGameStats,
-        showLatestGoal: gameDisplay !== GAME_DISPLAY_PRE_GAME,
-        showProgressInfo,
         startTime,
         teams,
         gameStats,
