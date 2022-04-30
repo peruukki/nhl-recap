@@ -1,6 +1,6 @@
 import { div, span } from '@cycle/dom';
-import _ from 'lodash';
 import { assert } from 'chai';
+import _ from 'lodash';
 
 import Game from 'app/js/components/game';
 import {
@@ -21,10 +21,10 @@ import {
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
 } from 'app/js/events/constants';
 
-import scoresAllRegularTime from '../data/latest.json';
-import scoresMultipleOvertime from '../data/latest-2-ot.json';
-import scoresAllRegularTimePlayoffs from '../data/latest-playoffs.json';
-import { getGameCard } from '../test-utils';
+import scoresAllRegularTime from '../../data/latest.json';
+import scoresMultipleOvertime from '../../data/latest-2-ot.json';
+import scoresAllRegularTimePlayoffs from '../../data/latest-playoffs.json';
+import { getGameCard } from '../../test-utils';
 
 const inProgressGameProgress = {
   currentPeriod: 1,
@@ -52,7 +52,7 @@ const teamStatIndexes = {
   playoffSpotPts: 6,
 };
 
-describe('game', () => {
+describe('info panel', () => {
   describe('latest goal panel', () => {
     it('should show nothing before the playback has reached the first goal scoring time', () => {
       const { teams } = scoresAllRegularTime.games[1];
