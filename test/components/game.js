@@ -2,13 +2,13 @@ import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import Game from '../../app/js/components/game';
+import Game from 'app/js/components/game';
 import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
   renderLatestGoalTime,
-} from '../../app/js/components/info-panel/info-panel';
-import { delimiter as renderedDelimiter } from '../../app/js/components/info-panel/stats/team-stats';
+} from 'app/js/components/info-panel/info-panel';
+import { delimiter as renderedDelimiter } from 'app/js/components/info-panel/stats/team-stats';
 import {
   ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
   ERROR_MISSING_ALL_GOALS,
@@ -21,8 +21,9 @@ import {
   GAME_STATE_NOT_STARTED,
   GAME_STATE_POSTPONED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-} from '../../app/js/events/constants';
-import { renderTeamLogo } from '../../app/js/utils/logos';
+} from 'app/js/events/constants';
+import { renderTeamLogo } from 'app/js/utils/logos';
+
 import scoresAllRegularTime from '../data/latest.json';
 import scoresMultipleOvertime from '../data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';

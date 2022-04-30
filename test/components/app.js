@@ -4,7 +4,8 @@ import xs from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
-import app from '../../app/js/components/app';
+import app from 'app/js/components/app';
+
 import apiResponse from '../data/latest.json';
 import animations from '../test-animations';
 import { addListener } from '../test-utils';
