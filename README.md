@@ -1,7 +1,5 @@
 # nhl-recap
 
-[![Build Status](https://travis-ci.org/peruukki/nhl-recap.svg?branch=master)](https://travis-ci.org/peruukki/nhl-recap)
-
 A web app playing back the goal information from the latest NHL games. I made this to have a more exciting way of checking
 the scores while I brush my teeth in the morning, as the games are usually played at night time in Finland.
 
