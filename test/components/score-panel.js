@@ -14,7 +14,7 @@ import { renderTeamLogo } from 'app/js/utils/logos';
 import scoresAllRegularTime from '../data/latest.json';
 import scoresMultipleOvertime from '../data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
-import { getGameCard } from '../test-utils';
+import { getGameCard } from './test-utils';
 
 describe('score panel', () => {
   describe('goal counts', () => {

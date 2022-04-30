@@ -12,7 +12,7 @@ import {
 } from 'app/js/events/constants';
 
 import scoresAllRegularTime from '../../data/latest.json';
-import { getGameCard } from '../../test-utils';
+import { getGameCard } from '../test-utils';
 import { expectedStat } from './test-utils';
 
 const inProgressGameProgress = {

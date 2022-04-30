@@ -24,7 +24,7 @@ import {
 import scoresAllRegularTime from '../../data/latest.json';
 import scoresMultipleOvertime from '../../data/latest-2-ot.json';
 import scoresAllRegularTimePlayoffs from '../../data/latest-playoffs.json';
-import { getGameCard } from '../../test-utils';
+import { getGameCard } from '../test-utils';
 import { expectedStat } from './test-utils';
 
 const inProgressGameProgress = {

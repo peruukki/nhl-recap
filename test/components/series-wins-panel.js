@@ -16,7 +16,7 @@ import {
 import scoresAllRegularTime from '../data/latest.json';
 import scoresAllRegularTimePlayoffs from '../data/latest-playoffs.json';
 import scoresRegularTimeAndOvertimePlayoffs from '../data/latest-playoffs-ot.json';
-import { getGameCard } from '../test-utils';
+import { getGameCard } from './test-utils';
 
 describe('playoff series wins panel', () => {
   it('should not exist if there is no playoff series information', () => {
