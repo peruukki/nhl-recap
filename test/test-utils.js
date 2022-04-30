@@ -5,3 +5,7 @@ export function addListener(done, stream$, assertFn) {
     complete: done,
   });
 }
+
+export function getGameCard(vtree) {
+  return vtree.children[0];
+}

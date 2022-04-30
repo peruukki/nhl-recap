@@ -10,8 +10,6 @@ import {
 } from 'app/js/components/info-panel/info-panel';
 import { delimiter as renderedDelimiter } from 'app/js/components/info-panel/stats/team-stats';
 import {
-  ERROR_SCORE_AND_GOAL_COUNT_MISMATCH,
-  ERROR_MISSING_ALL_GOALS,
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
@@ -29,6 +27,7 @@ import scoresMultipleOvertime from '../data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
 import scoresAllRegularTimePlayoffs from '../data/latest-playoffs.json';
 import scoresRegularTimeAndOvertimePlayoffs from '../data/latest-playoffs-ot.json';
+import { getGameCard } from '../test-utils';
 
 const inProgressGameProgress = {
   currentPeriod: 1,
@@ -959,30 +958,6 @@ describe('game', () => {
       );
     });
   });
-
-  describe('errors panel', () => {
-    it('should not show errors with valid data', () => {
-      assertErrors(undefined, null);
-    });
-
-    it('should show appropriate error when all goal data is missing', () => {
-      assertErrors([{ error: ERROR_MISSING_ALL_GOALS }], ['Missing all goal data']);
-    });
-
-    it("should show appropriate error when some goals' data is missing", () => {
-      assertErrors(
-        [{ error: ERROR_SCORE_AND_GOAL_COUNT_MISMATCH, details: { goalCount: 2, scoreCount: 3 } }],
-        ['Missing 1 goal from data']
-      );
-    });
-
-    it("should show appropriate error when too many goals' data exists", () => {
-      assertErrors(
-        [{ error: ERROR_SCORE_AND_GOAL_COUNT_MISMATCH, details: { goalCount: 2, scoreCount: 1 } }],
-        ['1 too many goals in data']
-      );
-    });
-  });
 });
 
 function assertGoalCounts(
@@ -1178,14 +1153,6 @@ function assertPlayoffSeriesWins(
   assert.deepEqual(playoffSeriesWinsPanel, expected);
 }
 
-function assertErrors(gameErrors, expectedErrors) {
-  const errorsPanel = getErrorsPanel(
-    Game(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, [])
-  );
-  const expected = expectedErrorsPanel(expectedErrors);
-  assert.deepEqual(errorsPanel, expected);
-}
-
 function getTeamPanels(vtree) {
   return getGameChildrenWithClass(vtree, 'team-panel');
 }
@@ -1219,14 +1186,6 @@ function getGameDescription(vtree) {
 
 function getPlayoffSeriesWinsPanel(vtree) {
   return getGameCard(vtree).children[2];
-}
-
-function getErrorsPanel(vtree) {
-  return getGameCard(vtree).children[3];
-}
-
-function getGameCard(vtree) {
-  return vtree.children[0];
 }
 
 function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
@@ -1293,8 +1252,4 @@ function expectedPlayoffSeriesWinsPanel(seriesWinsVtree, animationClass) {
   return seriesWinsVtree
     ? div(`.game__series-wins${animationClass || ''}`, seriesWinsVtree)
     : seriesWinsVtree;
-}
-
-function expectedErrorsPanel(errors) {
-  return errors ? div('.game__errors', errors) : null;
 }
