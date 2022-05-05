@@ -4151,7 +4151,7 @@
     "abbrev": {
       "version": "1.1.1",
       "resolved": "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz",
-      "integrity": "sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==",
+      "integrity": "sha1-+PLIh60Qv2f2NPAFtph/7TF5qsg=",
       "dev": true
     },
     "accepts": {
@@ -9722,9 +9722,9 @@
       }
     },
     "idb": {
-      "version": "6.1.2",
-      "resolved": "https://registry.npmjs.org/idb/-/idb-6.1.2.tgz",
-      "integrity": "sha512-1DNDVu3yDhAZkFDlJf0t7r+GLZ248F5pTAtA7V0oVG3yjmV125qZOx3g0XpAEkGZVYQiFDAsSOnGet2bhugc3w=="
+      "version": "6.1.5",
+      "resolved": "https://registry.npmjs.org/idb/-/idb-6.1.5.tgz",
+      "integrity": "sha512-IJtugpKkiVXQn5Y+LteyBCNk1N8xpGV3wWZk9EVtZWH8DYkjBn0bX1XnGP9RkyZF0sAcywa6unHqSWKe7q4LGw=="
     },
     "ieee754": {
       "version": "1.1.13",
@@ -17650,17 +17650,17 @@
       }
     },
     "workbox-core": {
-      "version": "6.2.4",
-      "resolved": "https://registry.npmjs.org/workbox-core/-/workbox-core-6.2.4.tgz",
-      "integrity": "sha512-Nu8X4R4Is3g8uzEJ6qwbW2CGVpzntW/cSf8OfsQGIKQR0nt84FAKzP2cLDaNLp3L/iV9TuhZgCTZzkMiap5/OQ=="
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/workbox-core/-/workbox-core-6.5.3.tgz",
+      "integrity": "sha512-Bb9ey5n/M9x+l3fBTlLpHt9ASTzgSGj6vxni7pY72ilB/Pb3XtN+cZ9yueboVhD5+9cNQrC9n/E1fSrqWsUz7Q=="
     },
     "workbox-expiration": {
-      "version": "6.2.4",
-      "resolved": "https://registry.npmjs.org/workbox-expiration/-/workbox-expiration-6.2.4.tgz",
-      "integrity": "sha512-EdOBLunrE3+Ff50y7AYDbiwtiLDvB+oEIkL1Wd9G5d176YVqFfgPfMRzJQ7fN+Yy2NfmsFME0Bw+dQruYekWsQ==",
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/workbox-expiration/-/workbox-expiration-6.5.3.tgz",
+      "integrity": "sha512-jzYopYR1zD04ZMdlbn/R2Ik6ixiXbi15c9iX5H8CTi6RPDz7uhvMLZPKEndZTpfgmUk8mdmT9Vx/AhbuCl5Sqw==",
       "requires": {
-        "idb": "^6.0.0",
-        "workbox-core": "6.2.4"
+        "idb": "^6.1.4",
+        "workbox-core": "6.5.3"
       }
     },
     "workbox-google-analytics": {
@@ -17720,13 +17720,13 @@
       }
     },
     "workbox-precaching": {
-      "version": "6.2.4",
-      "resolved": "https://registry.npmjs.org/workbox-precaching/-/workbox-precaching-6.2.4.tgz",
-      "integrity": "sha512-7POznbVc8EG/mkbXzeb94x3B1VJruPgXvXFgS0NJ3GRugkO4ULs/DpIIb+ycs7uJIKY9EzLS7VXvElr3rMSozQ==",
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/workbox-precaching/-/workbox-precaching-6.5.3.tgz",
+      "integrity": "sha512-sjNfgNLSsRX5zcc63H/ar/hCf+T19fRtTqvWh795gdpghWb5xsfEkecXEvZ8biEi1QD7X/ljtHphdaPvXDygMQ==",
       "requires": {
-        "workbox-core": "6.2.4",
-        "workbox-routing": "6.2.4",
-        "workbox-strategies": "6.2.4"
+        "workbox-core": "6.5.3",
+        "workbox-routing": "6.5.3",
+        "workbox-strategies": "6.5.3"
       }
     },
     "workbox-range-requests": {
@@ -17747,19 +17747,19 @@
       }
     },
     "workbox-routing": {
-      "version": "6.2.4",
-      "resolved": "https://registry.npmjs.org/workbox-routing/-/workbox-routing-6.2.4.tgz",
-      "integrity": "sha512-jHnOmpeH4MOWR4eXv6l608npD2y6IFv7yFJ1bT9/RbB8wq2vXHXJQ0ExTZRTWGbVltSG22wEU+MQ8VebDDwDeg==",
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/workbox-routing/-/workbox-routing-6.5.3.tgz",
+      "integrity": "sha512-DFjxcuRAJjjt4T34RbMm3MCn+xnd36UT/2RfPRfa8VWJGItGJIn7tG+GwVTdHmvE54i/QmVTJepyAGWtoLPTmg==",
       "requires": {
-        "workbox-core": "6.2.4"
+        "workbox-core": "6.5.3"
       }
     },
     "workbox-strategies": {
-      "version": "6.2.4",
-      "resolved": "https://registry.npmjs.org/workbox-strategies/-/workbox-strategies-6.2.4.tgz",
-      "integrity": "sha512-DKgGC3ruceDuu2o+Ae5qmJy0p0q21mFP+RrkdqKrjyf2u8cJvvtvt1eIt4nevKc5BESiKxmhC2h+TZpOSzUDvA==",
+      "version": "6.5.3",
+      "resolved": "https://registry.npmjs.org/workbox-strategies/-/workbox-strategies-6.5.3.tgz",
+      "integrity": "sha512-MgmGRrDVXs7rtSCcetZgkSZyMpRGw8HqL2aguszOc3nUmzGZsT238z/NN9ZouCxSzDu3PQ3ZSKmovAacaIhu1w==",
       "requires": {
-        "workbox-core": "6.2.4"
+        "workbox-core": "6.5.3"
       }
     },
     "workbox-streams": {
