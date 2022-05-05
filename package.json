@@ -79,7 +79,7 @@
     "@cycle/run": "^5.7.0",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
-    "normalize.css": "^5.0.0",
+    "normalize.css": "^8.0.1",
     "timeago.js": "^4.0.2",
     "workbox-expiration": "^6.5.3",
     "workbox-precaching": "^6.5.3",
