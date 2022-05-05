@@ -3666,11 +3666,11 @@
       }
     },
     "@cycle/run": {
-      "version": "5.5.0",
-      "resolved": "https://registry.npmjs.org/@cycle/run/-/run-5.5.0.tgz",
-      "integrity": "sha512-RZ7Zfai1zfxa0ZP2I4Pu72UgZrRyG3PnivFCe/yYfQBcFHSlUy1biwUTnPB4+k/SE6/cOMTiFqwqu/Y3M+fh1g==",
+      "version": "5.7.0",
+      "resolved": "https://registry.npmjs.org/@cycle/run/-/run-5.7.0.tgz",
+      "integrity": "sha512-HUsUWCIJxoBcBhkKxiLbUg6mSOIDbDtNvmPUJ4EYoVaJg9jf0wA/ojCmWjAh4Bg6o+lfNlO4c96TANFTreF3Kw==",
       "requires": {
-        "quicktask": "1.1.0",
+        "quicktask": "1.2.0",
         "xstream": "10.x || 11.x"
       }
     },
@@ -13316,9 +13316,9 @@
       "dev": true
     },
     "quicktask": {
-      "version": "1.1.0",
-      "resolved": "https://registry.npmjs.org/quicktask/-/quicktask-1.1.0.tgz",
-      "integrity": "sha512-b3w19IEXnt5auacLAbePVsqPyVQUwmuhJQrrWnVhm4pP8PAMg2U9vFHbAD9XYXXbMDjdLJs0x5NLqwTV8uFK4g=="
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/quicktask/-/quicktask-1.2.0.tgz",
+      "integrity": "sha512-LkBLIB8HxauuR6l7SigDZbvdjNWErRfauvCs7Rgp4Xh/oiA89IHTjj/SvUowywXnldISKWIZfxaqs/6lGEB+gw=="
     },
     "randomatic": {
       "version": "3.1.1",
