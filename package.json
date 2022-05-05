@@ -107,7 +107,7 @@
     "http-server": "^14.1.0",
     "json-server": "^0.17.0",
     "mocha": "^3.2.0",
-    "nock": "^9.0.9",
+    "nock": "^13.2.4",
     "node-sass": "^7.0.1",
     "parallelshell": "darkguy2008/parallelshell#8fd83e2",
     "postcss": "^8.4.13",
