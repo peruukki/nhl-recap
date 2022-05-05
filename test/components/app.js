@@ -41,10 +41,10 @@ describe('app', () => {
       assert.deepEqual(scoreListNode.sel, 'div.score-list');
 
       const gameScoreNodes = scoreListNode.children;
-      assert.deepEqual(gameScoreNodes.map(node => node.sel), [
-        'div.game-container',
-        'div.game-container',
-      ]);
+      assert.deepEqual(
+        gameScoreNodes.map(node => node.sel),
+        ['div.game-container', 'div.game-container']
+      );
     });
   });
 

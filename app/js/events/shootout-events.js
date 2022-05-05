@@ -16,11 +16,6 @@ function getShootoutGoalForEachGame(allGoalsSorted) {
     .filter({ period: PERIOD_SHOOTOUT })
     .groupBy('gameIndex')
     .map(goalsByGame =>
-      _.chain(goalsByGame)
-        .groupBy('team')
-        .values()
-        .maxBy('length')
-        .last()
-        .value()
+      _.chain(goalsByGame).groupBy('team').values().maxBy('length').last().value()
     );
 }

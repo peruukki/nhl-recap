@@ -40,12 +40,8 @@ function intent(DOM, HTTP, $window) {
     .filter(scores => scores.success)
     .map(scores => scores.success);
 
-  const playClicks$ = DOM.select('.button--play')
-    .events('click')
-    .mapTo(true);
-  const pauseClicks$ = DOM.select('.button--pause')
-    .events('click')
-    .mapTo(false);
+  const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
+  const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
   const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
   const playbackHasStarted$ = playClicks$.take(1);
 
