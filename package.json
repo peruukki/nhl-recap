@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=12.0 <13.0"
+    "node": ">=16.0"
   },
   "config": {
     "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
