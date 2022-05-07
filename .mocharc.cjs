@@ -1,6 +1,6 @@
 module.exports = {
   exit: true,
   'fail-zero': true,
+  loader: 'ts-node/esm',
   recursive: true,
-  require: '@babel/register',
 };

@@ -17,8 +17,8 @@
     "node": ">=16.0"
   },
   "config": {
-    "browserify_args": "app/js/main.js -t babelify -t [ envify purge ]",
-    "browserify_gallery_args": "gallery/js/main.js -t babelify",
+    "browserify_args": "app/js/main.js -p [ tsify ] -t [ envify purge ]",
+    "browserify_gallery_args": "gallery/js/main.js -p [ tsify ]",
     "rollup_sw_args": "app/js/service-worker/service-worker.js -c --file public/service-worker.js",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
@@ -60,7 +60,8 @@
     "start:local": "SCORE_API_HOST=http://localhost:8080 npm start",
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
     "svg": "node generate-svg-data.js",
-    "test": "npm run lint && npm run spec",
+    "test": "npm run lint && npm run ts && npm run spec",
+    "ts": "tsc",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js' 'npm run watch:sw'",
     "watch:gallery": "parallelshell 'npm run watch:assets:gallery' 'npm run watch:css:gallery' 'npm run watch:js:gallery'",
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
@@ -71,7 +72,8 @@
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
     "watch:lint:js": "esw -w *.js app/js gallery/js test",
     "watch:lint:css": "watch 'npm run lint:css' app/sass",
-    "watch:sw": "rollup $npm_package_config_rollup_sw_args -w"
+    "watch:sw": "rollup $npm_package_config_rollup_sw_args -w",
+    "watch:ts": "tsc -w"
   },
   "dependencies": {
     "@cycle/dom": "^23.1.0",
@@ -88,13 +90,9 @@
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/register": "^7.17.7",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
     "autoprefixer": "^10.4.7",
-    "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "chai": "^4.3.6",
     "envify": "^4.1.0",
@@ -118,6 +116,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-workbox-inject": "^2.0.0",
     "sass-lint": "^1.5.0",
+    "ts-node": "^10.7.0",
+    "tsify": "^5.0.4",
     "uglify-js": "^3.15.4",
     "uglifyify": "^5.0.2",
     "watch": "^1.0.2",

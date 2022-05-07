@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "lib": ["dom"],
+    "module": "commonjs",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es5"
+  }
+}
