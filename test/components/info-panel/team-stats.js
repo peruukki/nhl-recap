@@ -136,7 +136,7 @@ describe('team stats', () => {
       const gameDisplay = GAME_DISPLAY_PRE_GAME;
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
-      scoresAllRegularTimePlayoffs.games.forEach(game => {
+      scoresAllRegularTimePlayoffs.games.forEach((game) => {
         assertTeamStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },
@@ -278,7 +278,7 @@ describe('team stats', () => {
       const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
-      scoresAllRegularTimePlayoffs.games.forEach(game => {
+      scoresAllRegularTimePlayoffs.games.forEach((game) => {
         assertTeamStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },

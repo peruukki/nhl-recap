@@ -133,8 +133,8 @@ function getDelimiter(vtree) {
 }
 
 function getGameChildrenWithClass(vtree, className) {
-  const stripHtmlElement = sel => sel.replace(/^\w\./, '');
-  return getGameCard(vtree).children[0].children.filter(node =>
+  const stripHtmlElement = (sel) => sel.replace(/^\w\./, '');
+  return getGameCard(vtree).children[0].children.filter((node) =>
     _.includes(stripHtmlElement(node.sel).split('.'), className)
   );
 }

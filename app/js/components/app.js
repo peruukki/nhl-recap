@@ -25,9 +25,9 @@ function getApiUrl() {
 
 function intent(DOM, HTTP, $window) {
   const apiResponseWithErrors$ = HTTP.select()
-    .map(response$ => response$.replaceError(error => xs.of({ error })))
+    .map((response$) => response$.replaceError((error) => xs.of({ error })))
     .flatten()
-    .map(response => {
+    .map((response) => {
       if (response.error) {
         return response;
       }
@@ -37,8 +37,8 @@ function intent(DOM, HTTP, $window) {
         : { error: { message: 'No latest scores available.', expected: true } };
     });
   const successApiResponse$ = apiResponseWithErrors$
-    .filter(scores => scores.success)
-    .map(scores => scores.success);
+    .filter((scores) => scores.success)
+    .map((scores) => scores.success);
 
   const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
@@ -56,8 +56,10 @@ function intent(DOM, HTTP, $window) {
     isPlaying$,
     playbackHasStarted$,
     status$: apiResponseWithErrors$
-      .filter(scores => scores.error)
-      .map(scores => (scores.error.expected ? scores.error.message : getUnexpectedErrorMessage())),
+      .filter((scores) => scores.error)
+      .map((scores) =>
+        scores.error.expected ? scores.error.message : getUnexpectedErrorMessage()
+      ),
   };
 }
 
@@ -73,7 +75,7 @@ function model(actions, animations) {
 
   const gameUpdate$ = clock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
   gameUpdate$.addListener({
-    next: gameUpdate => {
+    next: (gameUpdate) => {
       switch (gameUpdate.type) {
         case GAME_UPDATE_END:
           animations.stopGameHighlight(gameUpdate.gameIndex);
@@ -91,11 +93,11 @@ function model(actions, animations) {
   });
 
   const initialGoals$ = scores$
-    .filter(scores => scores.games.length > 0)
-    .map(scores => Array.from({ length: scores.games.length }, () => []));
-  const goalUpdate$ = gameUpdate$.filter(update => update.type === GAME_UPDATE_GOAL);
+    .filter((scores) => scores.games.length > 0)
+    .map((scores) => Array.from({ length: scores.games.length }, () => []));
+  const goalUpdate$ = gameUpdate$.filter((update) => update.type === GAME_UPDATE_GOAL);
   const currentGoals$ = initialGoals$
-    .map(initialGameGoals =>
+    .map((initialGameGoals) =>
       goalUpdate$.fold(
         (currentGoals, update) => [
           ...currentGoals.slice(0, update.gameIndex),

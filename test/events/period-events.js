@@ -42,7 +42,7 @@ describe('periodEvents', () => {
       goalPauseEventCount
     );
 
-    const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map(second => ({
+    const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map((second) => ({
       period,
       minute: 2,
       second,
@@ -62,8 +62,8 @@ describe('periodEvents', () => {
 
     const minutes = _.range(periodLengthInMinutes - 1, 0, -1);
     const seconds = _.range(59, -1, -clockAdvanceStep);
-    const secondEvents = _.flatMap(minutes, minute =>
-      seconds.map(second => ({ period, minute, second }))
+    const secondEvents = _.flatMap(minutes, (minute) =>
+      seconds.map((second) => ({ period, minute, second }))
     );
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
@@ -71,14 +71,14 @@ describe('periodEvents', () => {
   });
 
   it('should advance by three seconds for the last minute of any period but the 3rd one', () => {
-    [1, 2, 'OT'].forEach(period => {
+    [1, 2, 'OT'].forEach((period) => {
       // Use only one minute period length to speed up and simplify the test
       const periodLength = 1;
       const clockEvents = periodEvents(period, periodLength, null, [], goalPauseEventCount);
 
       const secondEvents = _.range(59, -1, -clockAdvanceStep)
         .concat(0)
-        .map(second => ({
+        .map((second) => ({
           period,
           minute: 0,
           second,
@@ -98,7 +98,7 @@ describe('periodEvents', () => {
       5
     );
 
-    const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep).map(tenthOfASecond => ({
+    const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep).map((tenthOfASecond) => ({
       period,
       minute: 0,
       second: 59,
@@ -124,7 +124,7 @@ describe('periodEvents', () => {
 
       assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 }, description);
 
-      expectedGameIndexes.forEach(gameIndex => {
+      expectedGameIndexes.forEach((gameIndex) => {
         const eventIndexWithGameIndex = _.findIndex(
           clockEvents,
           ({ update }) => update && update.gameIndex === gameIndex
@@ -132,7 +132,7 @@ describe('periodEvents', () => {
         assert.deepEqual(
           clockEvents
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
-            .map(event => _.omit(event.update || event, 'goal')),
+            .map((event) => _.omit(event.update || event, 'goal')),
           [
             { gameIndex, type: GAME_UPDATE_START },
             { gameIndex, type: GAME_UPDATE_GOAL, classModifier: 'home' },

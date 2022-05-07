@@ -108,7 +108,7 @@ export function renderLatestGoalAssists(latestGoal) {
   }
   return [
     div('.latest-goal__assists-label', 'Assists:'),
-    ...latestGoal.assists.map(assist =>
+    ...latestGoal.assists.map((assist) =>
       div('.latest-goal__assist', [
         span('.latest-goal__assister', `${truncatePlayerName(assist.player)} `),
         span('.latest-goal__assist-count', `(${assist.seasonTotal})`),

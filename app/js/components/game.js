@@ -14,8 +14,8 @@ export default function Game(
   gameAnimationIndex
 ) {
   const latestGoal = _.last(currentGoals);
-  const awayGoals = currentGoals.filter(goal => goal.team === teams.away.abbreviation);
-  const homeGoals = currentGoals.filter(goal => goal.team === teams.home.abbreviation);
+  const awayGoals = currentGoals.filter((goal) => goal.team === teams.away.abbreviation);
+  const homeGoals = currentGoals.filter((goal) => goal.team === teams.home.abbreviation);
 
   return div('.game-container', [
     div(`.game.expand--${gameAnimationIndex}`, { class: { [`game--${gameDisplay}`]: true } }, [

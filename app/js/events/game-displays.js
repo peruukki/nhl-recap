@@ -18,11 +18,11 @@ import {
 
 export default function getGameDisplays$(clock$, scores$) {
   const initialgameDisplays$ = scores$
-    .filter(scores => scores.games.length > 0)
-    .map(scores => Array.from({ length: scores.games.length }, () => GAME_DISPLAY_PRE_GAME));
+    .filter((scores) => scores.games.length > 0)
+    .map((scores) => Array.from({ length: scores.games.length }, () => GAME_DISPLAY_PRE_GAME));
   const gameDisplays$ = xs.combine(scores$, clock$).map(([scores, clock]) => {
     const playbackState = clock.end && !clock.period ? PLAYBACK_FINISHED : PLAYBACK_IN_PROGRESS;
-    return scores.games.map(game => {
+    return scores.games.map((game) => {
       if (!hasGameStarted(game.status.state)) {
         return GAME_DISPLAY_PRE_GAME;
       }

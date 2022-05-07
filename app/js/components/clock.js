@@ -18,12 +18,12 @@ function intent(sources) {
 }
 
 function model(actions) {
-  const ticks$ = actions.props$.map(props => xs.periodic(props.interval)).flatten();
-  const events$ = actions.scores$.map(scores => gameEvents(scores));
+  const ticks$ = actions.props$.map((props) => xs.periodic(props.interval)).flatten();
+  const events$ = actions.scores$.map((scores) => gameEvents(scores));
   const eventIndex$ = xs
     .combine(actions.isPlaying$, ticks$)
     .filter(([isPlaying]) => isPlaying)
-    .fold(acc => acc + 1, -1)
+    .fold((acc) => acc + 1, -1)
     .drop(1);
   const eventsEnd$ = xs
     .combine(events$, eventIndex$)
@@ -33,11 +33,11 @@ function model(actions) {
     .combine(events$, eventIndex$)
     .endWhen(eventsEnd$)
     .map(([events, eventIndex]) => events[eventIndex])
-    .filter(event => !event.pause);
+    .filter((event) => !event.pause);
 }
 
 function view(state$) {
-  return state$.map(clock => {
+  return state$.map((clock) => {
     const time = clock ? renderTime(clock) : '';
     const animationClass =
       time || (clock.period === PERIOD_SHOOTOUT && !clock.end) ? '.fade-in-fast' : '';

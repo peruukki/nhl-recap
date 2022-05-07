@@ -124,17 +124,17 @@ describe('gameEvents', () => {
     const allGoalsSorted = getAllGoalsSorted(scoresMultipleOvertime.games);
 
     const expectedAllGoalsSorted = _.flatten([
-      _.dropRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
+      _.dropRight(scoresMultipleOvertime.games[1].goals).map((goal) => ({
         ...goal,
         classModifier: goal.team === 'ANA' ? 'away' : 'home',
         gameIndex: 1,
       })),
-      scoresMultipleOvertime.games[0].goals.map(goal => ({
+      scoresMultipleOvertime.games[0].goals.map((goal) => ({
         ...goal,
         classModifier: 'away',
         gameIndex: 0,
       })),
-      _.takeRight(scoresMultipleOvertime.games[1].goals).map(goal => ({
+      _.takeRight(scoresMultipleOvertime.games[1].goals).map((goal) => ({
         ...goal,
         classModifier: goal.team === 'ANA' ? 'away' : 'home',
         gameIndex: 1,
@@ -152,7 +152,7 @@ describe('gameEvents', () => {
 
 function assertPeriodEndEvents(events, periods) {
   const periodsWithEndEvent = _.chain(events)
-    .filter(event => event.period && event.end)
+    .filter((event) => event.period && event.end)
     .map('period')
     .uniq()
     .value();
@@ -160,8 +160,11 @@ function assertPeriodEndEvents(events, periods) {
 }
 
 function assertPeriodEndPauseEventsCount(events, periods) {
-  periods.forEach(period => {
-    const periodEndEventIndex = _.findIndex(events, event => event.end && event.period === period);
+  periods.forEach((period) => {
+    const periodEndEventIndex = _.findIndex(
+      events,
+      (event) => event.end && event.period === period
+    );
     const pauseEventsAfterPeriodEndEvent = _.takeWhile(
       events.slice(periodEndEventIndex + 1),
       'pause'
@@ -175,9 +178,9 @@ function assertPeriodEndPauseEventsCount(events, periods) {
 }
 
 function getPeriodEndEvents(events) {
-  return events.filter(event => event.period && event.end);
+  return events.filter((event) => event.period && event.end);
 }
 
 function getLastNonEndOrPauseEvent(events) {
-  return _.findLast(events, event => !event.end && !event.pause);
+  return _.findLast(events, (event) => !event.end && !event.pause);
 }

@@ -99,13 +99,13 @@ function model(stateDefinitions) {
   const gameDisplayIndex$ = xs
     .periodic(1000)
     .startWith(-1)
-    .map(index => index + 1)
+    .map((index) => index + 1)
     .take(2);
-  const transitionedGameStates$ = gameDisplayIndex$.map(gameDisplayIndex =>
-    gamesData.flatMap(gameData =>
+  const transitionedGameStates$ = gameDisplayIndex$.map((gameDisplayIndex) =>
+    gamesData.flatMap((gameData) =>
       stateDefinitions.map(({ gameStatus, states }) => ({
         gameDescription: `${gameData.description} ${gameStatus.description}`,
-        games: states.map(state =>
+        games: states.map((state) =>
           state
             ? {
                 description: state.description,
@@ -129,7 +129,7 @@ function model(stateDefinitions) {
 }
 
 function view({ gameStates$ }) {
-  return gameStates$.map(gameStates =>
+  return gameStates$.map((gameStates) =>
     div(
       '.score-list',
       gameStates.flatMap(({ gameDescription, games }) => [

@@ -22,10 +22,10 @@ export default function gameEvents(scores) {
   const completedPeriodEvents = endTime.inProgress
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
-  const periodEnds = completedPeriodEvents.map(onePeriodEvents =>
+  const periodEnds = completedPeriodEvents.map((onePeriodEvents) =>
     appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount)
   );
-  const allPeriodEvents = eventsByPeriod.map(onePeriodEvents => onePeriodEvents.events);
+  const allPeriodEvents = eventsByPeriod.map((onePeriodEvents) => onePeriodEvents.events);
   const periodSequences = _.chain()
     .zip(allPeriodEvents, periodEnds)
     .flatten()
@@ -68,7 +68,7 @@ function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
   const lastFullPeriodNumber = partialPeriodNumber
     ? partialPeriodNumber - 1
     : getLastFullPeriodNumber(endTime);
-  const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map(period => ({
+  const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map((period) => ({
     period,
     events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount),
   }));
@@ -182,10 +182,10 @@ export function getAllGoalsSorted(scores) {
     scores.map((game, gameIndex) =>
       _.chain(game.goals)
         .reject(
-          goal =>
+          (goal) =>
             goal.period === PERIOD_SHOOTOUT && game.status && !hasGameFinished(game.status.state)
         )
-        .map(goal => ({
+        .map((goal) => ({
           ...goal,
           gameIndex,
           classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home',

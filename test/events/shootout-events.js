@@ -55,7 +55,7 @@ describe('shootoutEvents', () => {
     assert.deepEqual(clockEvents.length, 2 * EVENT_COUNT_PER_GOAL);
 
     assert.deepEqual(
-      _.take(clockEvents, EVENT_COUNT_PER_GOAL).map(event => event.update || event),
+      _.take(clockEvents, EVENT_COUNT_PER_GOAL).map((event) => event.update || event),
       [
         { gameIndex: 0, type: GAME_UPDATE_START },
         {
@@ -74,7 +74,7 @@ describe('shootoutEvents', () => {
       _.chain(clockEvents)
         .drop(EVENT_COUNT_PER_GOAL)
         .take(EVENT_COUNT_PER_GOAL)
-        .map(event => event.update || event)
+        .map((event) => event.update || event)
         .value(),
       [
         { gameIndex: 1, type: GAME_UPDATE_START },

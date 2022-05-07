@@ -25,14 +25,14 @@ describe('gameDisplays', () => {
     CLOCK_STATE_IN_PROGRESS,
     CLOCK_STATE_PASSED_IN_PROGRESS_GAMES,
     CLOCK_STATE_END,
-  ].forEach(clockState => {
-    [GAME_STATE_NOT_STARTED, GAME_STATE_IN_PROGRESS, GAME_STATE_FINISHED].forEach(gameState => {
+  ].forEach((clockState) => {
+    [GAME_STATE_NOT_STARTED, GAME_STATE_IN_PROGRESS, GAME_STATE_FINISHED].forEach((gameState) => {
       const expected = getExpectedGameDisplay(clockState, gameState);
 
-      it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, done => {
+      it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, (done) => {
         const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
         // Ignore intermediate values and assert the last one
-        addListener(done, gameDisplays$.last(), gameDisplays => {
+        addListener(done, gameDisplays$.last(), (gameDisplays) => {
           assert.deepEqual(gameDisplays, [expected]);
         });
       });

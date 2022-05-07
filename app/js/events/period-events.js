@@ -17,7 +17,9 @@ export default function periodEvents(
   // Advance clock by second for all minutes but the last one of the 3rd period
   const allSecondEvents = generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond);
   const secondEvents =
-    period === 3 ? _.dropRightWhile(allSecondEvents, event => event.minute === 0) : allSecondEvents;
+    period === 3
+      ? _.dropRightWhile(allSecondEvents, (event) => event.minute === 0)
+      : allSecondEvents;
 
   // Advance clock by tenth of a second for the last minute of the 3rd period
   const tenthOfASecondEvents =
@@ -32,8 +34,8 @@ export default function periodEvents(
 
 function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
   return _.flatten(
-    minuteRange(durationInMinutes, lastMinute).map(minute =>
-      secondRange(minute, lastMinute, lastSecond).map(second => ({
+    minuteRange(durationInMinutes, lastMinute).map((minute) =>
+      secondRange(minute, lastMinute, lastSecond).map((second) => ({
         period,
         minute,
         second,
@@ -45,8 +47,8 @@ function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond)
 function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
   const minute = 0;
   return _.flatten(
-    secondRange(minute, lastMinute, lastSecond).map(second =>
-      _.range(9, -1, -advanceClockStep).map(tenthOfASecond => ({
+    secondRange(minute, lastMinute, lastSecond).map((second) =>
+      _.range(9, -1, -advanceClockStep).map((tenthOfASecond) => ({
         period,
         minute,
         second,
@@ -82,7 +84,7 @@ function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock]
           : _.flatten(
-              goalsScoredSincePreviousTime.map(goal =>
+              goalsScoredSincePreviousTime.map((goal) =>
                 getGoalEvents(currentClock, goal, goalPauseEventCount)
               )
             );
