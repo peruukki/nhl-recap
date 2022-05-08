@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
-export function truncatePlayerName(name) {
+export function truncatePlayerName(name: string): string {
   const maxLength = 20;
   if (name.length <= maxLength) {
     return name;
@@ -14,7 +14,7 @@ export function truncatePlayerName(name) {
   return `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
 }
 
-export function getGameAnimationIndexes(gameCount) {
+export function getGameAnimationIndexes(gameCount: number): number[] {
   return _.times(gameCount, (index) => {
     const isEven = index % 2 === 0;
     // Animate first column (evens) from top to bottom, second column (odds) from bottom to top
