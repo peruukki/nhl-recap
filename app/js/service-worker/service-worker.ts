@@ -5,6 +5,7 @@ import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategi
 
 // Adapted from https://developers.google.com/web/tools/workbox/guides/get-started#routing_and_caching_strategies
 
+// @ts-ignore
 // eslint-disable-next-line no-underscore-dangle
 precacheAndRoute(self.__WB_MANIFEST);
 
