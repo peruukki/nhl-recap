@@ -1,8 +1,8 @@
-import { svg } from '@cycle/dom';
+import { svg, VNode } from '@cycle/dom';
 
 const season = '20202021';
 
-export function fetchTeamLogoSVGSymbols() {
+export function fetchTeamLogoSVGSymbols(): void {
   // Adapted from https://css-tricks.com/ajaxing-svg-sprite/
   const ajax = new XMLHttpRequest();
   ajax.open(
@@ -19,7 +19,7 @@ export function fetchTeamLogoSVGSymbols() {
   };
 }
 
-export function renderTeamLogo(teamId, className) {
+export function renderTeamLogo(teamId: string, className: string): VNode {
   return svg({ attrs: { class: className } }, [
     svg.use({ attrs: { href: `#team-${teamId}-${season}-dark` } }),
   ]);
