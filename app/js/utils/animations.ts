@@ -1,8 +1,8 @@
 const gameInFocusClass = 'in-focus';
 const gameInFrontClass = 'in-front';
 
-function clearGameInFocus(element) {
-  element.style.transform = null;
+function clearGameInFocus(element: HTMLElement): void {
+  element.style.transform = '';
   element.classList.remove(gameInFocusClass);
   // Keep element's "in front" styling until it reaches its normal position
   // Use setTimeout instead of ontransitionend due to much better browser support
@@ -15,7 +15,7 @@ function clearGameInFocus(element) {
   }, 250);
 }
 
-function setGameInFocus(element, windowWidth, windowHeight) {
+function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight: number): void {
   const { left, right, top, bottom } = element.getBoundingClientRect();
 
   const windowCenterX = windowWidth / 2;
@@ -31,22 +31,22 @@ function setGameInFocus(element, windowWidth, windowHeight) {
   element.classList.add(gameInFocusClass);
 }
 
-function highlightGame(gameIndex) {
-  const element = document.querySelectorAll('.game')[gameIndex];
+function highlightGame(gameIndex: number): void {
+  const element = document.querySelectorAll<HTMLElement>('.game')[gameIndex];
   setGameInFocus(element, window.innerWidth, window.innerHeight);
 }
 
-function stopGameHighlight(gameIndex) {
-  const element = document.querySelectorAll('.game')[gameIndex];
+function stopGameHighlight(gameIndex: number): void {
+  const element = document.querySelectorAll<HTMLElement>('.game')[gameIndex];
   clearGameInFocus(element);
 }
 
-function highlightGoal(classModifier, gameIndex) {
+function highlightGoal(classModifier: string, gameIndex: number): void {
   highlightGoalCountChange(classModifier, gameIndex);
   highlightLatestGoalChange(gameIndex);
 }
 
-function highlightGoalCountChange(classModifier, gameIndex) {
+function highlightGoalCountChange(classModifier: string, gameIndex: number): void {
   const element = document.querySelectorAll(
     `.team-panel--${classModifier} > .team-panel__team-score`
   )[gameIndex];
@@ -55,14 +55,14 @@ function highlightGoalCountChange(classModifier, gameIndex) {
   }
 }
 
-function highlightLatestGoalChange(gameIndex) {
+function highlightLatestGoalChange(gameIndex: number): void {
   const element = document.querySelectorAll('.game__info-panel')[gameIndex];
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 750 });
   }
 }
 
-function highlightPlayPauseButtonChange() {
+function highlightPlayPauseButtonChange(): void {
   const element = document.querySelector('.play-pause-button');
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250 });
