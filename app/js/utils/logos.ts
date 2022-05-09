@@ -8,7 +8,7 @@ export function fetchTeamLogoSVGSymbols(): void {
   ajax.open(
     'GET',
     `https://www-league.nhlstatic.com/images/logos/team-sprites/${season}.svg`,
-    true
+    true,
   );
   ajax.send();
   ajax.onload = () => {

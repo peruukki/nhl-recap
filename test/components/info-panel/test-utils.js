@@ -5,12 +5,12 @@ export function expectedStat({ away, home, label }) {
   return div('.stat', [
     span(
       `${valueClass}${valueClass}--away${away.className ? valueClass + away.className : ''}`,
-      away.value
+      away.value,
     ),
     span('.stat__label', label),
     span(
       `${valueClass}${valueClass}--home${home.className ? valueClass + home.className : ''}`,
-      home.value
+      home.value,
     ),
   ]);
 }

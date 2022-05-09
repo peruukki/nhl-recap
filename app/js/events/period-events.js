@@ -9,7 +9,7 @@ export default function periodEvents(
   durationInMinutes,
   endTime,
   allGoalsSorted,
-  goalPauseEventCount
+  goalPauseEventCount,
 ) {
   const lastMinute = endTime ? endTime.minute : -1;
   const lastSecond = endTime ? endTime.second : -1;
@@ -39,8 +39,8 @@ function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond)
         period,
         minute,
         second,
-      }))
-    )
+      })),
+    ),
   );
 }
 
@@ -53,8 +53,8 @@ function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
         minute,
         second,
         tenthOfASecond,
-      }))
-    )
+      })),
+    ),
   );
 }
 
@@ -79,17 +79,17 @@ function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
         const goalsScoredSincePreviousTime = getGoalsScoredInTimeRange(
           previousClock,
           currentClock,
-          allGoalsSorted
+          allGoalsSorted,
         );
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock]
           : _.flatten(
               goalsScoredSincePreviousTime.map((goal) =>
-                getGoalEvents(currentClock, goal, goalPauseEventCount)
-              )
+                getGoalEvents(currentClock, goal, goalPauseEventCount),
+              ),
             );
-      })
-    )
+      }),
+    ),
   );
 }
 

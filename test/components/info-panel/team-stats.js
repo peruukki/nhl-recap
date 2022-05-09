@@ -83,7 +83,7 @@ describe('team stats', () => {
           away: { value: '7' },
           home: { value: '3', className: '--highlight' },
           label,
-        }
+        },
       );
 
       assertTeamStats(
@@ -94,7 +94,7 @@ describe('team stats', () => {
           away: { value: '2', className: '--highlight' },
           home: { value: '8' },
           label,
-        }
+        },
       );
     });
 
@@ -363,7 +363,7 @@ function assertPreGameStatsAreShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.deepEqual,
-    'div.stats.stats--team-stats'
+    'div.stats.stats--team-stats',
   );
 }
 function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
@@ -372,7 +372,7 @@ function assertPreGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.notDeepEqual,
-    'div.stats.stats--team-stats'
+    'div.stats.stats--team-stats',
   );
 }
 function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
@@ -381,7 +381,7 @@ function assertAfterGameStatsAreShown(gameDisplay, { status, teams }, goals) {
     { status, teams },
     goals,
     assert.deepEqual,
-    'div.stats.stats--team-stats.stats--after-game'
+    'div.stats.stats--team-stats.stats--after-game',
   );
 }
 function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) {
@@ -390,7 +390,7 @@ function assertAfterGameStatsAreNotShown(gameDisplay, { status, teams }, goals) 
     { status, teams },
     goals,
     assert.notDeepEqual,
-    'div.stats.stats--team-stats.stats--after-game'
+    'div.stats.stats--team-stats.stats--after-game',
   );
 }
 function assertStatsExistence(gameDisplay, { status, teams }, goals, assertFn, selector) {
@@ -402,10 +402,10 @@ function assertTeamStats(
   gameDisplay,
   { state = GAME_STATE_FINISHED, teams, goals, preGameStats, currentStats },
   statIndex,
-  renderedRecords
+  renderedRecords,
 ) {
   const renderedStats = getTeamStats(
-    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats }, goals),
   ).children[statIndex];
   const expected = expectedStat(renderedRecords);
   assert.deepEqual(renderedStats, expected);

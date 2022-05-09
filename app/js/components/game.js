@@ -11,7 +11,7 @@ export default function Game(
   gameDisplay,
   { status, startTime, teams, gameStats, preGameStats = {}, currentStats = {}, errors },
   currentGoals,
-  gameAnimationIndex
+  gameAnimationIndex,
 ) {
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter((goal) => goal.team === teams.away.abbreviation);

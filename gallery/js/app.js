@@ -120,10 +120,10 @@ function model(stateDefinitions) {
                 },
                 currentGoals: gameData.data.goals.slice(0, state.goalCount),
               }
-            : null
+            : null,
         ),
-      }))
-    )
+      })),
+    ),
   );
   return { gameStates$: transitionedGameStates$ };
 }
@@ -140,9 +140,9 @@ function view({ gameStates$ }) {
                 div('.gallery-game__description', [game.description]),
                 Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
               ])
-            : div()
+            : div(),
         ),
-      ])
-    )
+      ]),
+    ),
   );
 }

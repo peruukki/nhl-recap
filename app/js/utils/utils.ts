@@ -9,7 +9,7 @@ export function truncatePlayerName(name: string): string {
   const names = name.split(' ');
   const firstNames = _.dropRight(names);
   const abbreviatedFirstNames = _.flatten(
-    firstNames.map((firstName) => firstName.split('-').map((namePart) => `${namePart[0]}.`))
+    firstNames.map((firstName) => firstName.split('-').map((namePart) => `${namePart[0]}.`)),
   );
   return `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
 }

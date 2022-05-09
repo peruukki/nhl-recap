@@ -43,7 +43,7 @@ describe('app', () => {
       const gameScoreNodes = scoreListNode.children;
       assert.deepEqual(
         gameScoreNodes.map((node) => node.sel),
-        ['div.game-container', 'div.game-container']
+        ['div.game-container', 'div.game-container'],
       );
     });
   });
@@ -108,7 +108,7 @@ describe('app', () => {
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       assert.deepEqual(
         getStatusNode(vtree),
-        expectedStatusVtree('Failed to fetch latest scores: the network is offline.')
+        expectedStatusVtree('Failed to fetch latest scores: the network is offline.'),
       );
     });
   });

@@ -36,7 +36,7 @@ export default function InfoPanel({
     gameStats &&
     [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
   const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(
-    gameDisplay
+    gameDisplay,
   );
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
@@ -62,10 +62,10 @@ export default function InfoPanel({
             showProgressInfo || showAfterGameStats,
             showAfterGameStats,
             isPlayoffGame,
-            teamStats
+            teamStats,
           )
         : null,
-    ]
+    ],
   );
 }
 
@@ -112,7 +112,7 @@ export function renderLatestGoalAssists(latestGoal) {
       div('.latest-goal__assist', [
         span('.latest-goal__assister', `${truncatePlayerName(assist.player)} `),
         span('.latest-goal__assist-count', `(${assist.seasonTotal})`),
-      ])
+      ]),
     ),
   ];
 }

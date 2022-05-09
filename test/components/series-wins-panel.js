@@ -28,7 +28,7 @@ describe('playoff series wins panel', () => {
       preGameStats,
       GAME_STATE_FINISHED,
       undefined,
-      null
+      null,
     );
   });
 
@@ -41,7 +41,7 @@ describe('playoff series wins panel', () => {
       preGameStats,
       GAME_STATE_FINISHED,
       undefined,
-      '1st round - Game 1'
+      '1st round - Game 1',
     );
   });
 
@@ -53,7 +53,7 @@ describe('playoff series wins panel', () => {
       goals,
       preGameStats,
       GAME_STATE_FINISHED,
-      1
+      1,
     );
   });
 
@@ -67,7 +67,7 @@ describe('playoff series wins panel', () => {
       GAME_STATE_FINISHED,
       'NYR',
       2,
-      1
+      1,
     );
   });
 
@@ -86,7 +86,7 @@ describe('playoff series wins panel', () => {
       3,
       1,
       undefined,
-      'wins'
+      'wins',
     );
   });
 
@@ -105,7 +105,7 @@ describe('playoff series wins panel', () => {
       4,
       1,
       undefined,
-      'wins'
+      'wins',
     );
   });
 
@@ -118,7 +118,7 @@ describe('playoff series wins panel', () => {
       game1.goals,
       game1.preGameStats,
       GAME_STATE_FINISHED,
-      1
+      1,
     );
 
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
@@ -130,7 +130,7 @@ describe('playoff series wins panel', () => {
       GAME_STATE_FINISHED,
       'ANA',
       2,
-      1
+      1,
     );
   });
 
@@ -142,7 +142,7 @@ describe('playoff series wins panel', () => {
       game1.goals,
       game1.preGameStats,
       GAME_STATE_IN_PROGRESS,
-      1
+      1,
     );
 
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
@@ -154,7 +154,7 @@ describe('playoff series wins panel', () => {
       GAME_STATE_NOT_STARTED,
       'ANA',
       2,
-      1
+      1,
     );
   });
 
@@ -170,7 +170,7 @@ describe('playoff series wins panel', () => {
       'STL',
       2,
       1,
-      '.fade-in'
+      '.fade-in',
     );
 
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
@@ -181,7 +181,7 @@ describe('playoff series wins panel', () => {
       game2.preGameStats,
       GAME_STATE_FINISHED,
       2,
-      '.fade-in'
+      '.fade-in',
     );
   });
 });
@@ -196,7 +196,7 @@ function assertPlayoffSeriesLead(
   leadingWins,
   trailingWins,
   animationClass,
-  leadingText = 'leads'
+  leadingText = 'leads',
 ) {
   return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
@@ -214,7 +214,7 @@ function assertPlayoffSeriesTied(
   preGameStats,
   state,
   wins,
-  animationClass
+  animationClass,
 ) {
   return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     'Series ',
@@ -233,10 +233,10 @@ function assertPlayoffSeriesWins(
   preGameStats,
   state,
   animationClass,
-  expectedSeriesWinsVtree
+  expectedSeriesWinsVtree,
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    Game(gameDisplay, { status: { state }, teams, preGameStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, preGameStats }, goals),
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);

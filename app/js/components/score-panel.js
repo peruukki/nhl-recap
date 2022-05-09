@@ -20,7 +20,7 @@ export default function ScorePanel({
     ]),
     div(
       `.team-panel__delimiter${delimiterVisibilityClass}`,
-      isBeforeGame ? 'at' : renderDelimiter(latestGoalPeriod)
+      isBeforeGame ? 'at' : renderDelimiter(latestGoalPeriod),
     ),
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),
@@ -34,7 +34,7 @@ function renderLogo(teamId, modifier) {
   return span('.team-logo', [
     renderTeamLogo(
       teamId,
-      `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`
+      `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`,
     ),
   ]);
 }

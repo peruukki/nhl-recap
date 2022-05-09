@@ -26,7 +26,7 @@ describe('score panel', () => {
         [],
         0,
         0,
-        '.team-panel__team-score--hidden'
+        '.team-panel__team-score--hidden',
       );
     });
 
@@ -68,7 +68,7 @@ describe('score panel', () => {
         GAME_DISPLAY_PLAYBACK,
         { teams },
         goals,
-        span('.team-panel__delimiter-period', 'OT')
+        span('.team-panel__delimiter-period', 'OT'),
       );
     });
 
@@ -83,7 +83,7 @@ describe('score panel', () => {
         GAME_DISPLAY_PLAYBACK,
         { teams },
         goals,
-        span('.team-panel__delimiter-period', 'SO')
+        span('.team-panel__delimiter-period', 'SO'),
       );
     });
 
@@ -93,7 +93,7 @@ describe('score panel', () => {
         GAME_DISPLAY_POST_GAME_FINISHED,
         { teams },
         goals,
-        span('.team-panel__delimiter-period', 'SO')
+        span('.team-panel__delimiter-period', 'SO'),
       );
     });
   });
@@ -105,7 +105,7 @@ function assertGoalCounts(
   currentGoals,
   awayGoals,
   homeGoals,
-  visibilityClass = '.fade-in'
+  visibilityClass = '.fade-in',
 ) {
   const teamPanels = getTeamPanels(Game(gameDisplay, { status: { state }, teams }, currentGoals));
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
@@ -117,7 +117,7 @@ function assertDelimiter(
   { state = GAME_STATE_FINISHED, teams },
   currentGoals,
   delimiter,
-  visibilityClass = '.fade-in'
+  visibilityClass = '.fade-in',
 ) {
   const delimiterNode = getDelimiter(Game(gameDisplay, { status: { state }, teams }, currentGoals));
   const expected = expectedDelimiter(delimiter, visibilityClass);
@@ -135,7 +135,7 @@ function getDelimiter(vtree) {
 function getGameChildrenWithClass(vtree, className) {
   const stripHtmlElement = (sel) => sel.replace(/^\w\./, '');
   return getGameCard(vtree).children[0].children.filter((node) =>
-    _.includes(stripHtmlElement(node.sel).split('.'), className)
+    _.includes(stripHtmlElement(node.sel).split('.'), className),
   );
 }
 
@@ -145,7 +145,7 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
       span('.team-logo', [
         renderTeamLogo(
           teams.away.id,
-          `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`
+          `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`,
         ),
       ]),
       span('.team-panel__team-name', teams.away.abbreviation),
@@ -157,7 +157,7 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
       span('.team-logo', [
         renderTeamLogo(
           teams.home.id,
-          `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`
+          `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`,
         ),
       ]),
     ]),

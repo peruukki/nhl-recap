@@ -17,13 +17,13 @@ export default function SeriesWinsPanel({
     awayGoals,
     homeGoals,
     playoffSeries,
-    addCurrentGameToWins
+    addCurrentGameToWins,
   );
   const animationClass = addCurrentGameToWins ? '.fade-in' : '';
 
   return div(
     `.game__series-wins${animationClass}`,
-    getSeriesWinsDescription(playoffSeriesWins, playoffSeries.round)
+    getSeriesWinsDescription(playoffSeriesWins, playoffSeries.round),
   );
 }
 

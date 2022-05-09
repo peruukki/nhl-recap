@@ -84,8 +84,8 @@ describe('info panel', () => {
         { status, teams },
         goals,
         expectedCurrentProgressDescription(
-          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
-        )
+          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`,
+        ),
       );
     });
 
@@ -104,8 +104,8 @@ describe('info panel', () => {
         { status, teams },
         goals,
         expectedCurrentProgressDescription(
-          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`
-        )
+          `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`,
+        ),
       );
     });
 
@@ -123,7 +123,7 @@ describe('info panel', () => {
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
-        expectedCurrentProgressDescription(`End of ${status.progress.currentPeriodOrdinal}`)
+        expectedCurrentProgressDescription(`End of ${status.progress.currentPeriodOrdinal}`),
       );
     });
 
@@ -141,7 +141,7 @@ describe('info panel', () => {
         GAME_DISPLAY_PRE_GAME,
         { status, teams },
         goals,
-        expectedCurrentProgressDescription('In shootout')
+        expectedCurrentProgressDescription('In shootout'),
       );
     });
 
@@ -164,7 +164,7 @@ describe('info panel', () => {
         GAME_DISPLAY_PRE_GAME,
         { status, startTime, teams },
         goals,
-        'Starts in 3 hours'
+        'Starts in 3 hours',
       );
     });
 
@@ -178,7 +178,7 @@ describe('info panel', () => {
 
 function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
   const latestGoalPanel = getLatestGoalPanel(
-    Game(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals)
+    Game(gameDisplay, { status: { state: GAME_STATE_FINISHED }, teams }, goals),
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);
@@ -186,7 +186,7 @@ function assertLatestGoal(gameDisplay, teams, goals, expectedLatestGoal) {
 
 function assertGameDescription(gameDisplay, { status, startTime, teams }, goals, description) {
   const gameDescription = getGameDescription(
-    Game(gameDisplay, { status, startTime, teams }, goals)
+    Game(gameDisplay, { status, startTime, teams }, goals),
   );
   const expected = expectedGameDescription(description);
   assert.deepEqual(gameDescription, expected);

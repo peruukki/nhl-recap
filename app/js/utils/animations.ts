@@ -48,7 +48,7 @@ function highlightGoal(classModifier: string, gameIndex: number): void {
 
 function highlightGoalCountChange(classModifier: string, gameIndex: number): void {
   const element = document.querySelectorAll(
-    `.team-panel--${classModifier} > .team-panel__team-score`
+    `.team-panel--${classModifier} > .team-panel__team-score`,
   )[gameIndex];
   if (element) {
     element.animate([{ color: 'black' }, { color: '#fac02d' }], { duration: 1000 });

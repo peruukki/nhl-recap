@@ -23,21 +23,21 @@ describe('errors panel', () => {
   it("should show appropriate error when some goals' data is missing", () => {
     assertErrors(
       [{ error: ERROR_SCORE_AND_GOAL_COUNT_MISMATCH, details: { goalCount: 2, scoreCount: 3 } }],
-      ['Missing 1 goal from data']
+      ['Missing 1 goal from data'],
     );
   });
 
   it("should show appropriate error when too many goals' data exists", () => {
     assertErrors(
       [{ error: ERROR_SCORE_AND_GOAL_COUNT_MISMATCH, details: { goalCount: 2, scoreCount: 1 } }],
-      ['1 too many goals in data']
+      ['1 too many goals in data'],
     );
   });
 });
 
 function assertErrors(gameErrors, expectedErrors) {
   const errorsPanel = getErrorsPanel(
-    Game(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, [])
+    Game(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, []),
   );
   const expected = expectedErrorsPanel(expectedErrors);
   assert.deepEqual(errorsPanel, expected);

@@ -23,7 +23,7 @@ export default function gameEvents(scores) {
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
   const periodEnds = completedPeriodEvents.map((onePeriodEvents) =>
-    appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount)
+    appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount),
   );
   const allPeriodEvents = eventsByPeriod.map((onePeriodEvents) => onePeriodEvents.events);
   const periodSequences = _.chain()
@@ -35,7 +35,7 @@ export default function gameEvents(scores) {
   return _.concat(
     appendDelay(getGamesStartElement(), gamesStartPauseEventCount),
     ...periodSequences,
-    getGamesEndElement(endTime.inProgress)
+    getGamesEndElement(endTime.inProgress),
   );
 }
 
@@ -183,15 +183,15 @@ export function getAllGoalsSorted(scores) {
       _.chain(game.goals)
         .reject(
           (goal) =>
-            goal.period === PERIOD_SHOOTOUT && game.status && !hasGameFinished(game.status.state)
+            goal.period === PERIOD_SHOOTOUT && game.status && !hasGameFinished(game.status.state),
         )
         .map((goal) => ({
           ...goal,
           gameIndex,
           classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home',
         }))
-        .value()
-    )
+        .value(),
+    ),
   )
     .flatten()
     .sortBy(['period', 'min', 'sec'])

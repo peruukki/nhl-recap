@@ -39,7 +39,7 @@ describe('periodEvents', () => {
       periodLengthInMinutes,
       endTime,
       [],
-      goalPauseEventCount
+      goalPauseEventCount,
     );
 
     const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map((second) => ({
@@ -57,13 +57,13 @@ describe('periodEvents', () => {
     const clockEventCount = ((periodLengthInMinutes - 1) * 60) / clockAdvanceStep + 1;
     const clockEvents = _.take(
       periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCount),
-      clockEventCount
+      clockEventCount,
     );
 
     const minutes = _.range(periodLengthInMinutes - 1, 0, -1);
     const seconds = _.range(59, -1, -clockAdvanceStep);
     const secondEvents = _.flatMap(minutes, (minute) =>
-      seconds.map((second) => ({ period, minute, second }))
+      seconds.map((second) => ({ period, minute, second })),
     );
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
@@ -95,7 +95,7 @@ describe('periodEvents', () => {
     // Take only the first second to speed up and simplify the test
     const clockEvents = _.take(
       periodEvents(period, periodLength, null, [], goalPauseEventCount),
-      5
+      5,
     );
 
     const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep).map((tenthOfASecond) => ({
@@ -119,7 +119,7 @@ describe('periodEvents', () => {
         periodLength,
         null,
         allGoalsSorted,
-        EVENT_COUNTS.pause
+        EVENT_COUNTS.pause,
       );
 
       assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 }, description);
@@ -127,7 +127,7 @@ describe('periodEvents', () => {
       expectedGameIndexes.forEach((gameIndex) => {
         const eventIndexWithGameIndex = _.findIndex(
           clockEvents,
-          ({ update }) => update && update.gameIndex === gameIndex
+          ({ update }) => update && update.gameIndex === gameIndex,
         );
         assert.deepEqual(
           clockEvents
@@ -139,7 +139,7 @@ describe('periodEvents', () => {
             ..._.times(EVENT_COUNTS.pause, () => ({ pause: true })),
             { gameIndex, type: GAME_UPDATE_END },
           ],
-          description
+          description,
         );
       });
     };
@@ -156,7 +156,7 @@ describe('periodEvents', () => {
     assertGoalEvents(
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
       [5, 1],
-      'goal events with goal scoring times with goals at different times'
+      'goal events with goal scoring times with goals at different times',
     );
 
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
@@ -168,7 +168,7 @@ describe('periodEvents', () => {
       allGoalsSortedWithMultipleGoalsAtTheSameTime,
       [4, 3],
       'goal events with goal scoring times with simultaneous goals',
-      true
+      true,
     );
   });
 
@@ -198,7 +198,7 @@ it('should include clock-stopping goal scored on the second that the clock stops
       minute: 3,
       second: 0,
     },
-    { minute: 3, second: 0 }
+    { minute: 3, second: 0 },
   );
 });
 
@@ -206,7 +206,7 @@ function assertFinalSecondsGoalUpdate(
   goalTime,
   periodLength,
   gameEndTime,
-  updateTime = { minute: 0, second: 0 }
+  updateTime = { minute: 0, second: 0 },
 ) {
   const goal = { ...goalTime, gameIndex: 1, classModifier: 'home' };
   const clockEvents = periodEvents(
@@ -214,7 +214,7 @@ function assertFinalSecondsGoalUpdate(
     periodLength,
     gameEndTime,
     [goal],
-    goalPauseEventCount
+    goalPauseEventCount,
   );
 
   const expected = {

@@ -58,7 +58,7 @@ function intent(DOM, HTTP, $window) {
     status$: apiResponseWithErrors$
       .filter((scores) => scores.error)
       .map((scores) =>
-        scores.error.expected ? scores.error.message : getUnexpectedErrorMessage()
+        scores.error.expected ? scores.error.message : getUnexpectedErrorMessage(),
       ),
   };
 }
@@ -104,8 +104,8 @@ function model(actions, animations) {
           currentGoals[update.gameIndex].concat(update.goal),
           ...currentGoals.slice(update.gameIndex + 1),
         ],
-        initialGameGoals
-      )
+        initialGameGoals,
+      ),
     )
     .flatten();
 
@@ -123,7 +123,7 @@ function model(actions, animations) {
       actions.status$.startWith('Fetching latest scores...'),
       clock.DOM.startWith(span('.clock')),
       clock.clock$.startWith(null),
-      gameDisplays$.startWith([])
+      gameDisplays$.startWith([]),
     )
     .map(([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
       scores,
@@ -149,13 +149,13 @@ function view(state$) {
             gameCount,
             isPlaying,
             date: scores.date,
-          })
+          }),
         ),
         section(
           '.score-panel',
-          renderScores({ games: scores.games, currentGoals, status, gameDisplays })
+          renderScores({ games: scores.games, currentGoals, status, gameDisplays }),
         ),
-      ])
+      ]),
   );
 }
 
@@ -176,7 +176,7 @@ function renderHeader(state) {
     button(
       '.button.play-pause-button',
       { class: dynamicClassNames },
-      span('.visible-button', span('.visually-hidden', buttonText))
+      span('.visible-button', span('.visually-hidden', buttonText)),
     ),
     showDate ? renderDate(state.date) : state.clockVtree,
   ]);
@@ -196,9 +196,9 @@ function renderScores(state) {
             state.gameDisplays[index],
             game,
             state.currentGoals[index] || [],
-            gameAnimationIndexes[index]
-          )
-        )
+            gameAnimationIndexes[index],
+          ),
+        ),
       )
     : div('.status.fade-in', [state.status || 'No scores available.']);
 }

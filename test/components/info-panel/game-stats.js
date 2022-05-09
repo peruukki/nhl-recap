@@ -71,7 +71,7 @@ describe('game stats', () => {
     assertGameStatsAreShown(
       GAME_DISPLAY_POST_GAME_IN_PROGRESS,
       { status, teams, gameStats },
-      goals
+      goals,
     );
   });
 
@@ -210,7 +210,7 @@ function assertGameStatsAreShown(gameDisplay, { status, teams, gameStats }, goal
     { status, teams, gameStats },
     goals,
     assert.deepEqual,
-    'div.stats.stats--game-stats'
+    'div.stats.stats--game-stats',
   );
 }
 function assertGameStatsAreNotShown(gameDisplay, { status, teams, gameStats }, goals) {
@@ -219,7 +219,7 @@ function assertGameStatsAreNotShown(gameDisplay, { status, teams, gameStats }, g
     { status, teams, gameStats },
     goals,
     assert.notDeepEqual,
-    'div.stats.stats--game-stats'
+    'div.stats.stats--game-stats',
   );
 }
 function assertGameStatsExistence(
@@ -227,7 +227,7 @@ function assertGameStatsExistence(
   { status, teams, gameStats },
   goals,
   assertFn,
-  selector
+  selector,
 ) {
   const stats = getGameStats(Game(gameDisplay, { status, teams, gameStats }, goals));
   assertFn(stats && stats.sel, selector);
@@ -237,10 +237,10 @@ function assertGameStats(
   gameDisplay,
   { state = GAME_STATE_FINISHED, teams, goals, gameStats },
   statIndex,
-  renderedRecords
+  renderedRecords,
 ) {
   const renderedStats = getGameStats(
-    Game(gameDisplay, { status: { state }, teams, gameStats }, goals)
+    Game(gameDisplay, { status: { state }, teams, gameStats }, goals),
   ).children[statIndex];
   const expected = expectedStat(renderedRecords);
   assert.deepEqual(renderedStats, expected);

@@ -67,7 +67,7 @@ describe('shootoutEvents', () => {
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
         { gameIndex: 0, type: GAME_UPDATE_END },
       ],
-      'First shootout game goal events'
+      'First shootout game goal events',
     );
 
     assert.deepEqual(
@@ -87,7 +87,7 @@ describe('shootoutEvents', () => {
         ..._.times(goalPauseEventCount, () => ({ pause: true })),
         { gameIndex: 1, type: GAME_UPDATE_END },
       ],
-      'Second shootout game goal events'
+      'Second shootout game goal events',
     );
   });
 

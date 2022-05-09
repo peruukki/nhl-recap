@@ -13,7 +13,7 @@ export default function TeamStats(teams, fadeIn, showAfterGameStats, isPlayoffGa
       isPlayoffGame ? null : stats.records,
       'Point-%',
       renderWinPercentage,
-      renderWinPercentage
+      renderWinPercentage,
     ),
     renderStat(teams, stats.records, 'Record', renderWinPercentage, renderRecord),
     renderStat(teams, stats.streaks, 'Streak', getStreakRating, renderStreak),
@@ -22,7 +22,7 @@ export default function TeamStats(teams, fadeIn, showAfterGameStats, isPlayoffGa
       isPlayoffGame ? null : stats.standings,
       'PO spot pts',
       getPlayoffSpotRating,
-      renderPlayoffSpot
+      renderPlayoffSpot,
     ),
   ]);
 }

@@ -163,16 +163,16 @@ function assertPeriodEndPauseEventsCount(events, periods) {
   periods.forEach((period) => {
     const periodEndEventIndex = _.findIndex(
       events,
-      (event) => event.end && event.period === period
+      (event) => event.end && event.period === period,
     );
     const pauseEventsAfterPeriodEndEvent = _.takeWhile(
       events.slice(periodEndEventIndex + 1),
-      'pause'
+      'pause',
     );
     assert.equal(
       pauseEventsAfterPeriodEndEvent.length,
       periodEndPauseEventCount,
-      `Period ${period} end pause events count`
+      `Period ${period} end pause events count`,
     );
   });
 }

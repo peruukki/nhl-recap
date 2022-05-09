@@ -17,7 +17,7 @@ export default function GameStats(teams, stats) {
       stats.faceOffWinPercentage,
       'Faceoff-%',
       getPositiveNumericalRating,
-      renderPlainValue
+      renderPlainValue,
     ),
   ]);
 }

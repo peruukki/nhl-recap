@@ -6,12 +6,12 @@ export function renderStat(teams, values, label, ratingFn, renderFn) {
   return div('.stat', [
     span(
       `${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
-      values ? renderFn(values[teams.away.abbreviation]) : ''
+      values ? renderFn(values[teams.away.abbreviation]) : '',
     ),
     span('.stat__label', values ? label : ''),
     span(
       `${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
-      values ? renderFn(values[teams.home.abbreviation]) : ''
+      values ? renderFn(values[teams.home.abbreviation]) : '',
     ),
   ]);
 }
