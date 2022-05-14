@@ -1,18 +1,25 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
+import type {
+  GameEvent,
+  GoalWithUpdateFields,
+  GameEndTime,
+  GameEventClockTime,
+  PauseEvent,
+} from '../types';
 import { getGoalEvents, hasGoalBeenScored } from './utils';
 
 const advanceClockStep = 3;
 
 export default function periodEvents(
-  period,
-  durationInMinutes,
-  endTime,
-  allGoalsSorted,
-  goalPauseEventCount,
-) {
-  const lastMinute = endTime ? endTime.minute : -1;
-  const lastSecond = endTime ? endTime.second : -1;
+  period: number | 'OT',
+  durationInMinutes: number,
+  endTime: GameEndTime | null,
+  allGoalsSorted: GoalWithUpdateFields[],
+  goalPauseEventCount: number,
+): (GameEvent | PauseEvent)[] {
+  const lastMinute = endTime?.minute ?? -1;
+  const lastSecond = endTime?.second ?? -1;
 
   // Advance clock by second for all minutes but the last one of the 3rd period
   const allSecondEvents = generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond);
@@ -27,12 +34,17 @@ export default function periodEvents(
       ? generateTenthOfASecondEvents(period, lastMinute, lastSecond)
       : [];
 
-  const firstEvent = { period, minute: durationInMinutes, second: 0 };
+  const firstEvent: GameEventClockTime = { period, minute: durationInMinutes, second: 0 };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
   return createGoalEvents(sequence, allGoalsSorted, goalPauseEventCount);
 }
 
-function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond) {
+function generateSecondEvents(
+  period: GameEventClockTime['period'],
+  durationInMinutes: number,
+  lastMinute: number,
+  lastSecond: number,
+): GameEventClockTime[] {
   return _.flatten(
     minuteRange(durationInMinutes, lastMinute).map((minute) =>
       secondRange(minute, lastMinute, lastSecond).map((second) => ({
@@ -44,7 +56,11 @@ function generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond)
   );
 }
 
-function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
+function generateTenthOfASecondEvents(
+  period: GameEventClockTime['period'],
+  lastMinute: number,
+  lastSecond: number,
+): GameEventClockTime[] {
   const minute = 0;
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond).map((second) =>
@@ -58,34 +74,38 @@ function generateTenthOfASecondEvents(period, lastMinute, lastSecond) {
   );
 }
 
-function minuteRange(firstMinute, lastMinute) {
+function minuteRange(firstMinute: number, lastMinute: number): number[] {
   return _.range(firstMinute - 1, Math.max(lastMinute - 1, -1), -1);
 }
 
-function secondRange(minute, lastMinute, lastSecond) {
+function secondRange(minute: number, lastMinute: number, lastSecond: number): number[] {
   const rangeEnd = minute === lastMinute ? Math.max(lastSecond - advanceClockStep, -1) : -1;
   const initialRange = _.range(59, rangeEnd, -advanceClockStep);
   // Ensure the final seconds of the last minute are included
   const isLastMinute = minute === lastMinute || (minute === 0 && lastMinute === -1);
-  const lastIncludedSecond = _.last(initialRange);
+  const lastIncludedSecond = _.last(initialRange) as number;
   const areFinalSecondsExcluded = isLastMinute && lastSecond < lastIncludedSecond;
   return areFinalSecondsExcluded ? initialRange.concat(0) : initialRange;
 }
 
-function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
-  return _.take(clockEvents).concat(
+function createGoalEvents(
+  clockEvents: GameEventClockTime[],
+  allGoalsSorted: GoalWithUpdateFields[],
+  goalPauseEventCount: number,
+): (GameEvent | PauseEvent)[] {
+  return _.take<GameEvent | PauseEvent>(clockEvents).concat(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
         const goalsScoredSincePreviousTime = getGoalsScoredInTimeRange(
-          previousClock,
-          currentClock,
+          previousClock as GameEventClockTime,
+          currentClock as GameEventClockTime,
           allGoalsSorted,
         );
         return goalsScoredSincePreviousTime.length === 0
-          ? [currentClock]
+          ? [currentClock as GameEvent]
           : _.flatten(
               goalsScoredSincePreviousTime.map((goal) =>
-                getGoalEvents(currentClock, goal, goalPauseEventCount),
+                getGoalEvents(currentClock as GameEvent, goal, goalPauseEventCount),
               ),
             );
       }),
@@ -93,7 +113,11 @@ function createGoalEvents(clockEvents, allGoalsSorted, goalPauseEventCount) {
   );
 }
 
-function getGoalsScoredInTimeRange(previousClock, currentClock, allGoalsSorted) {
+function getGoalsScoredInTimeRange(
+  previousClock: GameEventClockTime,
+  currentClock: GameEventClockTime,
+  allGoalsSorted: GoalWithUpdateFields[],
+): GoalWithUpdateFields[] {
   const previousLastGoalFilter = _.partial(hasGoalBeenScored, previousClock);
   const currentLastGoalFilter = _.partial(hasGoalBeenScored, currentClock);
 

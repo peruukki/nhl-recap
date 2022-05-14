@@ -1,16 +1,29 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './constants';
 import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
 import {
+  Game,
+  GameEndTime,
+  GameEvent,
+  GameProgress,
+  Goal,
+  GoalWithUpdateFields,
+  isShootoutGoal,
+  PauseEvent,
+  Period,
+  PeriodGameEvents,
+  TextualPeriod,
+} from '../types';
+import {
   elapsedTimeToRemainingTime,
-  getPauseElement,
+  getPauseEvent,
   getPeriodOrdinal,
   hasGameFinished,
 } from './utils';
 
-export default function gameEvents(scores) {
+export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   // These event counts determine for how many number of extra events we pause the clock
   const pauseMultiplier = 50;
   const gamesStartPauseEventCount = 1 * pauseMultiplier;
@@ -26,10 +39,11 @@ export default function gameEvents(scores) {
     appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount),
   );
   const allPeriodEvents = eventsByPeriod.map((onePeriodEvents) => onePeriodEvents.events);
-  const periodSequences = _.chain()
-    .zip(allPeriodEvents, periodEnds)
+  const periodSequences = _.chain(allPeriodEvents)
+    .zip(periodEnds)
     .flatten()
-    .filter(_.identity)
+    // @ts-ignore
+    .filter<GameEvent>(_.identity)
     .value();
 
   return _.concat(
@@ -39,31 +53,38 @@ export default function gameEvents(scores) {
   );
 }
 
-function appendDelay(element, multiplier) {
-  return [element, ..._.times(multiplier, getPauseElement)];
+function appendDelay(element: GameEvent, multiplier: number) {
+  return [element, ..._.times(multiplier, getPauseEvent)];
 }
 
-function getPeriodEndElement(period) {
+function getPeriodEndElement(period: Period): GameEvent {
   return { period, end: true };
 }
 
-function getGamesStartElement() {
+function getGamesStartElement(): GameEvent {
   return { start: true };
 }
 
-function getGamesEndElement(inProgress) {
+function getGamesEndElement(inProgress?: boolean): GameEvent {
   return inProgress ? { end: true, inProgress } : { end: true };
 }
 
-function getAllPeriodEvents(scores, endTime, goalPauseEventCount) {
+function getAllPeriodEvents(
+  scores: Game[],
+  endTime: GameEndTime,
+  goalPauseEventCount: number,
+): PeriodGameEvents[] {
   const allGoalsSorted = getAllGoalsSorted(scores);
-  return getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount)
-    .concat(getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount))
-    .concat(getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount))
-    .filter(_.identity);
+  return getRegularPeriodGameEvents(endTime, allGoalsSorted, goalPauseEventCount)
+    .concat(getOvertimeGameEvents(endTime, allGoalsSorted, goalPauseEventCount))
+    .concat(getShootoutGameEvents(endTime, allGoalsSorted, goalPauseEventCount));
 }
 
-function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
+function getRegularPeriodGameEvents(
+  endTime: GameEndTime,
+  allGoalsSorted: GoalWithUpdateFields[],
+  goalPauseEventCount: number,
+): PeriodGameEvents[] {
   const partialPeriodNumber = getPartialPeriodNumber(endTime);
   const lastFullPeriodNumber = partialPeriodNumber
     ? partialPeriodNumber - 1
@@ -83,74 +104,87 @@ function getRegularPeriodClocks(endTime, allGoalsSorted, goalPauseEventCount) {
   return fullPeriods;
 }
 
-function getPartialPeriodNumber(endTime) {
-  return !isNaN(endTime.period) && !hasLastPeriodEnded(endTime) ? endTime.period : null;
+function getPartialPeriodNumber(endTime: GameEndTime): number | null {
+  return typeof endTime.period === 'number' && !hasLastPeriodEnded(endTime) ? endTime.period : null;
 }
 
-function getLastFullPeriodNumber(endTime) {
-  return !isNaN(endTime.period) && hasLastPeriodEnded(endTime) ? endTime.period : 3;
+function getLastFullPeriodNumber(endTime: GameEndTime): number {
+  return typeof endTime.period === 'number' && hasLastPeriodEnded(endTime) ? endTime.period : 3;
 }
 
-function hasLastPeriodEnded(endTime) {
+function hasLastPeriodEnded(endTime: GameEndTime): boolean {
   return endTime.minute === undefined;
 }
 
-function getOvertimeClock(endTime, allGoalsSorted, goalPauseEventCount) {
+function getOvertimeGameEvents(
+  endTime: GameEndTime,
+  allGoalsSorted: GoalWithUpdateFields[],
+  goalPauseEventCount: number,
+): PeriodGameEvents[] {
   if (endTime.period !== PERIOD_SHOOTOUT && endTime.period !== PERIOD_OVERTIME) {
-    return null;
+    return [];
   }
   const periodEnd = endTime.period === PERIOD_OVERTIME ? endTime : null;
-  return {
-    period: PERIOD_OVERTIME,
-    events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount),
-  };
+  return [
+    {
+      period: PERIOD_OVERTIME,
+      events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount),
+    },
+  ];
 }
 
-function getShootoutClock(endTime, allGoalsSorted, goalPauseEventCount) {
+function getShootoutGameEvents(
+  endTime: GameEndTime,
+  allGoalsSorted: GoalWithUpdateFields[],
+  goalPauseEventCount: number,
+): PeriodGameEvents[] {
   return endTime.period === PERIOD_SHOOTOUT
-    ? { period: PERIOD_SHOOTOUT, events: shootoutEvents(allGoalsSorted, goalPauseEventCount) }
-    : null;
+    ? [{ period: PERIOD_SHOOTOUT, events: shootoutEvents(allGoalsSorted, goalPauseEventCount) }]
+    : [];
 }
 
-function getClockEndTime(scores) {
+function getClockEndTime(scores: Game[]): GameEndTime {
   const gameEndTimes = scores.map(getGameEndTime);
-  return _.chain(gameEndTimes)
-    .filter(_.identity)
-    .sortBy([getPeriodIteratee, getMinuteIteratee, getSecondIteratee])
-    .last()
-    .value();
+  return (
+    _.chain(gameEndTimes)
+      .filter(_.identity)
+      // @ts-ignore
+      .sortBy([getPeriodIteratee, getMinuteIteratee, getSecondIteratee])
+      .last()
+      .value()
+  );
 }
 
-function getPeriodIteratee(event) {
+function getPeriodIteratee(event: GameEndTime): number {
   return getPeriodOrdinal(event.period);
 }
 
-function getMinuteIteratee(event) {
+function getMinuteIteratee(event: GameEndTime): number {
   return getTimeValueIteratee(event.minute);
 }
-function getSecondIteratee(event) {
+function getSecondIteratee(event: GameEndTime): number {
   return getTimeValueIteratee(event.second);
 }
-function getTimeValueIteratee(value) {
+function getTimeValueIteratee(value: number | undefined): number {
   // The time value is remaining time and undefined means end of period
   return value === undefined ? 0 : -value;
 }
 
-function getGameEndTime(game) {
+function getGameEndTime(game: Game): GameEndTime | null {
   const isPlayoffGame = !!game.preGameStats && !!game.preGameStats.playoffSeries;
   return game.status && game.status.state === 'LIVE'
     ? getGameEndTimeFromProgress(game.status.progress, isPlayoffGame)
     : getGameEndTimeFromGoals(game.goals);
 }
 
-function getGameEndTimeFromProgress(progress, isPlayoffGame) {
+function getGameEndTimeFromProgress(progress: GameProgress, isPlayoffGame: boolean): GameEndTime {
   const { min, sec } = progress.currentPeriodTimeRemaining;
   const hasEnded = min === 0 && sec === 0;
   return {
     period:
       !isPlayoffGame &&
       _.includes([PERIOD_OVERTIME, PERIOD_SHOOTOUT], progress.currentPeriodOrdinal)
-        ? progress.currentPeriodOrdinal
+        ? (progress.currentPeriodOrdinal as TextualPeriod)
         : progress.currentPeriod,
     minute: hasEnded ? undefined : min,
     second: hasEnded ? undefined : sec,
@@ -158,26 +192,27 @@ function getGameEndTimeFromProgress(progress, isPlayoffGame) {
   };
 }
 
-function getGameEndTimeFromGoals(goals) {
+function getGameEndTimeFromGoals(goals: Goal[]): GameEndTime | null {
   const lastGoal = _.last(goals);
   if (!lastGoal) {
     return null;
   }
 
-  const isOverTime = lastGoal.period === PERIOD_OVERTIME || lastGoal.period > 3;
-  const isShootout = lastGoal.period === PERIOD_SHOOTOUT;
-
-  if (isOverTime) {
-    return elapsedTimeToRemainingTime({
-      period: lastGoal.period,
-      minute: lastGoal.min,
-      second: lastGoal.sec,
-    });
+  if (isShootoutGoal(lastGoal)) {
+    return { period: PERIOD_SHOOTOUT };
   }
-  return isShootout ? { period: PERIOD_SHOOTOUT } : { period: 3 };
+
+  const isOverTime = lastGoal.period === PERIOD_OVERTIME || Number(lastGoal.period) > 3;
+  return isOverTime
+    ? elapsedTimeToRemainingTime({
+        period: lastGoal.period,
+        minute: lastGoal.min,
+        second: lastGoal.sec,
+      })
+    : { period: 3 };
 }
 
-export function getAllGoalsSorted(scores) {
+export function getAllGoalsSorted(scores: Game[]): GoalWithUpdateFields[] {
   return _.chain(
     scores.map((game, gameIndex) =>
       _.chain(game.goals)
@@ -188,7 +223,8 @@ export function getAllGoalsSorted(scores) {
         .map((goal) => ({
           ...goal,
           gameIndex,
-          classModifier: goal.team === game.teams.away.abbreviation ? 'away' : 'home',
+          classModifier:
+            goal.team === game.teams.away.abbreviation ? ('away' as const) : ('home' as const),
         }))
         .value(),
     ),

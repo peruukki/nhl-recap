@@ -1,5 +1,6 @@
-import xs from 'xstream';
+import xs, { Stream } from 'xstream';
 
+import { GameEvent, GameEventClockTime, isClockTimeEvent, isEndEvent, Scores } from '../types';
 import {
   GAME_DISPLAY_IN_PROGRESS,
   GAME_DISPLAY_PLAYBACK,
@@ -16,12 +17,16 @@ import {
   isGameInProgress,
 } from './utils';
 
-export default function getGameDisplays$(clock$, scores$) {
+export default function getGameDisplays$(
+  clock$: Stream<GameEvent>,
+  scores$: Stream<Scores>,
+): Stream<string[]> {
   const initialgameDisplays$ = scores$
     .filter((scores) => scores.games.length > 0)
     .map((scores) => Array.from({ length: scores.games.length }, () => GAME_DISPLAY_PRE_GAME));
   const gameDisplays$ = xs.combine(scores$, clock$).map(([scores, clock]) => {
-    const playbackState = clock.end && !clock.period ? PLAYBACK_FINISHED : PLAYBACK_IN_PROGRESS;
+    const playbackState =
+      isEndEvent(clock) && !isClockTimeEvent(clock) ? PLAYBACK_FINISHED : PLAYBACK_IN_PROGRESS;
     return scores.games.map((game) => {
       if (!hasGameStarted(game.status.state)) {
         return GAME_DISPLAY_PRE_GAME;
@@ -29,7 +34,7 @@ export default function getGameDisplays$(clock$, scores$) {
       if (
         playbackState === PLAYBACK_IN_PROGRESS &&
         isGameInProgress(game.status.state) &&
-        hasClockPassedCurrentProgress(clock, game.status)
+        hasClockPassedCurrentProgress(clock as GameEventClockTime, game.status)
       ) {
         return GAME_DISPLAY_IN_PROGRESS;
       }
