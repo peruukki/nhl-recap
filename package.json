@@ -70,7 +70,7 @@
     "watch:css:gallery": "npm run sass:gallery && npm run autoprefix:gallery && npm run sass:gallery -- -w gallery/sass/*.scss",
     "watch:js": "watchify $npm_package_config_browserify_args -o public/main.js -v",
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
-    "watch:lint:js": "esw -w *.js app/js gallery/js test",
+    "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/js gallery/js test",
     "watch:lint:css": "watch 'npm run lint:css' app/sass",
     "watch:sw": "rollup $npm_package_config_rollup_sw_args -w",
     "watch:ts": "tsc -w"
