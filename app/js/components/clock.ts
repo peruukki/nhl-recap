@@ -1,10 +1,33 @@
-import xs from 'xstream';
-import { span } from '@cycle/dom';
+import xs, { Stream } from 'xstream';
+import { span, VNode } from '@cycle/dom';
 
-import gameEvents from '../events/game-events';
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
+import gameEvents from '../events/game-events';
+import {
+  Game,
+  GameEvent,
+  isClockTimeEvent,
+  isEndEvent,
+  isPauseEvent,
+  isShootoutEvent,
+  isStartEvent,
+  Period,
+} from '../types';
 
-export default function Clock(sources) {
+type Sources = {
+  scores$: Stream<Game[]>;
+  isPlaying$: Stream<boolean>;
+  props$: Stream<{ interval: number }>;
+};
+
+type Sinks = {
+  clock$: Stream<GameEvent>;
+  DOM: Stream<VNode>;
+};
+
+type Actions = Sources;
+
+export default function Clock(sources: Sources): Sinks {
   const state$ = model(intent(sources));
   return {
     DOM: view(state$),
@@ -12,12 +35,12 @@ export default function Clock(sources) {
   };
 }
 
-function intent(sources) {
+function intent(sources: Sources): Actions {
   const { scores$, isPlaying$, props$ } = sources;
   return { scores$, isPlaying$, props$ };
 }
 
-function model(actions) {
+function model(actions: Actions): Stream<GameEvent> {
   const ticks$ = actions.props$.map((props) => xs.periodic(props.interval)).flatten();
   const events$ = actions.scores$.map((scores) => gameEvents(scores));
   const eventIndex$ = xs
@@ -33,14 +56,14 @@ function model(actions) {
     .combine(events$, eventIndex$)
     .endWhen(eventsEnd$)
     .map(([events, eventIndex]) => events[eventIndex])
-    .filter((event) => !event.pause);
+    .filter<GameEvent>((event): event is GameEvent => !isPauseEvent(event));
 }
 
-function view(state$) {
+function view(state$: Stream<GameEvent>) {
   return state$.map((clock) => {
     const time = clock ? renderTime(clock) : '';
     const animationClass =
-      time || (clock.period === PERIOD_SHOOTOUT && !clock.end) ? '.fade-in-fast' : '';
+      time || (isShootoutEvent(clock) && !isEndEvent(clock)) ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
       span('.clock__period', clock ? renderPeriod(clock) : ''),
       time ? span('.clock__time', time) : '',
@@ -48,23 +71,23 @@ function view(state$) {
   });
 }
 
-function renderPeriod(clock) {
-  if (clock.start) {
+function renderPeriod(clock: GameEvent): VNode | string {
+  if (isStartEvent(clock)) {
     return span('.fade-in', 'Starting...');
   }
-  if (clock.end) {
-    return clock.period
+  if (isEndEvent(clock)) {
+    return isClockTimeEvent(clock)
       ? span('.fade-in', renderPeriodEnd(clock.period))
       : span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
   }
-  return renderPeriodNumber(clock.period);
+  return renderPeriodNumber(clock.period as Period);
 }
 
-function renderPeriodEnd(period) {
+function renderPeriodEnd(period: Period): string {
   return `End of ${renderPeriodNumber(period)}`;
 }
 
-export function renderPeriodNumber(period) {
+export function renderPeriodNumber(period: Period): string {
   switch (period) {
     case PERIOD_OVERTIME:
     case 4:
@@ -82,18 +105,19 @@ export function renderPeriodNumber(period) {
     case '3':
       return '3rd';
     default:
-      return `${period - 3}OT`;
+      return `${Number(period) - 3}OT`;
   }
 }
 
-export function renderTime(clock) {
-  if (isNaN(clock.minute) && isNaN(clock.second)) {
+export function renderTime(clock: GameEvent): string {
+  if (isStartEvent(clock) || isEndEvent(clock) || !isClockTimeEvent(clock)) {
     return '';
   }
 
   const showTenthsOfASecond = clock.tenthOfASecond !== undefined;
   const minute = !showTenthsOfASecond ? `${clock.minute}:` : '';
-  const second = clock.second >= 10 || showTenthsOfASecond ? clock.second : `0${clock.second}`;
+  const second =
+    (clock.second || 0) >= 10 || showTenthsOfASecond ? clock.second : `0${clock.second}`;
   const tenthOfASecond = showTenthsOfASecond ? `.${clock.tenthOfASecond}` : '';
   return minute + second + tenthOfASecond;
 }
