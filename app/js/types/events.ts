@@ -34,10 +34,16 @@ export function isShootoutEvent(event: GameEvent): event is GameEventShootout {
 export type GameEventGameUpdate = GameEventClockTime & {
   update: GameUpdateEnd | GameUpdateGoal | GameUpdateStart;
 };
+export function isGameUpdateEvent(event: GameEvent): event is GameEventGameUpdate {
+  return !!(event as GameEventGameUpdate).update;
+}
 
 type GameUpdateBase<T extends string> = { gameIndex: number; type: T };
 type GameUpdateEnd = GameUpdateBase<'END'>;
-type GameUpdateGoal = GameUpdateBase<'GOAL'> & { classModifier: 'away' | 'home'; goal: Goal };
+export type GameUpdateGoal = GameUpdateBase<'GOAL'> & {
+  classModifier: 'away' | 'home';
+  goal: Goal;
+};
 type GameUpdateStart = GameUpdateBase<'START'>;
 
 export type GameEventEnd = { end: true; inProgress?: true };

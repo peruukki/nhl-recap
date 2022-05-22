@@ -1,6 +1,9 @@
 export type Game = {
+  gameStats: GameStats;
   goals: Goal[];
+  errors?: StatError[];
   preGameStats: TeamStats;
+  startTime: string;
   status: GameStatus;
   teams: {
     away: Team;
@@ -12,6 +15,19 @@ export type GameProgress = {
   currentPeriod: number;
   currentPeriodOrdinal: string;
   currentPeriodTimeRemaining: TimeElapsed & { pretty: string };
+};
+
+type GameStats = {
+  blocked: { [team: TeamAbbreviation]: number };
+  faceOffWinPercentage: { [team: TeamAbbreviation]: string };
+  giveaways: { [team: TeamAbbreviation]: number };
+  hits: { [team: TeamAbbreviation]: number };
+  pim: { [team: TeamAbbreviation]: number };
+  powerPlay: {
+    [team: TeamAbbreviation]: { goals: number; opportunities: number; percentage: string };
+  };
+  shots: { [team: TeamAbbreviation]: number };
+  takeaways: { [team: TeamAbbreviation]: number };
 };
 
 type GameStatusLive = {
@@ -42,7 +58,14 @@ export function isShootoutGoal(goal: Goal): goal is GoalInShootout {
 }
 
 export type Scores = {
+  date?: ScoresDate;
   games: Game[];
+};
+export type ScoresDate = { raw: string; pretty: string };
+
+type StatError = {
+  details?: { goalCount: number; scoreCount: number };
+  error: string;
 };
 
 type Team = {

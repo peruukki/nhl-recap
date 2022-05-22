@@ -1,14 +1,62 @@
-import { button, div, h1, header, section, span } from '@cycle/dom';
-import xs from 'xstream';
+import { button, div, h1, header, MainDOMSource, section, span, VNode } from '@cycle/dom';
+import { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
+import xs, { Stream } from 'xstream';
 
 import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from '../events/constants';
 import getGameDisplays$ from '../events/game-displays';
+import {
+  GameEvent,
+  GameEventGameUpdate,
+  GameUpdateGoal,
+  Goal,
+  isClockTimeEvent,
+  isEndEvent,
+  isGameUpdateEvent,
+  Scores,
+  ScoresDate,
+} from '../types';
+import type { Animations } from '../utils/animations';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import Game from './game';
 
-export default function main(animations, $window) {
+type Sources = {
+  DOM: MainDOMSource;
+  HTTP: HTTPSource;
+};
+
+type Sinks = {
+  DOM: Stream<VNode>;
+  HTTP: Stream<{ url: string }>;
+};
+
+type Actions = {
+  successApiResponse$: Stream<Scores>;
+  isPlaying$: Stream<boolean>;
+  playbackHasStarted$: Stream<boolean>;
+  status$: Stream<string>;
+};
+
+type Model = {
+  scores: Scores;
+  currentGoals: Goal[][];
+  isPlaying: boolean;
+  status: string;
+  clockVtree: VNode;
+  clock: GameEvent | null;
+  gameDisplays: string[];
+  gameCount: number;
+};
+
+type ApiResponseError = { error: { expected: boolean; message?: string } };
+type ApiResponseSuccess = { success: Scores };
+type ApiResponse = ApiResponseError | ApiResponseSuccess;
+function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuccess {
+  return !!(response as ApiResponseSuccess).success;
+}
+
+export default function main(animations: Animations, $window: Window): (sources: Sources) => Sinks {
   return ({ DOM, HTTP }) => {
     const url = getApiUrl();
     return {
@@ -18,27 +66,29 @@ export default function main(animations, $window) {
   };
 }
 
-function getApiUrl() {
+function getApiUrl(): string {
   const host = process.env.SCORE_API_HOST || 'https://nhl-score-api.herokuapp.com';
   return `${host}/api/scores/latest`;
 }
 
-function intent(DOM, HTTP, $window) {
+function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Actions {
   const apiResponseWithErrors$ = HTTP.select()
-    .map((response$) => response$.replaceError((error) => xs.of({ error })))
+    .map((response$) =>
+      response$.replaceError((error) => xs.of({ error }) as unknown as Stream<Response>),
+    )
     .flatten()
-    .map((response) => {
+    .map<ApiResponse>((response) => {
       if (response.error) {
-        return response;
+        return { error: { expected: false } };
       }
-      const responseJson = JSON.parse(response.text);
+      const responseJson = JSON.parse(response.text) as Scores;
       return responseJson.games.length > 0
         ? { success: responseJson }
         : { error: { message: 'No latest scores available.', expected: true } };
     });
   const successApiResponse$ = apiResponseWithErrors$
-    .filter((scores) => scores.success)
-    .map((scores) => scores.success);
+    .filter((response): response is ApiResponseSuccess => isSuccessApiResponse(response))
+    .map((response) => response.success);
 
   const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
@@ -56,15 +106,13 @@ function intent(DOM, HTTP, $window) {
     isPlaying$,
     playbackHasStarted$,
     status$: apiResponseWithErrors$
-      .filter((scores) => scores.error)
-      .map((scores) =>
-        scores.error.expected ? scores.error.message : getUnexpectedErrorMessage(),
-      ),
+      .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
+      .map(({ error }) => error.message || getUnexpectedErrorMessage()),
   };
 }
 
-function model(actions, animations) {
-  const initialState = { date: {}, games: [] };
+function model(actions: Actions, animations: Animations): Stream<Model> {
+  const initialState = { games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 
   const clock = Clock({
@@ -73,7 +121,9 @@ function model(actions, animations) {
     props$: xs.of({ interval: 20 }),
   });
 
-  const gameUpdate$ = clock.clock$.filter(({ update }) => !!update).map(({ update }) => update);
+  const gameUpdate$ = clock.clock$
+    .filter((event): event is GameEventGameUpdate => isGameUpdateEvent(event))
+    .map(({ update }) => update);
   gameUpdate$.addListener({
     next: (gameUpdate) => {
       switch (gameUpdate.type) {
@@ -87,15 +137,19 @@ function model(actions, animations) {
           animations.highlightGame(gameUpdate.gameIndex);
           break;
         default:
-          throw new Error(`Unknown game update type ${gameUpdate.type}`);
+          throw new Error(`Unknown game update type ${(gameUpdate as any).type}`);
       }
     },
   });
 
   const initialGoals$ = scores$
     .filter((scores) => scores.games.length > 0)
-    .map((scores) => Array.from({ length: scores.games.length }, () => []));
-  const goalUpdate$ = gameUpdate$.filter((update) => update.type === GAME_UPDATE_GOAL);
+    .map((scores) =>
+      Array.from<ArrayLike<never>, Goal[]>({ length: scores.games.length }, () => []),
+    );
+  const goalUpdate$ = gameUpdate$.filter(
+    (update): update is GameUpdateGoal => update.type === GAME_UPDATE_GOAL,
+  );
   const currentGoals$ = initialGoals$
     .map((initialGameGoals) =>
       goalUpdate$.fold(
@@ -122,22 +176,24 @@ function model(actions, animations) {
       actions.isPlaying$.startWith(false),
       actions.status$.startWith('Fetching latest scores...'),
       clock.DOM.startWith(span('.clock')),
-      clock.clock$.startWith(null),
+      clock.clock$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
     )
-    .map(([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
-      scores,
-      currentGoals,
-      isPlaying,
-      status,
-      clockVtree,
-      clock: clockEvent,
-      gameDisplays,
-      gameCount: scores.games.length,
-    }));
+    .map<Model>(
+      ([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
+        scores,
+        currentGoals,
+        isPlaying,
+        status,
+        clockVtree,
+        clock: clockEvent,
+        gameDisplays,
+        gameCount: scores.games.length,
+      }),
+    );
 }
 
-function view(state$) {
+function view(state$: Stream<Model>): Stream<VNode> {
   return state$.map(
     ({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays, gameCount }) =>
       div([
@@ -159,9 +215,11 @@ function view(state$) {
   );
 }
 
-function renderHeader(state) {
+function renderHeader(
+  state: Pick<Model, 'clock' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
+): VNode {
   const hasNotStarted = !state.clock;
-  const isFinished = !!(state.clock && state.clock.end && !state.clock.period);
+  const isFinished = !!(state.clock && isEndEvent(state.clock) && !isClockTimeEvent(state.clock));
   const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
   const dynamicClassNames = {
@@ -169,20 +227,19 @@ function renderHeader(state) {
     [`expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
     'button--hidden': isFinished,
   };
-  const showDate = hasNotStarted && !!state.date;
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button(
-      '.button.play-pause-button',
-      { class: dynamicClassNames },
+    button('.button.play-pause-button', { class: dynamicClassNames }, [
       span('.visible-button', span('.visually-hidden', buttonText)),
-    ),
-    showDate ? renderDate(state.date) : state.clockVtree,
+    ]),
+    hasNotStarted && state.date ? renderDate(state.date) : state.clockVtree,
   ]);
 }
 
-function renderScores(state) {
+function renderScores(
+  state: Pick<Model, 'currentGoals' | 'gameDisplays' | 'status'> & { games: Scores['games'] },
+): VNode {
   const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
   const scoreListClass = classNames({
     '.score-list': true,
@@ -203,6 +260,6 @@ function renderScores(state) {
     : div('.status.fade-in', [state.status || 'No scores available.']);
 }
 
-function renderDate(date) {
+function renderDate(date: ScoresDate): VNode {
   return span('.date.fade-in-slow', date.pretty);
 }

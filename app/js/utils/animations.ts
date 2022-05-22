@@ -69,9 +69,12 @@ function highlightPlayPauseButtonChange(): void {
   }
 }
 
-export default {
+const animations = {
   highlightGame,
   highlightGoal,
   highlightPlayPauseButtonChange,
   stopGameHighlight,
 };
+export default animations;
+
+export type Animations = typeof animations;
