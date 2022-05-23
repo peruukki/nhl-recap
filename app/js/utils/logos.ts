@@ -19,7 +19,7 @@ export function fetchTeamLogoSVGSymbols(): void {
   };
 }
 
-export function renderTeamLogo(teamId: string, className: string): VNode {
+export function renderTeamLogo(teamId: number, className: string): VNode {
   return svg({ attrs: { class: className } }, [
     svg.use({ attrs: { href: `#team-${teamId}-${season}-dark` } }),
   ]);

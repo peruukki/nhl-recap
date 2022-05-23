@@ -1,15 +1,24 @@
-import { div, span } from '@cycle/dom';
+import { div, span, VNode } from '@cycle/dom';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
+import type { Game, Goal } from '../types';
 import { renderTeamLogo } from '../utils/logos';
 
+type Props = {
+  awayGoals: Goal[];
+  homeGoals: Goal[];
+  isBeforeGame: boolean;
+  latestGoalPeriod?: string;
+  teams: Game['teams'];
+};
+
 export default function ScorePanel({
-  teams,
   awayGoals,
   homeGoals,
-  latestGoalPeriod,
   isBeforeGame,
-}) {
+  latestGoalPeriod,
+  teams,
+}: Props): VNode {
   const scoreVisibilityClass = isBeforeGame ? '.team-panel__team-score--hidden' : '.fade-in';
   const delimiterVisibilityClass = isBeforeGame ? '' : '.fade-in';
   return div('.game__score-panel', [
@@ -30,7 +39,7 @@ export default function ScorePanel({
   ]);
 }
 
-function renderLogo(teamId, modifier) {
+function renderLogo(teamId: number, modifier: string): VNode {
   return span('.team-logo', [
     renderTeamLogo(
       teamId,
@@ -39,8 +48,8 @@ function renderLogo(teamId, modifier) {
   ]);
 }
 
-function renderDelimiter(period) {
-  return period === PERIOD_OVERTIME || period === PERIOD_SHOOTOUT || period > 3
+function renderDelimiter(period?: string): VNode | string {
+  return period === PERIOD_OVERTIME || period === PERIOD_SHOOTOUT || Number(period) > 3
     ? span('.team-panel__delimiter-period', period === PERIOD_SHOOTOUT ? 'SO' : 'OT')
     : '';
 }
