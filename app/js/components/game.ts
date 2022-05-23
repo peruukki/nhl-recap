@@ -1,18 +1,19 @@
-import { div } from '@cycle/dom';
-import _ from 'lodash';
+import { div, VNode } from '@cycle/dom';
+import * as _ from 'lodash';
 
 import { GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_PRE_GAME } from '../events/constants';
+import type { Game as GameT, Goal } from '../types';
 import ErrorsPanel from './errors-panel';
 import InfoPanel from './info-panel';
 import ScorePanel from './score-panel';
 import SeriesWinsPanel from './series-wins-panel';
 
 export default function Game(
-  gameDisplay,
-  { status, startTime, teams, gameStats, preGameStats = {}, currentStats = {}, errors },
-  currentGoals,
-  gameAnimationIndex,
-) {
+  gameDisplay: string,
+  { status, startTime, teams, gameStats, preGameStats, currentStats, errors }: GameT,
+  currentGoals: Goal[],
+  gameAnimationIndex: number,
+): VNode {
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter((goal) => goal.team === teams.away.abbreviation);
   const homeGoals = currentGoals.filter((goal) => goal.team === teams.home.abbreviation);
@@ -23,7 +24,7 @@ export default function Game(
         teams,
         awayGoals,
         homeGoals,
-        latestGoalPeriod: latestGoal ? latestGoal.period : null,
+        latestGoalPeriod: latestGoal?.period,
         isBeforeGame: gameDisplay === GAME_DISPLAY_PRE_GAME,
       }),
       InfoPanel({
@@ -34,14 +35,14 @@ export default function Game(
         preGameStats,
         currentStats,
         status,
-        isPlayoffGame: !!preGameStats.playoffSeries,
+        isPlayoffGame: !!preGameStats?.playoffSeries,
         latestGoal,
       }),
       SeriesWinsPanel({
         teams,
         awayGoals,
         homeGoals,
-        playoffSeries: preGameStats.playoffSeries,
+        playoffSeries: preGameStats?.playoffSeries,
         addCurrentGameToWins: gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED,
       }),
       ErrorsPanel(errors),
