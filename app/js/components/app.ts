@@ -38,7 +38,7 @@ type Actions = {
   status$: Stream<string>;
 };
 
-type Model = {
+type State = {
   scores: Scores;
   currentGoals: Goal[][];
   isPlaying: boolean;
@@ -111,7 +111,7 @@ function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Ac
   };
 }
 
-function model(actions: Actions, animations: Animations): Stream<Model> {
+function model(actions: Actions, animations: Animations): Stream<State> {
   const initialState = { games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 
@@ -179,7 +179,7 @@ function model(actions: Actions, animations: Animations): Stream<Model> {
       clock.clock$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
     )
-    .map<Model>(
+    .map<State>(
       ([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
         scores,
         currentGoals,
@@ -193,7 +193,7 @@ function model(actions: Actions, animations: Animations): Stream<Model> {
     );
 }
 
-function view(state$: Stream<Model>): Stream<VNode> {
+function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
     ({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays, gameCount }) =>
       div([
@@ -216,7 +216,7 @@ function view(state$: Stream<Model>): Stream<VNode> {
 }
 
 function renderHeader(
-  state: Pick<Model, 'clock' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
+  state: Pick<State, 'clock' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
 ): VNode {
   const hasNotStarted = !state.clock;
   const isFinished = !!(state.clock && isEndEvent(state.clock) && !isClockTimeEvent(state.clock));
@@ -238,7 +238,7 @@ function renderHeader(
 }
 
 function renderScores(
-  state: Pick<Model, 'currentGoals' | 'gameDisplays' | 'status'> & { games: Scores['games'] },
+  state: Pick<State, 'currentGoals' | 'gameDisplays' | 'status'> & { games: Scores['games'] },
 ): VNode {
   const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
   const scoreListClass = classNames({
