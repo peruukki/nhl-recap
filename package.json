@@ -17,7 +17,7 @@
     "node": ">=16.0"
   },
   "config": {
-    "browserify_args": "app/js/main.js -p [ tsify ] -t [ envify purge ]",
+    "browserify_args": "app/js/main.ts -p [ tsify ] -t [ envify purge ]",
     "browserify_gallery_args": "gallery/js/main.js -p [ tsify ]",
     "rollup_sw_args": "app/js/service-worker/service-worker.ts -c --file public/service-worker.js",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
