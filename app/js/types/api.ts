@@ -5,10 +5,7 @@ export type Game = {
   preGameStats: TeamStats;
   startTime: string;
   status: GameStatus;
-  teams: {
-    away: Team;
-    home: Team;
-  };
+  teams: Teams;
 };
 
 export type GameProgress = {
@@ -78,6 +75,10 @@ type Team = {
   locationName: string;
   shortName: string;
   teamName: string;
+};
+export type Teams = {
+  away: Team;
+  home: Team;
 };
 
 export type TeamAbbreviation = string;

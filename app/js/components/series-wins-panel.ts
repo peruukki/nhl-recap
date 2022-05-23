@@ -1,14 +1,14 @@
 import { div, span, VNode } from '@cycle/dom';
 import * as _ from 'lodash';
 
-import type { Game, Goal, TeamAbbreviation, TeamPlayoffSeries } from '../types';
+import type { Goal, TeamAbbreviation, TeamPlayoffSeries, Teams } from '../types';
 
 type Props = {
   addCurrentGameToWins: boolean;
   awayGoals: Goal[];
   homeGoals: Goal[];
   playoffSeries?: TeamPlayoffSeries;
-  teams: Game['teams'];
+  teams: Teams;
 };
 
 export default function SeriesWinsPanel({
@@ -74,7 +74,7 @@ function getSeriesWinsDescription(
 }
 
 function getPlayoffSeriesWins(
-  teams: Game['teams'],
+  teams: Teams,
   awayGoals: Goal[],
   homeGoals: Goal[],
   playoffSeries: TeamPlayoffSeries,
