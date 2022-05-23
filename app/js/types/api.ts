@@ -63,10 +63,14 @@ export type Scores = {
 };
 export type ScoresDate = { raw: string; pretty: string };
 
-type StatError = {
-  details?: { goalCount: number; scoreCount: number };
-  error: string;
+type StatErrorMissingAllGoals = {
+  error: 'MISSING-ALL-GOALS';
 };
+type StatErrorScoreAndGoalCountMismatch = {
+  details: { goalCount: number; scoreCount: number };
+  error: 'SCORE-AND-GOAL-COUNT-MISMATCH';
+};
+export type StatError = StatErrorMissingAllGoals | StatErrorScoreAndGoalCountMismatch;
 
 type Team = {
   abbreviation: TeamAbbreviation;
