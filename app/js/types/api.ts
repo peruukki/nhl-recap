@@ -80,13 +80,15 @@ type Team = {
   teamName: string;
 };
 
-type TeamAbbreviation = string;
+export type TeamAbbreviation = string;
 
-type TeamStats = {
-  playoffSeries: {
-    round: number;
-    wins: { [team: TeamAbbreviation]: number };
-  };
+export type TeamPlayoffSeries = {
+  round: number;
+  wins: { [team: TeamAbbreviation]: number };
+};
+
+export type TeamStats = {
+  playoffSeries?: TeamPlayoffSeries;
   records: {
     [team: TeamAbbreviation]: { losses: number; ot?: number; wins: number };
   };
