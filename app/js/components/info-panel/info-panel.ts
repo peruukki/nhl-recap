@@ -1,4 +1,4 @@
-import { div, span } from '@cycle/dom';
+import { div, span, VNode } from '@cycle/dom';
 import { format } from 'timeago.js';
 
 import {
@@ -11,22 +11,43 @@ import {
   GAME_STATE_POSTPONED,
   PERIOD_SHOOTOUT,
 } from '../../events/constants';
+import {
+  GameProgress,
+  GameStats as GameStatsT,
+  GameStatus,
+  Goal,
+  isShootoutGoal,
+  Teams,
+  TeamStats as TeamStatsT,
+} from '../../types';
 import { truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import GameStats from './stats/game-stats';
 import TeamStats from './stats/team-stats';
 
+type Props = {
+  currentStats?: TeamStatsT;
+  gameDisplay: string;
+  gameStats: GameStatsT;
+  isPlayoffGame: boolean;
+  latestGoal?: Goal;
+  preGameStats?: TeamStatsT;
+  startTime: string;
+  status: GameStatus;
+  teams: Teams;
+};
+
 export default function InfoPanel({
-  gameDisplay,
-  startTime,
-  teams,
-  gameStats,
-  preGameStats,
   currentStats,
-  status,
+  gameDisplay,
+  gameStats,
   isPlayoffGame,
   latestGoal,
-}) {
+  preGameStats,
+  startTime,
+  status,
+  teams,
+}: Props): VNode {
   const showProgressInfo = [
     GAME_DISPLAY_PRE_GAME,
     GAME_DISPLAY_IN_PROGRESS,
@@ -39,7 +60,7 @@ export default function InfoPanel({
     gameDisplay,
   );
   const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
-  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : {};
+  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
 
   return div(
     '.game__info-panel',
@@ -69,7 +90,7 @@ export default function InfoPanel({
   );
 }
 
-function renderLatestGoal(latestGoal) {
+function renderLatestGoal(latestGoal?: Goal): VNode {
   return div('.latest-goal', [
     div('.latest-goal__time', latestGoal ? renderLatestGoalTime(latestGoal) : ''),
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
@@ -77,18 +98,24 @@ function renderLatestGoal(latestGoal) {
   ]);
 }
 
-export function renderLatestGoalTime(latestGoal) {
+export function renderLatestGoalTime(latestGoal: Goal): (VNode | null)[] {
   const period = renderPeriodNumber(latestGoal.period);
-  const time = renderTime({ minute: latestGoal.min, second: latestGoal.sec });
+  const time = isShootoutGoal(latestGoal)
+    ? ''
+    : renderTime({ minute: latestGoal.min, second: latestGoal.sec });
   return [
     span(`${period} ${time}`),
     span('.latest-goal__team', latestGoal.team),
-    latestGoal.strength ? span('.latest-goal__strength', latestGoal.strength) : null,
-    latestGoal.emptyNet ? span('.latest-goal__empty-net', 'EN') : null,
+    !isShootoutGoal(latestGoal) && latestGoal.strength
+      ? span('.latest-goal__strength', latestGoal.strength)
+      : null,
+    !isShootoutGoal(latestGoal) && latestGoal.emptyNet
+      ? span('.latest-goal__empty-net', 'EN')
+      : null,
   ];
 }
 
-export function renderLatestGoalScorer(latestGoal) {
+export function renderLatestGoalScorer(latestGoal: Goal): VNode | VNode[] {
   const { player, seasonTotal } = latestGoal.scorer;
   const scorer = truncatePlayerName(player);
   return seasonTotal
@@ -99,8 +126,8 @@ export function renderLatestGoalScorer(latestGoal) {
     : span('.latest-goal__scorer', scorer);
 }
 
-export function renderLatestGoalAssists(latestGoal) {
-  if (!latestGoal.assists) {
+export function renderLatestGoalAssists(latestGoal: Goal): VNode | VNode[] | string {
+  if (isShootoutGoal(latestGoal) || !latestGoal.assists) {
     return '';
   }
   if (latestGoal.assists.length === 0) {
@@ -117,12 +144,15 @@ export function renderLatestGoalAssists(latestGoal) {
   ];
 }
 
-function renderGameStatus(status, startTime) {
+function renderGameStatus(
+  status: Props['status'],
+  startTime: Props['startTime'],
+): string | (VNode | string)[] {
   switch (status.state) {
     case GAME_STATE_IN_PROGRESS:
       return renderCurrentProgress(status.progress);
     case GAME_STATE_NOT_STARTED: {
-      const isInFuture = new Date(startTime) - new Date() > 0;
+      const isInFuture = new Date(startTime).getTime() - new Date().getTime() > 0;
       return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
     }
     case GAME_STATE_POSTPONED:
@@ -132,7 +162,7 @@ function renderGameStatus(status, startTime) {
   }
 }
 
-function renderCurrentProgress(progress) {
+function renderCurrentProgress(progress: GameProgress): string | (VNode | string)[] {
   const label = 'In progress';
   if (!progress || !progress.currentPeriodOrdinal) {
     return label;
@@ -141,7 +171,7 @@ function renderCurrentProgress(progress) {
   return [`${label}:`, span('.game-description__value', progressTime)];
 }
 
-function renderCurrentProgressTime(progress) {
+function renderCurrentProgressTime(progress: GameProgress): string {
   if (progress.currentPeriodTimeRemaining.pretty === 'END') {
     return `End of ${progress.currentPeriodOrdinal}`;
   }

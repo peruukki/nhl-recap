@@ -61,7 +61,7 @@ function model(actions: Actions): Stream<GameEvent> {
 
 function view(state$: Stream<GameEvent>) {
   return state$.map((clock) => {
-    const time = clock ? renderTime(clock) : '';
+    const time = isClockTimeEvent(clock) ? renderTime(clock) : '';
     const animationClass =
       time || (isShootoutEvent(clock) && !isEndEvent(clock)) ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
@@ -109,8 +109,12 @@ export function renderPeriodNumber(period: Period): string {
   }
 }
 
-export function renderTime(clock: GameEvent): string {
-  if (isStartEvent(clock) || isEndEvent(clock) || !isClockTimeEvent(clock)) {
+export function renderTime(clock: {
+  minute?: number;
+  second?: number;
+  tenthOfASecond?: number;
+}): string {
+  if (!clock.minute && !clock.second) {
     return '';
   }
 

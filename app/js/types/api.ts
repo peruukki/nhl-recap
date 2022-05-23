@@ -1,8 +1,9 @@
 export type Game = {
+  currentStats?: TeamStats;
   gameStats: GameStats;
   goals: Goal[];
   errors?: StatError[];
-  preGameStats: TeamStats;
+  preGameStats?: TeamStats;
   startTime: string;
   status: GameStatus;
   teams: Teams;
@@ -14,17 +15,15 @@ export type GameProgress = {
   currentPeriodTimeRemaining: TimeElapsed & { pretty: string };
 };
 
-type GameStats = {
-  blocked: { [team: TeamAbbreviation]: number };
-  faceOffWinPercentage: { [team: TeamAbbreviation]: string };
-  giveaways: { [team: TeamAbbreviation]: number };
-  hits: { [team: TeamAbbreviation]: number };
-  pim: { [team: TeamAbbreviation]: number };
-  powerPlay: {
-    [team: TeamAbbreviation]: { goals: number; opportunities: number; percentage: string };
-  };
-  shots: { [team: TeamAbbreviation]: number };
-  takeaways: { [team: TeamAbbreviation]: number };
+export type GameStats = {
+  blocked: TeamValues<number>;
+  faceOffWinPercentage: TeamValues<string>;
+  giveaways: TeamValues<number>;
+  hits: TeamValues<number>;
+  pim: TeamValues<number>;
+  powerPlay: TeamValues<{ goals: number; opportunities: number; percentage: string }>;
+  shots: TeamValues<number>;
+  takeaways: TeamValues<number>;
 };
 
 type GameStatusLive = {
@@ -37,7 +36,7 @@ type GameStatusNonLive = {
 export type GameStatus = GameStatusLive | GameStatusNonLive;
 
 type GoalInGamePlay = TimeElapsed & {
-  assists: { player: string; seasonTotal: number }[];
+  assists?: { player: string; seasonTotal: number }[]; // FIXME: Optional due to incomplete test data
   emptyNet?: boolean;
   scorer: { player: string; seasonTotal: number };
   strength?: 'PPG' | 'SHG';
@@ -85,22 +84,25 @@ export type TeamAbbreviation = string;
 
 export type TeamPlayoffSeries = {
   round: number;
-  wins: { [team: TeamAbbreviation]: number };
+  wins: TeamValues<number>;
 };
+
+export type TeamRecord = { losses: number; ot?: number; wins: number };
 
 export type TeamStats = {
   playoffSeries?: TeamPlayoffSeries;
-  records: {
-    [team: TeamAbbreviation]: { losses: number; ot?: number; wins: number };
-  };
-  standings: {
-    [team: TeamAbbreviation]: {
-      divisionRank: string;
-      leagueRank: string;
-      pointsFromPlayoffSpot: string;
-    };
-  };
+  records: TeamValues<TeamRecord>;
+  standings: TeamValues<{
+    divisionRank: string;
+    leagueRank: string;
+    pointsFromPlayoffSpot: string;
+  }>;
+  streaks?: TeamValues<TeamStreak> | null;
 };
+
+export type TeamStreak = { count: number; type: 'WINS' | 'LOSSES' | 'OT' };
+
+export type TeamValues<T> = { [team: TeamAbbreviation]: T };
 
 type TimeElapsed = {
   period: string;
@@ -108,9 +110,7 @@ type TimeElapsed = {
   sec: number;
 };
 
-type TeamGoals = {
-  [team: TeamAbbreviation]: number;
-};
+type TeamGoals = TeamValues<number>;
 export type TeamScores = TeamGoals & {
   overtime?: true;
   shootout?: true;

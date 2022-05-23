@@ -1,8 +1,9 @@
 import { div } from '@cycle/dom';
 
+import type { GameStats as GameStatsT, Teams } from '../../../types';
 import { renderStat } from './common';
 
-export default function GameStats(teams, stats) {
+export default function GameStats(teams: Teams, stats: GameStatsT) {
   return div('.stats.stats--game-stats', { class: { 'fade-in': true } }, [
     div('.stats__heading', 'Game stats'),
     renderStat(teams, stats.shots, 'Shots', getPositiveNumericalRating, renderPlainValue),
@@ -22,22 +23,28 @@ export default function GameStats(teams, stats) {
   ]);
 }
 
-function getPositiveNumericalRating(value) {
+function getPositiveNumericalRating(value: number | string) {
   return Number(value);
 }
 
-function getNegativeNumericalRating(value) {
+function getNegativeNumericalRating(value: number | string) {
   return -Number(value);
 }
 
-function getPowerPlayRating({ percentage }) {
+function getPowerPlayRating({ percentage }: { percentage: string }): string {
   return percentage;
 }
 
-function renderPlainValue(value) {
+function renderPlainValue(value: number | string): number | string {
   return value;
 }
 
-function renderPowerPlay({ goals, opportunities }) {
+function renderPowerPlay({
+  goals,
+  opportunities,
+}: {
+  goals: number;
+  opportunities: number;
+}): string {
   return `${goals}/${opportunities}`;
 }
