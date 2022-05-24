@@ -92,7 +92,9 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
+    "@types/chai": "^4.3.1",
     "@types/lodash": "^4.14.182",
+    "@types/mocha": "^9.1.1",
     "@typescript-eslint/parser": "^5.22.0",
     "autoprefixer": "^10.4.7",
     "browserify": "^17.0.0",
