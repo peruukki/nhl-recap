@@ -12,7 +12,7 @@ export type Game = {
 export type GameProgress = {
   currentPeriod: number;
   currentPeriodOrdinal: string;
-  currentPeriodTimeRemaining: TimeElapsed & { pretty: string };
+  currentPeriodTimeRemaining: Pick<TimeElapsed, 'min' | 'sec'> & { pretty: string };
 };
 
 export type GameStats = {

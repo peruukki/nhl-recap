@@ -2,9 +2,10 @@
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
-    "lib": ["dom"],
+    "lib": ["dom", "ESNext"],
     "module": "commonjs",
     "noEmit": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "es5"

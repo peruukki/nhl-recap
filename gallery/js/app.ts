@@ -1,5 +1,5 @@
-import { div, span } from '@cycle/dom';
-import xs from 'xstream';
+import { div, span, VNode } from '@cycle/dom';
+import xs, { Stream } from 'xstream';
 
 import Game from '../../app/js/components/game';
 import {
@@ -14,12 +14,46 @@ import {
 } from '../../app/js/events/constants';
 import scoresAllRegularTime from '../../test/data/latest.json';
 import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
+import type { Game as GameT, GameStats, GameStatus, Goal } from '../../app/js/types';
 
-export default function main() {
+type Sinks = {
+  DOM: Stream<VNode>;
+};
+
+type Actions = GameStateDefinition[];
+
+type State = {
+  gameStates$: Stream<{ gameDescription: string; games: (GalleryGameT | null)[] }[]>;
+};
+
+type GalleryGameT = {
+  currentGoals: Goal[];
+  description: string;
+  gameDisplay: string;
+  gameState: GameT & {
+    status: string;
+    gameStats: GameStats;
+  };
+};
+
+type GameStateDefinition = {
+  gameStatus: {
+    description: string;
+    gameStats?: undefined;
+    status: GameStatus;
+  };
+  states: ({
+    description: string;
+    gameDisplays: string[];
+    goalCount: number;
+  } | null)[];
+};
+
+export default function main(): () => Sinks {
   return () => ({ DOM: view(model(intent())) });
 }
 
-function intent() {
+function intent(): Actions {
   const progress = {
     currentPeriod: 3,
     currentPeriodOrdinal: '3rd',
@@ -91,10 +125,13 @@ function intent() {
   ];
 }
 
-function model(stateDefinitions) {
+function model(stateDefinitions: Actions): State {
   const gamesData = [
-    { description: 'Regular season game', data: scoresAllRegularTime.games[1] },
-    { description: 'Playoff game', data: scoresAllRegularTimePlayoffs.games[1] },
+    { description: 'Regular season game', data: scoresAllRegularTime.games[1] as unknown as GameT },
+    {
+      description: 'Playoff game',
+      data: scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
+    },
   ];
   const gameDisplayIndex$ = xs
     .periodic(1000)
@@ -107,7 +144,7 @@ function model(stateDefinitions) {
         gameDescription: `${gameData.description} ${gameStatus.description}`,
         games: states.map((state) =>
           state
-            ? {
+            ? ({
                 description: state.description,
                 gameDisplay: state.gameDisplays[gameDisplayIndex],
                 gameState: {
@@ -119,7 +156,7 @@ function model(stateDefinitions) {
                     : gameData.data.gameStats,
                 },
                 currentGoals: gameData.data.goals.slice(0, state.goalCount),
-              }
+              } as GalleryGameT)
             : null,
         ),
       })),
@@ -128,7 +165,7 @@ function model(stateDefinitions) {
   return { gameStates$: transitionedGameStates$ };
 }
 
-function view({ gameStates$ }) {
+function view({ gameStates$ }: State): Stream<VNode> {
   return gameStates$.map((gameStates) =>
     div(
       '.score-list',
