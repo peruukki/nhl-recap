@@ -34,7 +34,7 @@ export function isShootoutEvent(event: GameEvent): event is GameEventShootout {
 export type GameEventGameUpdate = GameEventClockTime & {
   update: GameUpdateEnd | GameUpdateGoal | GameUpdateStart;
 };
-export function isGameUpdateEvent(event: GameEvent): event is GameEventGameUpdate {
+export function isGameUpdateEvent(event: GameEvent | PauseEvent): event is GameEventGameUpdate {
   return !!(event as GameEventGameUpdate).update;
 }
 

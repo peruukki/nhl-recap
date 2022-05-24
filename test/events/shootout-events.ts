@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { assert } from 'chai';
 
 import {
@@ -7,42 +7,47 @@ import {
   GAME_UPDATE_START,
 } from '../../app/js/events/constants';
 import shootoutEvents from '../../app/js/events/shootout-events';
+import { GoalInShootout, GoalWithUpdateFields, isGameUpdateEvent } from '../../app/js/types';
 import { EVENT_COUNT_PER_GOAL } from './period-events';
 
 describe('shootoutEvents', () => {
-  const goals = [
+  const goals: GoalWithUpdateFields[] = [
     {
-      period: 3,
+      period: '3',
+      min: 12,
+      sec: 5,
       team: 'FLA',
-      scorer: { player: 'Alexander Barkov' },
+      scorer: { player: 'Alexander Barkov', seasonTotal: 6 },
       gameIndex: 2,
       classModifier: 'home',
     },
     {
       period: 'OT',
+      min: 5,
+      sec: 2,
       team: 'CHI',
-      scorer: { player: 'Patrik Kane' },
+      scorer: { player: 'Patrik Kane', seasonTotal: 3 },
       gameIndex: 3,
       classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'TOR',
-      scorer: { player: 'Leo Komarov' },
+      scorer: { player: 'Leo Komarov', seasonTotal: 2 },
       gameIndex: 0,
       classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'TOR',
-      scorer: { player: 'Martin Marincin' },
+      scorer: { player: 'Martin Marincin', seasonTotal: 1 },
       gameIndex: 0,
       classModifier: 'home',
     },
     {
       period: 'SO',
       team: 'SJS',
-      scorer: { player: 'Joe Pavelski' },
+      scorer: { player: 'Joe Pavelski', seasonTotal: 5 },
       gameIndex: 1,
       classModifier: 'away',
     },
@@ -55,16 +60,18 @@ describe('shootoutEvents', () => {
     assert.deepEqual(clockEvents.length, 2 * EVENT_COUNT_PER_GOAL);
 
     assert.deepEqual(
-      _.take(clockEvents, EVENT_COUNT_PER_GOAL).map((event) => event.update || event),
+      _.take(clockEvents, EVENT_COUNT_PER_GOAL).map((event) =>
+        isGameUpdateEvent(event) ? event.update : event,
+      ),
       [
         { gameIndex: 0, type: GAME_UPDATE_START },
         {
           gameIndex: 0,
           type: GAME_UPDATE_GOAL,
           classModifier: 'home',
-          goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
+          goal: _.omit(goals[3], ['classModifier', 'gameIndex']) as GoalInShootout,
         },
-        ..._.times(goalPauseEventCount, () => ({ pause: true })),
+        ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
         { gameIndex: 0, type: GAME_UPDATE_END },
       ],
       'First shootout game goal events',
@@ -74,7 +81,7 @@ describe('shootoutEvents', () => {
       _.chain(clockEvents)
         .drop(EVENT_COUNT_PER_GOAL)
         .take(EVENT_COUNT_PER_GOAL)
-        .map((event) => event.update || event)
+        .map((event) => (isGameUpdateEvent(event) ? event.update : event))
         .value(),
       [
         { gameIndex: 1, type: GAME_UPDATE_START },
@@ -82,9 +89,9 @@ describe('shootoutEvents', () => {
           gameIndex: 1,
           type: GAME_UPDATE_GOAL,
           classModifier: 'away',
-          goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
+          goal: _.omit(goals[4], ['classModifier', 'gameIndex']) as GoalInShootout,
         },
-        ..._.times(goalPauseEventCount, () => ({ pause: true })),
+        ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
         { gameIndex: 1, type: GAME_UPDATE_END },
       ],
       'Second shootout game goal events',

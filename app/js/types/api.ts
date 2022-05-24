@@ -42,7 +42,7 @@ type GoalInGamePlay = TimeElapsed & {
   strength?: 'PPG' | 'SHG';
   team: TeamAbbreviation;
 };
-type GoalInShootout = {
+export type GoalInShootout = {
   period: 'SO';
   scorer: { player: string; seasonTotal: number };
   team: TeamAbbreviation;
