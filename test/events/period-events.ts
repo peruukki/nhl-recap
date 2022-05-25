@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { assert } from 'chai';
 
 import {
@@ -8,6 +8,7 @@ import {
   PERIOD_OVERTIME,
 } from '../../app/js/events/constants';
 import periodEvents from '../../app/js/events/period-events';
+import { GameEndTime, GoalWithUpdateFields, isGameUpdateEvent } from '../../app/js/types';
 
 export const EVENT_COUNTS = {
   start: 1,
@@ -23,6 +24,12 @@ const periodLengthInMinutes = 3;
 
 const clockAdvanceStep = 3;
 const goalPauseEventCount = 50;
+
+const baseGoal = {
+  classModifier: 'home' as const,
+  team: 'TOR',
+  scorer: { player: 'Auston Matthews', seasonTotal: 60 },
+};
 
 describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
@@ -71,7 +78,7 @@ describe('periodEvents', () => {
   });
 
   it('should advance by three seconds for the last minute of any period but the 3rd one', () => {
-    [1, 2, 'OT'].forEach((period) => {
+    ([1, 2, 'OT'] as const).forEach((period) => {
       // Use only one minute period length to speed up and simplify the test
       const periodLength = 1;
       const clockEvents = periodEvents(period, periodLength, null, [], goalPauseEventCount);
@@ -110,7 +117,11 @@ describe('periodEvents', () => {
   });
 
   it('should create update start, goal, pause, and end events when goals were scored since last event', () => {
-    const assertGoalEvents = (allGoalsSorted, expectedGameIndexes, description) => {
+    const assertGoalEvents = (
+      allGoalsSorted: GoalWithUpdateFields[],
+      expectedGameIndexes: number[],
+      description: string,
+    ) => {
       const period = 1;
       const periodLength = 20;
 
@@ -127,12 +138,12 @@ describe('periodEvents', () => {
       expectedGameIndexes.forEach((gameIndex) => {
         const eventIndexWithGameIndex = _.findIndex(
           clockEvents,
-          ({ update }) => update && update.gameIndex === gameIndex,
+          (event) => isGameUpdateEvent(event) && event.update.gameIndex === gameIndex,
         );
         assert.deepEqual(
           clockEvents
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
-            .map((event) => _.omit(event.update || event, 'goal')),
+            .map((event) => _.omit(isGameUpdateEvent(event) ? event.update : event, 'goal')),
           [
             { gameIndex, type: GAME_UPDATE_START },
             { gameIndex, type: GAME_UPDATE_GOAL, classModifier: 'home' },
@@ -149,9 +160,9 @@ describe('periodEvents', () => {
 
     // Assert that last event is as expected with goal scoring times
     const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
-      { period: 1, min: 1, sec: 1, gameIndex: 5, classModifier: 'home' },
-      { period: 1, min: 2, sec: 2, gameIndex: 1, classModifier: 'home' },
-      { period: 2, min: 1, sec: 1, gameIndex: 2, classModifier: 'home' },
+      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 5 },
+      { ...baseGoal, period: '1', min: 2, sec: 2, gameIndex: 1 },
+      { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 2 },
     ];
     assertGoalEvents(
       allGoalsSortedWithMultipleGoalsAtDifferingTimes,
@@ -160,15 +171,14 @@ describe('periodEvents', () => {
     );
 
     const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
-      { period: 1, min: 1, sec: 1, gameIndex: 4, classModifier: 'home' },
-      { period: 1, min: 1, sec: 1, gameIndex: 3, classModifier: 'home' },
-      { period: 2, min: 1, sec: 1, gameIndex: 0, classModifier: 'home' },
+      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 4 },
+      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 3 },
+      { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 0 },
     ];
     assertGoalEvents(
       allGoalsSortedWithMultipleGoalsAtTheSameTime,
       [4, 3],
       'goal events with goal scoring times with simultaneous goals',
-      true,
     );
   });
 
@@ -203,12 +213,17 @@ it('should include clock-stopping goal scored on the second that the clock stops
 });
 
 function assertFinalSecondsGoalUpdate(
-  goalTime,
-  periodLength,
-  gameEndTime,
+  goalTime: { period: number | 'OT'; min: number; sec: number },
+  periodLength: number,
+  gameEndTime: GameEndTime | null,
   updateTime = { minute: 0, second: 0 },
 ) {
-  const goal = { ...goalTime, gameIndex: 1, classModifier: 'home' };
+  const goal: GoalWithUpdateFields = {
+    ...baseGoal,
+    ...goalTime,
+    period: String(goalTime.period),
+    gameIndex: 1,
+  };
   const clockEvents = periodEvents(
     goalTime.period,
     periodLength,
@@ -225,12 +240,12 @@ function assertFinalSecondsGoalUpdate(
       type: GAME_UPDATE_GOAL,
       gameIndex: goal.gameIndex,
       classModifier: goal.classModifier,
-      goal: _.pick(goal, ['period', 'min', 'sec']),
+      goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'team']),
     },
   };
   assert.deepEqual(_.filter(clockEvents, { update: { type: GAME_UPDATE_GOAL } }), [expected]);
 }
 
-function firstEvent(period, minute) {
+function firstEvent(period: number | 'OT', minute: number) {
   return { period, minute, second: 0 };
 }

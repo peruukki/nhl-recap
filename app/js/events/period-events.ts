@@ -14,7 +14,7 @@ const advanceClockStep = 3;
 export default function periodEvents(
   period: number | 'OT',
   durationInMinutes: number,
-  endTime: GameEndTime | null,
+  endTime: Pick<GameEndTime, 'minute' | 'second'> | null,
   allGoalsSorted: GoalWithUpdateFields[],
   goalPauseEventCount: number,
 ): (GameEvent | PauseEvent)[] {
