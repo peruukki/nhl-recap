@@ -1,4 +1,4 @@
-import { div } from '@cycle/dom';
+import { div, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import Game from 'app/js/components/game';
@@ -7,6 +7,7 @@ import {
   ERROR_MISSING_ALL_GOALS,
   GAME_DISPLAY_PLAYBACK,
 } from 'app/js/events/constants';
+import type { Game as GameT, StatError } from 'app/js/types';
 
 import scoresAllRegularTime from '../data/latest.json';
 import { getGameCard } from './test-utils';
@@ -35,18 +36,23 @@ describe('errors panel', () => {
   });
 });
 
-function assertErrors(gameErrors, expectedErrors) {
+function assertErrors(gameErrors: StatError[] | undefined, expectedErrors: string[] | null) {
   const errorsPanel = getErrorsPanel(
-    Game(GAME_DISPLAY_PLAYBACK, { ...scoresAllRegularTime.games[0], errors: gameErrors }, []),
+    Game(
+      GAME_DISPLAY_PLAYBACK,
+      { ...(scoresAllRegularTime.games[0] as unknown as GameT), errors: gameErrors },
+      [],
+      0,
+    ),
   );
   const expected = expectedErrorsPanel(expectedErrors);
   assert.deepEqual(errorsPanel, expected);
 }
 
-function getErrorsPanel(vtree) {
-  return getGameCard(vtree).children[3];
+function getErrorsPanel(vtree: VNode) {
+  return getGameCard(vtree)?.children?.[3];
 }
 
-function expectedErrorsPanel(errors) {
+function expectedErrorsPanel(errors: string[] | null) {
   return errors ? div('.game__errors', errors) : null;
 }
