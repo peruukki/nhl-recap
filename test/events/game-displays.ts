@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import xs from 'xstream';
+import xs, { Stream } from 'xstream';
 
 import {
   GAME_DISPLAY_IN_PROGRESS,
@@ -12,6 +12,7 @@ import {
   GAME_STATE_NOT_STARTED,
 } from '../../app/js/events/constants';
 import getGameDisplays$ from '../../app/js/events/game-displays';
+import type { Game, GameEvent, Scores } from '../../app/js/types';
 import { addListener } from '../test-utils';
 
 const CLOCK_STATE_NOT_STARTED = 'CLOCK_STATE_NOT_STARTED';
@@ -39,7 +40,7 @@ describe('gameDisplays', () => {
     });
   });
 
-  function getExpectedGameDisplay(clockState, gameState) {
+  function getExpectedGameDisplay(clockState: string, gameState: string) {
     const expectedValues = new Map([
       [`${CLOCK_STATE_NOT_STARTED},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
       [`${CLOCK_STATE_NOT_STARTED},${GAME_STATE_IN_PROGRESS}`, GAME_DISPLAY_PRE_GAME],
@@ -60,22 +61,22 @@ describe('gameDisplays', () => {
     return expectedValues.get(`${clockState},${gameState}`);
   }
 
-  function getClock$(clockState) {
+  function getClock$(clockState: string): Stream<GameEvent> {
     switch (clockState) {
       case CLOCK_STATE_NOT_STARTED:
         return xs.empty();
       case CLOCK_STATE_IN_PROGRESS:
-        return xs.of({ period: 1, minute: 15, second: 38 });
+        return xs.of({ period: 1, minute: 15, second: 38 } as GameEvent);
       case CLOCK_STATE_PASSED_IN_PROGRESS_GAMES:
-        return xs.of({ period: 2, minute: 4, second: 56 });
+        return xs.of({ period: 2, minute: 4, second: 56 } as GameEvent);
       case CLOCK_STATE_END:
-        return xs.of({ end: true });
+        return xs.of({ end: true } as GameEvent);
       default:
         throw new Error(`Unexpected clock state ${clockState}`);
     }
   }
 
-  function getScores$(gameState) {
+  function getScores$(gameState: string): Stream<Scores> {
     return xs.of({
       games: [
         {
@@ -86,7 +87,7 @@ describe('gameDisplays', () => {
                 ? { currentPeriod: 1, currentPeriodTimeRemaining: { min: 1, sec: 5 } }
                 : undefined,
           },
-        },
+        } as Game,
       ],
     });
   }
