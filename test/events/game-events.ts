@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getAllGoalsSorted } from '../../app/js/events/game-events';
+import gameEvents, { getAllGoalsSorted } from 'app/js/events/game-events';
 import {
   Game,
   GameEvent,
@@ -9,7 +9,7 @@ import {
   isEndEvent,
   isPauseEvent,
   PauseEvent,
-} from '../../app/js/types';
+} from 'app/js/types';
 import scoresAllRegularTime from '../data/latest.json';
 import scoresMultipleOvertime from '../data/latest-2-ot.json';
 import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';

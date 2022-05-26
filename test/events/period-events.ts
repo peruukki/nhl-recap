@@ -6,9 +6,9 @@ import {
   GAME_UPDATE_GOAL,
   GAME_UPDATE_START,
   PERIOD_OVERTIME,
-} from '../../app/js/events/constants';
-import periodEvents from '../../app/js/events/period-events';
-import { GameEndTime, GoalWithUpdateFields, isGameUpdateEvent } from '../../app/js/types';
+} from 'app/js/events/constants';
+import periodEvents from 'app/js/events/period-events';
+import { GameEndTime, GoalWithUpdateFields, isGameUpdateEvent } from 'app/js/types';
 
 export const EVENT_COUNTS = {
   start: 1,

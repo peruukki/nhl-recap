@@ -10,9 +10,9 @@ import {
   GAME_STATE_FINISHED,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
-} from '../../app/js/events/constants';
-import getGameDisplays$ from '../../app/js/events/game-displays';
-import type { Game, GameEvent, Scores } from '../../app/js/types';
+} from 'app/js/events/constants';
+import getGameDisplays$ from 'app/js/events/game-displays';
+import type { Game, GameEvent, Scores } from 'app/js/types';
 import { addListener } from '../test-utils';
 
 const CLOCK_STATE_NOT_STARTED = 'CLOCK_STATE_NOT_STARTED';
