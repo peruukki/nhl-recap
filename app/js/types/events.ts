@@ -20,7 +20,7 @@ export type GameEventClockTime = {
   tenthOfASecond?: number;
   end?: true;
 };
-export function isClockTimeEvent(event: GameEvent): event is GameEventClockTime {
+export function isClockTimeEvent(event: GameEvent | PauseEvent): event is GameEventClockTime {
   return !!(event as GameEventClockTime).period;
 }
 
