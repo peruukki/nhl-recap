@@ -1,6 +1,6 @@
-import { div, mockDOMSource, span } from '@cycle/dom';
-import { makeHTTPDriver } from '@cycle/http';
-import xs from 'xstream';
+import { div, MainDOMSource, mockDOMSource, span, VNode } from '@cycle/dom';
+import { makeHTTPDriver, RequestInput } from '@cycle/http';
+import xs, { Stream } from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
@@ -38,11 +38,11 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
-      assert.deepEqual(scoreListNode.sel, 'div.score-list');
+      assert.deepEqual(scoreListNode?.sel, 'div.score-list');
 
-      const gameScoreNodes = scoreListNode.children;
+      const gameScoreNodes = scoreListNode?.children;
       assert.deepEqual(
-        gameScoreNodes.map((node) => node.sel),
+        gameScoreNodes?.map((node) => (typeof node !== 'string' ? node.sel : node)),
         ['div.game-container', 'div.game-container'],
       );
     });
@@ -57,7 +57,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
-      assert.deepEqual(scoreListNode.sel, 'div.score-list.score-list--single-game');
+      assert.deepEqual(scoreListNode?.sel, 'div.score-list.score-list--single-game');
     });
   });
 
@@ -70,7 +70,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const playButtonNode = getPlayButtonNode(vtree);
-      assert.deepEqual(playButtonNode.sel, 'button.button.play-pause-button');
+      assert.deepEqual(playButtonNode?.sel, 'button.button.play-pause-button');
     });
   });
 
@@ -126,36 +126,42 @@ describe('app', () => {
   });
 });
 
-function run(httpRequest$, options = { isOnline: true }) {
+function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
   const driver = makeHTTPDriver();
-  const $window = { navigator: { onLine: options.isOnline } };
-  return app(animations, $window)({ DOM: mockDOMSource({}), HTTP: driver(httpRequest$) });
+  const $window = { navigator: { onLine: options.isOnline } } as Window;
+  return app(
+    animations,
+    $window,
+  )({
+    DOM: mockDOMSource({}) as unknown as MainDOMSource,
+    HTTP: driver(httpRequest$ as Stream<RequestInput | string>),
+  });
 }
 
-function expectedStatusVtree(message) {
+function expectedStatusVtree(message: string) {
   return div('.status.fade-in', [message]);
 }
 
-function expectedDateVtree(date) {
+function expectedDateVtree(date: string) {
   return span('.date.fade-in-slow', date);
 }
 
-function getHeaderNode(vtree) {
-  return vtree.children[0].children[0];
+function getHeaderNode(vtree: VNode) {
+  return (vtree.children?.[0] as VNode)?.children?.[0] as VNode | undefined;
 }
 
-function getStatusNode(vtree) {
-  return vtree.children[1].children[0];
+function getStatusNode(vtree: VNode) {
+  return (vtree.children?.[1] as VNode)?.children?.[0] as VNode | undefined;
 }
 
-function getPlayButtonNode(vtree) {
-  return getHeaderNode(vtree).children[1];
+function getPlayButtonNode(vtree: VNode) {
+  return getHeaderNode(vtree)?.children?.[1] as VNode | undefined;
 }
 
-function getDateNode(vtree) {
-  return getHeaderNode(vtree).children[2];
+function getDateNode(vtree: VNode) {
+  return getHeaderNode(vtree)?.children?.[2] as VNode | undefined;
 }
 
-function getScoreListNode(vtree) {
+function getScoreListNode(vtree: VNode) {
   return getStatusNode(vtree);
 }
