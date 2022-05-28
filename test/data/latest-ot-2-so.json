@@ -39,11 +39,17 @@
       "teams": {
         "away": {
           "abbreviation": "STL",
-          "id": 19
+          "id": 19,
+          "locationName": "St. Louis",
+          "shortName": "St Louis",
+          "teamName": "Blues"
         },
         "home": {
           "abbreviation": "BOS",
-          "id": 6
+          "id": 6,
+          "locationName": "Boston",
+          "shortName": "Boston",
+          "teamName": "Bruins"
         }
       }
     },
@@ -133,11 +139,17 @@
       "teams": {
         "away": {
           "abbreviation": "ANA",
-          "id": 24
+          "id": 24,
+          "locationName": "Anaheim",
+          "shortName": "Anaheim",
+          "teamName": "Ducks"
         },
         "home": {
           "abbreviation": "NYR",
-          "id": 3
+          "id": 3,
+          "locationName": "New York",
+          "shortName": "NY Rangers",
+          "teamName": "Rangers"
         }
       }
     },
@@ -193,11 +205,17 @@
       "teams": {
         "away": {
           "abbreviation": "TOR",
-          "id": 10
+          "id": 10,
+          "locationName": "Toronto",
+          "shortName": "Toronto",
+          "teamName": "Maple Leafs"
         },
         "home": {
           "abbreviation": "TBL",
-          "id": 14
+          "id": 14,
+          "locationName": "Tampa Bay",
+          "shortName": "Tampa Bay",
+          "teamName": "Lightning"
         }
       }
     }

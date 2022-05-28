@@ -1,6 +1,6 @@
-import { div, span } from '@cycle/dom';
+import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import Game from 'app/js/components/game';
 import {
@@ -10,6 +10,7 @@ import {
   GAME_STATE_FINISHED,
 } from 'app/js/events/constants';
 import { renderTeamLogo } from 'app/js/utils/logos';
+import type { Game as GameT, GameStatus, Goal, Teams } from 'app/js/types';
 
 import scoresAllRegularTime from '../data/latest.json';
 import scoresMultipleOvertime from '../data/latest-2-ot.json';
@@ -82,7 +83,7 @@ describe('score panel', () => {
       assertDelimiter(
         GAME_DISPLAY_PLAYBACK,
         { teams },
-        goals,
+        goals as unknown as Goal[],
         span('.team-panel__delimiter-period', 'SO'),
       );
     });
@@ -92,7 +93,7 @@ describe('score panel', () => {
       assertDelimiter(
         GAME_DISPLAY_POST_GAME_FINISHED,
         { teams },
-        goals,
+        goals as unknown as Goal[],
         span('.team-panel__delimiter-period', 'SO'),
       );
     });
@@ -100,46 +101,55 @@ describe('score panel', () => {
 });
 
 function assertGoalCounts(
-  gameDisplay,
-  { state = GAME_STATE_FINISHED, teams },
-  currentGoals,
-  awayGoals,
-  homeGoals,
+  gameDisplay: string,
+  { state = GAME_STATE_FINISHED, teams }: { state?: GameStatus['state']; teams: Teams },
+  currentGoals: Goal[],
+  awayGoals: number,
+  homeGoals: number,
   visibilityClass = '.fade-in',
 ) {
-  const teamPanels = getTeamPanels(Game(gameDisplay, { status: { state }, teams }, currentGoals));
+  const teamPanels = getTeamPanels(
+    Game(gameDisplay, { status: { state }, teams } as GameT, currentGoals, 0),
+  );
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
   assert.deepEqual(teamPanels, expected);
 }
 
 function assertDelimiter(
-  gameDisplay,
-  { state = GAME_STATE_FINISHED, teams },
-  currentGoals,
-  delimiter,
+  gameDisplay: string,
+  { state = GAME_STATE_FINISHED, teams }: { state?: GameStatus['state']; teams: Teams },
+  currentGoals: Goal[],
+  delimiter: VNode | string,
   visibilityClass = '.fade-in',
 ) {
-  const delimiterNode = getDelimiter(Game(gameDisplay, { status: { state }, teams }, currentGoals));
+  const delimiterNode = getDelimiter(
+    Game(gameDisplay, { status: { state } as GameStatus, teams } as GameT, currentGoals, 0),
+  );
   const expected = expectedDelimiter(delimiter, visibilityClass);
   assert.deepEqual(delimiterNode, expected);
 }
 
-function getTeamPanels(vtree) {
+function getTeamPanels(vtree: VNode) {
   return getGameChildrenWithClass(vtree, 'team-panel');
 }
 
-function getDelimiter(vtree) {
-  return getGameChildrenWithClass(vtree, 'team-panel__delimiter')[0];
+function getDelimiter(vtree: VNode) {
+  return getGameChildrenWithClass(vtree, 'team-panel__delimiter')?.[0];
 }
 
-function getGameChildrenWithClass(vtree, className) {
-  const stripHtmlElement = (sel) => sel.replace(/^\w\./, '');
-  return getGameCard(vtree).children[0].children.filter((node) =>
-    _.includes(stripHtmlElement(node.sel).split('.'), className),
+function getGameChildrenWithClass(vtree: VNode, className: string) {
+  const stripHtmlElement = (sel?: string) => sel?.replace(/^\w\./, '');
+  return (getGameCard(vtree)?.children?.[0] as VNode)?.children?.filter((node) =>
+    _.includes(stripHtmlElement(typeof node !== 'string' ? node.sel : node)?.split('.'), className),
   );
 }
 
-function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
+function expectedTeamPanels(
+  teams: Teams,
+  awayGoals: number,
+  homeGoals: number,
+  visibilityClass: string,
+) {
   return [
     div('.team-panel.team-panel--away', [
       span('.team-logo', [
@@ -164,6 +174,6 @@ function expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass) {
   ];
 }
 
-function expectedDelimiter(delimiter, visibilityClass) {
+function expectedDelimiter(delimiter: VNode | string, visibilityClass: string) {
   return div(`.team-panel__delimiter${visibilityClass}`, delimiter);
 }
