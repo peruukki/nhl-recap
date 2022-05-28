@@ -54,11 +54,17 @@
       "teams": {
         "away": {
           "abbreviation": "STL",
-          "id": 19
+          "id": 19,
+          "locationName": "St. Louis",
+          "shortName": "St Louis",
+          "teamName": "Blues"
         },
         "home": {
           "abbreviation": "BOS",
-          "id": 6
+          "id": 6,
+          "locationName": "Boston",
+          "shortName": "Boston",
+          "teamName": "Bruins"
         }
       }
     },
@@ -143,11 +149,17 @@
       "teams": {
         "away": {
           "abbreviation": "ANA",
-          "id": 24
+          "id": 24,
+          "locationName": "Anaheim",
+          "shortName": "Anaheim",
+          "teamName": "Ducks"
         },
         "home": {
           "abbreviation": "NYR",
-          "id": 3
+          "id": 3,
+          "locationName": "New York",
+          "shortName": "NY Rangers",
+          "teamName": "Rangers"
         }
       }
     }

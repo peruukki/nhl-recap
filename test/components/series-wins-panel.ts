@@ -1,6 +1,6 @@
-import { div, span } from '@cycle/dom';
+import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import Game from 'app/js/components/game';
 import {
@@ -12,6 +12,14 @@ import {
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
 } from 'app/js/events/constants';
+import type {
+  Game as GameT,
+  GameStatus,
+  Goal,
+  TeamAbbreviation,
+  Teams,
+  TeamStats,
+} from 'app/js/types';
 
 import scoresAllRegularTime from '../data/latest.json';
 import scoresAllRegularTimePlayoffs from '../data/latest-playoffs.json';
@@ -25,7 +33,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      preGameStats,
+      preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       undefined,
       null,
@@ -38,7 +46,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      preGameStats,
+      preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       undefined,
       '1st round - Game 1',
@@ -51,7 +59,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      preGameStats,
+      preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       1,
     );
@@ -63,7 +71,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      preGameStats,
+      preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       'NYR',
       2,
@@ -80,7 +88,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      modifiedPreGameStats,
+      modifiedPreGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       'NYR',
       3,
@@ -99,7 +107,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PLAYBACK,
       teams,
       goals,
-      modifiedPreGameStats,
+      modifiedPreGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       'NYR',
       4,
@@ -116,7 +124,7 @@ describe('playoff series wins panel', () => {
       gameDisplay,
       game1.teams,
       game1.goals,
-      game1.preGameStats,
+      game1.preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       1,
     );
@@ -126,7 +134,7 @@ describe('playoff series wins panel', () => {
       gameDisplay,
       game2.teams,
       game2.goals,
-      game2.preGameStats,
+      game2.preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       'ANA',
       2,
@@ -140,7 +148,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_IN_PROGRESS,
       game1.teams,
       game1.goals,
-      game1.preGameStats,
+      game1.preGameStats as unknown as TeamStats,
       GAME_STATE_IN_PROGRESS,
       1,
     );
@@ -150,7 +158,7 @@ describe('playoff series wins panel', () => {
       GAME_DISPLAY_PRE_GAME,
       game2.teams,
       game2.goals,
-      game2.preGameStats,
+      game2.preGameStats as unknown as TeamStats,
       GAME_STATE_NOT_STARTED,
       'ANA',
       2,
@@ -165,7 +173,7 @@ describe('playoff series wins panel', () => {
       gameDisplay,
       game1.teams,
       game1.goals,
-      game1.preGameStats,
+      game1.preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       'STL',
       2,
@@ -178,7 +186,7 @@ describe('playoff series wins panel', () => {
       gameDisplay,
       game2.teams,
       game2.goals,
-      game2.preGameStats,
+      game2.preGameStats as unknown as TeamStats,
       GAME_STATE_FINISHED,
       2,
       '.fade-in',
@@ -187,15 +195,15 @@ describe('playoff series wins panel', () => {
 });
 
 function assertPlayoffSeriesLead(
-  gameDisplay,
-  teams,
-  goals,
-  preGameStats,
-  state,
-  leadingTeam,
-  leadingWins,
-  trailingWins,
-  animationClass,
+  gameDisplay: string,
+  teams: Teams,
+  goals: Goal[],
+  preGameStats: TeamStats,
+  state: GameStatus['state'],
+  leadingTeam: TeamAbbreviation,
+  leadingWins: number,
+  trailingWins: number,
+  animationClass?: string,
   leadingText = 'leads',
 ) {
   return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
@@ -208,13 +216,13 @@ function assertPlayoffSeriesLead(
 }
 
 function assertPlayoffSeriesTied(
-  gameDisplay,
-  teams,
-  goals,
-  preGameStats,
-  state,
-  wins,
-  animationClass,
+  gameDisplay: string,
+  teams: Teams,
+  goals: Goal[],
+  preGameStats: TeamStats,
+  state: GameStatus['state'],
+  wins: number,
+  animationClass?: string,
 ) {
   return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     'Series ',
@@ -227,26 +235,29 @@ function assertPlayoffSeriesTied(
 }
 
 function assertPlayoffSeriesWins(
-  gameDisplay,
-  teams,
-  goals,
-  preGameStats,
-  state,
-  animationClass,
-  expectedSeriesWinsVtree,
+  gameDisplay: string,
+  teams: Teams,
+  goals: Goal[],
+  preGameStats: TeamStats,
+  state: GameStatus['state'],
+  animationClass: string | undefined,
+  expectedSeriesWinsVtree: (VNode | string)[] | string | null,
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    Game(gameDisplay, { status: { state }, teams, preGameStats }, goals),
+    Game(gameDisplay, { status: { state }, teams, preGameStats } as GameT, goals, 0),
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   assert.deepEqual(playoffSeriesWinsPanel, expected);
 }
 
-function getPlayoffSeriesWinsPanel(vtree) {
-  return getGameCard(vtree).children[2];
+function getPlayoffSeriesWinsPanel(vtree: VNode) {
+  return getGameCard(vtree)?.children?.[2];
 }
 
-function expectedPlayoffSeriesWinsPanel(seriesWinsVtree, animationClass) {
+function expectedPlayoffSeriesWinsPanel(
+  seriesWinsVtree: (VNode | string)[] | string | null,
+  animationClass: string | undefined,
+) {
   return seriesWinsVtree
     ? div(`.game__series-wins${animationClass || ''}`, seriesWinsVtree)
     : seriesWinsVtree;
