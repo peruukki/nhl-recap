@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export function truncatePlayerName(name: string): string {
   const maxLength = 20;

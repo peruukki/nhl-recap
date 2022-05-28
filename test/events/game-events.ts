@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { assert } from 'chai';
 
 import gameEvents, { getAllGoalsSorted } from 'app/js/events/game-events';

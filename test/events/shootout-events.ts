@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { assert } from 'chai';
 
 import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from 'app/js/events/constants';

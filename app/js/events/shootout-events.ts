@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import type { GameEvent, GoalWithUpdateFields, PauseEvent } from '../types';
 import { PERIOD_SHOOTOUT } from './constants';

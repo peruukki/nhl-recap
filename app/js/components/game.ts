@@ -1,5 +1,5 @@
 import { div, VNode } from '@cycle/dom';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import { GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_PRE_GAME } from '../events/constants';
 import type { Game as GameT, Goal } from '../types';

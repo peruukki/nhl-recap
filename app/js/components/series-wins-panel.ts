@@ -1,5 +1,5 @@
 import { div, span, VNode } from '@cycle/dom';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import type { Goal, TeamAbbreviation, TeamPlayoffSeries, Teams } from '../types';
 
