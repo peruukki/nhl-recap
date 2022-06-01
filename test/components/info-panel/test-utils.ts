@@ -1,6 +1,16 @@
 import { div, span } from '@cycle/dom';
 
-export function expectedStat({ away, home, label }) {
+export type StatValue = { className?: string; value: number | string };
+
+export function expectedStat({
+  away,
+  home,
+  label,
+}: {
+  away: StatValue;
+  home: StatValue;
+  label: string;
+}) {
   const valueClass = '.stat__value';
   return div('.stat', [
     span(
