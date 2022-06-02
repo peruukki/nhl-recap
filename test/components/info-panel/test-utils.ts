@@ -1,6 +1,6 @@
-import { div, span } from '@cycle/dom';
+import { div, span, VNode } from '@cycle/dom';
 
-export type StatValue = { className?: string; value: number | string };
+export type StatValue = { className?: string; value: number | string | (VNode | number)[] };
 
 export function expectedStat({
   away,
