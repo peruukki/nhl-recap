@@ -17,9 +17,6 @@ import {
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NOT_STARTED,
   GAME_STATE_POSTPONED,
-  GAME_UPDATE_END,
-  GAME_UPDATE_GOAL,
-  GAME_UPDATE_START,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
 } from './constants';
@@ -105,10 +102,10 @@ export function getGoalEvents(
   goalPauseEventCount: number,
 ): (GameEvent | PauseEvent)[] {
   return [
-    { ...currentGameEvent, update: { gameIndex, type: GAME_UPDATE_START } },
-    { ...currentGameEvent, update: { gameIndex, classModifier, goal, type: GAME_UPDATE_GOAL } },
+    { ...currentGameEvent, update: { gameIndex, type: 'START' } },
+    { ...currentGameEvent, update: { gameIndex, classModifier, goal, type: 'GOAL' } },
     ..._.times(goalPauseEventCount, getPauseEvent),
-    { ...currentGameEvent, update: { gameIndex, type: GAME_UPDATE_END } },
+    { ...currentGameEvent, update: { gameIndex, type: 'END' } },
   ];
 }
 

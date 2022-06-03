@@ -1,12 +1,7 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import {
-  GAME_UPDATE_END,
-  GAME_UPDATE_GOAL,
-  GAME_UPDATE_START,
-  PERIOD_OVERTIME,
-} from 'app/js/events/constants';
+import { PERIOD_OVERTIME } from 'app/js/events/constants';
 import periodEvents from 'app/js/events/period-events';
 import { GameEndTime, GoalWithUpdateFields, isGameUpdateEvent } from 'app/js/types';
 
@@ -145,10 +140,10 @@ describe('periodEvents', () => {
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
             .map((event) => _.omit(isGameUpdateEvent(event) ? event.update : event, 'goal')),
           [
-            { gameIndex, type: GAME_UPDATE_START },
-            { gameIndex, type: GAME_UPDATE_GOAL, classModifier: 'home' },
+            { gameIndex, type: 'START' },
+            { gameIndex, type: 'GOAL', classModifier: 'home' },
             ..._.times(EVENT_COUNTS.pause, () => ({ pause: true })),
-            { gameIndex, type: GAME_UPDATE_END },
+            { gameIndex, type: 'END' },
           ],
           description,
         );
@@ -237,13 +232,13 @@ function assertFinalSecondsGoalUpdate(
     minute: updateTime.minute,
     second: updateTime.second,
     update: {
-      type: GAME_UPDATE_GOAL,
+      type: 'GOAL',
       gameIndex: goal.gameIndex,
       classModifier: goal.classModifier,
       goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'team']),
     },
   };
-  assert.deepEqual(_.filter(clockEvents, { update: { type: GAME_UPDATE_GOAL } }), [expected]);
+  assert.deepEqual(_.filter(clockEvents, { update: { type: 'GOAL' } }), [expected]);
 }
 
 function firstEvent(period: number | 'OT', minute: number) {

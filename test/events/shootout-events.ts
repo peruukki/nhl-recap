@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from 'app/js/events/constants';
 import shootoutEvents from 'app/js/events/shootout-events';
 import { GoalInShootout, GoalWithUpdateFields, isGameUpdateEvent } from 'app/js/types';
 import { EVENT_COUNT_PER_GOAL } from './period-events';
@@ -60,15 +59,15 @@ describe('shootoutEvents', () => {
         isGameUpdateEvent(event) ? event.update : event,
       ),
       [
-        { gameIndex: 0, type: GAME_UPDATE_START },
+        { gameIndex: 0, type: 'START' },
         {
           gameIndex: 0,
-          type: GAME_UPDATE_GOAL,
+          type: 'GOAL',
           classModifier: 'home',
           goal: _.omit(goals[3], ['classModifier', 'gameIndex']) as GoalInShootout,
         },
         ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
-        { gameIndex: 0, type: GAME_UPDATE_END },
+        { gameIndex: 0, type: 'END' },
       ],
       'First shootout game goal events',
     );
@@ -80,15 +79,15 @@ describe('shootoutEvents', () => {
         .map((event) => (isGameUpdateEvent(event) ? event.update : event))
         .value(),
       [
-        { gameIndex: 1, type: GAME_UPDATE_START },
+        { gameIndex: 1, type: 'START' },
         {
           gameIndex: 1,
-          type: GAME_UPDATE_GOAL,
+          type: 'GOAL',
           classModifier: 'away',
           goal: _.omit(goals[4], ['classModifier', 'gameIndex']) as GoalInShootout,
         },
         ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
-        { gameIndex: 1, type: GAME_UPDATE_END },
+        { gameIndex: 1, type: 'END' },
       ],
       'Second shootout game goal events',
     );

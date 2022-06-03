@@ -14,9 +14,5 @@ export const GAME_STATE_IN_PROGRESS = 'LIVE';
 export const GAME_STATE_NOT_STARTED = 'PREVIEW';
 export const GAME_STATE_POSTPONED = 'POSTPONED';
 
-export const GAME_UPDATE_START = 'START';
-export const GAME_UPDATE_GOAL = 'GOAL';
-export const GAME_UPDATE_END = 'END';
-
 export const PERIOD_OVERTIME = 'OT';
 export const PERIOD_SHOOTOUT = 'SO';

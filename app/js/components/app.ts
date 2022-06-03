@@ -3,7 +3,6 @@ import { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { Stream } from 'xstream';
 
-import { GAME_UPDATE_END, GAME_UPDATE_GOAL, GAME_UPDATE_START } from '../events/constants';
 import getGameDisplays$ from '../events/game-displays';
 import {
   GameEvent,
@@ -127,13 +126,13 @@ function model(actions: Actions, animations: Animations): Stream<State> {
   gameUpdate$.addListener({
     next: (gameUpdate) => {
       switch (gameUpdate.type) {
-        case GAME_UPDATE_END:
+        case 'END':
           animations.stopGameHighlight(gameUpdate.gameIndex);
           break;
-        case GAME_UPDATE_GOAL:
+        case 'GOAL':
           animations.highlightGoal(gameUpdate.classModifier, gameUpdate.gameIndex);
           break;
-        case GAME_UPDATE_START:
+        case 'START':
           animations.highlightGame(gameUpdate.gameIndex);
           break;
         default:
@@ -148,7 +147,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       Array.from<ArrayLike<never>, Goal[]>({ length: scores.games.length }, () => []),
     );
   const goalUpdate$ = gameUpdate$.filter(
-    (update): update is GameUpdateGoal => update.type === GAME_UPDATE_GOAL,
+    (update): update is GameUpdateGoal => update.type === 'GOAL',
   );
   const currentGoals$ = initialGoals$
     .map((initialGameGoals) =>
