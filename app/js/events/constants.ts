@@ -20,6 +20,3 @@ export const GAME_UPDATE_END = 'END';
 
 export const PERIOD_OVERTIME = 'OT';
 export const PERIOD_SHOOTOUT = 'SO';
-
-export const PLAYBACK_IN_PROGRESS = 'PLAYBACK_IN_PROGRESS';
-export const PLAYBACK_FINISHED = 'PLAYBACK_FINISHED';
