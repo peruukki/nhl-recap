@@ -13,10 +13,6 @@ import {
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
-  GAME_STATE_POSTPONED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
 } from 'app/js/events/constants';
 import { Game as GameT, GameStatus, Goal, Teams } from 'app/js/types';
@@ -59,21 +55,21 @@ describe('info panel', () => {
   });
 
   describe('game description', () => {
-    it(`should show "Finished" description for game in ${GAME_STATE_FINISHED} state`, () => {
+    it(`should show "Finished" description for game in FINAL state`, () => {
       const { teams, goals, status } = scoresAllRegularTime.games[1] as unknown as GameT;
       assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Finished');
     });
 
-    it(`should show game without progress information in ${GAME_STATE_IN_PROGRESS} state as in progress`, () => {
+    it(`should show game without progress information in LIVE state as in progress`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      const status = { state: GAME_STATE_IN_PROGRESS } as GameStatus;
+      const status = { state: 'LIVE' } as GameStatus;
       assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In progress');
     });
 
-    it(`should show time remaining progress for game in ${GAME_STATE_IN_PROGRESS} state`, () => {
+    it(`should show time remaining progress for game in LIVE state`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
-        state: GAME_STATE_IN_PROGRESS,
+        state: 'LIVE',
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
@@ -90,10 +86,10 @@ describe('info panel', () => {
       );
     });
 
-    it(`should show time remaining progress for game in ${GAME_STATE_IN_PROGRESS} state after playback has reached current progress`, () => {
+    it(`should show time remaining progress for game in LIVE state after playback has reached current progress`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
-        state: GAME_STATE_IN_PROGRESS,
+        state: 'LIVE',
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
@@ -110,10 +106,10 @@ describe('info panel', () => {
       );
     });
 
-    it(`should show end of period progress for game in ${GAME_STATE_IN_PROGRESS} state`, () => {
+    it(`should show end of period progress for game in LIVE state`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
-        state: GAME_STATE_IN_PROGRESS,
+        state: 'LIVE',
         progress: {
           currentPeriod: 1,
           currentPeriodOrdinal: '1st',
@@ -128,10 +124,10 @@ describe('info panel', () => {
       );
     });
 
-    it(`should not show remaining time for SO game in ${GAME_STATE_IN_PROGRESS} state`, () => {
+    it(`should not show remaining time for SO game in LIVE state`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
-        state: GAME_STATE_IN_PROGRESS,
+        state: 'LIVE',
         progress: {
           currentPeriod: 5,
           currentPeriodOrdinal: 'SO',
@@ -146,15 +142,15 @@ describe('info panel', () => {
       );
     });
 
-    it(`should show game in ${GAME_STATE_NOT_STARTED} state and start time in the past as starting soon`, () => {
+    it(`should show game in PREVIEW state and start time in the past as starting soon`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      const status: GameStatus = { state: GAME_STATE_NOT_STARTED };
+      const status: GameStatus = { state: 'PREVIEW' };
       assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Starts soon');
     });
 
-    it(`should show game in ${GAME_STATE_NOT_STARTED} state and start time in the future as starting in some time`, () => {
+    it(`should show game in PREVIEW state and start time in the future as starting in some time`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      const status: GameStatus = { state: GAME_STATE_NOT_STARTED };
+      const status: GameStatus = { state: 'PREVIEW' };
 
       const time = new Date();
       time.setHours(time.getHours() + 3);
@@ -169,9 +165,9 @@ describe('info panel', () => {
       );
     });
 
-    it(`should show game in ${GAME_STATE_POSTPONED} state as postponed`, () => {
+    it(`should show game in POSTPONED state as postponed`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      const status: GameStatus = { state: GAME_STATE_POSTPONED };
+      const status: GameStatus = { state: 'POSTPONED' };
       assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Postponed');
     });
   });
@@ -184,12 +180,7 @@ function assertLatestGoal(
   expectedLatestGoal: Goal | null,
 ) {
   const latestGoalPanel = getLatestGoalPanel(
-    Game(
-      gameDisplay,
-      { status: { state: GAME_STATE_FINISHED }, teams } as unknown as GameT,
-      goals,
-      0,
-    ),
+    Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   assert.deepEqual(latestGoalPanel, expected);

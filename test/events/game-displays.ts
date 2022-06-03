@@ -7,9 +7,6 @@ import {
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
 } from 'app/js/events/constants';
 import getGameDisplays$ from 'app/js/events/game-displays';
 import type { Game, GameEvent, Scores } from 'app/js/types';
@@ -27,7 +24,7 @@ describe('gameDisplays', () => {
     CLOCK_STATE_PASSED_IN_PROGRESS_GAMES,
     CLOCK_STATE_END,
   ].forEach((clockState) => {
-    [GAME_STATE_NOT_STARTED, GAME_STATE_IN_PROGRESS, GAME_STATE_FINISHED].forEach((gameState) => {
+    ['PREVIEW', 'LIVE', 'FINAL'].forEach((gameState) => {
       const expected = getExpectedGameDisplay(clockState, gameState);
 
       it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, (done) => {
@@ -42,21 +39,18 @@ describe('gameDisplays', () => {
 
   function getExpectedGameDisplay(clockState: string, gameState: string) {
     const expectedValues = new Map([
-      [`${CLOCK_STATE_NOT_STARTED},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_NOT_STARTED},${GAME_STATE_IN_PROGRESS}`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_NOT_STARTED},${GAME_STATE_FINISHED}`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_IN_PROGRESS},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_IN_PROGRESS},${GAME_STATE_IN_PROGRESS}`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_IN_PROGRESS},${GAME_STATE_FINISHED}`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
-      [
-        `${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_IN_PROGRESS}`,
-        GAME_DISPLAY_IN_PROGRESS,
-      ],
-      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},${GAME_STATE_FINISHED}`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_END},${GAME_STATE_NOT_STARTED}`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_END},${GAME_STATE_IN_PROGRESS}`, GAME_DISPLAY_POST_GAME_IN_PROGRESS],
-      [`${CLOCK_STATE_END},${GAME_STATE_FINISHED}`, GAME_DISPLAY_POST_GAME_FINISHED],
+      [`${CLOCK_STATE_NOT_STARTED},PREVIEW`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_NOT_STARTED},LIVE`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_NOT_STARTED},FINAL`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_IN_PROGRESS},PREVIEW`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_IN_PROGRESS},LIVE`, GAME_DISPLAY_PLAYBACK],
+      [`${CLOCK_STATE_IN_PROGRESS},FINAL`, GAME_DISPLAY_PLAYBACK],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},PREVIEW`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},LIVE`, GAME_DISPLAY_IN_PROGRESS],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},FINAL`, GAME_DISPLAY_PLAYBACK],
+      [`${CLOCK_STATE_END},PREVIEW`, GAME_DISPLAY_PRE_GAME],
+      [`${CLOCK_STATE_END},LIVE`, GAME_DISPLAY_POST_GAME_IN_PROGRESS],
+      [`${CLOCK_STATE_END},FINAL`, GAME_DISPLAY_POST_GAME_FINISHED],
     ]);
     return expectedValues.get(`${clockState},${gameState}`);
   }
@@ -83,7 +77,7 @@ describe('gameDisplays', () => {
           status: {
             state: gameState,
             progress:
-              gameState === GAME_STATE_IN_PROGRESS
+              gameState === 'LIVE'
                 ? { currentPeriod: 1, currentPeriodTimeRemaining: { min: 1, sec: 5 } }
                 : undefined,
           },

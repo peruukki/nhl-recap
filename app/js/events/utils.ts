@@ -6,20 +6,14 @@ import {
   GameEvent,
   GameEventClockTime,
   GameProgress,
+  GameState,
   GameStatus,
   GoalWithUpdateFields,
   isShootoutGoal,
   PauseEvent,
   Period,
 } from '../types';
-import {
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
-  GAME_STATE_POSTPONED,
-  PERIOD_OVERTIME,
-  PERIOD_SHOOTOUT,
-} from './constants';
+import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './constants';
 
 export function remainingTimeToElapsedTime({ period, minute, second }: ClockTimeRemaining): {
   period: number | string;
@@ -39,16 +33,16 @@ export function elapsedTimeToRemainingTime(time: ClockTimeElapsed): ClockTimeRem
   return remainingTimeToElapsedTime(time);
 }
 
-export function hasGameFinished(state: string): boolean {
-  return state === GAME_STATE_FINISHED;
+export function hasGameFinished(state: GameState): boolean {
+  return state === 'FINAL';
 }
 
-export function hasGameStarted(state: string): boolean {
-  return ![GAME_STATE_NOT_STARTED, GAME_STATE_POSTPONED].includes(state);
+export function hasGameStarted(state: GameState): boolean {
+  return !['PREVIEW', 'POSTPONED'].includes(state);
 }
 
-export function isGameInProgress(state: string): boolean {
-  return state === GAME_STATE_IN_PROGRESS;
+export function isGameInProgress(state: GameState): boolean {
+  return state === 'LIVE';
 }
 
 export function hasGoalBeenScored(clock: GameEventClockTime, goal: GoalWithUpdateFields): boolean {

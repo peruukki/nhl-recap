@@ -7,7 +7,6 @@ import {
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
 } from 'app/js/events/constants';
 import { renderTeamLogo } from 'app/js/utils/logos';
 import type { Game as GameT, GameStatus, Goal, Teams } from 'app/js/types';
@@ -102,7 +101,7 @@ describe('score panel', () => {
 
 function assertGoalCounts(
   gameDisplay: string,
-  { state = GAME_STATE_FINISHED, teams }: { state?: GameStatus['state']; teams: Teams },
+  { state = 'FINAL', teams }: { state?: GameStatus['state']; teams: Teams },
   currentGoals: Goal[],
   awayGoals: number,
   homeGoals: number,
@@ -117,7 +116,7 @@ function assertGoalCounts(
 
 function assertDelimiter(
   gameDisplay: string,
-  { state = GAME_STATE_FINISHED, teams }: { state?: GameStatus['state']; teams: Teams },
+  { state = 'FINAL', teams }: { state?: GameStatus['state']; teams: Teams },
   currentGoals: Goal[],
   delimiter: VNode | string,
   visibilityClass = '.fade-in',

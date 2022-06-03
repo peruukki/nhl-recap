@@ -8,8 +8,6 @@ import {
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
 } from 'app/js/events/constants';
 import { Game as GameT, GameStatus, Goal } from 'app/js/types';
 
@@ -38,37 +36,37 @@ describe('game stats', () => {
   const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
 
   it('should not be shown when game display state is pre-game', () => {
-    const status: GameStatus = { state: GAME_STATE_FINISHED };
+    const status: GameStatus = { state: 'FINAL' };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreNotShown(GAME_DISPLAY_PRE_GAME, { status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has started for in-progress games', () => {
-    const status = { state: GAME_STATE_IN_PROGRESS } as GameStatus;
+    const status = { state: 'LIVE' } as GameStatus;
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreNotShown(GAME_DISPLAY_PLAYBACK, { status, teams, gameStats }, goals);
   });
 
   it('should not be shown when playback has not reached current progress in in-progress games', () => {
-    const status: GameStatus = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
+    const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreNotShown(GAME_DISPLAY_PLAYBACK, { status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has reached current progress in in-progress games', () => {
-    const status: GameStatus = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
+    const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreNotShown(GAME_DISPLAY_IN_PROGRESS, { status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for finished games', () => {
-    const status: GameStatus = { state: GAME_STATE_FINISHED };
+    const status: GameStatus = { state: 'FINAL' };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for in-progress games', () => {
-    const status: GameStatus = { state: GAME_STATE_IN_PROGRESS, progress: inProgressGameProgress };
+    const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
     assertGameStatsAreShown(
       GAME_DISPLAY_POST_GAME_IN_PROGRESS,
@@ -325,7 +323,7 @@ function assertGameStatsExistence(
 
 function assertGameStats(
   gameDisplay: string,
-  { state = GAME_STATE_FINISHED, teams, goals, gameStats }: GameT & Partial<GameStatus>,
+  { state = 'FINAL', teams, goals, gameStats }: GameT & Partial<GameStatus>,
   statIndex: number,
   renderedRecords: {
     away: StatValue;

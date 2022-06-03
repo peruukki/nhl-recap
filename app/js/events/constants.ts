@@ -9,10 +9,5 @@ export const GAME_DISPLAY_POST_GAME_FINISHED = 'GAME_DISPLAY_POST_GAME_FINISHED'
 /** Playback has finished, showing this in-progress game's post-game information. */
 export const GAME_DISPLAY_POST_GAME_IN_PROGRESS = 'GAME_DISPLAY_POST_GAME_IN_PROGRESS';
 
-export const GAME_STATE_FINISHED = 'FINAL';
-export const GAME_STATE_IN_PROGRESS = 'LIVE';
-export const GAME_STATE_NOT_STARTED = 'PREVIEW';
-export const GAME_STATE_POSTPONED = 'POSTPONED';
-
 export const PERIOD_OVERTIME = 'OT';
 export const PERIOD_SHOOTOUT = 'SO';

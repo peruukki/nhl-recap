@@ -6,9 +6,6 @@ import {
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
-  GAME_STATE_POSTPONED,
   PERIOD_SHOOTOUT,
 } from '../../events/constants';
 import {
@@ -149,13 +146,13 @@ function renderGameStatus(
   startTime: Props['startTime'],
 ): string | (VNode | string)[] {
   switch (status.state) {
-    case GAME_STATE_IN_PROGRESS:
+    case 'LIVE':
       return renderCurrentProgress(status.progress);
-    case GAME_STATE_NOT_STARTED: {
+    case 'PREVIEW': {
       const isInFuture = new Date(startTime).getTime() - new Date().getTime() > 0;
       return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
     }
-    case GAME_STATE_POSTPONED:
+    case 'POSTPONED':
       return 'Postponed';
     default:
       return 'Finished';

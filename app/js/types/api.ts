@@ -26,6 +26,8 @@ export type GameStats = {
   takeaways: TeamValues<number>;
 };
 
+export type GameState = 'FINAL' | 'LIVE' | 'POSTPONED' | 'PREVIEW';
+
 type GameStatusLive = {
   progress: GameProgress;
   state: 'LIVE';

@@ -8,9 +8,6 @@ import {
   GAME_DISPLAY_PLAYBACK,
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
 } from 'app/js/events/constants';
 import type {
   Game as GameT,
@@ -34,7 +31,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       undefined,
       null,
     );
@@ -47,7 +44,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       undefined,
       '1st round - Game 1',
     );
@@ -60,7 +57,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       1,
     );
   });
@@ -72,7 +69,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       'NYR',
       2,
       1,
@@ -89,7 +86,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       modifiedPreGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       'NYR',
       3,
       1,
@@ -108,7 +105,7 @@ describe('playoff series wins panel', () => {
       teams,
       goals,
       modifiedPreGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       'NYR',
       4,
       1,
@@ -125,7 +122,7 @@ describe('playoff series wins panel', () => {
       game1.teams,
       game1.goals,
       game1.preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       1,
     );
 
@@ -135,7 +132,7 @@ describe('playoff series wins panel', () => {
       game2.teams,
       game2.goals,
       game2.preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       'ANA',
       2,
       1,
@@ -149,7 +146,7 @@ describe('playoff series wins panel', () => {
       game1.teams,
       game1.goals,
       game1.preGameStats as unknown as TeamStats,
-      GAME_STATE_IN_PROGRESS,
+      'LIVE',
       1,
     );
 
@@ -159,7 +156,7 @@ describe('playoff series wins panel', () => {
       game2.teams,
       game2.goals,
       game2.preGameStats as unknown as TeamStats,
-      GAME_STATE_NOT_STARTED,
+      'PREVIEW',
       'ANA',
       2,
       1,
@@ -174,7 +171,7 @@ describe('playoff series wins panel', () => {
       game1.teams,
       game1.goals,
       game1.preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       'STL',
       2,
       1,
@@ -187,7 +184,7 @@ describe('playoff series wins panel', () => {
       game2.teams,
       game2.goals,
       game2.preGameStats as unknown as TeamStats,
-      GAME_STATE_FINISHED,
+      'FINAL',
       2,
       '.fade-in',
     );

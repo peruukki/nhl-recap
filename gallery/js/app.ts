@@ -8,9 +8,6 @@ import {
   GAME_DISPLAY_POST_GAME_FINISHED,
   GAME_DISPLAY_POST_GAME_IN_PROGRESS,
   GAME_DISPLAY_PRE_GAME,
-  GAME_STATE_FINISHED,
-  GAME_STATE_IN_PROGRESS,
-  GAME_STATE_NOT_STARTED,
 } from '../../app/js/events/constants';
 import scoresAllRegularTime from '../../test/data/latest.json';
 import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
@@ -63,7 +60,7 @@ function intent(): Actions {
     {
       gameStatus: {
         description: 'in progress',
-        status: { state: GAME_STATE_IN_PROGRESS, progress },
+        status: { state: 'LIVE', progress },
       },
       states: [
         {
@@ -86,7 +83,7 @@ function intent(): Actions {
     {
       gameStatus: {
         description: 'finished',
-        status: { state: GAME_STATE_FINISHED },
+        status: { state: 'FINAL' },
       },
       states: [
         {
@@ -109,7 +106,7 @@ function intent(): Actions {
     {
       gameStatus: {
         description: 'not started',
-        status: { state: GAME_STATE_NOT_STARTED },
+        status: { state: 'PREVIEW' },
         gameStats: undefined,
       },
       states: [
