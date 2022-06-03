@@ -1,6 +1,5 @@
 import { div, VNode } from '@cycle/dom';
 
-import { ERROR_MISSING_ALL_GOALS, ERROR_SCORE_AND_GOAL_COUNT_MISMATCH } from '../events/constants';
 import type { StatError } from '../types';
 
 export default function ErrorsPanel(errors?: StatError[]): VNode | null {
@@ -9,9 +8,9 @@ export default function ErrorsPanel(errors?: StatError[]): VNode | null {
 
 function getErrorText(error: StatError): string {
   switch (error.error) {
-    case ERROR_MISSING_ALL_GOALS:
+    case 'MISSING-ALL-GOALS':
       return 'Missing all goal data';
-    case ERROR_SCORE_AND_GOAL_COUNT_MISMATCH: {
+    case 'SCORE-AND-GOAL-COUNT-MISMATCH': {
       const { goalCount, scoreCount } = error.details;
       const difference = Math.abs(goalCount - scoreCount);
       const pluralSuffix = difference === 1 ? '' : 's';

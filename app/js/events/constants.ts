@@ -1,6 +1,3 @@
-export const ERROR_MISSING_ALL_GOALS = 'MISSING-ALL-GOALS';
-export const ERROR_SCORE_AND_GOAL_COUNT_MISMATCH = 'SCORE-AND-GOAL-COUNT-MISMATCH';
-
 /** Showing pre-game information, before playback has started. */
 export const GAME_DISPLAY_PRE_GAME = 'GAME_DISPLAY_PRE_GAME';
 /** Playback has started, clock hasn't reached this game's end time. */
