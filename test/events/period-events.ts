@@ -24,6 +24,7 @@ const baseGoal = {
   classModifier: 'home' as const,
   team: 'TOR',
   scorer: { player: 'Auston Matthews', seasonTotal: 60 },
+  assists: [],
 };
 
 describe('periodEvents', () => {
@@ -235,7 +236,7 @@ function assertFinalSecondsGoalUpdate(
       type: 'GOAL',
       gameIndex: goal.gameIndex,
       classModifier: goal.classModifier,
-      goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'team']),
+      goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'assists', 'team']),
     },
   };
   assert.deepEqual(_.filter(clockEvents, { update: { type: 'GOAL' } }), [expected]);

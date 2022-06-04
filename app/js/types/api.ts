@@ -38,7 +38,7 @@ type GameStatusNonLive = {
 export type GameStatus = GameStatusLive | GameStatusNonLive;
 
 type GoalInGamePlay = TimeElapsed & {
-  assists?: { player: string; seasonTotal: number }[]; // FIXME: Optional due to incomplete test data
+  assists: { player: string; seasonTotal: number }[];
   emptyNet?: boolean;
   scorer: { player: string; seasonTotal: number };
   strength?: 'PPG' | 'SHG';
