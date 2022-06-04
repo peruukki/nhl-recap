@@ -2,28 +2,24 @@ import _ from 'lodash';
 import { assert } from 'chai';
 
 import gameEvents, { getAllGoalsSorted } from 'app/js/events/game-events';
+import { GameEvent, isClockTimeEvent, isEndEvent, isPauseEvent, PauseEvent } from 'app/js/types';
+
 import {
-  Game,
-  GameEvent,
-  isClockTimeEvent,
-  isEndEvent,
-  isPauseEvent,
-  PauseEvent,
-} from 'app/js/types';
-import scoresAllRegularTime from '../data/latest.json';
-import scoresMultipleOvertime from '../data/latest-2-ot.json';
-import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
-import scoresAllLive from '../data/latest-live.json';
-import scoresLiveProgressedMoreThanFinished from '../data/latest-live-2-ot.json';
-import scoresLiveEndOfOT from '../data/latest-live-end-of-ot.json';
-import scoresLiveEndOf2OT from '../data/latest-live-end-of-2-ot.json';
-import scoresLiveSO from '../data/latest-live-so.json';
+  scoresAllLive,
+  scoresAllRegularTime,
+  scoresLiveProgressedMoreThanFinished,
+  scoresLiveEndOfOT,
+  scoresLiveEndOf2OT,
+  scoresLiveSO,
+  scoresMultipleOvertime,
+  scoresOvertimeAndMultipleShootout,
+} from '../data';
 
 const periodEndPauseEventCount = 150;
 
 describe('gameEvents', () => {
   it('should include 3 periods if no games went to overtime or shootout', () => {
-    const events = gameEvents(scoresAllRegularTime.games as unknown as Game[]);
+    const events = gameEvents(scoresAllRegularTime.games);
 
     // Check that regulation periods were included
     assertPeriodEndEvents(events, [1, 2, 3]);
@@ -33,7 +29,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until last overtime goal if games went to overtime and none went to shootout', () => {
-    const events = gameEvents(scoresMultipleOvertime.games as unknown as Game[]);
+    const events = gameEvents(scoresMultipleOvertime.games);
 
     // Check that regulation periods and overtime were included
     assertPeriodEndEvents(events, [1, 2, 3, 'OT']);
@@ -49,7 +45,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until shootout if games went to shootout', () => {
-    const events = gameEvents(scoresOvertimeAndMultipleShootout.games as unknown as Game[]);
+    const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
     // Check that regulation periods, overtime and shootout were included
     assertPeriodEndEvents(events, [1, 2, 3, 'OT', 'SO']);
@@ -62,7 +58,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until most progressed game if no games have finished', () => {
-    const events = gameEvents(scoresAllLive.games as unknown as Game[]);
+    const events = gameEvents(scoresAllLive.games);
 
     // Check that expected regulation periods were included
     assertPeriodEndEvents(events, [1, 2]);
@@ -73,7 +69,7 @@ describe('gameEvents', () => {
   });
 
   it('should include events until most progressed game even if some games have finished', () => {
-    const events = gameEvents(scoresLiveProgressedMoreThanFinished.games as unknown as Game[]);
+    const events = gameEvents(scoresLiveProgressedMoreThanFinished.games);
 
     // Check that expected regulation periods were included
     assertPeriodEndEvents(events, [1, 2, 3, 4]);
@@ -84,7 +80,7 @@ describe('gameEvents', () => {
   });
 
   it('should include 20 minute overtime events if game is live at the end of overtime', () => {
-    const events = gameEvents(scoresLiveEndOfOT.games as unknown as Game[]);
+    const events = gameEvents(scoresLiveEndOfOT.games);
 
     // Check the last event
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
@@ -98,7 +94,7 @@ describe('gameEvents', () => {
   });
 
   it('should include 20 minute overtime events if game is live at the end of second overtime', () => {
-    const events = gameEvents(scoresLiveEndOf2OT.games as unknown as Game[]);
+    const events = gameEvents(scoresLiveEndOf2OT.games);
 
     // Check the last event
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
@@ -112,24 +108,24 @@ describe('gameEvents', () => {
   });
 
   it('should pause after each period end event', () => {
-    const events = gameEvents(scoresOvertimeAndMultipleShootout.games as unknown as Game[]);
+    const events = gameEvents(scoresOvertimeAndMultipleShootout.games);
 
     // Check period pause event count after period end events
     assertPeriodEndPauseEventsCount(events, [1, 2, 3, 'OT', 'SO']);
   });
 
   it('should have a final "end" event as the last event', () => {
-    const events = gameEvents(scoresAllRegularTime.games as unknown as Game[]);
+    const events = gameEvents(scoresAllRegularTime.games);
     assert.deepEqual(_.last(events), { end: true });
   });
 
   it('should have a final "end" event with inProgress flag if no games have finished', () => {
-    const events = gameEvents(scoresAllLive.games as unknown as Game[]);
+    const events = gameEvents(scoresAllLive.games);
     assert.deepEqual(_.last(events), { end: true, inProgress: true });
   });
 
   it('should sort all goals correctly', () => {
-    const allGoalsSorted = getAllGoalsSorted(scoresMultipleOvertime.games as unknown as Game[]);
+    const allGoalsSorted = getAllGoalsSorted(scoresMultipleOvertime.games);
 
     const expectedAllGoalsSorted = _.flatten([
       _.dropRight(scoresMultipleOvertime.games[1].goals).map((goal) => ({
@@ -153,7 +149,7 @@ describe('gameEvents', () => {
   });
 
   it('should leave out shootout goals from unfinished games from all sorted goals', () => {
-    const allGoalsSorted = getAllGoalsSorted(scoresLiveSO.games as unknown as Game[]);
+    const allGoalsSorted = getAllGoalsSorted(scoresLiveSO.games);
     assert.deepEqual(allGoalsSorted, []);
   });
 });

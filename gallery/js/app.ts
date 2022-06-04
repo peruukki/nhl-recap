@@ -2,8 +2,7 @@ import { div, span, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
 
 import Game from '../../app/js/components/game';
-import scoresAllRegularTime from '../../test/data/latest.json';
-import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../test/data';
 import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/js/types';
 
 type Sinks = {
@@ -117,10 +116,10 @@ function intent(): Actions {
 
 function model(stateDefinitions: Actions): State {
   const gamesData = [
-    { description: 'Regular season game', data: scoresAllRegularTime.games[1] as unknown as GameT },
+    { description: 'Regular season game', data: scoresAllRegularTime.games[1] },
     {
       description: 'Playoff game',
-      data: scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
+      data: scoresAllRegularTimePlayoffs.games[1],
     },
   ];
   const gameDisplayIndex$ = xs

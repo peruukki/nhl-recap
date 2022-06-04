@@ -2,9 +2,9 @@ import { div, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import Game from 'app/js/components/game';
-import type { Game as GameT, StatError } from 'app/js/types';
+import type { StatError } from 'app/js/types';
 
-import scoresAllRegularTime from '../data/latest.json';
+import { scoresAllRegularTime } from '../data';
 import { getGameCard } from './test-utils';
 
 describe('errors panel', () => {
@@ -33,12 +33,7 @@ describe('errors panel', () => {
 
 function assertErrors(gameErrors: StatError[] | undefined, expectedErrors: string[] | null) {
   const errorsPanel = getErrorsPanel(
-    Game(
-      'playback',
-      { ...(scoresAllRegularTime.games[0] as unknown as GameT), errors: gameErrors },
-      [],
-      0,
-    ),
+    Game('playback', { ...scoresAllRegularTime.games[0], errors: gameErrors }, [], 0),
   );
   const expected = expectedErrorsPanel(expectedErrors);
   assert.deepEqual(errorsPanel, expected);

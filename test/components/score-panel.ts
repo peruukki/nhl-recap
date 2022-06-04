@@ -6,9 +6,11 @@ import Game from 'app/js/components/game';
 import { renderTeamLogo } from 'app/js/utils/logos';
 import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
-import scoresAllRegularTime from '../data/latest.json';
-import scoresMultipleOvertime from '../data/latest-2-ot.json';
-import scoresOvertimeAndMultipleShootout from '../data/latest-ot-2-so.json';
+import {
+  scoresAllRegularTime,
+  scoresMultipleOvertime,
+  scoresOvertimeAndMultipleShootout,
+} from '../data';
 import { getGameCard } from './test-utils';
 
 describe('score panel', () => {
@@ -62,12 +64,7 @@ describe('score panel', () => {
 
     it('should show "SO" when the playback reaches shootout and the game has a shootout goal', () => {
       const { teams, goals } = scoresOvertimeAndMultipleShootout.games[1];
-      assertDelimiter(
-        'playback',
-        { teams },
-        goals as unknown as Goal[],
-        span('.team-panel__delimiter-period', 'SO'),
-      );
+      assertDelimiter('playback', { teams }, goals, span('.team-panel__delimiter-period', 'SO'));
     });
 
     it('should show the period of the last goal when the playback reaches the end of the game', () => {
@@ -75,7 +72,7 @@ describe('score panel', () => {
       assertDelimiter(
         'post-game-finished',
         { teams },
-        goals as unknown as Goal[],
+        goals,
         span('.team-panel__delimiter-period', 'SO'),
       );
     });

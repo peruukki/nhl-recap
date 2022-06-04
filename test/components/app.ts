@@ -6,7 +6,7 @@ import nock from 'nock';
 
 import app from 'app/js/components/app';
 
-import apiResponse from '../data/latest.json';
+import { scoresAllRegularTime as apiResponse } from '../data';
 import animations from '../test-animations';
 import { addListener } from '../test-utils';
 

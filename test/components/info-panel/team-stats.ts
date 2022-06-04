@@ -4,8 +4,7 @@ import { assert } from 'chai';
 import { delimiter as renderedDelimiter } from 'app/js/components/info-panel/stats/team-stats';
 import { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
 
-import scoresAllRegularTime from '../../data/latest.json';
-import scoresAllRegularTimePlayoffs from '../../data/latest-playoffs.json';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../data';
 import Game from '../../../app/js/components/game';
 import { expectedStat, StatValue } from './test-utils';
 import { getGameCard } from '../test-utils';
@@ -78,7 +77,7 @@ describe('team stats', () => {
 
       assertTeamStats(
         gameDisplay,
-        scoresAllRegularTimePlayoffs.games[0] as unknown as GameT,
+        scoresAllRegularTimePlayoffs.games[0],
         statIndexes.divisionRank,
         {
           away: { value: '7' },
@@ -89,7 +88,7 @@ describe('team stats', () => {
 
       assertTeamStats(
         gameDisplay,
-        scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
+        scoresAllRegularTimePlayoffs.games[1],
         statIndexes.divisionRank,
         {
           away: { value: '2', className: '--highlight' },
@@ -103,54 +102,34 @@ describe('team stats', () => {
       const gameDisplay = 'pre-game';
       const label = 'NHL rank';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[0] as unknown as GameT,
-        statIndexes.leagueRank,
-        {
-          away: { value: '11' },
-          home: { value: '8', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.leagueRank, {
+        away: { value: '11' },
+        home: { value: '8', className: '--highlight' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
-        statIndexes.leagueRank,
-        {
-          away: { value: '4', className: '--highlight' },
-          home: { value: '26' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.leagueRank, {
+        away: { value: '4', className: '--highlight' },
+        home: { value: '26' },
+        label,
+      });
     });
 
     it("should show teams' point percentages, highlighting the better one", () => {
       const gameDisplay = 'pre-game';
       const label = 'Point-%';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.pointPct,
-        {
-          away: { value: '.654' },
-          home: { value: '.654' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
+        away: { value: '.654' },
+        home: { value: '.654' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.pointPct,
-        {
-          away: { value: '.654' },
-          home: { value: '.692', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
+        away: { value: '.654' },
+        home: { value: '.692', className: '--highlight' },
+        label,
+      });
     });
 
     it("should not show teams' playoff win percentages", () => {
@@ -158,7 +137,7 @@ describe('team stats', () => {
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach((game) => {
-        assertTeamStats(gameDisplay, game as unknown as GameT, statIndexes.pointPct, {
+        assertTeamStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },
           label: '',
@@ -170,57 +149,37 @@ describe('team stats', () => {
       const gameDisplay = 'pre-game';
       const label = 'Record';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
-          home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+        home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
-          home: {
-            value: [7, renderedDelimiter, 2, renderedDelimiter, 4],
-            className: '--highlight',
-          },
-          label,
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+        home: {
+          value: [7, renderedDelimiter, 2, renderedDelimiter, 4],
+          className: '--highlight',
         },
-      );
+        label,
+      });
     });
 
     it("should show teams' playoff records, highlighting the better one", () => {
       const gameDisplay = 'pre-game';
       const label = 'Record';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[0] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [7, renderedDelimiter, 3] },
-          home: { value: [7, renderedDelimiter, 3] },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
+        away: { value: [7, renderedDelimiter, 3] },
+        home: { value: [7, renderedDelimiter, 3] },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
-          home: { value: [5, renderedDelimiter, 9] },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
+        away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
+        home: { value: [5, renderedDelimiter, 9] },
+        label,
+      });
     });
   });
 
@@ -277,81 +236,51 @@ describe('team stats', () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Div. rank';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.divisionRank,
-        {
-          away: { value: '7' },
-          home: { value: '3', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.divisionRank, {
+        away: { value: '7' },
+        home: { value: '3', className: '--highlight' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.divisionRank,
-        {
-          away: { value: '2', className: '--highlight' },
-          home: { value: '8' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
+        away: { value: '2', className: '--highlight' },
+        home: { value: '8' },
+        label,
+      });
     });
 
     it("should show teams' league ranks, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'NHL rank';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.leagueRank,
-        {
-          away: { value: '11' },
-          home: { value: '8', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.leagueRank, {
+        away: { value: '11' },
+        home: { value: '8', className: '--highlight' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.leagueRank,
-        {
-          away: { value: '4', className: '--highlight' },
-          home: { value: '26' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.leagueRank, {
+        away: { value: '4', className: '--highlight' },
+        home: { value: '26' },
+        label,
+      });
     });
 
     it("should show teams' point percentages, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Point-%';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.pointPct,
-        {
-          away: { value: '.679', className: '--highlight' },
-          home: { value: '.607' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.pointPct, {
+        away: { value: '.679', className: '--highlight' },
+        home: { value: '.607' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.pointPct,
-        {
-          away: { value: '.607' },
-          home: { value: '.714', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.pointPct, {
+        away: { value: '.607' },
+        home: { value: '.714', className: '--highlight' },
+        label,
+      });
     });
 
     it("should not show teams' playoff win percentages", () => {
@@ -359,7 +288,7 @@ describe('team stats', () => {
 
       assert.lengthOf(scoresAllRegularTimePlayoffs.games, 3);
       scoresAllRegularTimePlayoffs.games.forEach((game) => {
-        assertTeamStats(gameDisplay, game as unknown as GameT, statIndexes.pointPct, {
+        assertTeamStats(gameDisplay, game, statIndexes.pointPct, {
           away: { value: '' },
           home: { value: '' },
           label: '',
@@ -371,114 +300,74 @@ describe('team stats', () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Record';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: {
-            value: [9, renderedDelimiter, 4, renderedDelimiter, 1],
-            className: '--highlight',
-          },
-          home: { value: [7, renderedDelimiter, 4, renderedDelimiter, 3] },
-          label,
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+        away: {
+          value: [9, renderedDelimiter, 4, renderedDelimiter, 1],
+          className: '--highlight',
         },
-      );
+        home: { value: [7, renderedDelimiter, 4, renderedDelimiter, 3] },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
-          home: {
-            value: [8, renderedDelimiter, 2, renderedDelimiter, 4],
-            className: '--highlight',
-          },
-          label,
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+        away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
+        home: {
+          value: [8, renderedDelimiter, 2, renderedDelimiter, 4],
+          className: '--highlight',
         },
-      );
+        label,
+      });
     });
 
     it("should show teams' playoff records, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Record';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[0] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
-          home: { value: [7, renderedDelimiter, 4] },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
+        away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
+        home: { value: [7, renderedDelimiter, 4] },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTimePlayoffs.games[1] as unknown as GameT,
-        statIndexes.record,
-        {
-          away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
-          home: { value: [6, renderedDelimiter, 9] },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
+        away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
+        home: { value: [6, renderedDelimiter, 9] },
+        label,
+      });
     });
 
     it("should show teams' streaks, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Streak';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.streak,
-        {
-          away: { value: '2 W', className: '--highlight' },
-          home: { value: '1 L' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.streak, {
+        away: { value: '2 W', className: '--highlight' },
+        home: { value: '1 L' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.streak,
-        {
-          away: { value: '2 L' },
-          home: { value: '2 W', className: '--highlight' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
+        away: { value: '2 L' },
+        home: { value: '2 W', className: '--highlight' },
+        label,
+      });
     });
 
     it("should show teams' playoff spot point differences, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'PO spot pts';
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[0] as unknown as GameT,
-        statIndexes.playoffSpotPts,
-        {
-          away: { value: '+4' },
-          home: { value: '+4' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
+        away: { value: '+4' },
+        home: { value: '+4' },
+        label,
+      });
 
-      assertTeamStats(
-        gameDisplay,
-        scoresAllRegularTime.games[1] as unknown as GameT,
-        statIndexes.playoffSpotPts,
-        {
-          away: { value: '+2', className: '--highlight' },
-          home: { value: '-2' },
-          label,
-        },
-      );
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
+        away: { value: '+2', className: '--highlight' },
+        home: { value: '-2' },
+        label,
+      });
     });
   });
 });

@@ -10,8 +10,7 @@ import {
 } from 'app/js/components/info-panel/info-panel';
 import { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
-import scoresAllRegularTime from '../../data/latest.json';
-import scoresMultipleOvertime from '../../data/latest-2-ot.json';
+import { scoresAllRegularTime, scoresMultipleOvertime } from '../../data';
 import { getGameCard } from '../test-utils';
 
 describe('info panel', () => {
@@ -49,7 +48,7 @@ describe('info panel', () => {
 
   describe('game description', () => {
     it(`should show "Finished" description for game in FINAL state`, () => {
-      const { teams, goals, status } = scoresAllRegularTime.games[1] as unknown as GameT;
+      const { teams, goals, status } = scoresAllRegularTime.games[1];
       assertGameDescription('pre-game', { status, teams }, goals, 'Finished');
     });
 
