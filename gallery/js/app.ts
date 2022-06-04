@@ -2,16 +2,9 @@ import { div, span, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
 
 import Game from '../../app/js/components/game';
-import {
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  GAME_DISPLAY_PRE_GAME,
-} from '../../app/js/events/constants';
 import scoresAllRegularTime from '../../test/data/latest.json';
 import scoresAllRegularTimePlayoffs from '../../test/data/latest-playoffs.json';
-import type { Game as GameT, GameStats, GameStatus, Goal } from '../../app/js/types';
+import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/js/types';
 
 type Sinks = {
   DOM: Stream<VNode>;
@@ -26,7 +19,7 @@ type State = {
 type GalleryGameT = {
   currentGoals: Goal[];
   description: string;
-  gameDisplay: string;
+  gameDisplay: GameDisplay;
   gameState: GameT & {
     status: string;
     gameStats: GameStats;
@@ -65,17 +58,17 @@ function intent(): Actions {
       states: [
         {
           description: 'Playback not started',
-          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          gameDisplays: ['pre-game', 'pre-game'],
           goalCount: 4,
         },
         {
           description: 'Playback has passed game’s current progress',
-          gameDisplays: [GAME_DISPLAY_PLAYBACK, GAME_DISPLAY_IN_PROGRESS],
+          gameDisplays: ['playback', 'in-progress'],
           goalCount: 4,
         },
         {
           description: 'Playback finished',
-          gameDisplays: [GAME_DISPLAY_IN_PROGRESS, GAME_DISPLAY_POST_GAME_IN_PROGRESS],
+          gameDisplays: ['in-progress', 'post-game-in-progress'],
           goalCount: 4,
         },
       ],
@@ -88,17 +81,17 @@ function intent(): Actions {
       states: [
         {
           description: 'Playback not started',
-          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          gameDisplays: ['pre-game', 'pre-game'],
           goalCount: 5,
         },
         {
           description: 'Playback in progress',
-          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PLAYBACK],
+          gameDisplays: ['pre-game', 'playback'],
           goalCount: 0,
         },
         {
           description: 'Playback finished',
-          gameDisplays: [GAME_DISPLAY_PLAYBACK, GAME_DISPLAY_POST_GAME_FINISHED],
+          gameDisplays: ['playback', 'post-game-finished'],
           goalCount: 5,
         },
       ],
@@ -112,7 +105,7 @@ function intent(): Actions {
       states: [
         {
           description: 'Playback in any state',
-          gameDisplays: [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_PRE_GAME],
+          gameDisplays: ['pre-game', 'pre-game'],
           goalCount: 0,
         },
         null,

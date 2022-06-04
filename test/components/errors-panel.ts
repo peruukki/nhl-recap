@@ -2,7 +2,6 @@ import { div, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import Game from 'app/js/components/game';
-import { GAME_DISPLAY_PLAYBACK } from 'app/js/events/constants';
 import type { Game as GameT, StatError } from 'app/js/types';
 
 import scoresAllRegularTime from '../data/latest.json';
@@ -35,7 +34,7 @@ describe('errors panel', () => {
 function assertErrors(gameErrors: StatError[] | undefined, expectedErrors: string[] | null) {
   const errorsPanel = getErrorsPanel(
     Game(
-      GAME_DISPLAY_PLAYBACK,
+      'playback',
       { ...(scoresAllRegularTime.games[0] as unknown as GameT), errors: gameErrors },
       [],
       0,

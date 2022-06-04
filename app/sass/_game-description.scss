@@ -3,7 +3,7 @@
   color: $color-main;
   text-align: center;
 
-  .game--GAME_DISPLAY_IN_PROGRESS & {
+  .game--in-progress & {
     @include delayed-animation;
   }
 

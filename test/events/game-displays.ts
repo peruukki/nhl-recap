@@ -1,13 +1,6 @@
 import { assert } from 'chai';
 import xs, { Stream } from 'xstream';
 
-import {
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  GAME_DISPLAY_PRE_GAME,
-} from 'app/js/events/constants';
 import getGameDisplays$ from 'app/js/events/game-displays';
 import type { Game, GameEvent, Scores } from 'app/js/types';
 import { addListener } from '../test-utils';
@@ -39,18 +32,18 @@ describe('gameDisplays', () => {
 
   function getExpectedGameDisplay(clockState: string, gameState: string) {
     const expectedValues = new Map([
-      [`${CLOCK_STATE_NOT_STARTED},PREVIEW`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_NOT_STARTED},LIVE`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_NOT_STARTED},FINAL`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_IN_PROGRESS},PREVIEW`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_IN_PROGRESS},LIVE`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_IN_PROGRESS},FINAL`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},PREVIEW`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},LIVE`, GAME_DISPLAY_IN_PROGRESS],
-      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},FINAL`, GAME_DISPLAY_PLAYBACK],
-      [`${CLOCK_STATE_END},PREVIEW`, GAME_DISPLAY_PRE_GAME],
-      [`${CLOCK_STATE_END},LIVE`, GAME_DISPLAY_POST_GAME_IN_PROGRESS],
-      [`${CLOCK_STATE_END},FINAL`, GAME_DISPLAY_POST_GAME_FINISHED],
+      [`${CLOCK_STATE_NOT_STARTED},PREVIEW`, 'pre-game'],
+      [`${CLOCK_STATE_NOT_STARTED},LIVE`, 'pre-game'],
+      [`${CLOCK_STATE_NOT_STARTED},FINAL`, 'pre-game'],
+      [`${CLOCK_STATE_IN_PROGRESS},PREVIEW`, 'pre-game'],
+      [`${CLOCK_STATE_IN_PROGRESS},LIVE`, 'playback'],
+      [`${CLOCK_STATE_IN_PROGRESS},FINAL`, 'playback'],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},PREVIEW`, 'pre-game'],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},LIVE`, 'in-progress'],
+      [`${CLOCK_STATE_PASSED_IN_PROGRESS_GAMES},FINAL`, 'playback'],
+      [`${CLOCK_STATE_END},PREVIEW`, 'pre-game'],
+      [`${CLOCK_STATE_END},LIVE`, 'post-game-in-progress'],
+      [`${CLOCK_STATE_END},FINAL`, 'post-game-finished'],
     ]);
     return expectedValues.get(`${clockState},${gameState}`);
   }

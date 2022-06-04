@@ -13,6 +13,22 @@ export type ClockTimeRemaining = {
   tenthOfASecond?: number;
 };
 
+/**
+ * Game display states:
+ *
+ * - `in-progress`: playback has started, clock has reached this in-progress game's current time
+ * - `playback`: playback has started, clock hasn't reached this game's end time
+ * - `post-game-finished`: playback has finished, showing this finished game's post-game information
+ * - `post-game-in-progress`: playback has finished, showing this in-progress game's post-game information
+ * - `pre-game`: showing pre-game information, before playback has started
+ */
+export type GameDisplay =
+  | 'in-progress'
+  | 'playback'
+  | 'post-game-finished'
+  | 'post-game-in-progress'
+  | 'pre-game';
+
 export type GameEventClockTime = {
   period: number | string;
   minute: number;

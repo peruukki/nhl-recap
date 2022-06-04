@@ -8,14 +8,7 @@ import {
   renderLatestGoalScorer,
   renderLatestGoalTime,
 } from 'app/js/components/info-panel/info-panel';
-import {
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_PRE_GAME,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-} from 'app/js/events/constants';
-import { Game as GameT, GameStatus, Goal, Teams } from 'app/js/types';
+import { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
 import scoresAllRegularTime from '../../data/latest.json';
 import scoresMultipleOvertime from '../../data/latest-2-ot.json';
@@ -25,45 +18,45 @@ describe('info panel', () => {
   describe('latest goal panel', () => {
     it('should show nothing before the playback has reached the first goal scoring time', () => {
       const { teams } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_PLAYBACK, teams, [], null);
+      assertLatestGoal('playback', teams, [], null);
     });
 
     it('should show the latest goal when the playback reaches a goal scoring time', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_PLAYBACK, teams, _.take(goals, 1), _.first(goals) as Goal);
+      assertLatestGoal('playback', teams, _.take(goals, 1), _.first(goals) as Goal);
     });
 
     it('should show the last goal of the game when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_POST_GAME_FINISHED, teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('post-game-finished', teams, goals, _.last(goals) as Goal);
     });
 
     it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_IN_PROGRESS, teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('in-progress', teams, goals, _.last(goals) as Goal);
     });
 
     it('should show the last goal of an in-progress game when playback has finished', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal(GAME_DISPLAY_POST_GAME_IN_PROGRESS, teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('post-game-in-progress', teams, goals, _.last(goals) as Goal);
     });
 
     it('should show goals scored in overtime', () => {
       const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertLatestGoal(GAME_DISPLAY_PLAYBACK, teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('playback', teams, goals, _.last(goals) as Goal);
     });
   });
 
   describe('game description', () => {
     it(`should show "Finished" description for game in FINAL state`, () => {
       const { teams, goals, status } = scoresAllRegularTime.games[1] as unknown as GameT;
-      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Finished');
+      assertGameDescription('pre-game', { status, teams }, goals, 'Finished');
     });
 
     it(`should show game without progress information in LIVE state as in progress`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: 'LIVE' } as GameStatus;
-      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'In progress');
+      assertGameDescription('pre-game', { status, teams }, goals, 'In progress');
     });
 
     it(`should show time remaining progress for game in LIVE state`, () => {
@@ -77,7 +70,7 @@ describe('info panel', () => {
         },
       };
       assertGameDescription(
-        GAME_DISPLAY_PRE_GAME,
+        'pre-game',
         { status, teams },
         goals,
         expectedCurrentProgressDescription(
@@ -97,7 +90,7 @@ describe('info panel', () => {
         },
       };
       assertGameDescription(
-        GAME_DISPLAY_IN_PROGRESS,
+        'in-progress',
         { status, teams },
         goals,
         expectedCurrentProgressDescription(
@@ -117,7 +110,7 @@ describe('info panel', () => {
         },
       };
       assertGameDescription(
-        GAME_DISPLAY_PRE_GAME,
+        'pre-game',
         { status, teams },
         goals,
         expectedCurrentProgressDescription(`End of ${status.progress.currentPeriodOrdinal}`),
@@ -135,7 +128,7 @@ describe('info panel', () => {
         },
       };
       assertGameDescription(
-        GAME_DISPLAY_PRE_GAME,
+        'pre-game',
         { status, teams },
         goals,
         expectedCurrentProgressDescription('In shootout'),
@@ -145,7 +138,7 @@ describe('info panel', () => {
     it(`should show game in PREVIEW state and start time in the past as starting soon`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = { state: 'PREVIEW' };
-      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Starts soon');
+      assertGameDescription('pre-game', { status, teams }, goals, 'Starts soon');
     });
 
     it(`should show game in PREVIEW state and start time in the future as starting in some time`, () => {
@@ -157,24 +150,19 @@ describe('info panel', () => {
       time.setMinutes(time.getMinutes() + 1);
       const startTime = time.toISOString();
 
-      assertGameDescription(
-        GAME_DISPLAY_PRE_GAME,
-        { status, startTime, teams },
-        goals,
-        'Starts in 3 hours',
-      );
+      assertGameDescription('pre-game', { status, startTime, teams }, goals, 'Starts in 3 hours');
     });
 
     it(`should show game in POSTPONED state as postponed`, () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = { state: 'POSTPONED' };
-      assertGameDescription(GAME_DISPLAY_PRE_GAME, { status, teams }, goals, 'Postponed');
+      assertGameDescription('pre-game', { status, teams }, goals, 'Postponed');
     });
   });
 });
 
 function assertLatestGoal(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   teams: Teams,
   goals: Goal[],
   expectedLatestGoal: Goal | null,
@@ -187,7 +175,7 @@ function assertLatestGoal(
 }
 
 function assertGameDescription(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { status, startTime, teams }: Partial<GameT>,
   goals: Goal[],
   description: string | (string | VNode)[],

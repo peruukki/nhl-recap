@@ -23,7 +23,7 @@
     border-bottom-right-radius: 4px;
     background-color: $background-team-stats;
 
-    .game--GAME_DISPLAY_POST_GAME_FINISHED & {
+    .game--post-game-finished & {
       height: get-stats-height($team-stats-line-count-finished);
     }
 

@@ -1,14 +1,9 @@
 import { div, span, VNode } from '@cycle/dom';
 import { format } from 'timeago.js';
 
+import { PERIOD_SHOOTOUT } from '../../events/constants';
 import {
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  GAME_DISPLAY_PRE_GAME,
-  PERIOD_SHOOTOUT,
-} from '../../events/constants';
-import {
+  GameDisplay,
   GameProgress,
   GameStats as GameStatsT,
   GameStatus,
@@ -24,7 +19,7 @@ import TeamStats from './stats/team-stats';
 
 type Props = {
   currentStats?: TeamStatsT;
-  gameDisplay: string;
+  gameDisplay: GameDisplay;
   gameStats: GameStatsT;
   isPlayoffGame: boolean;
   latestGoal?: Goal;
@@ -45,18 +40,13 @@ export default function InfoPanel({
   status,
   teams,
 }: Props): VNode {
-  const showProgressInfo = [
-    GAME_DISPLAY_PRE_GAME,
-    GAME_DISPLAY_IN_PROGRESS,
-    GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  ].includes(gameDisplay);
-  const showGameStats =
-    gameStats &&
-    [GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(gameDisplay);
-  const showPreGameStats = [GAME_DISPLAY_PRE_GAME, GAME_DISPLAY_POST_GAME_IN_PROGRESS].includes(
+  const showProgressInfo = ['pre-game', 'in-progress', 'post-game-in-progress'].includes(
     gameDisplay,
   );
-  const showAfterGameStats = gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED;
+  const showGameStats =
+    gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
+  const showPreGameStats = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
+  const showAfterGameStats = gameDisplay === 'post-game-finished';
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
 
   return div(
@@ -69,7 +59,7 @@ export default function InfoPanel({
       },
     },
     [
-      gameDisplay !== GAME_DISPLAY_PRE_GAME ? renderLatestGoal(latestGoal) : null,
+      gameDisplay !== 'pre-game' ? renderLatestGoal(latestGoal) : null,
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,

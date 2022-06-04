@@ -5,6 +5,7 @@ import xs, { Stream } from 'xstream';
 
 import getGameDisplays$ from '../events/game-displays';
 import {
+  GameDisplay,
   GameEvent,
   GameEventGameUpdate,
   GameUpdateGoal,
@@ -44,7 +45,7 @@ type State = {
   status: string;
   clockVtree: VNode;
   clock: GameEvent | null;
-  gameDisplays: string[];
+  gameDisplays: GameDisplay[];
   gameCount: number;
 };
 

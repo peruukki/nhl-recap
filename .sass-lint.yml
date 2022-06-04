@@ -8,13 +8,7 @@ rules:
     - 2
     - allow-leading-underscore: false
       convention: hyphenatedbem
-      ignore:
-        [
-          'game--GAME_DISPLAY_IN_PROGRESS',
-          'game--GAME_DISPLAY_PLAYBACK',
-          'game--GAME_DISPLAY_POST_GAME_FINISHED',
-          'game--GAME_DISPLAY_POST_GAME_IN_PROGRESS',
-        ]
+      ignore: []
   empty-line-between-blocks: 0
   indentation: 0
   leading-zero:

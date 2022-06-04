@@ -1,15 +1,14 @@
 import { div, VNode } from '@cycle/dom';
 import _ from 'lodash';
 
-import { GAME_DISPLAY_POST_GAME_FINISHED, GAME_DISPLAY_PRE_GAME } from '../events/constants';
-import type { Game as GameT, Goal } from '../types';
+import type { Game as GameT, GameDisplay, Goal } from '../types';
 import ErrorsPanel from './errors-panel';
 import InfoPanel from './info-panel';
 import ScorePanel from './score-panel';
 import SeriesWinsPanel from './series-wins-panel';
 
 export default function Game(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { status, startTime, teams, gameStats, preGameStats, currentStats, errors }: GameT,
   currentGoals: Goal[],
   gameAnimationIndex: number,
@@ -25,7 +24,7 @@ export default function Game(
         awayGoals,
         homeGoals,
         latestGoalPeriod: latestGoal?.period,
-        isBeforeGame: gameDisplay === GAME_DISPLAY_PRE_GAME,
+        isBeforeGame: gameDisplay === 'pre-game',
       }),
       InfoPanel({
         gameDisplay,
@@ -43,7 +42,7 @@ export default function Game(
         awayGoals,
         homeGoals,
         playoffSeries: preGameStats?.playoffSeries,
-        addCurrentGameToWins: gameDisplay === GAME_DISPLAY_POST_GAME_FINISHED,
+        addCurrentGameToWins: gameDisplay === 'post-game-finished',
       }),
       ErrorsPanel(errors),
     ]),

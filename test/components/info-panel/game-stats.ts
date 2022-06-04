@@ -2,14 +2,7 @@ import { VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import Game from 'app/js/components/game';
-import {
-  GAME_DISPLAY_IN_PROGRESS,
-  GAME_DISPLAY_PLAYBACK,
-  GAME_DISPLAY_POST_GAME_FINISHED,
-  GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-  GAME_DISPLAY_PRE_GAME,
-} from 'app/js/events/constants';
-import { Game as GameT, GameStatus, Goal } from 'app/js/types';
+import { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
 
 import scoresAllRegularTime from '../../data/latest.json';
 import { getGameCard } from '../test-utils';
@@ -33,46 +26,42 @@ const statIndexes = {
 };
 
 describe('game stats', () => {
-  const gameDisplay = GAME_DISPLAY_POST_GAME_FINISHED;
+  const gameDisplay = 'post-game-finished';
 
   it('should not be shown when game display state is pre-game', () => {
     const status: GameStatus = { state: 'FINAL' };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreNotShown(GAME_DISPLAY_PRE_GAME, { status, teams, gameStats }, goals);
+    assertGameStatsAreNotShown('pre-game', { status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has started for in-progress games', () => {
     const status = { state: 'LIVE' } as GameStatus;
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreNotShown(GAME_DISPLAY_PLAYBACK, { status, teams, gameStats }, goals);
+    assertGameStatsAreNotShown('playback', { status, teams, gameStats }, goals);
   });
 
   it('should not be shown when playback has not reached current progress in in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreNotShown(GAME_DISPLAY_PLAYBACK, { status, teams, gameStats }, goals);
+    assertGameStatsAreNotShown('playback', { status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has reached current progress in in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreNotShown(GAME_DISPLAY_IN_PROGRESS, { status, teams, gameStats }, goals);
+    assertGameStatsAreNotShown('in-progress', { status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for finished games', () => {
     const status: GameStatus = { state: 'FINAL' };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreShown(GAME_DISPLAY_POST_GAME_FINISHED, { status, teams, gameStats }, goals);
+    assertGameStatsAreShown('post-game-finished', { status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
     const { teams, goals, gameStats } = scoresAllRegularTime.games[1] as unknown as GameT;
-    assertGameStatsAreShown(
-      GAME_DISPLAY_POST_GAME_IN_PROGRESS,
-      { status, teams, gameStats },
-      goals,
-    );
+    assertGameStatsAreShown('post-game-in-progress', { status, teams, gameStats }, goals);
   });
 
   it('should show shots, highlighting the larger one', () => {
@@ -285,7 +274,7 @@ describe('game stats', () => {
 });
 
 function assertGameStatsAreShown(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
@@ -298,7 +287,7 @@ function assertGameStatsAreShown(
   );
 }
 function assertGameStatsAreNotShown(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
@@ -311,7 +300,7 @@ function assertGameStatsAreNotShown(
   );
 }
 function assertGameStatsExistence(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
   assertFn: (actual: string | undefined, expected: string) => void,
@@ -322,7 +311,7 @@ function assertGameStatsExistence(
 }
 
 function assertGameStats(
-  gameDisplay: string,
+  gameDisplay: GameDisplay,
   { state = 'FINAL', teams, goals, gameStats }: GameT & Partial<GameStatus>,
   statIndex: number,
   renderedRecords: {
