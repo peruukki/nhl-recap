@@ -61,15 +61,15 @@ describe('shootoutEvents', () => {
         event.type === 'game-update' ? event.update : event,
       ),
       [
-        { gameIndex: 0, type: 'START' },
+        { gameIndex: 0, type: 'start' },
         {
           gameIndex: 0,
-          type: 'GOAL',
+          type: 'goal',
           classModifier: 'home',
           goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
         },
         ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
-        { gameIndex: 0, type: 'END' },
+        { gameIndex: 0, type: 'end' },
       ],
       'First shootout game goal events',
     );
@@ -81,15 +81,15 @@ describe('shootoutEvents', () => {
         .map((event) => (event.type === 'game-update' ? event.update : event))
         .value(),
       [
-        { gameIndex: 1, type: 'START' },
+        { gameIndex: 1, type: 'start' },
         {
           gameIndex: 1,
-          type: 'GOAL',
+          type: 'goal',
           classModifier: 'away',
           goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
         },
         ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
-        { gameIndex: 1, type: 'END' },
+        { gameIndex: 1, type: 'end' },
       ],
       'Second shootout game goal events',
     );

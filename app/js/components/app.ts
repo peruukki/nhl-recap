@@ -124,13 +124,13 @@ function model(actions: Actions, animations: Animations): Stream<State> {
   gameUpdate$.addListener({
     next: (gameUpdate) => {
       switch (gameUpdate.type) {
-        case 'END':
+        case 'end':
           animations.stopGameHighlight(gameUpdate.gameIndex);
           break;
-        case 'GOAL':
+        case 'goal':
           animations.highlightGoal(gameUpdate.classModifier, gameUpdate.gameIndex);
           break;
-        case 'START':
+        case 'start':
           animations.highlightGame(gameUpdate.gameIndex);
           break;
         default:
@@ -145,7 +145,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       Array.from<ArrayLike<never>, Goal[]>({ length: scores.games.length }, () => []),
     );
   const goalUpdate$ = gameUpdate$.filter(
-    (update): update is GameUpdateGoal => update.type === 'GOAL',
+    (update): update is GameUpdateGoal => update.type === 'goal',
   );
   const currentGoals$ = initialGoals$
     .map((initialGameGoals) =>

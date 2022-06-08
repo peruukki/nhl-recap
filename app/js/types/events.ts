@@ -48,12 +48,12 @@ export type GameEventGameUpdate = (
 };
 
 type GameUpdateBase<Type extends string> = { gameIndex: number; type: Type };
-type GameUpdateEnd = GameUpdateBase<'END'>;
-export type GameUpdateGoal = GameUpdateBase<'GOAL'> & {
+type GameUpdateEnd = GameUpdateBase<'end'>;
+export type GameUpdateGoal = GameUpdateBase<'goal'> & {
   classModifier: 'away' | 'home';
   goal: Goal;
 };
-type GameUpdateStart = GameUpdateBase<'START'>;
+type GameUpdateStart = GameUpdateBase<'start'>;
 
 type GameEventBase<Type extends string> = {
   type: Type;

@@ -148,10 +148,10 @@ describe('periodEvents', () => {
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
             .map((event) => _.omit(event.type === 'game-update' ? event.update : event, 'goal')),
           [
-            { gameIndex, type: 'START' },
-            { gameIndex, type: 'GOAL', classModifier: 'home' },
+            { gameIndex, type: 'start' },
+            { gameIndex, type: 'goal', classModifier: 'home' },
             ..._.times(EVENT_COUNTS.pause, () => ({ type: 'pause' })),
-            { gameIndex, type: 'END' },
+            { gameIndex, type: 'end' },
           ],
           description,
         );
@@ -241,13 +241,13 @@ function assertFinalSecondsGoalUpdate(
     minute: updateTime.minute,
     second: updateTime.second,
     update: {
-      type: 'GOAL' as const,
+      type: 'goal' as const,
       gameIndex: goal.gameIndex,
       classModifier: goal.classModifier,
       goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'assists', 'team']),
     },
   };
-  assert.deepEqual(_.filter(clockEvents, { update: { type: 'GOAL' } }), [expected]);
+  assert.deepEqual(_.filter(clockEvents, { update: { type: 'goal' } }), [expected]);
 }
 
 function firstEvent(period: number | 'OT', minute: number) {

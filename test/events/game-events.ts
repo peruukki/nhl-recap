@@ -41,7 +41,7 @@ describe('gameEvents', () => {
       period: 'OT',
       minute: 2,
       second: 23,
-      update: { gameIndex: 1, type: 'END' },
+      update: { gameIndex: 1, type: 'end' },
     });
   });
 
@@ -55,7 +55,7 @@ describe('gameEvents', () => {
     assert.deepEqual(lastClockElement, {
       type: 'game-update',
       period: 'SO',
-      update: { gameIndex: 2, type: 'END' },
+      update: { gameIndex: 2, type: 'end' },
     });
   });
 

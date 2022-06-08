@@ -97,13 +97,13 @@ export function getGoalEvents(
   goalPauseEventCount: number,
 ): (GameEvent | PauseEvent)[] {
   return [
-    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'START' } },
+    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'start' } },
     {
       ...currentGameEvent,
       type: 'game-update',
-      update: { gameIndex, classModifier, goal, type: 'GOAL' },
+      update: { gameIndex, classModifier, goal, type: 'goal' },
     },
     ..._.times(goalPauseEventCount, () => ({ type: 'pause' as const })),
-    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'END' } },
+    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'end' } },
   ];
 }
