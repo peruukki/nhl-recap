@@ -2,7 +2,7 @@ import { VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import Game from 'app/js/components/game';
-import { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
+import type { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
 
 import { scoresAllRegularTime } from '../../data';
 import { getGameCard } from '../test-utils';

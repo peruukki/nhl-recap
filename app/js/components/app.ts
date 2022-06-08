@@ -4,15 +4,12 @@ import classNames from 'classnames';
 import xs, { Stream } from 'xstream';
 
 import getGameDisplays$ from '../events/game-displays';
-import {
+import type {
   GameDisplay,
   GameEvent,
   GameEventGameUpdate,
   GameUpdateGoal,
   Goal,
-  isClockTimeEvent,
-  isEndEvent,
-  isGameUpdateEvent,
   Scores,
   ScoresDate,
 } from '../types';
@@ -122,7 +119,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
   });
 
   const gameUpdate$ = clock.clock$
-    .filter((event): event is GameEventGameUpdate => isGameUpdateEvent(event))
+    .filter((event): event is GameEventGameUpdate => event.type === 'game-update')
     .map(({ update }) => update);
   gameUpdate$.addListener({
     next: (gameUpdate) => {
@@ -219,7 +216,7 @@ function renderHeader(
   state: Pick<State, 'clock' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
 ): VNode {
   const hasNotStarted = !state.clock;
-  const isFinished = !!(state.clock && isEndEvent(state.clock) && !isClockTimeEvent(state.clock));
+  const isFinished = state.clock?.type === 'end';
   const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
   const dynamicClassNames = {

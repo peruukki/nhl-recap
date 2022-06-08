@@ -53,11 +53,11 @@ describe('gameDisplays', () => {
       case CLOCK_STATE_NOT_STARTED:
         return xs.empty();
       case CLOCK_STATE_IN_PROGRESS:
-        return xs.of({ period: 1, minute: 15, second: 38 } as GameEvent);
+        return xs.of({ type: 'clock', period: 1, minute: 15, second: 38 } as GameEvent);
       case CLOCK_STATE_PASSED_IN_PROGRESS_GAMES:
-        return xs.of({ period: 2, minute: 4, second: 56 } as GameEvent);
+        return xs.of({ type: 'clock', period: 2, minute: 4, second: 56 } as GameEvent);
       case CLOCK_STATE_END:
-        return xs.of({ end: true } as GameEvent);
+        return xs.of({ type: 'end' } as GameEvent);
       default:
         throw new Error(`Unexpected clock state ${clockState}`);
     }

@@ -1,13 +1,6 @@
 import xs, { Stream } from 'xstream';
 
-import {
-  GameDisplay,
-  GameEvent,
-  GameEventClockTime,
-  isClockTimeEvent,
-  isEndEvent,
-  Scores,
-} from '../types';
+import { GameDisplay, GameEvent, GameEventClockTime, Scores } from '../types';
 import {
   hasClockPassedCurrentProgress,
   hasGameFinished,
@@ -27,7 +20,7 @@ export default function getGameDisplays$(
   const gameDisplays$: Stream<GameDisplay[]> = xs
     .combine(scores$, clock$)
     .map(([scores, clock]) => {
-      const isPlaybackFinished = isEndEvent(clock) && !isClockTimeEvent(clock);
+      const isPlaybackFinished = clock.type === 'end';
       return scores.games.map((game) => {
         if (!hasGameStarted(game.status.state)) {
           return 'pre-game';

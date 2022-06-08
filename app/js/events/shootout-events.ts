@@ -10,7 +10,9 @@ export default function shootoutEvents(
 ): (GameEvent | PauseEvent)[] {
   const finalShootoutGoals = getShootoutGoalForEachGame(allGoalsSorted);
   return _.chain(finalShootoutGoals)
-    .map((goal) => getGoalEvents({ period: PERIOD_SHOOTOUT }, goal, goalPauseEventCount))
+    .map((goal) =>
+      getGoalEvents({ type: 'shootout', period: PERIOD_SHOOTOUT }, goal, goalPauseEventCount),
+    )
     .flatten()
     .value();
 }

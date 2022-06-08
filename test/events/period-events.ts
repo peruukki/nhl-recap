@@ -3,7 +3,7 @@ import { assert } from 'chai';
 
 import { PERIOD_OVERTIME } from 'app/js/events/constants';
 import periodEvents from 'app/js/events/period-events';
-import { GameEndTime, GoalWithUpdateFields, isGameUpdateEvent } from 'app/js/types';
+import type { GameEndTime, GoalWithUpdateFields } from 'app/js/types';
 
 export const EVENT_COUNTS = {
   start: 1,
@@ -31,7 +31,7 @@ describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
     const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalPauseEventCount);
     assert.deepEqual(clockEvents.length, 62);
-    assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 });
+    assert.deepEqual(_.last(clockEvents), { type: 'clock', period: 1, minute: 0, second: 0 });
   });
 
   it('should stop at given end time', () => {
@@ -46,6 +46,7 @@ describe('periodEvents', () => {
     );
 
     const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map((second) => ({
+      type: 'clock' as const,
       period,
       minute: 2,
       second,
@@ -66,7 +67,7 @@ describe('periodEvents', () => {
     const minutes = _.range(periodLengthInMinutes - 1, 0, -1);
     const seconds = _.range(59, -1, -clockAdvanceStep);
     const secondEvents = _.flatMap(minutes, (minute) =>
-      seconds.map((second) => ({ period, minute, second })),
+      seconds.map((second) => ({ type: 'clock' as const, period, minute, second })),
     );
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
@@ -82,6 +83,7 @@ describe('periodEvents', () => {
       const secondEvents = _.range(59, -1, -clockAdvanceStep)
         .concat(0)
         .map((second) => ({
+          type: 'clock' as const,
           period,
           minute: 0,
           second,
@@ -102,6 +104,7 @@ describe('periodEvents', () => {
     );
 
     const tenthOfASecondEvents = _.range(9, -1, -clockAdvanceStep).map((tenthOfASecond) => ({
+      type: 'clock' as const,
       period,
       minute: 0,
       second: 59,
@@ -129,21 +132,25 @@ describe('periodEvents', () => {
         EVENT_COUNTS.pause,
       );
 
-      assert.deepEqual(_.last(clockEvents), { period: 1, minute: 0, second: 0 }, description);
+      assert.deepEqual(
+        _.last(clockEvents),
+        { type: 'clock', period: 1, minute: 0, second: 0 },
+        description,
+      );
 
       expectedGameIndexes.forEach((gameIndex) => {
         const eventIndexWithGameIndex = _.findIndex(
           clockEvents,
-          (event) => isGameUpdateEvent(event) && event.update.gameIndex === gameIndex,
+          (event) => event.type === 'game-update' && event.update.gameIndex === gameIndex,
         );
         assert.deepEqual(
           clockEvents
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
-            .map((event) => _.omit(isGameUpdateEvent(event) ? event.update : event, 'goal')),
+            .map((event) => _.omit(event.type === 'game-update' ? event.update : event, 'goal')),
           [
             { gameIndex, type: 'START' },
             { gameIndex, type: 'GOAL', classModifier: 'home' },
-            ..._.times(EVENT_COUNTS.pause, () => ({ pause: true })),
+            ..._.times(EVENT_COUNTS.pause, () => ({ type: 'pause' })),
             { gameIndex, type: 'END' },
           ],
           description,
@@ -229,11 +236,12 @@ function assertFinalSecondsGoalUpdate(
   );
 
   const expected = {
+    type: 'game-update' as const,
     period: goalTime.period,
     minute: updateTime.minute,
     second: updateTime.second,
     update: {
-      type: 'GOAL',
+      type: 'GOAL' as const,
       gameIndex: goal.gameIndex,
       classModifier: goal.classModifier,
       goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'assists', 'team']),
@@ -243,5 +251,5 @@ function assertFinalSecondsGoalUpdate(
 }
 
 function firstEvent(period: number | 'OT', minute: number) {
-  return { period, minute, second: 0 };
+  return { type: 'clock' as const, period, minute, second: 0 };
 }

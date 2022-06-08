@@ -5,6 +5,7 @@ import {
   ClockTimeRemaining,
   GameEvent,
   GameEventClockTime,
+  GameEventShootout,
   GameProgress,
   GameState,
   GameStatus,
@@ -91,18 +92,18 @@ export function getPeriodOrdinal(period: Period): number {
 }
 
 export function getGoalEvents(
-  currentGameEvent: GameEvent,
+  currentGameEvent: GameEventClockTime | GameEventShootout,
   { classModifier, gameIndex, ...goal }: GoalWithUpdateFields,
   goalPauseEventCount: number,
 ): (GameEvent | PauseEvent)[] {
   return [
-    { ...currentGameEvent, update: { gameIndex, type: 'START' } },
-    { ...currentGameEvent, update: { gameIndex, classModifier, goal, type: 'GOAL' } },
-    ..._.times(goalPauseEventCount, getPauseEvent),
-    { ...currentGameEvent, update: { gameIndex, type: 'END' } },
+    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'START' } },
+    {
+      ...currentGameEvent,
+      type: 'game-update',
+      update: { gameIndex, classModifier, goal, type: 'GOAL' },
+    },
+    ..._.times(goalPauseEventCount, () => ({ type: 'pause' as const })),
+    { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'END' } },
   ];
-}
-
-export function getPauseEvent(): PauseEvent {
-  return { pause: true };
 }

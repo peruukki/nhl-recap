@@ -29,32 +29,25 @@ export type GameDisplay =
   | 'post-game-in-progress'
   | 'pre-game';
 
-export type GameEventClockTime = {
+export type GameEventClockTime<Type extends string = 'clock'> = GameEventBase<Type> & {
   period: number | string;
   minute: number;
   second: number;
   tenthOfASecond?: number;
-  end?: true;
 };
-export function isClockTimeEvent(event: GameEvent | PauseEvent): event is GameEventClockTime {
-  return !!(event as GameEventClockTime).period;
-}
 
-export type GameEventShootout = {
+export type GameEventShootout<Type extends string = 'shootout'> = GameEventBase<Type> & {
   period: 'SO';
 };
-export function isShootoutEvent(event: GameEvent): event is GameEventShootout {
-  return (event as GameEventShootout).period === 'SO';
-}
 
-export type GameEventGameUpdate = GameEventClockTime & {
+export type GameEventGameUpdate = (
+  | GameEventClockTime<'game-update'>
+  | GameEventShootout<'game-update'>
+) & {
   update: GameUpdateEnd | GameUpdateGoal | GameUpdateStart;
 };
-export function isGameUpdateEvent(event: GameEvent | PauseEvent): event is GameEventGameUpdate {
-  return !!(event as GameEventGameUpdate).update;
-}
 
-type GameUpdateBase<T extends string> = { gameIndex: number; type: T };
+type GameUpdateBase<Type extends string> = { gameIndex: number; type: Type };
 type GameUpdateEnd = GameUpdateBase<'END'>;
 export type GameUpdateGoal = GameUpdateBase<'GOAL'> & {
   classModifier: 'away' | 'home';
@@ -62,25 +55,23 @@ export type GameUpdateGoal = GameUpdateBase<'GOAL'> & {
 };
 type GameUpdateStart = GameUpdateBase<'START'>;
 
-export type GameEventEnd = { end: true; inProgress?: true };
-export function isEndEvent(event: GameEvent): event is GameEventEnd {
-  return (event as GameEventEnd).end;
-}
+type GameEventBase<Type extends string> = {
+  type: Type;
+};
 
-export type PauseEvent = { pause: true };
-export function isPauseEvent(event: GameEvent | PauseEvent): event is PauseEvent {
-  return !!(event as PauseEvent).pause;
-}
+export type GameEventEnd = GameEventBase<'end'> & { inProgress: boolean };
 
-export type GameEventStart = { start: true };
-export function isStartEvent(event: GameEvent): event is GameEventStart {
-  return (event as GameEventStart).start;
-}
+export type PauseEvent = GameEventBase<'pause'>;
+
+export type GameEventPeriodEnd = GameEventBase<'period-end'> & Pick<GameEventClockTime, 'period'>;
+
+export type GameEventStart = GameEventBase<'start'>;
 
 export type GameEvent =
   | GameEventClockTime
   | GameEventEnd
   | GameEventGameUpdate
+  | GameEventPeriodEnd
   | GameEventShootout
   | GameEventStart;
 

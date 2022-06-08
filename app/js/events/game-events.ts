@@ -12,16 +12,10 @@ import {
   GoalWithUpdateFields,
   isShootoutGoal,
   PauseEvent,
-  Period,
   PeriodGameEvents,
   TextualPeriod,
 } from '../types';
-import {
-  elapsedTimeToRemainingTime,
-  getPauseEvent,
-  getPeriodOrdinal,
-  hasGameFinished,
-} from './utils';
+import { elapsedTimeToRemainingTime, getPeriodOrdinal, hasGameFinished } from './utils';
 
 export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   // These event counts determine for how many number of extra events we pause the clock
@@ -36,7 +30,7 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
   const periodEnds = completedPeriodEvents.map((onePeriodEvents) =>
-    appendDelay(getPeriodEndElement(onePeriodEvents.period), periodEndPauseEventCount),
+    appendDelay({ period: onePeriodEvents.period, type: 'period-end' }, periodEndPauseEventCount),
   );
   const allPeriodEvents = eventsByPeriod.map((onePeriodEvents) => onePeriodEvents.events);
   const periodSequences = _.chain(allPeriodEvents)
@@ -46,27 +40,14 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
     .filter<GameEvent>(_.identity)
     .value();
 
-  return _.concat(
-    appendDelay(getGamesStartElement(), gamesStartPauseEventCount),
-    ...periodSequences,
-    getGamesEndElement(endTime.inProgress),
-  );
+  return _.concat(appendDelay({ type: 'start' }, gamesStartPauseEventCount), ...periodSequences, {
+    type: 'end',
+    inProgress: !!endTime.inProgress,
+  });
 }
 
-function appendDelay(element: GameEvent, multiplier: number) {
-  return [element, ..._.times(multiplier, getPauseEvent)];
-}
-
-function getPeriodEndElement(period: Period): GameEvent {
-  return { period, end: true };
-}
-
-function getGamesStartElement(): GameEvent {
-  return { start: true };
-}
-
-function getGamesEndElement(inProgress?: boolean): GameEvent {
-  return inProgress ? { end: true, inProgress } : { end: true };
+function appendDelay(element: GameEvent, multiplier: number): (GameEvent | PauseEvent)[] {
+  return [element, ..._.times(multiplier, () => ({ type: 'pause' as const }))];
 }
 
 function getAllPeriodEvents(

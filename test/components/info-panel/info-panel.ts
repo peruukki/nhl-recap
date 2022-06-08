@@ -8,7 +8,7 @@ import {
   renderLatestGoalScorer,
   renderLatestGoalTime,
 } from 'app/js/components/info-panel/info-panel';
-import { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
+import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../data';
 import { getGameCard } from '../test-utils';

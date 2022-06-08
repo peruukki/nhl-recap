@@ -34,7 +34,12 @@ export default function periodEvents(
       ? generateTenthOfASecondEvents(period, lastMinute, lastSecond)
       : [];
 
-  const firstEvent: GameEventClockTime = { period, minute: durationInMinutes, second: 0 };
+  const firstEvent: GameEventClockTime = {
+    type: 'clock',
+    period,
+    minute: durationInMinutes,
+    second: 0,
+  };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
   return createGoalEvents(sequence, allGoalsSorted, goalPauseEventCount);
 }
@@ -48,6 +53,7 @@ function generateSecondEvents(
   return _.flatten(
     minuteRange(durationInMinutes, lastMinute).map((minute) =>
       secondRange(minute, lastMinute, lastSecond).map((second) => ({
+        type: 'clock',
         period,
         minute,
         second,
@@ -65,6 +71,7 @@ function generateTenthOfASecondEvents(
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond).map((second) =>
       _.range(9, -1, -advanceClockStep).map((tenthOfASecond) => ({
+        type: 'clock',
         period,
         minute,
         second,
@@ -105,7 +112,7 @@ function createGoalEvents(
           ? [currentClock as GameEvent]
           : _.flatten(
               goalsScoredSincePreviousTime.map((goal) =>
-                getGoalEvents(currentClock as GameEvent, goal, goalPauseEventCount),
+                getGoalEvents(currentClock as GameEventClockTime, goal, goalPauseEventCount),
               ),
             );
       }),

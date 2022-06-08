@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { assert } from 'chai';
 
 import gameEvents, { getAllGoalsSorted } from 'app/js/events/game-events';
-import { GameEvent, isClockTimeEvent, isEndEvent, isPauseEvent, PauseEvent } from 'app/js/types';
+import type { GameEvent, PauseEvent } from 'app/js/types';
 
 import {
   scoresAllLive,
@@ -37,6 +37,7 @@ describe('gameEvents', () => {
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastTimeEvent, {
+      type: 'game-update',
       period: 'OT',
       minute: 2,
       second: 23,
@@ -52,6 +53,7 @@ describe('gameEvents', () => {
 
     const lastClockElement = getLastNonEndOrPauseEvent(events);
     assert.deepEqual(lastClockElement, {
+      type: 'game-update',
       period: 'SO',
       update: { gameIndex: 2, type: 'END' },
     });
@@ -65,7 +67,13 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 3, minute: 0, second: 53, tenthOfASecond: 0 });
+    assert.deepEqual(lastTimeEvent, {
+      type: 'clock',
+      period: 3,
+      minute: 0,
+      second: 53,
+      tenthOfASecond: 0,
+    });
   });
 
   it('should include events until most progressed game even if some games have finished', () => {
@@ -76,35 +84,35 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 5, minute: 11, second: 2 });
+    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 5, minute: 11, second: 2 });
   });
 
   it('should include 20 minute overtime events if game is live at the end of overtime', () => {
     const events = gameEvents(scoresLiveEndOfOT.games);
 
     // Check the last event
-    assert.deepEqual(_.last(events), { end: true, inProgress: true });
+    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 4, minute: 0, second: 0 });
+    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 4, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
-    assert.isTrue(_.some(events, { period: 4, minute: 20, second: 0 }));
+    assert.isTrue(_.some(events, { type: 'clock', period: 4, minute: 20, second: 0 }));
   });
 
   it('should include 20 minute overtime events if game is live at the end of second overtime', () => {
     const events = gameEvents(scoresLiveEndOf2OT.games);
 
     // Check the last event
-    assert.deepEqual(_.last(events), { end: true, inProgress: true });
+    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { period: 5, minute: 0, second: 0 });
+    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 5, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
-    assert.isTrue(_.some(events, { period: 5, minute: 20, second: 0 }));
+    assert.isTrue(_.some(events, { type: 'clock', period: 5, minute: 20, second: 0 }));
   });
 
   it('should pause after each period end event', () => {
@@ -116,12 +124,12 @@ describe('gameEvents', () => {
 
   it('should have a final "end" event as the last event', () => {
     const events = gameEvents(scoresAllRegularTime.games);
-    assert.deepEqual(_.last(events), { end: true });
+    assert.deepEqual(_.last(events), { type: 'end', inProgress: false });
   });
 
   it('should have a final "end" event with inProgress flag if no games have finished', () => {
     const events = gameEvents(scoresAllLive.games);
-    assert.deepEqual(_.last(events), { end: true, inProgress: true });
+    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
   });
 
   it('should sort all goals correctly', () => {
@@ -156,7 +164,7 @@ describe('gameEvents', () => {
 
 function assertPeriodEndEvents(events: (GameEvent | PauseEvent)[], periods: (number | string)[]) {
   const periodsWithEndEvent = _.chain(events)
-    .filter((event) => isClockTimeEvent(event) && isEndEvent(event))
+    .filter((event) => event.type === 'period-end')
     .map('period')
     .uniq()
     .value();
@@ -170,11 +178,11 @@ function assertPeriodEndPauseEventsCount(
   periods.forEach((period) => {
     const periodEndEventIndex = _.findIndex(
       events,
-      (event) => isClockTimeEvent(event) && isEndEvent(event) && event.period === period,
+      (event) => event.type === 'period-end' && event.period === period,
     );
     const pauseEventsAfterPeriodEndEvent = _.takeWhile(
       events.slice(periodEndEventIndex + 1),
-      'pause',
+      (event) => event.type === 'pause',
     );
     assert.equal(
       pauseEventsAfterPeriodEndEvent.length,
@@ -185,9 +193,9 @@ function assertPeriodEndPauseEventsCount(
 }
 
 function getPeriodEndEvents(events: (GameEvent | PauseEvent)[]) {
-  return events.filter((event) => isClockTimeEvent(event) && isEndEvent(event));
+  return events.filter((event) => event.type === 'period-end');
 }
 
 function getLastNonEndOrPauseEvent(events: (GameEvent | PauseEvent)[]) {
-  return _.findLast(events, (event) => !isPauseEvent(event) && !isEndEvent(event));
+  return _.findLast(events, (event) => !['end', 'pause', 'period-end'].includes(event.type));
 }

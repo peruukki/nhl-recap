@@ -2,7 +2,7 @@ import { VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
 import { delimiter as renderedDelimiter } from 'app/js/components/info-panel/stats/team-stats';
-import { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
+import type { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/js/types';
 
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../data';
 import Game from '../../../app/js/components/game';

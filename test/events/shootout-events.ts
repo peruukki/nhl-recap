@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { assert } from 'chai';
 
 import shootoutEvents from 'app/js/events/shootout-events';
-import { GoalInShootout, GoalWithUpdateFields, isGameUpdateEvent } from 'app/js/types';
+import type { GoalWithUpdateFields } from 'app/js/types';
 import { EVENT_COUNT_PER_GOAL } from './period-events';
 
 describe('shootoutEvents', () => {
@@ -58,7 +58,7 @@ describe('shootoutEvents', () => {
 
     assert.deepEqual(
       _.take(clockEvents, EVENT_COUNT_PER_GOAL).map((event) =>
-        isGameUpdateEvent(event) ? event.update : event,
+        event.type === 'game-update' ? event.update : event,
       ),
       [
         { gameIndex: 0, type: 'START' },
@@ -66,9 +66,9 @@ describe('shootoutEvents', () => {
           gameIndex: 0,
           type: 'GOAL',
           classModifier: 'home',
-          goal: _.omit(goals[3], ['classModifier', 'gameIndex']) as GoalInShootout,
+          goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
         },
-        ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
+        ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
         { gameIndex: 0, type: 'END' },
       ],
       'First shootout game goal events',
@@ -78,7 +78,7 @@ describe('shootoutEvents', () => {
       _.chain(clockEvents)
         .drop(EVENT_COUNT_PER_GOAL)
         .take(EVENT_COUNT_PER_GOAL)
-        .map((event) => (isGameUpdateEvent(event) ? event.update : event))
+        .map((event) => (event.type === 'game-update' ? event.update : event))
         .value(),
       [
         { gameIndex: 1, type: 'START' },
@@ -86,9 +86,9 @@ describe('shootoutEvents', () => {
           gameIndex: 1,
           type: 'GOAL',
           classModifier: 'away',
-          goal: _.omit(goals[4], ['classModifier', 'gameIndex']) as GoalInShootout,
+          goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
         },
-        ..._.times(goalPauseEventCount, () => ({ pause: true } as const)),
+        ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
         { gameIndex: 1, type: 'END' },
       ],
       'Second shootout game goal events',

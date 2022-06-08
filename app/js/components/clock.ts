@@ -3,16 +3,7 @@ import { span, VNode } from '@cycle/dom';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 import gameEvents from '../events/game-events';
-import {
-  Game,
-  GameEvent,
-  isClockTimeEvent,
-  isEndEvent,
-  isPauseEvent,
-  isShootoutEvent,
-  isStartEvent,
-  Period,
-} from '../types';
+import type { Game, GameEvent, GameEventClockTime, Period } from '../types';
 
 type Sources = {
   scores$: Stream<Game[]>;
@@ -56,14 +47,15 @@ function model(actions: Actions): Stream<GameEvent> {
     .combine(events$, eventIndex$)
     .endWhen(eventsEnd$)
     .map(([events, eventIndex]) => events[eventIndex])
-    .filter<GameEvent>((event): event is GameEvent => !isPauseEvent(event));
+    .filter<GameEvent>((event): event is GameEvent => event.type !== 'pause');
 }
 
 function view(state$: Stream<GameEvent>) {
   return state$.map((clock) => {
-    const time = isClockTimeEvent(clock) ? renderTime(clock) : '';
-    const animationClass =
-      time || (isShootoutEvent(clock) && !isEndEvent(clock)) ? '.fade-in-fast' : '';
+    const time = ['clock', 'game-update'].includes(clock.type)
+      ? renderTime(clock as GameEventClockTime)
+      : '';
+    const animationClass = time || clock.type === 'shootout' ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
       span('.clock__period', clock ? renderPeriod(clock) : ''),
       time ? span('.clock__time', time) : '',
@@ -72,11 +64,11 @@ function view(state$: Stream<GameEvent>) {
 }
 
 function renderPeriod(clock: GameEvent): VNode | string {
-  if (isStartEvent(clock)) {
+  if (clock.type === 'start') {
     return span('.fade-in', 'Starting...');
   }
-  if (isEndEvent(clock)) {
-    return isClockTimeEvent(clock)
+  if (clock.type === 'end' || clock.type === 'period-end') {
+    return clock.type === 'period-end'
       ? span('.fade-in', renderPeriodEnd(clock.period))
       : span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
   }
@@ -114,7 +106,7 @@ export function renderTime(clock: {
   second?: number;
   tenthOfASecond?: number;
 }): string {
-  if (!clock.minute && !clock.second) {
+  if (clock.minute === undefined && clock.second === undefined) {
     return '';
   }
 
