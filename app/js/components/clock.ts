@@ -12,7 +12,7 @@ type Sources = {
 };
 
 type Sinks = {
-  clock$: Stream<GameEvent>;
+  events$: Stream<GameEvent>;
   DOM: Stream<VNode>;
 };
 
@@ -22,7 +22,7 @@ export default function Clock(sources: Sources): Sinks {
   const state$ = model(intent(sources));
   return {
     DOM: view(state$),
-    clock$: state$,
+    events$: state$,
   };
 }
 
@@ -51,28 +51,28 @@ function model(actions: Actions): Stream<GameEvent> {
 }
 
 function view(state$: Stream<GameEvent>) {
-  return state$.map((clock) => {
-    const time = ['clock', 'game-update'].includes(clock.type)
-      ? renderTime(clock as GameEventClockTime)
+  return state$.map((event) => {
+    const time = ['clock', 'game-update'].includes(event.type)
+      ? renderTime(event as GameEventClockTime)
       : '';
-    const animationClass = time || clock.type === 'shootout' ? '.fade-in-fast' : '';
+    const animationClass = time || event.type === 'shootout' ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
-      span('.clock__period', clock ? renderPeriod(clock) : ''),
+      span('.clock__period', event ? renderPeriod(event) : ''),
       time ? span('.clock__time', time) : '',
     ]);
   });
 }
 
-function renderPeriod(clock: GameEvent): VNode | string {
-  if (clock.type === 'start') {
+function renderPeriod(event: GameEvent): VNode | string {
+  if (event.type === 'start') {
     return span('.fade-in', 'Starting...');
   }
-  if (clock.type === 'end' || clock.type === 'period-end') {
-    return clock.type === 'period-end'
-      ? span('.fade-in', renderPeriodEnd(clock.period))
-      : span('.fade-in-fast', clock.inProgress ? 'In progress' : 'Final');
+  if (event.type === 'end' || event.type === 'period-end') {
+    return event.type === 'period-end'
+      ? span('.fade-in', renderPeriodEnd(event.period))
+      : span('.fade-in-fast', event.inProgress ? 'In progress' : 'Final');
   }
-  return renderPeriodNumber(clock.period as Period);
+  return renderPeriodNumber(event.period as Period);
 }
 
 function renderPeriodEnd(period: Period): string {

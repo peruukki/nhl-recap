@@ -9,7 +9,7 @@ import {
 } from './utils';
 
 export default function getGameDisplays$(
-  clock$: Stream<GameEvent>,
+  events$: Stream<GameEvent>,
   scores$: Stream<Scores>,
 ): Stream<GameDisplay[]> {
   const initialgameDisplays$ = scores$
@@ -18,9 +18,9 @@ export default function getGameDisplays$(
       Array.from<ArrayLike<never>, GameDisplay>({ length: scores.games.length }, () => 'pre-game'),
     );
   const gameDisplays$: Stream<GameDisplay[]> = xs
-    .combine(scores$, clock$)
-    .map(([scores, clock]) => {
-      const isPlaybackFinished = clock.type === 'end';
+    .combine(scores$, events$)
+    .map(([scores, event]) => {
+      const isPlaybackFinished = event.type === 'end';
       return scores.games.map((game) => {
         if (!hasGameStarted(game.status.state)) {
           return 'pre-game';
@@ -28,7 +28,7 @@ export default function getGameDisplays$(
         if (
           !isPlaybackFinished &&
           isGameInProgress(game.status.state) &&
-          hasClockPassedCurrentProgress(clock as GameEventClockTime, game.status)
+          hasClockPassedCurrentProgress(event as GameEventClockTime, game.status)
         ) {
           return 'in-progress';
         }

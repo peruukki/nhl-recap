@@ -41,7 +41,7 @@ type State = {
   isPlaying: boolean;
   status: string;
   clockVtree: VNode;
-  clock: GameEvent | null;
+  event: GameEvent | null;
   gameDisplays: GameDisplay[];
   gameCount: number;
 };
@@ -118,7 +118,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
     props$: xs.of({ interval: 20 }),
   });
 
-  const gameUpdate$ = clock.clock$
+  const gameUpdate$ = clock.events$
     .filter((event): event is GameEventGameUpdate => event.type === 'game-update')
     .map(({ update }) => update);
   gameUpdate$.addListener({
@@ -160,7 +160,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
     )
     .flatten();
 
-  const gameDisplays$ = getGameDisplays$(clock.clock$, scores$);
+  const gameDisplays$ = getGameDisplays$(clock.events$, scores$);
 
   actions.isPlaying$.addListener({
     next: animations.highlightPlayPauseButtonChange,
@@ -173,7 +173,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       actions.isPlaying$.startWith(false),
       actions.status$.startWith('Fetching latest scores...'),
       clock.DOM.startWith(span('.clock')),
-      clock.clock$.startWith(null as unknown as GameEvent),
+      clock.events$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
     )
     .map<State>(
@@ -183,7 +183,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
         isPlaying,
         status,
         clockVtree,
-        clock: clockEvent,
+        event: clockEvent,
         gameDisplays,
         gameCount: scores.games.length,
       }),
@@ -192,13 +192,13 @@ function model(actions: Actions, animations: Animations): Stream<State> {
 
 function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
-    ({ scores, currentGoals, isPlaying, status, clockVtree, clock, gameDisplays, gameCount }) =>
+    ({ scores, currentGoals, isPlaying, status, clockVtree, event, gameDisplays, gameCount }) =>
       div([
         header(
           '.header',
           renderHeader({
             clockVtree,
-            clock,
+            event,
             gameCount,
             isPlaying,
             date: scores.date,
@@ -213,10 +213,10 @@ function view(state$: Stream<State>): Stream<VNode> {
 }
 
 function renderHeader(
-  state: Pick<State, 'clock' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
+  state: Pick<State, 'event' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
 ): VNode {
-  const hasNotStarted = !state.clock;
-  const isFinished = state.clock?.type === 'end';
+  const hasNotStarted = !state.event;
+  const isFinished = state.event?.type === 'end';
   const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
   const dynamicClassNames = {

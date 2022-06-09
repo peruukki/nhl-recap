@@ -46,14 +46,14 @@ export function isGameInProgress(state: GameState): boolean {
   return state === 'LIVE';
 }
 
-export function hasGoalBeenScored(clock: GameEventClockTime, goal: GoalWithUpdateFields): boolean {
+export function hasGoalBeenScored(event: GameEventClockTime, goal: GoalWithUpdateFields): boolean {
   const minute = isShootoutGoal(goal) ? undefined : goal.min;
   const second = isShootoutGoal(goal) ? undefined : goal.sec;
-  return hasElapsedTimePassed(clock, { period: goal.period, minute, second });
+  return hasElapsedTimePassed(event, { period: goal.period, minute, second });
 }
 
 export function hasClockPassedCurrentProgress(
-  clock: GameEventClockTime,
+  event: GameEventClockTime,
   status: GameStatus,
 ): boolean {
   const progressTime = status.state === 'LIVE' ? parseProgressTimeRemaining(status.progress) : null;
@@ -62,14 +62,14 @@ export function hasClockPassedCurrentProgress(
   }
 
   const progressTimeElapsed = remainingTimeToElapsedTime(progressTime);
-  return hasElapsedTimePassed(clock, progressTimeElapsed);
+  return hasElapsedTimePassed(event, progressTimeElapsed);
 }
 
-function hasElapsedTimePassed(clock: GameEventClockTime, elapsedTime: ClockTimeElapsed): boolean {
-  const { minute, second } = remainingTimeToElapsedTime(clock);
+function hasElapsedTimePassed(event: GameEventClockTime, elapsedTime: ClockTimeElapsed): boolean {
+  const { minute, second } = remainingTimeToElapsedTime(event);
   return (
-    getPeriodOrdinal(elapsedTime.period) < getPeriodOrdinal(clock.period) ||
-    (getPeriodOrdinal(elapsedTime.period) === getPeriodOrdinal(clock.period) &&
+    getPeriodOrdinal(elapsedTime.period) < getPeriodOrdinal(event.period) ||
+    (getPeriodOrdinal(elapsedTime.period) === getPeriodOrdinal(event.period) &&
       ((elapsedTime.minute ?? 0) < minute ||
         (elapsedTime.minute === minute && (elapsedTime.second ?? 0) <= second)))
   );
