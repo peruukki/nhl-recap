@@ -13,6 +13,7 @@ import {
   scoresLiveSO,
   scoresMultipleOvertime,
   scoresOvertimeAndMultipleShootout,
+  scoresRegularTimeAndOvertimePlayoffs,
 } from '../data';
 
 const periodEndPauseEventCount = 150;
@@ -40,6 +41,23 @@ describe('gameEvents', () => {
       type: 'game-update',
       period: 'OT',
       minute: 2,
+      second: 23,
+      update: { gameIndex: 1, type: 'end' },
+    });
+  });
+
+  it('should include events until last playoff overtime goal', () => {
+    const events = gameEvents(scoresRegularTimeAndOvertimePlayoffs.games);
+
+    // Check that regulation and overtime periods were included
+    assertPeriodEndEvents(events, [1, 2, 3, 4, 5]);
+
+    // Check the last event with time
+    const lastTimeEvent = getLastNonEndOrPauseEvent(events);
+    assert.deepEqual(lastTimeEvent, {
+      type: 'game-update',
+      period: 5,
+      minute: 0,
       second: 23,
       update: { gameIndex: 1, type: 'end' },
     });

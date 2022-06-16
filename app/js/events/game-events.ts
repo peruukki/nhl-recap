@@ -186,7 +186,7 @@ function getGameEndTimeFromGoals(goals: Goal[]): GameEndTime | null {
   const isOverTime = lastGoal.period === PERIOD_OVERTIME || Number(lastGoal.period) > 3;
   return isOverTime
     ? elapsedTimeToRemainingTime({
-        period: lastGoal.period,
+        period: lastGoal.period === PERIOD_OVERTIME ? lastGoal.period : Number(lastGoal.period),
         minute: lastGoal.min,
         second: lastGoal.sec,
       })
