@@ -79,9 +79,19 @@ function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Ac
         return { error: { expected: false } };
       }
       const responseJson = JSON.parse(response.text) as Scores;
-      return responseJson.games.length > 0
+      return responseJson.games.length > 0 &&
+        responseJson.games.every((game) => game.goals) &&
+        responseJson.games.some((game) => game.goals.length > 0)
         ? { success: responseJson }
-        : { error: { message: 'No latest scores available.', expected: true } };
+        : {
+            error: {
+              message:
+                responseJson.games.length === 0
+                  ? 'No latest scores available.'
+                  : 'Received invalid data. 😵‍💫',
+              expected: true,
+            },
+          };
     });
   const successApiResponse$ = apiResponseWithErrors$
     .filter((response): response is ApiResponseSuccess => isSuccessApiResponse(response))
