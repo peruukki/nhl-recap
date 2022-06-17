@@ -80,7 +80,6 @@ function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Ac
       }
       const responseJson = JSON.parse(response.text) as Scores;
       return responseJson.games.length > 0 &&
-        responseJson.games.every((game) => game.goals) &&
         responseJson.games.some((game) => game.goals.length > 0)
         ? { success: responseJson }
         : {
