@@ -1,6 +1,6 @@
 import { svg, VNode } from '@cycle/dom';
 
-const season = '20202021';
+const season = '20222023';
 
 export function fetchTeamLogoSVGSymbols(): void {
   // Adapted from https://css-tricks.com/ajaxing-svg-sprite/
