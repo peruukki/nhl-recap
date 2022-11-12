@@ -20,14 +20,18 @@
 
 .score-list {
   max-width: unset;
+  column-gap: 1rem;
   grid-template-columns: auto repeat(3, 1fr);
-  grid-gap: 3rem 1rem;
 }
 
 .gallery-heading {
   &__description {
     @include gallery-description;
     color: $color-accent-light;
+  }
+
+  &__toggle {
+    margin-right: 0.5rem;
   }
 }
 
