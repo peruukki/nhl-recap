@@ -2,7 +2,7 @@ import { div, span, VNode } from '@cycle/dom';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 import type { Goal, Teams } from '../types';
-import { renderTeamLogo } from '../utils/logos';
+import TeamLogo from './team-logo';
 
 type Props = {
   awayGoals: Goal[];
@@ -23,7 +23,7 @@ export default function ScorePanel({
   const delimiterVisibilityClass = isBeforeGame ? '' : '.fade-in';
   return div('.game__score-panel', [
     div('.team-panel.team-panel--away', [
-      renderLogo(teams.away.id, 'away'),
+      TeamLogo(teams.away.id, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),
       span(`.team-panel__team-score${scoreVisibilityClass}`, [awayGoals.length]),
     ]),
@@ -34,17 +34,8 @@ export default function ScorePanel({
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),
       span('.team-panel__team-name', teams.home.abbreviation),
-      renderLogo(teams.home.id, 'home'),
+      TeamLogo(teams.home.id, 'home'),
     ]),
-  ]);
-}
-
-function renderLogo(teamId: number, modifier: string): VNode {
-  return span('.team-logo', [
-    renderTeamLogo(
-      teamId,
-      `team-logo__image team-logo__image--${modifier} team-logo__image--${teamId}`,
-    ),
   ]);
 }
 
