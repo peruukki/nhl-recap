@@ -28,6 +28,11 @@ describe('utils', () => {
       const name = 'Pierre-Alexandre Jean Parenteau';
       assert.equal(truncatePlayerName(name), 'P.A.J. Parenteau');
     });
+
+    it('should truncate a name longer than given maximum length', () => {
+      const name = 'Ryan Nugent';
+      assert.equal(truncatePlayerName(name, 10), 'R. Nugent');
+    });
   });
 
   describe('getAnimationIndexes', () => {

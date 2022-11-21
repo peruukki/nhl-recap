@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
-export function truncatePlayerName(name: string): string {
-  const maxLength = 20;
+export function truncatePlayerName(name: string, maxLength = 20): string {
   if (name.length <= maxLength) {
     return name;
   }
