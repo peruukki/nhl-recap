@@ -5,7 +5,7 @@ public/
 dist/
 
 # Copied dependencies
-app/sass/vendor
+app/styles/vendor
 
 # Node
 node_modules/
