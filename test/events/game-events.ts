@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getAllGoalsSorted } from 'app/js/events/game-events';
-import type { GameEvent, PauseEvent } from 'app/js/types';
+import gameEvents, { getAllGoalsSorted } from 'app/src/events/game-events';
+import type { GameEvent, PauseEvent } from 'app/src/types';
 
 import {
   scoresAllLive,

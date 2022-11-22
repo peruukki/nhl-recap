@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import xs, { Stream } from 'xstream';
 
-import getGameDisplays$ from 'app/js/events/game-displays';
-import type { Game, GameEvent, Scores } from 'app/js/types';
+import getGameDisplays$ from 'app/src/events/game-displays';
+import type { Game, GameEvent, Scores } from 'app/src/types';
 import { addListener } from '../test-utils';
 
 const CLOCK_STATE_NOT_STARTED = 'CLOCK_STATE_NOT_STARTED';

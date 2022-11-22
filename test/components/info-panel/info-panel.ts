@@ -2,15 +2,15 @@ import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import Game from 'app/js/components/game';
+import Game from 'app/src/components/game';
 import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
   renderLatestGoalTime,
-} from 'app/js/components/info-panel/info-panel';
-import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
+} from 'app/src/components/info-panel/info-panel';
+import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/src/types';
 
-import { renderTeamLogoSVG } from 'app/js/utils/logos';
+import { renderTeamLogoSVG } from 'app/src/utils/logos';
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../data';
 import { getGameCard } from '../test-utils';
 

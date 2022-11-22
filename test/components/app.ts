@@ -4,7 +4,7 @@ import xs, { Stream } from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
-import app from 'app/js/components/app';
+import app from 'app/src/components/app';
 
 import { scoresAllRegularTime as apiResponse } from '../data';
 import animations from '../test-animations';

@@ -17,9 +17,9 @@
     "node": ">=16.0"
   },
   "config": {
-    "browserify_args": "app/js/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
-    "browserify_gallery_args": "gallery/js/main.ts -p [ tsify --project ./gallery ]",
-    "rollup_sw_args": "app/js/service-worker/service-worker.ts -c --file public/service-worker.js",
+    "browserify_args": "app/src/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
+    "browserify_gallery_args": "gallery/src/main.ts -p [ tsify --project ./gallery ]",
+    "rollup_sw_args": "app/src/service-worker/service-worker.ts -c --file public/service-worker.js",
     "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
   },
   "scripts": {
@@ -42,8 +42,8 @@
     "hash:inject": "replaceinfiles -S -r public/assets.json -s public/*.html -d {dir}/{base}",
     "lint": "npm run lint:css && npm run lint:format && npm run lint:js",
     "lint:css": "sass-lint -v",
-    "lint:format": "prettier --write *.js app/js gallery/js test",
-    "lint:js": "eslint *.js app/js gallery/js test",
+    "lint:format": "prettier --write *.js app/src gallery/src test",
+    "lint:js": "eslint *.js app/src gallery/src test",
     "postcopy:dist": "rm -f dist/assets.json",
     "postinstall": "npm run copy:normalize",
     "prebuild": "npm run clean:build",
@@ -70,7 +70,7 @@
     "watch:css:gallery": "npm run sass:gallery && npm run autoprefix:gallery && npm run sass:gallery -- -w gallery/sass/*.scss",
     "watch:js": "watchify $npm_package_config_browserify_args -o public/main.js -v",
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
-    "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/js gallery/js test",
+    "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/src gallery/src test",
     "watch:lint:css": "watch 'npm run lint:css' app/sass",
     "watch:sw": "rollup $npm_package_config_rollup_sw_args -w",
     "watch:ts": "tsc -w"

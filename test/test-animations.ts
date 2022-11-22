@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
-import { Animations } from 'app/js/utils/animations';
+import { Animations } from 'app/src/utils/animations';
 
 function highlightGame(gameIndex: number): void {}
 

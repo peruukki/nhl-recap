@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import { PERIOD_OVERTIME } from 'app/js/events/constants';
-import periodEvents from 'app/js/events/period-events';
-import type { GameEndTime, GoalWithUpdateFields } from 'app/js/types';
+import { PERIOD_OVERTIME } from 'app/src/events/constants';
+import periodEvents from 'app/src/events/period-events';
+import type { GameEndTime, GoalWithUpdateFields } from 'app/src/types';
 
 export const EVENT_COUNTS = {
   start: 1,

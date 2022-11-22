@@ -2,7 +2,7 @@ import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import Game from 'app/js/components/game';
+import Game from 'app/src/components/game';
 import type {
   Game as GameT,
   GameDisplay,
@@ -11,7 +11,7 @@ import type {
   TeamAbbreviation,
   Teams,
   TeamStats,
-} from 'app/js/types';
+} from 'app/src/types';
 
 import {
   scoresAllRegularTime,

@@ -1,4 +1,4 @@
-import type { Scores } from 'app/js/types';
+import type { Scores } from 'app/src/types';
 
 import latest from './latest.json';
 import latestLive from './latest-live.json';

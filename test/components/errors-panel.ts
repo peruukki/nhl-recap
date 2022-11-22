@@ -1,8 +1,8 @@
 import { div, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
-import Game from 'app/js/components/game';
-import type { StatError } from 'app/js/types';
+import Game from 'app/src/components/game';
+import type { StatError } from 'app/src/types';
 
 import { scoresAllRegularTime } from '../data';
 import { getGameCard } from './test-utils';

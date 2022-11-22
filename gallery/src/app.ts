@@ -2,9 +2,9 @@ import { div, input, label, MainDOMSource, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
 import fromEvent from 'xstream/extra/fromEvent';
 
-import Game from '../../app/js/components/game';
+import Game from '../../app/src/components/game';
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../test/data';
-import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/js/types';
+import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/src/types';
 import { getGameStateToggleChecked, setGameStateToggleChecked } from './storage';
 
 type Sources = {
