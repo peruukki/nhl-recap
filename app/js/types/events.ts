@@ -21,13 +21,21 @@ export type ClockTimeRemaining = {
  * - `post-game-finished`: playback has finished, showing this finished game's post-game information
  * - `post-game-in-progress`: playback has finished, showing this in-progress game's post-game information
  * - `pre-game`: showing pre-game information, before playback has started
+ * - `pre-summary-finished`: playback has finished, delay before showing this finished game's summary
+ * - `pre-summary-in-progress`: playback has finished, delay before showing this in-progress game's summary
+ * - `summary-finished`: playback has finished, showing this finished game's summary
+ * - `summary-in-progress`: playback has finished, showing this in-progress game's summary
  */
 export type GameDisplay =
   | 'in-progress'
   | 'playback'
   | 'post-game-finished'
   | 'post-game-in-progress'
-  | 'pre-game';
+  | 'pre-game'
+  | 'pre-summary-finished'
+  | 'pre-summary-in-progress'
+  | 'summary-finished'
+  | 'summary-in-progress';
 
 export type GameEventClockTime<Type extends string = 'clock'> = GameEventBase<Type> & {
   period: number | string;
@@ -60,6 +68,8 @@ type GameEventBase<Type extends string> = {
 };
 
 export type GameEventEnd = GameEventBase<'end'> & { inProgress: boolean };
+export type GameEventPreSummary = GameEventBase<'pre-summary'> & { inProgress: boolean };
+export type GameEventSummary = GameEventBase<'summary'> & { inProgress: boolean };
 
 export type PauseEvent = GameEventBase<'pause'>;
 
@@ -73,7 +83,9 @@ export type GameEvent =
   | GameEventGameUpdate
   | GameEventPeriodEnd
   | GameEventShootout
-  | GameEventStart;
+  | GameEventStart
+  | GameEventPreSummary
+  | GameEventSummary;
 
 export type GameEndTime = {
   inProgress?: true;

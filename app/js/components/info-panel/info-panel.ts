@@ -8,16 +8,19 @@ import {
   GameStats as GameStatsT,
   GameStatus,
   Goal,
+  GoalInGamePlay,
   isShootoutGoal,
   Teams,
   TeamStats as TeamStatsT,
 } from '../../types';
 import { truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
+import PlayerLogo from './player-logo';
 import GameStats from './stats/game-stats';
 import TeamStats from './stats/team-stats';
 
 type Props = {
+  currentGoals: Goal[];
   currentStats?: TeamStatsT;
   gameDisplay: GameDisplay;
   gameStats: GameStatsT;
@@ -30,6 +33,7 @@ type Props = {
 };
 
 export default function InfoPanel({
+  currentGoals,
   currentStats,
   gameDisplay,
   gameStats,
@@ -40,9 +44,13 @@ export default function InfoPanel({
   status,
   teams,
 }: Props): VNode {
-  const showProgressInfo = ['pre-game', 'in-progress', 'post-game-in-progress'].includes(
-    gameDisplay,
-  );
+  const showProgressInfo = [
+    'pre-game',
+    'in-progress',
+    'pre-summary-in-progress',
+    'summary-in-progress',
+    'post-game-in-progress',
+  ].includes(gameDisplay);
   const showGameStats =
     gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
   const showPreGameStats = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
@@ -59,7 +67,9 @@ export default function InfoPanel({
       },
     },
     [
-      gameDisplay !== 'pre-game' ? renderLatestGoal(latestGoal) : null,
+      gameDisplay !== 'pre-game'
+        ? renderLatestGoalOrSummary(teams, gameDisplay, currentGoals, latestGoal)
+        : null,
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
@@ -83,6 +93,102 @@ function renderLatestGoal(latestGoal?: Goal): VNode {
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
     div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : ''),
   ]);
+}
+
+function renderSummary(teams: Teams, allGoals: Goal[]) {
+  const topPointScorers = getTopPointScorers(teams, allGoals);
+  return div(
+    '.summary.fade-in',
+    topPointScorers.length
+      ? [
+          div('.summary__heading', 'Top scorers'),
+          div(
+            '.summary__point-scorers',
+            topPointScorers.map(({ player, teamId, goals, assists }) =>
+              div('.summary__point-scorer', [
+                PlayerLogo(teamId),
+                ...renderPlayerAndPoints(player, goals, assists),
+              ]),
+            ),
+          ),
+        ]
+      : null,
+  );
+}
+
+function getTopPointScorers(teams: Teams, allGoals: Goal[]) {
+  const nonShootoutGoals = allGoals.filter((goal): goal is GoalInGamePlay => !isShootoutGoal(goal));
+
+  const pointScorersPerTeam = [teams.away, teams.home].map((team) => {
+    const teamPointScorers = nonShootoutGoals
+      .filter((goal) => goal.team === team.abbreviation)
+      .reduce((pointScorers, goal) => {
+        const scorerPoints = pointScorers.get(goal.scorer.player);
+        pointScorers.set(goal.scorer.player, {
+          goals: (scorerPoints?.goals ?? 0) + 1,
+          assists: scorerPoints?.assists ?? 0,
+          points: (scorerPoints?.points ?? 0) + 1,
+          goalsSeason: goal.scorer.seasonTotal,
+          assistsSeason: scorerPoints?.assistsSeason ?? 0,
+        });
+        goal.assists.forEach(({ player, seasonTotal }) => {
+          const assisterPoints = pointScorers.get(player);
+          pointScorers.set(player, {
+            goals: assisterPoints?.goals ?? 0,
+            assists: (assisterPoints?.assists ?? 0) + 1,
+            points: (assisterPoints?.points ?? 0) + 1,
+            goalsSeason: assisterPoints?.goalsSeason ?? 0,
+            assistsSeason: seasonTotal,
+          });
+        });
+        return pointScorers;
+      }, new Map<string, { goals: number; assists: number; points: number; goalsSeason: number; assistsSeason: number }>());
+    return { teamId: team.id, pointScorers: teamPointScorers };
+  });
+
+  const allPointScorers = pointScorersPerTeam.flatMap(({ teamId, pointScorers }) =>
+    Array.from(pointScorers.entries()).map(([player, points]) => ({ teamId, player, ...points })),
+  );
+  const sortedPointScorers = allPointScorers.sort(
+    (a, b) =>
+      [b.points - a.points, b.goals - a.goals, b.assists - a.assists].find((diff) => diff) ||
+      b.goalsSeason + b.assistsSeason - (a.goalsSeason + a.assistsSeason) ||
+      (a.assists > a.goals ? b.assistsSeason - a.assistsSeason : b.goalsSeason - a.goalsSeason),
+  );
+  return sortedPointScorers.slice(0, (sortedPointScorers[3]?.points ?? 0) > 1 ? 4 : 3);
+}
+
+function renderPlayerAndPoints(player: string, goals: number, assists: number) {
+  return [
+    span('.player', truncatePlayerName(player, 15)),
+    span('.points', renderPointsText(goals, assists)),
+  ];
+}
+
+function renderPointsText(goals: number, assists: number) {
+  if (goals && assists) {
+    return `${goals} G, ${assists} A`;
+  }
+  if (goals) {
+    return `${goals} ${goals === 1 ? 'goal' : 'goals'}`;
+  }
+  return `${assists} ${assists === 1 ? 'assist' : 'assists'}`;
+}
+
+function renderLatestGoalOrSummary(
+  teams: Teams,
+  gameDisplay: GameDisplay,
+  goals: Goal[],
+  latestGoal?: Goal,
+) {
+  return [
+    'summary-in-progress',
+    'summary-finished',
+    'post-game-finished',
+    'post-game-in-progress',
+  ].includes(gameDisplay)
+    ? renderSummary(teams, goals)
+    : renderLatestGoal(latestGoal);
 }
 
 export function renderLatestGoalTime(latestGoal: Goal): (VNode | null)[] {

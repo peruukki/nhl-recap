@@ -37,7 +37,7 @@ type GameStatusNonLive = {
 };
 export type GameStatus = GameStatusLive | GameStatusNonLive;
 
-type GoalInGamePlay = TimeElapsed & {
+export type GoalInGamePlay = TimeElapsed & {
   assists: { player: string; seasonTotal: number }[];
   emptyNet?: boolean;
   scorer: { player: string; seasonTotal: number };

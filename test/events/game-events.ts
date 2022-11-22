@@ -215,5 +215,8 @@ function getPeriodEndEvents(events: (GameEvent | PauseEvent)[]) {
 }
 
 function getLastNonEndOrPauseEvent(events: (GameEvent | PauseEvent)[]) {
-  return _.findLast(events, (event) => !['end', 'pause', 'period-end'].includes(event.type));
+  return _.findLast(
+    events,
+    (event) => !['end', 'pause', 'period-end', 'pre-summary', 'summary'].includes(event.type),
+  );
 }

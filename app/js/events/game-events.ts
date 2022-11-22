@@ -23,6 +23,8 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   const gamesStartPauseEventCount = 1 * pauseMultiplier;
   const periodEndPauseEventCount = 3 * pauseMultiplier;
   const goalPauseEventCount = 2 * pauseMultiplier;
+  const gamePreSummaryPauseEventCount = 1 * pauseMultiplier;
+  const gameSummaryPauseEventCount = 1 * pauseMultiplier;
 
   const endTime = getClockEndTime(scores);
   const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalPauseEventCount);
@@ -40,10 +42,19 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
     .filter<GameEvent>(_.identity)
     .value();
 
-  return _.concat(appendDelay({ type: 'start' }, gamesStartPauseEventCount), ...periodSequences, {
-    type: 'end',
-    inProgress: !!endTime.inProgress,
-  });
+  return _.concat(
+    appendDelay({ type: 'start' }, gamesStartPauseEventCount),
+    ...periodSequences,
+    appendDelay(
+      { type: 'pre-summary', inProgress: !!endTime.inProgress },
+      gamePreSummaryPauseEventCount,
+    ),
+    appendDelay({ type: 'summary', inProgress: !!endTime.inProgress }, gameSummaryPauseEventCount),
+    {
+      type: 'end',
+      inProgress: !!endTime.inProgress,
+    },
+  );
 }
 
 function appendDelay(element: GameEvent, multiplier: number): (GameEvent | PauseEvent)[] {

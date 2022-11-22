@@ -20,7 +20,7 @@ export default function getGameDisplays$(
   const gameDisplays$: Stream<GameDisplay[]> = xs
     .combine(scores$, events$)
     .map(([scores, event]) => {
-      const isPlaybackFinished = event.type === 'end';
+      const isPlaybackFinished = ['end', 'pre-summary', 'summary'].includes(event.type);
       return scores.games.map((game) => {
         if (!hasGameStarted(game.status.state)) {
           return 'pre-game';
@@ -32,7 +32,15 @@ export default function getGameDisplays$(
         ) {
           return 'in-progress';
         }
-        if (isPlaybackFinished) {
+        if (event.type === 'pre-summary') {
+          return hasGameFinished(game.status.state)
+            ? 'pre-summary-finished'
+            : 'pre-summary-in-progress';
+        }
+        if (event.type === 'summary') {
+          return hasGameFinished(game.status.state) ? 'summary-finished' : 'summary-in-progress';
+        }
+        if (event.type === 'end') {
           return hasGameFinished(game.status.state)
             ? 'post-game-finished'
             : 'post-game-in-progress';

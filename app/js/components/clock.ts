@@ -65,10 +65,14 @@ function renderPeriod(event: GameEvent): VNode | string {
   if (event.type === 'start') {
     return span('.fade-in', 'Starting...');
   }
-  if (event.type === 'end' || event.type === 'period-end') {
-    return event.type === 'period-end'
-      ? span('.fade-in', renderPeriodEnd(event.period))
-      : span('.fade-in-fast', event.inProgress ? 'In progress' : 'Final');
+  if (event.type === 'period-end') {
+    return span('.fade-in', renderPeriodEnd(event.period));
+  }
+  if (event.type === 'end' || event.type === 'pre-summary' || event.type === 'summary') {
+    return span(
+      event.type === 'pre-summary' ? '.fade-in-fast' : '',
+      event.inProgress ? 'In progress' : 'Final',
+    );
   }
   return renderPeriodNumber(event.period as Period);
 }

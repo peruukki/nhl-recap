@@ -35,6 +35,7 @@ export default function Game(
         currentStats,
         status,
         isPlayoffGame: !!preGameStats?.playoffSeries,
+        currentGoals,
         latestGoal,
       }),
       SeriesWinsPanel({

@@ -10,11 +10,14 @@ import {
 } from 'app/js/components/info-panel/info-panel';
 import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
+import { renderTeamLogoSVG } from 'app/js/utils/logos';
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../data';
 import { getGameCard } from '../test-utils';
 
+type PointScorer = { player: string; teamId: number; goals: number; assists: number };
+
 describe('info panel', () => {
-  describe('latest goal panel', () => {
+  describe('latest goal / summary panel', () => {
     it('should show nothing before the playback has reached the first goal scoring time', () => {
       const { teams } = scoresAllRegularTime.games[1];
       assertLatestGoal('playback', teams, [], null);
@@ -25,9 +28,15 @@ describe('info panel', () => {
       assertLatestGoal('playback', teams, _.take(goals, 1), _.first(goals) as Goal);
     });
 
-    it('should show the last goal of the game when the playback reaches the end of the game', () => {
+    it('should show the summary when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('post-game-finished', teams, goals, _.last(goals) as Goal);
+      const pointScorers = [
+        { player: 'Derick Brassard', teamId: 3, goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamId: 3, goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamId: 24, goals: 1, assists: 0 },
+      ];
+      assertSummary('summary-finished', teams, goals, pointScorers);
+      assertSummary('post-game-finished', teams, goals, pointScorers);
     });
 
     it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
@@ -35,9 +44,15 @@ describe('info panel', () => {
       assertLatestGoal('in-progress', teams, goals, _.last(goals) as Goal);
     });
 
-    it('should show the last goal of an in-progress game when playback has finished', () => {
+    it('should show the summary of an in-progress game when playback has finished', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('post-game-in-progress', teams, goals, _.last(goals) as Goal);
+      const pointScorers = [
+        { player: 'Derick Brassard', teamId: 3, goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamId: 3, goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamId: 24, goals: 1, assists: 0 },
+      ];
+      assertSummary('summary-in-progress', teams, goals, pointScorers);
+      assertSummary('post-game-in-progress', teams, goals, pointScorers);
     });
 
     it('should show goals scored in overtime', () => {
@@ -173,6 +188,19 @@ function assertLatestGoal(
   assert.deepEqual(latestGoalPanel, expected);
 }
 
+function assertSummary(
+  gameDisplay: GameDisplay,
+  teams: Teams,
+  goals: Goal[],
+  pointScorers: PointScorer[],
+) {
+  const summaryPanel = getSummaryPanel(
+    Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
+  );
+  const expected = expectedSummaryPanel(pointScorers);
+  assert.deepEqual(summaryPanel, expected);
+}
+
 function assertGameDescription(
   gameDisplay: GameDisplay,
   { status, startTime, teams }: Partial<GameT>,
@@ -190,6 +218,10 @@ function getLatestGoalPanel(vtree: VNode) {
   return (getGameCard(vtree)?.children?.[1] as VNode).children?.[0] as VNode | undefined;
 }
 
+function getSummaryPanel(vtree: VNode) {
+  return getLatestGoalPanel(vtree);
+}
+
 function getGameDescription(vtree: VNode) {
   return (getGameCard(vtree)?.children?.[1] as VNode).children?.[1] as VNode | undefined;
 }
@@ -200,6 +232,32 @@ function expectedLatestGoalPanel(latestGoal: Goal | null) {
     div('.latest-goal__scorer', latestGoal ? renderLatestGoalScorer(latestGoal) : ''),
     div('.latest-goal__assists', latestGoal ? renderLatestGoalAssists(latestGoal) : ''),
   ]);
+}
+
+function expectedSummaryPanel(pointScorers: PointScorer[]) {
+  return div('.summary.fade-in', [
+    div('.summary__heading', 'Top scorers'),
+    div(
+      '.summary__point-scorers',
+      pointScorers.map(({ player, teamId, goals, assists }) =>
+        div('.summary__point-scorer', [
+          renderTeamLogoSVG(teamId, `player-logo player-logo--${teamId}`),
+          span('.player', player),
+          span('.points', renderPointsText(goals, assists)),
+        ]),
+      ),
+    ),
+  ]);
+}
+
+function renderPointsText(goals: number, assists: number) {
+  if (goals && assists) {
+    return `${goals} G, ${assists} A`;
+  }
+  if (goals) {
+    return `${goals} ${goals === 1 ? 'goal' : 'goals'}`;
+  }
+  return `${assists} ${assists === 1 ? 'assist' : 'assists'}`;
 }
 
 function expectedCurrentProgressDescription(progressTime: string) {

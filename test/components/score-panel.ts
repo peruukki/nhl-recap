@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import _ from 'lodash';
 
 import Game from 'app/js/components/game';
-import { renderTeamLogo } from 'app/js/utils/logos';
+import { renderTeamLogoSVG } from 'app/js/utils/logos';
 import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/js/types';
 
 import {
@@ -132,7 +132,7 @@ function expectedTeamPanels(
   return [
     div('.team-panel.team-panel--away', [
       span('.team-logo', [
-        renderTeamLogo(
+        renderTeamLogoSVG(
           teams.away.id,
           `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`,
         ),
@@ -144,7 +144,7 @@ function expectedTeamPanels(
       span(`.team-panel__team-score${visibilityClass}`, [homeGoals]),
       span('.team-panel__team-name', teams.home.abbreviation),
       span('.team-logo', [
-        renderTeamLogo(
+        renderTeamLogoSVG(
           teams.home.id,
           `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`,
         ),

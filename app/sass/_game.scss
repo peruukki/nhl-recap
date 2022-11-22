@@ -36,11 +36,15 @@
     line-height: 1.5rem;
     box-sizing: border-box;
 
-    .game--playback & {
+    .game--playback &,
+    .game--pre-summary-finished &,
+    .game--summary-finished & {
       height: $latest-goal-height;
     }
 
-    .game--in-progress & {
+    .game--in-progress &,
+    .game--pre-summary-in-progress &,
+    .game--summary-in-progress & {
       height: $latest-goal-height + $game-description-height;
     }
 

@@ -76,17 +76,22 @@ function intent(DOM: Sources['DOM']): Actions {
         states: [
           {
             description: 'Playback not started',
-            gameDisplays: ['pre-game', 'pre-game'],
+            gameDisplays: ['pre-game', 'pre-game', 'pre-game', 'pre-game'],
             goalCount: 4,
           },
           {
             description: 'Playback has passed game’s current progress',
-            gameDisplays: ['playback', 'in-progress'],
+            gameDisplays: ['playback', 'in-progress', 'in-progress', 'in-progress'],
             goalCount: 4,
           },
           {
             description: 'Playback finished',
-            gameDisplays: ['in-progress', 'post-game-in-progress'],
+            gameDisplays: [
+              'in-progress',
+              'pre-summary-in-progress',
+              'summary-in-progress',
+              'post-game-in-progress',
+            ],
             goalCount: 4,
           },
         ],
@@ -99,17 +104,22 @@ function intent(DOM: Sources['DOM']): Actions {
         states: [
           {
             description: 'Playback not started',
-            gameDisplays: ['pre-game', 'pre-game'],
+            gameDisplays: ['pre-game', 'pre-game', 'pre-game', 'pre-game'],
             goalCount: 5,
           },
           {
             description: 'Playback in progress',
-            gameDisplays: ['pre-game', 'playback'],
+            gameDisplays: ['pre-game', 'playback', 'playback', 'playback'],
             goalCount: 0,
           },
           {
             description: 'Playback finished',
-            gameDisplays: ['playback', 'post-game-finished'],
+            gameDisplays: [
+              'playback',
+              'pre-summary-finished',
+              'summary-finished',
+              'post-game-finished',
+            ],
             goalCount: 5,
           },
         ],
@@ -123,7 +133,7 @@ function intent(DOM: Sources['DOM']): Actions {
         states: [
           {
             description: 'Playback in any state',
-            gameDisplays: ['pre-game', 'pre-game'],
+            gameDisplays: ['pre-game', 'pre-game', 'pre-game', 'pre-game'],
             goalCount: 0,
           },
           null,
@@ -169,7 +179,7 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
     .periodic(1000)
     .startWith(-1)
     .map((index) => index + 1)
-    .take(2);
+    .take(4);
   const transitionedGameStates$ = gameDisplayIndex$.map((gameDisplayIndex) =>
     gamesData.flatMap((gameData) =>
       stateDefinitions.map(({ gameStatus, states }) => ({

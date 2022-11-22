@@ -1,0 +1,34 @@
+.summary {
+  height: $latest-goal-height - $latest-goal-padding-height;
+  padding-bottom: $latest-goal-padding-height;
+
+  &__heading {
+    color: $color-accent-light;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  &__point-scorers {
+    display: inline-block;
+    position: relative;
+    left: -2px;
+  }
+
+  &__point-scorer {
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+
+    .player {
+      margin: 0 0.3em 0 0.2em;
+      color: $color-highlight;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .points {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+}
