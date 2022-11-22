@@ -2,7 +2,7 @@ options:
   merge-default-rules: true
   formatter: stylish
 files:
-  include: ['app/sass/*.s+(a|c)ss', 'gallery/sass/*.s+(a|c)ss']
+  include: ['app/sass/*.s+(a|c)ss', 'gallery/src/*.s+(a|c)ss']
 rules:
   class-name-format:
     - 2
