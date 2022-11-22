@@ -52,13 +52,11 @@ function model(actions: Actions): Stream<GameEvent> {
 
 function view(state$: Stream<GameEvent>) {
   return state$.map((event) => {
-    const time = ['clock', 'game-update'].includes(event.type)
-      ? renderTime(event as GameEventClockTime)
-      : '';
-    const animationClass = time || event.type === 'shootout' ? '.fade-in-fast' : '';
+    const isUpdateEvent = ['clock', 'game-update'].includes(event.type);
+    const animationClass = isUpdateEvent ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
       span('.clock__period', event ? renderPeriod(event) : ''),
-      time ? span('.clock__time', time) : '',
+      isUpdateEvent ? span('.clock__time', renderTime(event as GameEventClockTime)) : '',
     ]);
   });
 }
