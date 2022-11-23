@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 import type { GoalWithUpdateFields } from '../types';
-import { EVENT_COUNT_PER_GOAL } from './period-events.spec';
 import shootoutEvents from './shootout-events';
+import { EVENT_COUNT_PER_GOAL } from './test-utils';
 
 describe('shootoutEvents', () => {
   const goals: GoalWithUpdateFields[] = [

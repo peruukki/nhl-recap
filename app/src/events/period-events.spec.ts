@@ -3,15 +3,7 @@ import _ from 'lodash';
 import type { GameEndTime, GoalWithUpdateFields } from '../types';
 import { PERIOD_OVERTIME } from './constants';
 import periodEvents from './period-events';
-
-export const EVENT_COUNTS = {
-  start: 1,
-  goal: 1,
-  pause: 50,
-  end: 1,
-};
-export const EVENT_COUNT_PER_GOAL =
-  EVENT_COUNTS.start + EVENT_COUNTS.goal + EVENT_COUNTS.pause + EVENT_COUNTS.end;
+import { EVENT_COUNTS, EVENT_COUNT_PER_GOAL } from './test-utils';
 
 // Use short period times to speed up the tests
 const periodLengthInMinutes = 3;
@@ -114,11 +106,10 @@ describe('periodEvents', () => {
     expect(clockEvents).toEqual(expected);
   });
 
-  it('should create update start, goal, pause, and end events when goals were scored since last event', () => {
+  describe('should create update start, goal, pause, and end events when goals were scored since last event', () => {
     const assertGoalEvents = (
       allGoalsSorted: GoalWithUpdateFields[],
       expectedGameIndexes: number[],
-      description: string,
     ) => {
       const period = 1;
       const periodLength = 20;
@@ -151,31 +142,29 @@ describe('periodEvents', () => {
       });
     };
 
-    // Assert that last event is as expected without goal scoring times
-    assertGoalEvents([], [], 'goal events without goal scoring times');
+    test('goal events without goal scoring times', () => {
+      // Assert that last event is as expected without goal scoring times
+      assertGoalEvents([], []);
+    });
 
-    // Assert that last event is as expected with goal scoring times
-    const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
-      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 5 },
-      { ...baseGoal, period: '1', min: 2, sec: 2, gameIndex: 1 },
-      { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 2 },
-    ];
-    assertGoalEvents(
-      allGoalsSortedWithMultipleGoalsAtDifferingTimes,
-      [5, 1],
-      'goal events with goal scoring times with goals at different times',
-    );
+    test('goal events with goal scoring times with goals at different times', () => {
+      // Assert that last event is as expected with goal scoring times
+      const allGoalsSortedWithMultipleGoalsAtDifferingTimes = [
+        { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 5 },
+        { ...baseGoal, period: '1', min: 2, sec: 2, gameIndex: 1 },
+        { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 2 },
+      ];
+      assertGoalEvents(allGoalsSortedWithMultipleGoalsAtDifferingTimes, [5, 1]);
+    });
 
-    const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
-      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 4 },
-      { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 3 },
-      { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 0 },
-    ];
-    assertGoalEvents(
-      allGoalsSortedWithMultipleGoalsAtTheSameTime,
-      [4, 3],
-      'goal events with goal scoring times with simultaneous goals',
-    );
+    test('goal events with goal scoring times with simultaneous goals', () => {
+      const allGoalsSortedWithMultipleGoalsAtTheSameTime = [
+        { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 4 },
+        { ...baseGoal, period: '1', min: 1, sec: 1, gameIndex: 3 },
+        { ...baseGoal, period: '2', min: 1, sec: 1, gameIndex: 0 },
+      ];
+      assertGoalEvents(allGoalsSortedWithMultipleGoalsAtTheSameTime, [4, 3]);
+    });
   });
 
   it('should include goal scored on the last second of a regular period', () => {
