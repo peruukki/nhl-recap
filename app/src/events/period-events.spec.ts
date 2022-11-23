@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { assert } from 'chai';
 
 import type { GameEndTime, GoalWithUpdateFields } from '../types';
 import { PERIOD_OVERTIME } from './constants';
@@ -30,8 +29,8 @@ const baseGoal = {
 describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
     const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalPauseEventCount);
-    assert.deepEqual(clockEvents.length, 62);
-    assert.deepEqual(_.last(clockEvents), { type: 'clock', period: 1, minute: 0, second: 0 });
+    expect(clockEvents.length).toEqual(62);
+    expect(_.last(clockEvents)).toEqual({ type: 'clock', period: 1, minute: 0, second: 0 });
   });
 
   it('should stop at given end time', () => {
@@ -53,7 +52,7 @@ describe('periodEvents', () => {
     }));
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
-    assert.deepEqual(clockEvents, expected);
+    expect(clockEvents).toEqual(expected);
   });
 
   it('should advance by three seconds for all minutes of a period but the last one', () => {
@@ -71,7 +70,7 @@ describe('periodEvents', () => {
     );
     const expected = [firstEvent(period, periodLengthInMinutes)].concat(secondEvents);
 
-    assert.deepEqual(clockEvents, expected);
+    expect(clockEvents).toEqual(expected);
   });
 
   it('should advance by three seconds for the last minute of any period but the 3rd one', () => {
@@ -90,7 +89,7 @@ describe('periodEvents', () => {
         }));
       const expected = [firstEvent(period, periodLength)].concat(secondEvents);
 
-      assert.deepEqual(clockEvents, expected);
+      expect(clockEvents).toEqual(expected);
     });
   });
 
@@ -112,7 +111,7 @@ describe('periodEvents', () => {
     }));
     const expected = [firstEvent(period, periodLength)].concat(tenthOfASecondEvents);
 
-    assert.deepEqual(clockEvents, expected);
+    expect(clockEvents).toEqual(expected);
   });
 
   it('should create update start, goal, pause, and end events when goals were scored since last event', () => {
@@ -132,29 +131,23 @@ describe('periodEvents', () => {
         EVENT_COUNTS.pause,
       );
 
-      assert.deepEqual(
-        _.last(clockEvents),
-        { type: 'clock', period: 1, minute: 0, second: 0 },
-        description,
-      );
+      expect(_.last(clockEvents)).toEqual({ type: 'clock', period: 1, minute: 0, second: 0 });
 
       expectedGameIndexes.forEach((gameIndex) => {
         const eventIndexWithGameIndex = _.findIndex(
           clockEvents,
           (event) => event.type === 'game-update' && event.update.gameIndex === gameIndex,
         );
-        assert.deepEqual(
+        expect(
           clockEvents
             .slice(eventIndexWithGameIndex, eventIndexWithGameIndex + EVENT_COUNT_PER_GOAL)
             .map((event) => _.omit(event.type === 'game-update' ? event.update : event, 'goal')),
-          [
-            { gameIndex, type: 'start' },
-            { gameIndex, type: 'goal', classModifier: 'home' },
-            ..._.times(EVENT_COUNTS.pause, () => ({ type: 'pause' })),
-            { gameIndex, type: 'end' },
-          ],
-          description,
-        );
+        ).toEqual([
+          { gameIndex, type: 'start' },
+          { gameIndex, type: 'goal', classModifier: 'home' },
+          ..._.times(EVENT_COUNTS.pause, () => ({ type: 'pause' })),
+          { gameIndex, type: 'end' },
+        ]);
       });
     };
 
@@ -247,7 +240,7 @@ function assertFinalSecondsGoalUpdate(
       goal: _.pick(goal, ['period', 'min', 'sec', 'scorer', 'assists', 'team']),
     },
   };
-  assert.deepEqual(_.filter(clockEvents, { update: { type: 'goal' } }), [expected]);
+  expect(_.filter(clockEvents, { update: { type: 'goal' } })).toEqual([expected]);
 }
 
 function firstEvent(period: number | 'OT', minute: number) {

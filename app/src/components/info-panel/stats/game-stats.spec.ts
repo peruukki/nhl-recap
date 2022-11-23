@@ -1,5 +1,4 @@
 import { VNode } from '@cycle/dom';
-import { assert } from 'chai';
 
 import { scoresAllRegularTime } from '../../../test/data';
 import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
@@ -197,12 +196,8 @@ function assertGameStatsAreShown(
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertGameStatsExistence(
-    gameDisplay,
-    { status, teams, gameStats },
-    goals,
-    assert.deepEqual,
-    'div.stats.stats--game-stats',
+  assertGameStatsExistence(gameDisplay, { status, teams, gameStats }, goals, (selector?: string) =>
+    expect(selector).toEqual('div.stats.stats--game-stats'),
   );
 }
 function assertGameStatsAreNotShown(
@@ -210,23 +205,18 @@ function assertGameStatsAreNotShown(
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertGameStatsExistence(
-    gameDisplay,
-    { status, teams, gameStats },
-    goals,
-    assert.notDeepEqual,
-    'div.stats.stats--game-stats',
+  assertGameStatsExistence(gameDisplay, { status, teams, gameStats }, goals, (selector?: string) =>
+    expect(selector).not.toEqual('div.stats.stats--game-stats'),
   );
 }
 function assertGameStatsExistence(
   gameDisplay: GameDisplay,
   { status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
-  assertFn: (actual: string | undefined, expected: string) => void,
-  selector: string,
+  assertFn: (actual: string | undefined) => void,
 ) {
   const stats = getGameStats(Game(gameDisplay, { status, teams, gameStats } as GameT, goals, 0));
-  assertFn(stats?.sel, selector);
+  assertFn(stats?.sel);
 }
 
 function assertGameStats(
@@ -243,7 +233,7 @@ function assertGameStats(
     Game(gameDisplay, { status: { state }, teams, gameStats } as GameT, goals, 0),
   )?.children?.[statIndex];
   const expected = expectedStat(renderedRecords);
-  assert.deepEqual(renderedStats, expected);
+  expect(renderedStats).toEqual(expected);
 }
 
 function getGameStats(vtree: VNode) {

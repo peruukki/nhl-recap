@@ -1,7 +1,6 @@
 import { div, MainDOMSource, mockDOMSource, span, VNode } from '@cycle/dom';
 import { makeHTTPDriver, RequestInput } from '@cycle/http';
 import xs, { Stream } from 'xstream';
-import { assert } from 'chai';
 import nock from 'nock';
 
 import animations from '../test/test-animations';
@@ -17,14 +16,14 @@ describe('app', () => {
   it('should initially show a message about fetching latest scores', (done) => {
     const sinks = run(xs.empty());
     addListener(done, sinks.DOM.take(1), (vtree) => {
-      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Fetching latest scores...'));
+      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('Fetching latest scores...'));
     });
   });
 
   it('should fetch latest scores', (done) => {
     const sinks = run(xs.empty());
     addListener(done, sinks.HTTP, (request) => {
-      assert.deepEqual(request.url, nhlScoreApiUrl);
+      expect(request.url).toEqual(nhlScoreApiUrl);
     });
   });
 
@@ -37,13 +36,13 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
-      assert.deepEqual(scoreListNode?.sel, 'div.score-list');
+      expect(scoreListNode?.sel).toEqual('div.score-list');
 
       const gameScoreNodes = scoreListNode?.children;
-      assert.deepEqual(
-        gameScoreNodes?.map((node) => (typeof node !== 'string' ? node.sel : node)),
-        ['div.game-container', 'div.game-container'],
-      );
+      expect(gameScoreNodes?.map((node) => (typeof node !== 'string' ? node.sel : node))).toEqual([
+        'div.game-container',
+        'div.game-container',
+      ]);
     });
   });
 
@@ -56,7 +55,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
-      assert.deepEqual(scoreListNode?.sel, 'div.score-list.score-list--single-game');
+      expect(scoreListNode?.sel).toEqual('div.score-list.score-list--single-game');
     });
   });
 
@@ -69,7 +68,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       const playButtonNode = getPlayButtonNode(vtree);
-      assert.deepEqual(playButtonNode?.sel, 'button.button.play-pause-button');
+      expect(playButtonNode?.sel).toEqual('button.button.play-pause-button');
     });
   });
 
@@ -81,7 +80,7 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      assert.deepEqual(getDateNode(vtree), expectedDateVtree('Tue Oct 17'));
+      expect(getDateNode(vtree)).toEqual(expectedDateVtree('Tue Oct 17'));
     });
   });
 
@@ -93,7 +92,7 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('No latest scores available.'));
+      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('No latest scores available.'));
     });
   });
 
@@ -105,8 +104,7 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      assert.deepEqual(
-        getStatusNode(vtree),
+      expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree('Failed to fetch latest scores: the network is offline.'),
       );
     });
@@ -120,7 +118,7 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      assert.deepEqual(getStatusNode(vtree), expectedStatusVtree('Failed to fetch latest scores.'));
+      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('Failed to fetch latest scores.'));
     });
   });
 });

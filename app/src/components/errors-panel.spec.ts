@@ -1,5 +1,4 @@
 import { div, VNode } from '@cycle/dom';
-import { assert } from 'chai';
 
 import { scoresAllRegularTime } from '../test/data';
 import type { StatError } from '../types';
@@ -35,7 +34,7 @@ function assertErrors(gameErrors: StatError[] | undefined, expectedErrors: strin
     Game('playback', { ...scoresAllRegularTime.games[0], errors: gameErrors }, [], 0),
   );
   const expected = expectedErrorsPanel(expectedErrors);
-  assert.deepEqual(errorsPanel, expected);
+  expect(errorsPanel).toEqual(expected);
 }
 
 function getErrorsPanel(vtree: VNode) {

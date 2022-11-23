@@ -1,5 +1,4 @@
 import { div, span, VNode } from '@cycle/dom';
-import { assert } from 'chai';
 import _ from 'lodash';
 
 import {
@@ -90,7 +89,7 @@ function assertGoalCounts(
     Game(gameDisplay, { status: { state }, teams } as GameT, currentGoals, 0),
   );
   const expected = expectedTeamPanels(teams, awayGoals, homeGoals, visibilityClass);
-  assert.deepEqual(teamPanels, expected);
+  expect(teamPanels).toEqual(expected);
 }
 
 function assertDelimiter(
@@ -104,7 +103,7 @@ function assertDelimiter(
     Game(gameDisplay, { status: { state } as GameStatus, teams } as GameT, currentGoals, 0),
   );
   const expected = expectedDelimiter(delimiter, visibilityClass);
-  assert.deepEqual(delimiterNode, expected);
+  expect(delimiterNode).toEqual(expected);
 }
 
 function getTeamPanels(vtree: VNode) {

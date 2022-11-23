@@ -1,5 +1,4 @@
 import { div, span, VNode } from '@cycle/dom';
-import { assert } from 'chai';
 import _ from 'lodash';
 
 import {
@@ -202,7 +201,7 @@ function assertPlayoffSeriesWins(
     Game(gameDisplay, { status: { state }, teams, preGameStats } as GameT, goals, 0),
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
-  assert.deepEqual(playoffSeriesWinsPanel, expected);
+  expect(playoffSeriesWinsPanel).toEqual(expected);
 }
 
 function getPlayoffSeriesWinsPanel(vtree: VNode) {

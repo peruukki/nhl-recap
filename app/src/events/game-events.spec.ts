@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { assert } from 'chai';
 
 import type { GameEvent, PauseEvent } from '../types';
 import gameEvents, { getAllGoalsSorted } from './game-events';
@@ -26,7 +25,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3]);
 
     // Check that there were no other period end events
-    assert.equal(getPeriodEndEvents(events).length, 3, 'All period end events count');
+    expect(getPeriodEndEvents(events).length).toEqual(3);
   });
 
   it('should include events until last overtime goal if games went to overtime and none went to shootout', () => {
@@ -37,7 +36,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, {
+    expect(lastTimeEvent).toEqual({
       type: 'game-update',
       period: 'OT',
       minute: 2,
@@ -54,7 +53,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, {
+    expect(lastTimeEvent).toEqual({
       type: 'game-update',
       period: 5,
       minute: 0,
@@ -70,7 +69,7 @@ describe('gameEvents', () => {
     assertPeriodEndEvents(events, [1, 2, 3, 'OT', 'SO']);
 
     const lastClockElement = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastClockElement, {
+    expect(lastClockElement).toEqual({
       type: 'game-update',
       period: 'SO',
       update: { gameIndex: 2, type: 'end' },
@@ -85,7 +84,7 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, {
+    expect(lastTimeEvent).toEqual({
       type: 'clock',
       period: 3,
       minute: 0,
@@ -102,35 +101,35 @@ describe('gameEvents', () => {
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 5, minute: 11, second: 2 });
+    expect(lastTimeEvent).toEqual({ type: 'clock', period: 5, minute: 11, second: 2 });
   });
 
   it('should include 20 minute overtime events if game is live at the end of overtime', () => {
     const events = gameEvents(scoresLiveEndOfOT.games);
 
     // Check the last event
-    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
+    expect(_.last(events)).toEqual({ type: 'end', inProgress: true });
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 4, minute: 0, second: 0 });
+    expect(lastTimeEvent).toEqual({ type: 'clock', period: 4, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
-    assert.isTrue(_.some(events, { type: 'clock', period: 4, minute: 20, second: 0 }));
+    expect(_.some(events, { type: 'clock', period: 4, minute: 20, second: 0 })).toBe(true);
   });
 
   it('should include 20 minute overtime events if game is live at the end of second overtime', () => {
     const events = gameEvents(scoresLiveEndOf2OT.games);
 
     // Check the last event
-    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
+    expect(_.last(events)).toEqual({ type: 'end', inProgress: true });
 
     // Check the last event with time
     const lastTimeEvent = getLastNonEndOrPauseEvent(events);
-    assert.deepEqual(lastTimeEvent, { type: 'clock', period: 5, minute: 0, second: 0 });
+    expect(lastTimeEvent).toEqual({ type: 'clock', period: 5, minute: 0, second: 0 });
 
     // Check that the last period lasted 20 minutes
-    assert.isTrue(_.some(events, { type: 'clock', period: 5, minute: 20, second: 0 }));
+    expect(_.some(events, { type: 'clock', period: 5, minute: 20, second: 0 })).toBe(true);
   });
 
   it('should pause after each period end event', () => {
@@ -142,12 +141,12 @@ describe('gameEvents', () => {
 
   it('should have a final "end" event as the last event', () => {
     const events = gameEvents(scoresAllRegularTime.games);
-    assert.deepEqual(_.last(events), { type: 'end', inProgress: false });
+    expect(_.last(events)).toEqual({ type: 'end', inProgress: false });
   });
 
   it('should have a final "end" event with inProgress flag if no games have finished', () => {
     const events = gameEvents(scoresAllLive.games);
-    assert.deepEqual(_.last(events), { type: 'end', inProgress: true });
+    expect(_.last(events)).toEqual({ type: 'end', inProgress: true });
   });
 
   it('should sort all goals correctly', () => {
@@ -171,12 +170,12 @@ describe('gameEvents', () => {
       })),
     ]);
 
-    assert.deepEqual(allGoalsSorted, expectedAllGoalsSorted);
+    expect(allGoalsSorted).toEqual(expectedAllGoalsSorted);
   });
 
   it('should leave out shootout goals from unfinished games from all sorted goals', () => {
     const allGoalsSorted = getAllGoalsSorted(scoresLiveSO.games);
-    assert.deepEqual(allGoalsSorted, []);
+    expect(allGoalsSorted).toEqual([]);
   });
 });
 
@@ -186,7 +185,7 @@ function assertPeriodEndEvents(events: (GameEvent | PauseEvent)[], periods: (num
     .map('period')
     .uniq()
     .value();
-  assert.deepEqual(periodsWithEndEvent, periods, `End events exist only for period(s) ${periods}`);
+  expect(periodsWithEndEvent).toEqual(periods);
 }
 
 function assertPeriodEndPauseEventsCount(
@@ -202,11 +201,7 @@ function assertPeriodEndPauseEventsCount(
       events.slice(periodEndEventIndex + 1),
       (event) => event.type === 'pause',
     );
-    assert.equal(
-      pauseEventsAfterPeriodEndEvent.length,
-      periodEndPauseEventCount,
-      `Period ${period} end pause events count`,
-    );
+    expect(pauseEventsAfterPeriodEndEvent.length).toEqual(periodEndPauseEventCount);
   });
 }
 

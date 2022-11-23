@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { assert } from 'chai';
 
 import type { GoalWithUpdateFields } from '../types';
 import { EVENT_COUNT_PER_GOAL } from './period-events.spec';
@@ -54,50 +53,46 @@ describe('shootoutEvents', () => {
   it('should create update start, goal, pause, and end events for each shootout goal scored, but only once per game', () => {
     const clockEvents = shootoutEvents(goals, goalPauseEventCount);
 
-    assert.deepEqual(clockEvents.length, 2 * EVENT_COUNT_PER_GOAL);
+    expect(clockEvents.length).toEqual(2 * EVENT_COUNT_PER_GOAL);
 
-    assert.deepEqual(
+    expect(
       _.take(clockEvents, EVENT_COUNT_PER_GOAL).map((event) =>
         event.type === 'game-update' ? event.update : event,
       ),
-      [
-        { gameIndex: 0, type: 'start' },
-        {
-          gameIndex: 0,
-          type: 'goal',
-          classModifier: 'home',
-          goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
-        },
-        ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
-        { gameIndex: 0, type: 'end' },
-      ],
-      'First shootout game goal events',
-    );
+    ).toEqual([
+      { gameIndex: 0, type: 'start' },
+      {
+        gameIndex: 0,
+        type: 'goal',
+        classModifier: 'home',
+        goal: _.omit(goals[3], ['classModifier', 'gameIndex']),
+      },
+      ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
+      { gameIndex: 0, type: 'end' },
+    ]);
 
-    assert.deepEqual(
+    expect(
       _.chain(clockEvents)
         .drop(EVENT_COUNT_PER_GOAL)
         .take(EVENT_COUNT_PER_GOAL)
         .map((event) => (event.type === 'game-update' ? event.update : event))
         .value(),
-      [
-        { gameIndex: 1, type: 'start' },
-        {
-          gameIndex: 1,
-          type: 'goal',
-          classModifier: 'away',
-          goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
-        },
-        ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
-        { gameIndex: 1, type: 'end' },
-      ],
-      'Second shootout game goal events',
-    );
+    ).toEqual([
+      { gameIndex: 1, type: 'start' },
+      {
+        gameIndex: 1,
+        type: 'goal',
+        classModifier: 'away',
+        goal: _.omit(goals[4], ['classModifier', 'gameIndex']),
+      },
+      ..._.times(goalPauseEventCount, () => ({ type: 'pause' })),
+      { gameIndex: 1, type: 'end' },
+    ]);
   });
 
   it('should not include shootout end event', () => {
     const clockEvents = shootoutEvents(goals, goalPauseEventCount);
 
-    assert.deepEqual(_.filter(clockEvents, { end: true }), []);
+    expect(_.filter(clockEvents, { end: true })).toEqual([]);
   });
 });

@@ -1,4 +1,3 @@
-import { assert } from 'chai';
 import xs, { Stream } from 'xstream';
 
 import { addListener } from '../test/test-utils';
@@ -24,7 +23,7 @@ describe('gameDisplays', () => {
         const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
         // Ignore intermediate values and assert the last one
         addListener(done, gameDisplays$.last(), (gameDisplays) => {
-          assert.deepEqual(gameDisplays, [expected]);
+          expect(gameDisplays).toEqual([expected]);
         });
       });
     });

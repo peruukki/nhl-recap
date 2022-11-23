@@ -1,5 +1,4 @@
 import { div, span, VNode } from '@cycle/dom';
-import { assert } from 'chai';
 import _ from 'lodash';
 
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../test/data';
@@ -184,7 +183,7 @@ function assertLatestGoal(
     Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
-  assert.deepEqual(latestGoalPanel, expected);
+  expect(latestGoalPanel).toEqual(expected);
 }
 
 function assertSummary(
@@ -197,7 +196,7 @@ function assertSummary(
     Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedSummaryPanel(pointScorers);
-  assert.deepEqual(summaryPanel, expected);
+  expect(summaryPanel).toEqual(expected);
 }
 
 function assertGameDescription(
@@ -210,7 +209,7 @@ function assertGameDescription(
     Game(gameDisplay, { status, startTime, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedGameDescription(description);
-  assert.deepEqual(gameDescription, expected);
+  expect(gameDescription).toEqual(expected);
 }
 
 function getLatestGoalPanel(vtree: VNode) {
