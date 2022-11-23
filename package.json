@@ -53,7 +53,7 @@
     "sass": "node-sass app/src/main.scss public/main.css --output-style compressed",
     "sass:gallery": "node-sass gallery/src/main.scss public/main-gallery.css --output-style compressed",
     "server": "http-server public -p 8008",
-    "spec": "jest",
+    "spec": "jest --coverage true --verbose true",
     "spec:watch": "jest --watch",
     "start": "NODE_ENV=dev parallelshell 'npm run watch' 'npm run server'",
     "start:gallery": "npm run watch:gallery",
