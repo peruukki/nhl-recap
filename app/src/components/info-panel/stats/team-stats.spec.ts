@@ -1,13 +1,12 @@
 import { VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
-import { delimiter as renderedDelimiter } from 'app/src/components/info-panel/stats/team-stats';
-import type { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/src/types';
-
-import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../data';
-import Game from '../../../app/src/components/game';
-import { expectedStat, StatValue } from './test-utils';
-import { getGameCard } from '../test-utils';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
+import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
+import Game from '../../game';
+import { getGameCard } from '../../test-utils';
+import { expectedStat, StatValue } from '../test-utils';
+import { delimiter as renderedDelimiter } from './team-stats';
 
 const inProgressGameProgress = {
   currentPeriod: 1,

@@ -2,15 +2,14 @@ import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import Game from 'app/src/components/game';
-import { renderTeamLogoSVG } from 'app/src/utils/logos';
-import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/src/types';
-
 import {
   scoresAllRegularTime,
   scoresMultipleOvertime,
   scoresOvertimeAndMultipleShootout,
-} from '../data';
+} from '../test/data';
+import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from '../types';
+import { renderTeamLogoSVG } from '../utils/logos';
+import Game from './game';
 import { getGameCard } from './test-utils';
 
 describe('score panel', () => {

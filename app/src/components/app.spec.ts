@@ -4,11 +4,10 @@ import xs, { Stream } from 'xstream';
 import { assert } from 'chai';
 import nock from 'nock';
 
-import app from 'app/src/components/app';
-
-import { scoresAllRegularTime as apiResponse } from '../data';
-import animations from '../test-animations';
-import { addListener } from '../test-utils';
+import animations from '../test/test-animations';
+import { scoresAllRegularTime as apiResponse } from '../test/data';
+import { addListener } from '../test/test-utils';
+import app from './app';
 
 describe('app', () => {
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';

@@ -3,7 +3,7 @@ import xs, { Stream } from 'xstream';
 import fromEvent from 'xstream/extra/fromEvent';
 
 import Game from '../../app/src/components/game';
-import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../test/data';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../app/src/test/data';
 import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/src/types';
 import { getGameStateToggleChecked, setGameStateToggleChecked } from './storage';
 

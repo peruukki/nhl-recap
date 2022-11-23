@@ -2,17 +2,16 @@ import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import Game from 'app/src/components/game';
+import { scoresAllRegularTime, scoresMultipleOvertime } from '../../test/data';
+import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from '../../types';
+import { renderTeamLogoSVG } from '../../utils/logos';
+import Game from '../game';
+import { getGameCard } from '../test-utils';
 import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
   renderLatestGoalTime,
-} from 'app/src/components/info-panel/info-panel';
-import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from 'app/src/types';
-
-import { renderTeamLogoSVG } from 'app/src/utils/logos';
-import { scoresAllRegularTime, scoresMultipleOvertime } from '../../data';
-import { getGameCard } from '../test-utils';
+} from './info-panel';
 
 type PointScorer = { player: string; teamId: number; goals: number; assists: number };
 

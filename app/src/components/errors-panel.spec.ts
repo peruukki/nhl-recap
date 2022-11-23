@@ -1,10 +1,9 @@
 import { div, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
-import Game from 'app/src/components/game';
-import type { StatError } from 'app/src/types';
-
-import { scoresAllRegularTime } from '../data';
+import { scoresAllRegularTime } from '../test/data';
+import type { StatError } from '../types';
+import Game from './game';
 import { getGameCard } from './test-utils';
 
 describe('errors panel', () => {

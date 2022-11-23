@@ -1,12 +1,11 @@
 import { VNode } from '@cycle/dom';
 import { assert } from 'chai';
 
-import Game from 'app/src/components/game';
-import type { Game as GameT, GameDisplay, GameStatus, Goal } from 'app/src/types';
-
-import { scoresAllRegularTime } from '../../data';
-import { getGameCard } from '../test-utils';
-import { expectedStat, StatValue } from './test-utils';
+import { scoresAllRegularTime } from '../../../test/data';
+import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
+import Game from '../../game';
+import { getGameCard } from '../../test-utils';
+import { expectedStat, StatValue } from '../test-utils';
 
 const inProgressGameProgress = {
   currentPeriod: 1,

@@ -2,7 +2,11 @@ import { div, span, VNode } from '@cycle/dom';
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import Game from 'app/src/components/game';
+import {
+  scoresAllRegularTime,
+  scoresAllRegularTimePlayoffs,
+  scoresRegularTimeAndOvertimePlayoffs,
+} from '../test/data';
 import type {
   Game as GameT,
   GameDisplay,
@@ -11,13 +15,8 @@ import type {
   TeamAbbreviation,
   Teams,
   TeamStats,
-} from 'app/src/types';
-
-import {
-  scoresAllRegularTime,
-  scoresAllRegularTimePlayoffs,
-  scoresRegularTimeAndOvertimePlayoffs,
-} from '../data';
+} from '../types';
+import Game from './game';
 import { getGameCard } from './test-utils';
 
 describe('playoff series wins panel', () => {

@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import shootoutEvents from 'app/src/events/shootout-events';
-import type { GoalWithUpdateFields } from 'app/src/types';
-import { EVENT_COUNT_PER_GOAL } from './period-events';
+import type { GoalWithUpdateFields } from '../types';
+import { EVENT_COUNT_PER_GOAL } from './period-events.spec';
+import shootoutEvents from './shootout-events';
 
 describe('shootoutEvents', () => {
   const goals: GoalWithUpdateFields[] = [

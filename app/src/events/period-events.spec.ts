@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import { PERIOD_OVERTIME } from 'app/src/events/constants';
-import periodEvents from 'app/src/events/period-events';
-import type { GameEndTime, GoalWithUpdateFields } from 'app/src/types';
+import type { GameEndTime, GoalWithUpdateFields } from '../types';
+import { PERIOD_OVERTIME } from './constants';
+import periodEvents from './period-events';
 
 export const EVENT_COUNTS = {
   start: 1,
@@ -200,19 +200,19 @@ describe('periodEvents', () => {
       second: 1,
     });
   });
-});
 
-it('should include clock-stopping goal scored on the second that the clock stops', () => {
-  assertFinalSecondsGoalUpdate(
-    { period: PERIOD_OVERTIME, min: 2, sec: 0 },
-    5,
-    {
-      period: PERIOD_OVERTIME,
-      minute: 3,
-      second: 0,
-    },
-    { minute: 3, second: 0 },
-  );
+  it('should include clock-stopping goal scored on the second that the clock stops', () => {
+    assertFinalSecondsGoalUpdate(
+      { period: PERIOD_OVERTIME, min: 2, sec: 0 },
+      5,
+      {
+        period: PERIOD_OVERTIME,
+        minute: 3,
+        second: 0,
+      },
+      { minute: 3, second: 0 },
+    );
+  });
 });
 
 function assertFinalSecondsGoalUpdate(

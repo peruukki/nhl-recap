@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { assert } from 'chai';
 
-import gameEvents, { getAllGoalsSorted } from 'app/src/events/game-events';
-import type { GameEvent, PauseEvent } from 'app/src/types';
+import type { GameEvent, PauseEvent } from '../types';
+import gameEvents, { getAllGoalsSorted } from './game-events';
 
 import {
   scoresAllLive,
@@ -14,7 +14,7 @@ import {
   scoresMultipleOvertime,
   scoresOvertimeAndMultipleShootout,
   scoresRegularTimeAndOvertimePlayoffs,
-} from '../data';
+} from '../test/data';
 
 const periodEndPauseEventCount = 150;
 
