@@ -107,6 +107,18 @@ Lint SASS, lint JavaScript, run Prettier and run unit tests:
 npm test
 ```
 
+Run only unit tests, including coverage:
+
+```
+npm run spec
+```
+
+Run only unit tests in watch mode:
+
+```
+npm run spec:watch
+```
+
 ## Building
 
 Build the app to the `public` directory:
