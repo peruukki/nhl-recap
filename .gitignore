@@ -10,3 +10,6 @@ app/styles/vendor
 # Node
 node_modules/
 npm-debug.log
+
+# Test output
+coverage/
