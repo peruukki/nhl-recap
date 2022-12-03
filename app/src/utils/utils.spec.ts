@@ -31,6 +31,11 @@ describe('utils', () => {
       const name = 'Ryan Nugent';
       expect(truncatePlayerName(name, 10)).toEqual('R. Nugent');
     });
+
+    it('should return only last name if first name truncation is not short enough', () => {
+      const name = 'Ryan Nugent-Hopkins';
+      expect(truncatePlayerName(name, 15)).toEqual('Nugent-Hopkins');
+    });
   });
 
   describe('getAnimationIndexes', () => {

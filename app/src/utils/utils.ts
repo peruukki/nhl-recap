@@ -10,7 +10,8 @@ export function truncatePlayerName(name: string, maxLength = 20): string {
   const abbreviatedFirstNames = _.flatten(
     firstNames.map((firstName) => firstName.split('-').map((namePart) => `${namePart[0]}.`)),
   );
-  return `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
+  const truncatedName = `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
+  return truncatedName.length <= maxLength ? truncatedName : _.last(names) ?? '';
 }
 
 export function getGameAnimationIndexes(gameCount: number): number[] {
