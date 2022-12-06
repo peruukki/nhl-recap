@@ -6,12 +6,11 @@ export function truncatePlayerName(name: string, maxLength = 20): string {
   }
 
   const names = name.split(' ');
-  const firstNames = _.dropRight(names);
-  const abbreviatedFirstNames = _.flatten(
-    firstNames.map((firstName) => firstName.split('-').map((namePart) => `${namePart[0]}.`)),
-  );
-  const truncatedName = `${abbreviatedFirstNames.join('')} ${_.last(names)}`;
-  return truncatedName.length <= maxLength ? truncatedName : _.last(names) ?? '';
+  const firstName = _.first(names) ?? '';
+  const lastNames = _.drop(names).join(' ');
+  const abbreviatedFirstName = firstName.split('-').map((namePart) => `${namePart[0]}.`);
+  const truncatedName = `${abbreviatedFirstName.join('')} ${lastNames}`;
+  return truncatedName.length <= maxLength ? truncatedName : lastNames;
 }
 
 export function getGameAnimationIndexes(gameCount: number): number[] {

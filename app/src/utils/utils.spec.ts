@@ -22,9 +22,9 @@ describe('utils', () => {
       expect(truncatePlayerName(name)).toEqual('P.A.J. Parenteau');
     });
 
-    it('should truncate multiple first names of name longer than 20 characters', () => {
-      const name = 'Pierre-Alexandre Jean Parenteau';
-      expect(truncatePlayerName(name)).toEqual('P.A.J. Parenteau');
+    it('should truncate only first name of name longer than 20 characters', () => {
+      const name = 'Joel-Alexandre Eriksson Ek';
+      expect(truncatePlayerName(name)).toEqual('J.A. Eriksson Ek');
     });
 
     it('should truncate a name longer than given maximum length', () => {
