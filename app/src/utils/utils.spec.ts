@@ -3,12 +3,12 @@ import { getGameAnimationIndexes, truncatePlayerName } from './utils';
 describe('utils', () => {
   describe('truncatePlayerName', () => {
     it('should not truncate a name shorter than 21 characters', () => {
-      const name = 'Ryan Nugent-Hopkinss';
+      const name = 'Ryan Nugent-Hopkinsss';
       expect(truncatePlayerName(name)).toEqual(name);
     });
 
     it('should truncate a single-part first name of name longer than 20 characters', () => {
-      const name = 'Ryann Nugent-Hopkinss';
+      const name = 'Ryannn Nugent-Hopkinss';
       expect(truncatePlayerName(name)).toEqual('R. Nugent-Hopkinss');
     });
 
@@ -35,6 +35,16 @@ describe('utils', () => {
     it('should return only last name if first name truncation is not short enough', () => {
       const name = 'Ryan Nugent-Hopkins';
       expect(truncatePlayerName(name, 15)).toEqual('Nugent-Hopkins');
+    });
+
+    it('should count narrow characters as half characters', () => {
+      const name = 'Ili J-j'; // 6 narrow letters + 1 regular (space)
+      expect(truncatePlayerName(name, 4)).toEqual(name);
+    });
+
+    it('should count wide characters as one-and-a-half characters', () => {
+      const name = 'Mam Wow'; // 4 wide letters + 3 regular (a, o, space)
+      expect(truncatePlayerName(name, 8)).toEqual('M. Wow');
     });
   });
 
