@@ -1,6 +1,6 @@
 import { VNode } from '@cycle/dom';
 
-import { scoresAllRegularTime } from '../../../test/data';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
 import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
 import Game from '../../game';
 import { getGameCard } from '../../test-utils';
@@ -169,6 +169,12 @@ describe('game stats', () => {
 
     assertGameStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.powerPlay, {
       away: { value: '2/4', className: '--highlight' },
+      home: { value: '1/3' },
+      label,
+    });
+
+    assertGameStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.powerPlay, {
+      away: { value: '2/2', className: '--highlight' },
       home: { value: '1/3' },
       label,
     });

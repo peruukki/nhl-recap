@@ -31,8 +31,8 @@ function getNegativeNumericalRating(value: number | string) {
   return -Number(value);
 }
 
-function getPowerPlayRating({ percentage }: { percentage: string }): string {
-  return percentage;
+function getPowerPlayRating({ percentage }: { percentage: string }): number {
+  return Number(percentage);
 }
 
 function renderPlainValue(value: number | string): number | string {
