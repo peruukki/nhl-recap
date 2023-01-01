@@ -12,7 +12,13 @@ export default function GameStats(teams: Teams, stats: GameStatsT) {
     renderStat(teams, stats.hits, 'Hits', getPositiveNumericalRating, renderPlainValue),
     renderStat(teams, stats.giveaways, 'Giveaways', getNegativeNumericalRating, renderPlainValue),
     renderStat(teams, stats.takeaways, 'Takeaways', getPositiveNumericalRating, renderPlainValue),
-    renderStat(teams, stats.powerPlay, 'Power play', getPowerPlayRating, renderPowerPlay),
+    renderStat(
+      teams,
+      stats.powerPlay,
+      'Power play',
+      ({ percentage }) => getPositiveNumericalRating(percentage),
+      renderPowerPlay,
+    ),
     renderStat(
       teams,
       stats.faceOffWinPercentage,
@@ -29,10 +35,6 @@ function getPositiveNumericalRating(value: number | string): number {
 
 function getNegativeNumericalRating(value: number | string): number {
   return -Number(value);
-}
-
-function getPowerPlayRating({ percentage }: { percentage: string }): number {
-  return Number(percentage);
 }
 
 function renderPlainValue(value: number | string): number | string {
