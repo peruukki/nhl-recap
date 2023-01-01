@@ -23,11 +23,11 @@ export default function GameStats(teams: Teams, stats: GameStatsT) {
   ]);
 }
 
-function getPositiveNumericalRating(value: number | string) {
+function getPositiveNumericalRating(value: number | string): number {
   return Number(value);
 }
 
-function getNegativeNumericalRating(value: number | string) {
+function getNegativeNumericalRating(value: number | string): number {
   return -Number(value);
 }
 
