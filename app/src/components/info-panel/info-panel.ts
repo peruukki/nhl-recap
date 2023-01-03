@@ -1,4 +1,5 @@
 import { div, span, VNode } from '@cycle/dom';
+import classNames from 'classnames';
 import { format } from 'timeago.js';
 
 import { PERIOD_SHOOTOUT } from '../../events/constants';
@@ -166,11 +167,15 @@ function renderPlayerAndPoints(player: string, goals: number, assists: number) {
 }
 
 function renderPointsText(goals: number, assists: number) {
+  const goalsClassName = classNames({ '.goals': true, '.goals--highlight': goals >= 3 }).replace(
+    /\s/g,
+    '',
+  );
   if (goals && assists) {
-    return `${goals} G, ${assists} A`;
+    return [span(goalsClassName, `${goals} G`), `, ${assists} A`];
   }
   if (goals) {
-    return `${goals} ${goals === 1 ? 'goal' : 'goals'}`;
+    return span(goalsClassName, `${goals} ${goals === 1 ? 'goal' : 'goals'}`);
   }
   return `${assists} ${assists === 1 ? 'assist' : 'assists'}`;
 }

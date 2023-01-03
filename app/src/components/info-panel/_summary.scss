@@ -31,5 +31,11 @@
       white-space: nowrap;
       overflow: hidden;
     }
+
+    .goals {
+      &--highlight {
+        color: $color-highlight-light;
+      }
+    }
   }
 }

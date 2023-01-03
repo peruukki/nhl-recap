@@ -250,10 +250,10 @@ function expectedSummaryPanel(pointScorers: PointScorer[]) {
 
 function renderPointsText(goals: number, assists: number) {
   if (goals && assists) {
-    return `${goals} G, ${assists} A`;
+    return [span('.goals', `${goals} G`), `, ${assists} A`];
   }
   if (goals) {
-    return `${goals} ${goals === 1 ? 'goal' : 'goals'}`;
+    return span('.goals', `${goals} ${goals === 1 ? 'goal' : 'goals'}`);
   }
   return `${assists} ${assists === 1 ? 'assist' : 'assists'}`;
 }
