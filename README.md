@@ -9,6 +9,8 @@ or iOS device for a more app-like, chromeless experience.
 Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
 as its backed.
 
+https://user-images.githubusercontent.com/1781172/211150099-47546d64-719a-4a72-b3ed-16b7ac6aebe6.mp4
+
 ## Running the app
 
 To run the app and re-build on file changes:
