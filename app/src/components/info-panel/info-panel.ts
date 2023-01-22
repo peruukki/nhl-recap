@@ -123,32 +123,47 @@ function getTopPointScorers(teams: Teams, allGoals: Goal[]) {
   const pointScorersPerTeam = [teams.away, teams.home].map((team) => {
     const teamPointScorers = nonShootoutGoals
       .filter((goal) => goal.team === team.abbreviation)
-      .reduce((pointScorers, goal) => {
-        const scorerPoints = pointScorers.get(goal.scorer.player);
-        pointScorers.set(goal.scorer.player, {
-          goals: (scorerPoints?.goals ?? 0) + 1,
-          assists: scorerPoints?.assists ?? 0,
-          points: (scorerPoints?.points ?? 0) + 1,
-          goalsSeason: goal.scorer.seasonTotal,
-          assistsSeason: scorerPoints?.assistsSeason ?? 0,
-        });
-        goal.assists.forEach(({ player, seasonTotal }) => {
-          const assisterPoints = pointScorers.get(player);
-          pointScorers.set(player, {
-            goals: assisterPoints?.goals ?? 0,
-            assists: (assisterPoints?.assists ?? 0) + 1,
-            points: (assisterPoints?.points ?? 0) + 1,
-            goalsSeason: assisterPoints?.goalsSeason ?? 0,
-            assistsSeason: seasonTotal,
+      .reduce(
+        (pointScorers, goal) => {
+          const scorerPoints = pointScorers.get(goal.scorer.playerId);
+          pointScorers.set(goal.scorer.playerId, {
+            player: goal.scorer.player,
+            goals: (scorerPoints?.goals ?? 0) + 1,
+            assists: scorerPoints?.assists ?? 0,
+            points: (scorerPoints?.points ?? 0) + 1,
+            goalsSeason: goal.scorer.seasonTotal,
+            assistsSeason: scorerPoints?.assistsSeason ?? 0,
           });
-        });
-        return pointScorers;
-      }, new Map<string, { goals: number; assists: number; points: number; goalsSeason: number; assistsSeason: number }>());
+          goal.assists.forEach(({ player, playerId, seasonTotal }) => {
+            const assisterPoints = pointScorers.get(playerId);
+            pointScorers.set(playerId, {
+              player,
+              goals: assisterPoints?.goals ?? 0,
+              assists: (assisterPoints?.assists ?? 0) + 1,
+              points: (assisterPoints?.points ?? 0) + 1,
+              goalsSeason: assisterPoints?.goalsSeason ?? 0,
+              assistsSeason: seasonTotal,
+            });
+          });
+          return pointScorers;
+        },
+        new Map<
+          number,
+          {
+            player: string;
+            goals: number;
+            assists: number;
+            points: number;
+            goalsSeason: number;
+            assistsSeason: number;
+          }
+        >(),
+      );
     return { teamId: team.id, pointScorers: teamPointScorers };
   });
 
   const allPointScorers = pointScorersPerTeam.flatMap(({ teamId, pointScorers }) =>
-    Array.from(pointScorers.entries()).map(([player, points]) => ({ teamId, player, ...points })),
+    Array.from(pointScorers.values()).map((points) => ({ teamId, ...points })),
   );
   const sortedPointScorers = allPointScorers.sort(
     (a, b) =>

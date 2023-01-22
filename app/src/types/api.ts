@@ -38,15 +38,15 @@ type GameStatusNonLive = {
 export type GameStatus = GameStatusLive | GameStatusNonLive;
 
 export type GoalInGamePlay = TimeElapsed & {
-  assists: { player: string; seasonTotal: number }[];
+  assists: PointScorer[];
   emptyNet?: boolean;
-  scorer: { player: string; seasonTotal: number };
+  scorer: PointScorer;
   strength?: 'PPG' | 'SHG';
   team: TeamAbbreviation;
 };
 export type GoalInShootout = {
   period: 'SO';
-  scorer: { player: string; seasonTotal: number };
+  scorer: PointScorer;
   team: TeamAbbreviation;
 };
 export type Goal = GoalInGamePlay | GoalInShootout;
@@ -54,6 +54,12 @@ export type Goal = GoalInGamePlay | GoalInShootout;
 export function isShootoutGoal(goal: Goal): goal is GoalInShootout {
   return goal.period === 'SO';
 }
+
+type PointScorer = {
+  player: string;
+  playerId: number;
+  seasonTotal: number;
+};
 
 export type Scores = {
   date?: ScoresDate;
