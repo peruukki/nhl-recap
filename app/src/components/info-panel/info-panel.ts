@@ -75,7 +75,7 @@ export default function InfoPanel({
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
       showGameStats ? GameStats(teams, gameStats) : null,
-      showPreGameStats || showAfterGameStats
+      (showPreGameStats || showAfterGameStats) && teamStats
         ? TeamStats(
             teams,
             showProgressInfo || showAfterGameStats,
