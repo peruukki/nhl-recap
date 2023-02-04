@@ -11,7 +11,7 @@ registerServiceWorker();
 
 fetchTeamLogoSVGSymbols();
 
-run(app(animations, window), {
+run(app(animations, window, { fetchStatusDelayMs: 1000 }), {
   DOM: makeDOMDriver('#app'),
   HTTP: makeHTTPDriver(),
 });

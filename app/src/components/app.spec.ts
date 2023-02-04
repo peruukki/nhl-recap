@@ -135,10 +135,7 @@ describe('app', () => {
 function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
   const driver = makeHTTPDriver();
   const $window = { navigator: { onLine: options.isOnline } } as Window;
-  return app(
-    animations,
-    $window,
-  )({
+  return app(animations, $window, { fetchStatusDelayMs: 0 })({
     DOM: mockDOMSource({}) as unknown as MainDOMSource,
     HTTP: driver(httpRequest$ as Stream<RequestInput | string>),
   });

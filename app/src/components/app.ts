@@ -14,6 +14,7 @@ import type {
   ScoresDate,
 } from '../types';
 import type { Animations } from '../utils/animations';
+import { delayAtLeast } from '../utils/delay';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import Game from './game';
@@ -58,11 +59,17 @@ function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuc
   return !!(response as ApiResponseSuccess).success;
 }
 
-export default function main(animations: Animations, $window: Window): (sources: Sources) => Sinks {
+type Options = { fetchStatusDelayMs: number };
+
+export default function main(
+  animations: Animations,
+  $window: Window,
+  options: Options,
+): (sources: Sources) => Sinks {
   return ({ DOM, HTTP }) => {
     const url = getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, $window), animations)),
+      DOM: view(model(intent(DOM, HTTP, $window, options), animations)),
       HTTP: xs.of({ url }),
     };
   };
@@ -73,7 +80,12 @@ function getApiUrl(): string {
   return `${host}/api/scores/latest`;
 }
 
-function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Actions {
+function intent(
+  DOM: Sources['DOM'],
+  HTTP: Sources['HTTP'],
+  $window: Window,
+  options: Options,
+): Actions {
   const apiResponseWithErrors$ = HTTP.select()
     .map((response$) =>
       response$.replaceError((error) => xs.of({ error }) as unknown as Stream<Response>),
@@ -96,7 +108,8 @@ function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Ac
               expected: true,
             },
           };
-    });
+    })
+    .compose(delayAtLeast(options.fetchStatusDelayMs));
   const successApiResponse$ = apiResponseWithErrors$
     .filter((response): response is ApiResponseSuccess => isSuccessApiResponse(response))
     .map((response) => response.success);
