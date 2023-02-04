@@ -10,5 +10,6 @@ import xs, { Stream } from 'xstream';
  * @returns delayed stream
  */
 export function delayAtLeast<T>(delayMs: number): (stream$: Stream<T>) => Stream<T> {
-  return (stream$) => xs.combine(stream$, xs.periodic(delayMs).take(1)).map(([s$]) => s$);
+  return (stream$) =>
+    xs.combine(stream$, xs.periodic(delayMs).take(1)).map(([streamValue]) => streamValue);
 }
