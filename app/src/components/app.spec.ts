@@ -16,7 +16,9 @@ describe('app', () => {
   it('should initially show a message about fetching latest scores', (done) => {
     const sinks = run(xs.empty());
     addListener(done, sinks.DOM.take(1), (vtree) => {
-      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('Fetching latest scores...'));
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree('Fetching latest scores...', '.fade-in'),
+      );
     });
   });
 
@@ -92,7 +94,9 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('No latest scores available.'));
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree('No latest scores available.', '.fade-in-fast'),
+      );
     });
   });
 
@@ -105,7 +109,10 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree('Failed to fetch latest scores: the network is offline.'),
+        expectedStatusVtree(
+          'Failed to fetch latest scores: the network is offline.',
+          '.fade-in-fast',
+        ),
       );
     });
   });
@@ -118,7 +125,9 @@ describe('app', () => {
 
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
-      expect(getStatusNode(vtree)).toEqual(expectedStatusVtree('Failed to fetch latest scores.'));
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree('Failed to fetch latest scores.', '.fade-in-fast'),
+      );
     });
   });
 });
@@ -135,8 +144,8 @@ function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
   });
 }
 
-function expectedStatusVtree(message: string) {
-  return div('.status.fade-in', [message]);
+function expectedStatusVtree(message: string, animationClass: string) {
+  return div(`.status${animationClass}`, [message]);
 }
 
 function expectedDateVtree(date: string) {

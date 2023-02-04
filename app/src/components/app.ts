@@ -32,18 +32,23 @@ type Actions = {
   successApiResponse$: Stream<Scores>;
   isPlaying$: Stream<boolean>;
   playbackHasStarted$: Stream<boolean>;
-  status$: Stream<string>;
+  status$: Stream<FetchStatus>;
 };
 
 type State = {
   scores: Scores;
   currentGoals: Goal[][];
   isPlaying: boolean;
-  status: string;
+  status: FetchStatus;
   clockVtree: VNode;
   event: GameEvent | null;
   gameDisplays: GameDisplay[];
   gameCount: number;
+};
+
+type FetchStatus = {
+  isDone: boolean;
+  message: string;
 };
 
 type ApiResponseError = { error: { expected: boolean; message?: string } };
@@ -113,7 +118,10 @@ function intent(DOM: Sources['DOM'], HTTP: Sources['HTTP'], $window: Window): Ac
     playbackHasStarted$,
     status$: apiResponseWithErrors$
       .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
-      .map(({ error }) => error.message || getUnexpectedErrorMessage()),
+      .map<FetchStatus>(({ error }) => ({
+        isDone: true,
+        message: error.message || getUnexpectedErrorMessage(),
+      })),
   };
 }
 
@@ -180,7 +188,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       scores$,
       currentGoals$.startWith([]),
       actions.isPlaying$.startWith(false),
-      actions.status$.startWith('Fetching latest scores...'),
+      actions.status$.startWith({ isDone: false, message: 'Fetching latest scores...' }),
       clock.DOM.startWith(span('.clock')),
       clock.events$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
@@ -263,7 +271,7 @@ function renderScores(
           ),
         ),
       )
-    : div('.status.fade-in', [state.status || 'No scores available.']);
+    : div(`.status.fade-in${state.status.isDone ? '-fast' : ''}`, [state.status.message]);
 }
 
 function renderDate(date: ScoresDate): VNode {
