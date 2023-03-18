@@ -36,7 +36,8 @@ $height-timing-function: ease-in-out;
 }
 
 .expand {
-  @for $i from 0 through 15 {
+  // Max number of games is 16, need +1 for play button animation coming last
+  @for $i from 0 through 16 {
     &--#{$i} {
       $delay: $i * 50ms + 50ms;
       animation: $delay hidden, $expand-duration $expand-timing-function expand $delay,
