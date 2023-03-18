@@ -251,7 +251,7 @@ function renderHeader(
   const buttonType = state.isPlaying ? 'pause' : 'play';
   const dynamicClassNames = {
     [`button--${buttonType}`]: state.gameCount > 0,
-    [`expand--${state.gameCount}`]: state.gameCount > 0 && hasNotStarted,
+    'expand--last': state.gameCount > 0 && hasNotStarted,
     'button--hidden': isFinished,
   };
 
