@@ -11,7 +11,7 @@ $height-timing-function: ease-in-out;
   animation: $fade-duration fade-in;
 }
 .fade-in-fast {
-  animation: ($fade-duration / 2) fade-in-fast;
+  animation: ($fade-duration * 0.5) fade-in-fast;
 }
 .fade-in-slow {
   animation: ($fade-duration * 2) fade-in;
@@ -41,7 +41,7 @@ $height-timing-function: ease-in-out;
     &--#{$i} {
       $delay: $i * 50ms + 50ms;
       animation: $delay hidden, $expand-duration $expand-timing-function expand $delay,
-        ($fade-duration / 2) ease-in fade-in $delay;
+        ($fade-duration * 0.5) ease-in fade-in $delay;
     }
   }
 }
@@ -66,5 +66,5 @@ $height-timing-function: ease-in-out;
 
 @mixin delayed-animation {
   animation-fill-mode: both;
-  animation-delay: ($fade-duration / 4);
+  animation-delay: ($fade-duration * 0.25);
 }
