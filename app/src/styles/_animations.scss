@@ -53,6 +53,7 @@ $height-timing-function: ease-in-out;
       $delay: 50ms + cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) * 500ms;
       animation: $delay hidden, $expand-duration $expand-timing-function expand $delay,
         ($fade-duration * 0.5) ease-in fade-in $delay;
+      will-change: opacity, transform;
     }
   }
 }
