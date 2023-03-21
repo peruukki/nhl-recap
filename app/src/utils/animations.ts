@@ -15,7 +15,7 @@ function clearGameInFocus(element: HTMLElement): void {
   }, 250);
 }
 
-function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight: number): void {
+function animateGame(element: HTMLElement, windowWidth: number, windowHeight: number): void {
   const { left, right, top, bottom } = element.getBoundingClientRect();
 
   const windowCenterX = windowWidth / 2;
@@ -27,7 +27,14 @@ function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight:
   const translateY = windowCenterY - elementCenterY;
   const scale = 1.2;
   element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  element.classList.add(gameInFrontClass);
+}
+
+function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight: number): void {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
+  if (!prefersReducedMotion) {
+    animateGame(element, windowWidth, windowHeight);
+    element.classList.add(gameInFrontClass);
+  }
   element.classList.add(gameInFocusClass);
 }
 

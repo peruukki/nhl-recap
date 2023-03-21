@@ -54,6 +54,11 @@ $height-timing-function: ease-in-out;
       animation: $delay hidden, $expand-duration $expand-timing-function expand $delay,
         ($fade-duration * 0.5) ease-in fade-in $delay;
       will-change: opacity, transform;
+
+      @media (prefers-reduced-motion) {
+        animation: $delay hidden, ($fade-duration * 0.5) ease-in fade-in $delay;
+        will-change: opacity;
+      }
     }
   }
 }
@@ -62,6 +67,10 @@ $height-timing-function: ease-in-out;
   $delay: 1000ms;
   animation: $delay hidden, $expand-duration $expand-timing-function expand $delay,
     ($fade-duration * 0.5) ease-in fade-in $delay;
+
+  @media (prefers-reduced-motion) {
+    animation: $delay hidden, ($fade-duration * 0.5) ease-in fade-in $delay;
+  }
 }
 
 @keyframes expand {

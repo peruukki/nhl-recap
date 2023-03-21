@@ -2,7 +2,8 @@
   width: $game-card-width;
   margin: $game-card-margin;
   float: left;
-  transition: transform $focus-duration $focus-timing-function;
+  transition: transform $focus-duration $focus-timing-function,
+    background-color $focus-duration $focus-timing-function;
   border-radius: 4px;
   background: $background-game;
   font-size: 1.4rem;
@@ -10,12 +11,12 @@
 
   &.in-front {
     position: relative;
+    box-shadow: $color-shadow 0 5px 10px;
     z-index: 1;
   }
 
   &.in-focus {
     background: $background-game-in-focus;
-    box-shadow: $color-shadow 0 5px 10px;
   }
 
   &__score-panel {
@@ -31,10 +32,13 @@
     position: relative;
     height: $game-description-height + get-stats-height($team-stats-line-count-not-finished);
     padding-bottom: 0.5rem;
-    transition: height $height-duration $height-timing-function;
     font-size: 1.2rem;
     line-height: 1.5rem;
     box-sizing: border-box;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: height $height-duration $height-timing-function;
+    }
 
     .game--playback &,
     .game--pre-summary-finished &,
