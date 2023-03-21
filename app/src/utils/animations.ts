@@ -30,7 +30,7 @@ function animateGame(element: HTMLElement, windowWidth: number, windowHeight: nu
 }
 
 function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight: number): void {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReducedMotion) {
     animateGame(element, windowWidth, windowHeight);
     element.classList.add(gameInFrontClass);
