@@ -48,7 +48,7 @@ function getSeriesWinsDescription(
   const trailingWins = _.first(sortedByWins)?.wins ?? 0;
 
   if (leadingWins === 0 && trailingWins === 0) {
-    const roundDescriptions = ['Qualifier', '1st round', '2nd round', 'Semifinal', 'Final'];
+    const roundDescriptions = ['Qualifier', '1st round', '2nd round', 'Conference final', 'Final'];
     return `${roundDescriptions[playoffRound]} - Game 1`;
   }
 
