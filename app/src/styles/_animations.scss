@@ -95,3 +95,37 @@ $height-timing-function: ease-in-out;
   animation-fill-mode: both;
   animation-delay: ($fade-duration * 0.25);
 }
+
+// Adapted from https://github.com/erictreacy/mimic.css/blob/master/mimic.css
+@keyframes nope {
+  0% {
+    transform: translateX(0);
+  }
+
+  6.5% {
+    transform: translateX(-4px) rotateY(-10deg);
+  }
+
+  18.5% {
+    transform: translateX(3px) rotateY(8deg);
+  }
+
+  31.5% {
+    transform: translateX(-2px) rotateY(-6deg);
+  }
+
+  43.5% {
+    transform: translateX(1px) rotateY(4deg);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+}
+
+.nope-animation {
+  animation-name: nope;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}

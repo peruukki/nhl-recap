@@ -284,7 +284,9 @@ function renderScores(
           ),
         ),
       )
-    : div(`.status.fade-in${state.status.isDone ? '-fast' : ''}`, [state.status.message]);
+    : div(`.status${state.status.isDone ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
+        state.status.message,
+      ]);
 }
 
 function renderDate(date: ScoresDate): VNode {

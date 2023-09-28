@@ -95,7 +95,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree('No latest scores available.', '.fade-in-fast'),
+        expectedStatusVtree('No latest scores available.', '.fade-in-fast.nope-animation'),
       );
     });
   });
@@ -111,7 +111,7 @@ describe('app', () => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(
           'Failed to fetch latest scores: the network is offline.',
-          '.fade-in-fast',
+          '.fade-in-fast.nope-animation',
         ),
       );
     });
@@ -126,7 +126,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree('Failed to fetch latest scores.', '.fade-in-fast'),
+        expectedStatusVtree('Failed to fetch latest scores.', '.fade-in-fast.nope-animation'),
       );
     });
   });
