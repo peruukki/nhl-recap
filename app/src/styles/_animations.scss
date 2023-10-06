@@ -124,8 +124,10 @@ $height-timing-function: ease-in-out;
 }
 
 .nope-animation {
-  animation-name: nope;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: both;
+  @media (prefers-reduced-motion: no-preference) {
+    animation-name: nope;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+  }
 }
