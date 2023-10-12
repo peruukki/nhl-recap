@@ -67,7 +67,7 @@
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
     "watch:assets:gallery": "watch 'cp -r gallery/assets/** public' gallery/assets",
     "watch:css": "npm run sass && npm run autoprefix && npm run sass -- -w",
-    "watch:css:gallery": "npm run sass:gallery && npm run autoprefix:gallery && npm run sass:gallery -- -w gallery/src/*.scss",
+    "watch:css:gallery": "npm run sass:gallery && npm run autoprefix:gallery && npm run sass:gallery -- -w",
     "watch:js": "watchify $npm_package_config_browserify_args -o public/main.js -v",
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
     "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/src gallery/src",
