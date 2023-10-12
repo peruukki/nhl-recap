@@ -12,7 +12,13 @@ import {
   renderLatestGoalTime,
 } from './info-panel';
 
-type PointScorer = { player: string; teamId: number; goals: number; assists: number };
+type PointScorer = {
+  player: string;
+  teamId: number;
+  teamAbbreviation: string;
+  goals: number;
+  assists: number;
+};
 
 describe('info panel', () => {
   describe('latest goal / summary panel', () => {
@@ -29,9 +35,9 @@ describe('info panel', () => {
     it('should show the summary when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
-        { player: 'Derick Brassard', teamId: 3, goals: 2, assists: 1 },
-        { player: 'Mats Zuccarello', teamId: 3, goals: 1, assists: 0 },
-        { player: 'Corey Perry', teamId: 24, goals: 1, assists: 0 },
+        { player: 'Derick Brassard', teamId: 3, teamAbbreviation: 'NYR', goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamId: 3, teamAbbreviation: 'NYR', goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamId: 24, teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
       assertSummary('summary-finished', teams, goals, pointScorers);
       assertSummary('post-game-finished', teams, goals, pointScorers);
@@ -45,9 +51,9 @@ describe('info panel', () => {
     it('should show the summary of an in-progress game when playback has finished', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
-        { player: 'Derick Brassard', teamId: 3, goals: 2, assists: 1 },
-        { player: 'Mats Zuccarello', teamId: 3, goals: 1, assists: 0 },
-        { player: 'Corey Perry', teamId: 24, goals: 1, assists: 0 },
+        { player: 'Derick Brassard', teamId: 3, teamAbbreviation: 'NYR', goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamId: 3, teamAbbreviation: 'NYR', goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamId: 24, teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
       assertSummary('summary-in-progress', teams, goals, pointScorers);
       assertSummary('post-game-in-progress', teams, goals, pointScorers);
@@ -237,9 +243,9 @@ function expectedSummaryPanel(pointScorers: PointScorer[]) {
     div('.summary__heading', 'Top scorers'),
     div(
       '.summary__point-scorers',
-      pointScorers.map(({ player, teamId, goals, assists }) =>
+      pointScorers.map(({ player, teamId, teamAbbreviation, goals, assists }) =>
         div('.summary__point-scorer', [
-          renderTeamLogoSVG(teamId, `player-logo player-logo--${teamId}`),
+          renderTeamLogoSVG(teamAbbreviation, `player-logo player-logo--${teamId}`),
           span('.player', player),
           span('.points', renderPointsText(goals, assists)),
         ]),

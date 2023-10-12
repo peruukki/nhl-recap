@@ -131,7 +131,7 @@ function expectedTeamPanels(
     div('.team-panel.team-panel--away', [
       span('.team-logo', [
         renderTeamLogoSVG(
-          teams.away.id,
+          teams.away.abbreviation,
           `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`,
         ),
       ]),
@@ -143,7 +143,7 @@ function expectedTeamPanels(
       span('.team-panel__team-name', teams.home.abbreviation),
       span('.team-logo', [
         renderTeamLogoSVG(
-          teams.home.id,
+          teams.home.abbreviation,
           `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`,
         ),
       ]),
