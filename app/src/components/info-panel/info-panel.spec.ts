@@ -14,7 +14,6 @@ import {
 
 type PointScorer = {
   player: string;
-  teamId: number;
   teamAbbreviation: string;
   goals: number;
   assists: number;
@@ -35,9 +34,9 @@ describe('info panel', () => {
     it('should show the summary when the playback reaches the end of the game', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
-        { player: 'Derick Brassard', teamId: 3, teamAbbreviation: 'NYR', goals: 2, assists: 1 },
-        { player: 'Mats Zuccarello', teamId: 3, teamAbbreviation: 'NYR', goals: 1, assists: 0 },
-        { player: 'Corey Perry', teamId: 24, teamAbbreviation: 'ANA', goals: 1, assists: 0 },
+        { player: 'Derick Brassard', teamAbbreviation: 'NYR', goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamAbbreviation: 'NYR', goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
       assertSummary('summary-finished', teams, goals, pointScorers);
       assertSummary('post-game-finished', teams, goals, pointScorers);
@@ -51,9 +50,9 @@ describe('info panel', () => {
     it('should show the summary of an in-progress game when playback has finished', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
-        { player: 'Derick Brassard', teamId: 3, teamAbbreviation: 'NYR', goals: 2, assists: 1 },
-        { player: 'Mats Zuccarello', teamId: 3, teamAbbreviation: 'NYR', goals: 1, assists: 0 },
-        { player: 'Corey Perry', teamId: 24, teamAbbreviation: 'ANA', goals: 1, assists: 0 },
+        { player: 'Derick Brassard', teamAbbreviation: 'NYR', goals: 2, assists: 1 },
+        { player: 'Mats Zuccarello', teamAbbreviation: 'NYR', goals: 1, assists: 0 },
+        { player: 'Corey Perry', teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
       assertSummary('summary-in-progress', teams, goals, pointScorers);
       assertSummary('post-game-in-progress', teams, goals, pointScorers);
@@ -243,9 +242,9 @@ function expectedSummaryPanel(pointScorers: PointScorer[]) {
     div('.summary__heading', 'Top scorers'),
     div(
       '.summary__point-scorers',
-      pointScorers.map(({ player, teamId, teamAbbreviation, goals, assists }) =>
+      pointScorers.map(({ player, teamAbbreviation, goals, assists }) =>
         div('.summary__point-scorer', [
-          renderTeamLogoSVG(teamAbbreviation, `player-logo player-logo--${teamId}`),
+          renderTeamLogoSVG(teamAbbreviation, `player-logo player-logo--${teamAbbreviation}`),
           span('.player', player),
           span('.points', renderPointsText(goals, assists)),
         ]),

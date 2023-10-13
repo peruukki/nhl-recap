@@ -105,9 +105,9 @@ function renderSummary(teams: Teams, allGoals: Goal[]) {
           div('.summary__heading', 'Top scorers'),
           div(
             '.summary__point-scorers',
-            topPointScorers.map(({ player, teamId, teamAbbreviation, goals, assists }) =>
+            topPointScorers.map(({ player, teamAbbreviation, goals, assists }) =>
               div('.summary__point-scorer', [
-                PlayerLogo(teamId, teamAbbreviation),
+                PlayerLogo(teamAbbreviation),
                 ...renderPlayerAndPoints(player, goals, assists),
               ]),
             ),
@@ -159,12 +159,11 @@ function getTopPointScorers(teams: Teams, allGoals: Goal[]) {
           }
         >(),
       );
-    return { teamId: team.id, teamAbbreviation: team.abbreviation, pointScorers: teamPointScorers };
+    return { teamAbbreviation: team.abbreviation, pointScorers: teamPointScorers };
   });
 
-  const allPointScorers = pointScorersPerTeam.flatMap(
-    ({ teamId, teamAbbreviation, pointScorers }) =>
-      Array.from(pointScorers.values()).map((points) => ({ teamId, teamAbbreviation, ...points })),
+  const allPointScorers = pointScorersPerTeam.flatMap(({ teamAbbreviation, pointScorers }) =>
+    Array.from(pointScorers.values()).map((points) => ({ teamAbbreviation, ...points })),
   );
   const sortedPointScorers = allPointScorers.sort(
     (a, b) =>

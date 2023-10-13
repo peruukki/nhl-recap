@@ -132,7 +132,7 @@ function expectedTeamPanels(
       span('.team-logo', [
         renderTeamLogoSVG(
           teams.away.abbreviation,
-          `team-logo__image team-logo__image--away team-logo__image--${teams.away.id}`,
+          `team-logo__image team-logo__image--away team-logo__image--${teams.away.abbreviation}`,
         ),
       ]),
       span('.team-panel__team-name', teams.away.abbreviation),
@@ -144,7 +144,7 @@ function expectedTeamPanels(
       span('.team-logo', [
         renderTeamLogoSVG(
           teams.home.abbreviation,
-          `team-logo__image team-logo__image--home team-logo__image--${teams.home.id}`,
+          `team-logo__image team-logo__image--home team-logo__image--${teams.home.abbreviation}`,
         ),
       ]),
     ]),

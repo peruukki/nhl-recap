@@ -1,8 +1,8 @@
-@mixin horizontal-offset($team-id, $offset) {
-  &--#{$team-id}#{&}--away {
+@mixin horizontal-offset($team-abbreviation, $offset) {
+  &--#{$team-abbreviation}#{&}--away {
     right: $offset;
   }
-  &--#{$team-id}#{&}--home {
+  &--#{$team-abbreviation}#{&}--home {
     left: $offset;
   }
 }
@@ -25,23 +25,23 @@
       left: 0;
     }
 
-    @include horizontal-offset(12, 2px); // CAR
-    @include horizontal-offset(25, -2px); // DAL
-    @include horizontal-offset(17, 2px); // DET
-    @include horizontal-offset(13, -1px); // FLA
-    @include horizontal-offset(26, -3px); // LAK
-    @include horizontal-offset(30, 2px); // MIN
-    @include horizontal-offset(8, 2px); // MTL
-    @include horizontal-offset(1, -1px); // NJD
-    @include horizontal-offset(18, 2px); // NSH
-    @include horizontal-offset(3, -1px); // NYR
-    @include horizontal-offset(9, 1px); // OTT
-    @include horizontal-offset(55, -4px); // SEA
-    @include horizontal-offset(28, 3px); // SJS
-    @include horizontal-offset(19, -1px); // STL
-    @include horizontal-offset(14, 1px); // TBL
-    @include horizontal-offset(10, -2px); // TOR
-    @include horizontal-offset(54, -3px); // VGK
-    @include horizontal-offset(15, 1px); // WSH
+    @include horizontal-offset(CAR, 2px);
+    @include horizontal-offset(DAL, -2px);
+    @include horizontal-offset(DET, 2px);
+    @include horizontal-offset(FLA, -1px);
+    @include horizontal-offset(LAK, -3px);
+    @include horizontal-offset(MIN, 2px);
+    @include horizontal-offset(MTL, 2px);
+    @include horizontal-offset(NJD, -1px);
+    @include horizontal-offset(NSH, 2px);
+    @include horizontal-offset(NYR, -1px);
+    @include horizontal-offset(OTT, 1px);
+    @include horizontal-offset(SEA, -4px);
+    @include horizontal-offset(SJS, 3px);
+    @include horizontal-offset(STL, -1px);
+    @include horizontal-offset(TBL, 1px);
+    @include horizontal-offset(TOR, -2px);
+    @include horizontal-offset(VGK, -3px);
+    @include horizontal-offset(WSH, 1px);
   }
 }

@@ -23,7 +23,7 @@ export default function ScorePanel({
   const delimiterVisibilityClass = isBeforeGame ? '' : '.fade-in';
   return div('.game__score-panel', [
     div('.team-panel.team-panel--away', [
-      TeamLogo(teams.away.id, teams.away.abbreviation, 'away'),
+      TeamLogo(teams.away.abbreviation, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),
       span(`.team-panel__team-score${scoreVisibilityClass}`, [awayGoals.length]),
     ]),
@@ -34,7 +34,7 @@ export default function ScorePanel({
     div('.team-panel.team-panel--home', [
       span(`.team-panel__team-score${scoreVisibilityClass}`, [homeGoals.length]),
       span('.team-panel__team-name', teams.home.abbreviation),
-      TeamLogo(teams.home.id, teams.home.abbreviation, 'home'),
+      TeamLogo(teams.home.abbreviation, 'home'),
     ]),
   ]);
 }

@@ -3,16 +3,12 @@ import classNames from 'classnames';
 
 import { renderTeamLogoSVG } from '../utils/logos';
 
-export default function TeamLogo(
-  teamId: number,
-  teamAbbreviation: string,
-  modifier?: string,
-): VNode {
+export default function TeamLogo(teamAbbreviation: string, modifier?: string): VNode {
   const baseClassName = 'team-logo__image';
   const scoreListClass = classNames({
     [baseClassName]: true,
     [`${baseClassName}--${modifier}`]: !!modifier,
-    [`${baseClassName}--${teamId}`]: true,
+    [`${baseClassName}--${teamAbbreviation}`]: true,
   });
   return span('.team-logo', [renderTeamLogoSVG(teamAbbreviation, scoreListClass)]);
 }
