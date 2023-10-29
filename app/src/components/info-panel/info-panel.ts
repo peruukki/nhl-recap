@@ -247,7 +247,7 @@ export function renderLatestGoalAssists(latestGoal: Goal): VNode | VNode[] | str
     return span('.latest-goal__assists-label', 'Unassisted');
   }
   return [
-    div('.latest-goal__assists-label', 'Assists:'),
+    div('.latest-goal__assists-label', 'Assists'),
     ...latestGoal.assists.map((assist) =>
       div('.latest-goal__assist', [
         span('.latest-goal__assister', `${truncatePlayerName(assist.player)} `),
