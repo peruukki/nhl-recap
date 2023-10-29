@@ -96,18 +96,9 @@ function intent(
         return { error: { expected: false } };
       }
       const responseJson = JSON.parse(response.text) as Scores;
-      return responseJson.games.length > 0 &&
-        responseJson.games.some((game) => game.goals.length > 0)
+      return responseJson.games.length > 0
         ? { success: responseJson }
-        : {
-            error: {
-              message:
-                responseJson.games.length === 0
-                  ? 'No latest scores available.'
-                  : 'Received invalid data. 😵‍💫',
-              expected: true,
-            },
-          };
+        : { error: { message: 'No latest scores available.', expected: true } };
     })
     .compose(delayAtLeast(options.fetchStatusDelayMs));
   const successApiResponse$ = apiResponseWithErrors$
