@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=16.0"
+    "node": ">=18.0"
   },
   "config": {
     "browserify_args": "app/src/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
