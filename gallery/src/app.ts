@@ -192,10 +192,8 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
                 gameState: {
                   ...gameData.data,
                   status: gameStatus.status,
-                  // eslint-disable-next-line no-prototype-builtins
-                  gameStats: gameStatus.hasOwnProperty('gameStats')
-                    ? gameStatus.gameStats
-                    : gameData.data.gameStats,
+                  gameStats:
+                    'gameStats' in gameStatus ? gameStatus.gameStats : gameData.data.gameStats,
                 },
                 currentGoals: gameData.data.goals.slice(0, state.goalCount),
               } as GalleryGameT)
