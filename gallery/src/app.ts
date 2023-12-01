@@ -151,6 +151,15 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
       description: 'Playoff game',
       data: scoresAllRegularTimePlayoffs.games[1],
     },
+    {
+      description: 'Game with errors',
+      data: {
+        ...scoresAllRegularTime.games[1],
+        errors: [
+          { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 5 } },
+        ],
+      },
+    },
   ];
 
   const gameStateToggleStateUpdate$ = gameStateToggleChange$.map((event) => {
