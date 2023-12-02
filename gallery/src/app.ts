@@ -156,6 +156,7 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
       data: {
         ...scoresAllRegularTime.games[1],
         errors: [
+          { error: 'MISSING-ALL-GOALS' },
           { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 5 } },
         ],
       },

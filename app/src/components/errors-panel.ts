@@ -3,7 +3,12 @@ import { div, VNode } from '@cycle/dom';
 import type { StatError } from '../types';
 
 export default function ErrorsPanel(errors?: StatError[]): VNode | null {
-  return errors ? div('.game__errors', errors.map(getErrorText)) : null;
+  return errors
+    ? div(
+        '.game__errors',
+        errors.map((error) => div(getErrorText(error))),
+      )
+    : null;
 }
 
 function getErrorText(error: StatError): string {
