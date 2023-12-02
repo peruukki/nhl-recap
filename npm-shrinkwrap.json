@@ -67,7 +67,7 @@
         "watchify": "^4.0.0"
       },
       "engines": {
-        "node": ">=16.0"
+        "node": ">=18.0"
       }
     },
     "node_modules/@ampproject/remapping": {
@@ -12998,6 +12998,13 @@
       "engines": {
         "node": ">=0.8"
       }
+    },
+    "node_modules/pass-stream/node_modules/readable-stream": {
+      "version": "1.0.2",
+      "resolved": "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz",
+      "integrity": "sha512-4DfqsAX+1OToUZ/uHLsC3NUHN7wCn2BNfkG/Eyr2ii4c4suSipjLFbVymS7pj49+aRcSutnK9dIuHS3X7fwApQ==",
+      "dev": true,
+      "license": "BSD"
     },
     "node_modules/path-browserify": {
       "version": "1.0.1",
@@ -27151,6 +27158,13 @@
       "dev": true,
       "requires": {
         "readable-stream": "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz"
+      },
+      "dependencies": {
+        "readable-stream": {
+          "version": "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz",
+          "integrity": "sha512-4DfqsAX+1OToUZ/uHLsC3NUHN7wCn2BNfkG/Eyr2ii4c4suSipjLFbVymS7pj49+aRcSutnK9dIuHS3X7fwApQ==",
+          "dev": true
+        }
       }
     },
     "path-browserify": {
