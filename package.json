@@ -62,6 +62,7 @@
     "svg": "node generate-svg-data.js",
     "test": "npm run lint && npm run ts && npm run spec",
     "ts": "tsc",
+    "ts:watch": "tsc -w",
     "watch": "parallelshell 'npm run watch:assets' 'npm run watch:css' 'npm run watch:js' 'npm run watch:sw'",
     "watch:gallery": "parallelshell 'npm run watch:assets:gallery' 'npm run watch:css:gallery' 'npm run watch:js:gallery'",
     "watch:assets": "watch 'cp -r app/assets/** public' app/assets",
@@ -72,8 +73,7 @@
     "watch:js:gallery": "watchify $npm_package_config_browserify_gallery_args -o public/main-gallery.js -v",
     "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/src gallery/src",
     "watch:lint:css": "watch 'npm run lint:css' app/sass",
-    "watch:sw": "rollup $npm_package_config_rollup_sw_args -w",
-    "watch:ts": "tsc -w"
+    "watch:sw": "rollup $npm_package_config_rollup_sw_args -w"
   },
   "dependencies": {
     "@cycle/dom": "^23.1.0",
