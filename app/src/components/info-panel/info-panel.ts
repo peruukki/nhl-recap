@@ -17,8 +17,8 @@ import {
 import { truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import PlayerLogo from './player-logo';
-import GameStats from './stats/game-stats';
-import TeamStats from './stats/team-stats';
+import GameStats from './stats-panel/game-stats';
+import TeamStats from './stats-panel/team-stats';
 
 type Props = {
   currentGoals: Goal[];
