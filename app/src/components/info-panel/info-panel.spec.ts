@@ -2,15 +2,15 @@ import { div, span, VNode } from '@cycle/dom';
 import _ from 'lodash';
 
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../test/data';
-import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from '../../types';
+import type { GameDisplay, GameStatus, Game as GameT, Goal, Teams } from '../../types';
 import { renderTeamLogoSVG } from '../../utils/logos';
 import Game from '../game';
-import { getGameCard } from '../test-utils';
 import {
   renderLatestGoalAssists,
   renderLatestGoalScorer,
   renderLatestGoalTime,
 } from './info-panel';
+import { getInfoPanel } from './test-utils';
 
 type PointScorer = {
   player: string;
@@ -218,7 +218,7 @@ function assertGameDescription(
 }
 
 function getLatestGoalPanel(vtree: VNode) {
-  return (getGameCard(vtree)?.children?.[1] as VNode).children?.[0] as VNode | undefined;
+  return getInfoPanel(vtree)?.children?.[0] as VNode | undefined;
 }
 
 function getSummaryPanel(vtree: VNode) {
@@ -226,7 +226,7 @@ function getSummaryPanel(vtree: VNode) {
 }
 
 function getGameDescription(vtree: VNode) {
-  return (getGameCard(vtree)?.children?.[1] as VNode).children?.[1] as VNode | undefined;
+  return getInfoPanel(vtree)?.children?.[1] as VNode | undefined;
 }
 
 function expectedLatestGoalPanel(latestGoal: Goal | null) {

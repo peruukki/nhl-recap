@@ -3,8 +3,7 @@ import { VNode } from '@cycle/dom';
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
 import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
 import Game from '../../game';
-import { getGameCard } from '../../test-utils';
-import { expectedStat, StatValue } from '../test-utils';
+import { expectedStat, getStatsPanel, StatValue } from '../test-utils';
 
 const inProgressGameProgress = {
   currentPeriod: 1,
@@ -243,7 +242,5 @@ function assertGameStats(
 }
 
 function getGameStats(vtree: VNode) {
-  return ((getGameCard(vtree)?.children?.[1] as VNode).children?.[2] as VNode)?.children?.[0] as
-    | VNode
-    | undefined;
+  return getStatsPanel(vtree)?.children?.[0] as VNode | undefined;
 }

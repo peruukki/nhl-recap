@@ -1,6 +1,16 @@
 import { div, span, VNode } from '@cycle/dom';
 
+import { getGameCard } from '../test-utils';
+
 export type StatValue = { className?: string; value: number | string | (VNode | number)[] };
+
+export function getInfoPanel(vtree: VNode): VNode | undefined {
+  return getGameCard(vtree)?.children?.[1] as VNode | undefined;
+}
+
+export function getStatsPanel(vtree: VNode): VNode | undefined {
+  return getInfoPanel(vtree)?.children?.[2] as VNode | undefined;
+}
 
 export function expectedStat({
   away,
