@@ -17,8 +17,7 @@ import {
 import { truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import PlayerLogo from './player-logo';
-import GameStats from './stats-panel/game-stats';
-import TeamStats from './stats-panel/team-stats';
+import StatsPanel from './stats-panel';
 
 type Props = {
   currentGoals: Goal[];
@@ -74,15 +73,17 @@ export default function InfoPanel({
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
-      showGameStats ? GameStats(teams, gameStats) : null,
-      (showPreGameStats || showAfterGameStats) && teamStats
-        ? TeamStats(
-            teams,
-            showProgressInfo || showAfterGameStats,
-            showAfterGameStats,
+      showGameStats || ((showPreGameStats || showAfterGameStats) && teamStats)
+        ? StatsPanel({
+            gameStats,
             isPlayoffGame,
+            showAfterGameStats,
+            showGameStats,
+            showPreGameStats,
+            showProgressInfo,
             teamStats,
-          )
+            teams,
+          })
         : null,
     ],
   );

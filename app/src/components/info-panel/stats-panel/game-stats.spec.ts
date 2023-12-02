@@ -243,5 +243,7 @@ function assertGameStats(
 }
 
 function getGameStats(vtree: VNode) {
-  return (getGameCard(vtree)?.children?.[1] as VNode).children?.[2] as VNode | undefined;
+  return ((getGameCard(vtree)?.children?.[1] as VNode).children?.[2] as VNode)?.children?.[0] as
+    | VNode
+    | undefined;
 }

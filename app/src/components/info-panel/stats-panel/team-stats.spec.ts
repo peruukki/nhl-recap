@@ -440,5 +440,7 @@ function assertTeamStats(
 }
 
 function getTeamStats(vtree: VNode) {
-  return (getGameCard(vtree)?.children?.[1] as VNode).children?.[3] as VNode | undefined;
+  return ((getGameCard(vtree)?.children?.[1] as VNode).children?.[2] as VNode)?.children?.[1] as
+    | VNode
+    | undefined;
 }
