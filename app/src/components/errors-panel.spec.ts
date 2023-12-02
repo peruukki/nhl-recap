@@ -42,5 +42,10 @@ function getErrorsPanel(vtree: VNode) {
 }
 
 function expectedErrorsPanel(errors: string[] | null) {
-  return errors ? div('.game__errors', errors) : null;
+  return errors
+    ? div(
+        '.game__errors',
+        errors.map((error) => div(error)),
+      )
+    : null;
 }
