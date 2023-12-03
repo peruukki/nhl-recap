@@ -1,0 +1,40 @@
+.stats-panel {
+  flex-direction: column;
+  height: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: $background-stats-panel;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: height $height-duration $height-timing-function;
+  }
+
+  .game--pre-game & {
+    height: get-stats-panel-height($team-stats-line-count-not-finished);
+  }
+
+  .game--post-game-in-progress & {
+    height: get-stats-panel-height($game-stats-line-count) +
+      get-stats-section-height($team-stats-line-count-not-finished);
+  }
+
+  .game--post-game-finished & {
+    height: get-stats-panel-height($game-stats-line-count) +
+      get-stats-section-height($team-stats-line-count-finished);
+  }
+
+  .game__info-panel--playoff & {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .game--pre-game .game__info-panel--playoff & {
+    height: get-stats-panel-height($team-stats-line-count-playoff);
+  }
+
+  .game--post-game-in-progress .game__info-panel--playoff &,
+  .game--post-game-finished .game__info-panel--playoff & {
+    height: get-stats-panel-height($game-stats-line-count) +
+      get-stats-section-height($team-stats-line-count-playoff);
+  }
+}

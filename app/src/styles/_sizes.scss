@@ -2,14 +2,13 @@ $game-card-line-height: 1.5rem;
 $game-card-margin: 0.2rem;
 $game-card-width: 15.75rem;
 
-$game-description-padding-height: 0.5rem;
-$game-description-height: $game-card-line-height + $game-description-padding-height;
+$panel-padding-height: 0.75rem;
+$game-description-height: $game-card-line-height + $panel-padding-height;
 
 $stats-line-height: $game-card-line-height;
-$stats-padding-height: 1rem;
 
-$latest-goal-height: 8.5rem;
-$latest-goal-padding-height: 0.5rem;
+$latest-goal-height: 8.75rem;
+$latest-goal-padding-height: $panel-padding-height;
 
 $content-width: 2 * ($game-card-width + 2 * $game-card-margin) + 0.1rem;
 
@@ -18,6 +17,10 @@ $team-stats-line-count-not-finished: 3;
 $team-stats-line-count-finished: 7;
 $team-stats-line-count-playoff: 4;
 
-@function get-stats-height($line-count) {
-  @return $stats-padding-height + $line-count * $stats-line-height;
+@function get-stats-section-height($line-count) {
+  @return $panel-padding-height + $line-count * $stats-line-height;
+}
+
+@function get-stats-panel-height($line-count) {
+  @return $panel-padding-height + get-stats-section-height($line-count);
 }

@@ -1,36 +1,13 @@
 .stats {
-  @include delayed-animation;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
+  padding-top: $panel-padding-height;
   box-sizing: border-box;
 
   &__heading {
     color: $color-accent-light;
     font-size: 1rem;
     text-transform: uppercase;
-  }
-
-  &--game-stats {
-    height: get-stats-height($game-stats-line-count);
-    background-color: $background-game-stats;
-  }
-
-  &--team-stats {
-    height: get-stats-height($team-stats-line-count-not-finished);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    background-color: $background-team-stats;
-
-    .game--post-game-finished & {
-      height: get-stats-height($team-stats-line-count-finished);
-    }
-
-    .game__info-panel--playoff & {
-      height: get-stats-height($team-stats-line-count-playoff);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
   }
 }

@@ -73,7 +73,7 @@ export default function InfoPanel({
       showProgressInfo
         ? div('.game-description.fade-in', renderGameStatus(status, startTime))
         : null,
-      showGameStats || ((showPreGameStats || showAfterGameStats) && teamStats)
+      gameDisplay !== 'playback'
         ? StatsPanel({
             gameStats,
             isPlayoffGame,

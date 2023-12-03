@@ -25,16 +25,21 @@ export default function StatsPanel({
   teamStats,
   teams,
 }: Props) {
-  return div('.stats-panel', [
-    showGameStats ? GameStats(teams, gameStats) : null,
-    (showPreGameStats || showAfterGameStats) && teamStats
-      ? TeamStats(
-          teams,
-          showProgressInfo || showAfterGameStats,
-          showAfterGameStats,
-          isPlayoffGame,
-          teamStats,
-        )
+  return div(
+    '.stats-panel',
+    showGameStats || ((showPreGameStats || showAfterGameStats) && teamStats)
+      ? [
+          showGameStats ? GameStats(teams, gameStats) : null,
+          (showPreGameStats || showAfterGameStats) && teamStats
+            ? TeamStats(
+                teams,
+                showProgressInfo || showAfterGameStats,
+                showAfterGameStats,
+                isPlayoffGame,
+                teamStats,
+              )
+            : null,
+        ]
       : null,
-  ]);
+  );
 }
