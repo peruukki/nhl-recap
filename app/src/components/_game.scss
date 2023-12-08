@@ -105,9 +105,6 @@
 
   &__errors {
     padding: $panel-padding-height 0;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
-    background-color: $background-game-errors;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
