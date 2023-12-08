@@ -3,8 +3,6 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 0;
-  border-bottom-left-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
   background-color: $background-stats-panel;
 
   @media (prefers-reduced-motion: no-preference) {
@@ -23,11 +21,6 @@
   .game--post-game-finished & {
     height: get-stats-panel-height($game-stats-line-count) +
       get-stats-section-height($team-stats-line-count-finished);
-  }
-
-  .game__info-panel--playoff & {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
 
   .game--pre-game .game__info-panel--playoff & {
