@@ -152,11 +152,20 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
       data: scoresAllRegularTimePlayoffs.games[1],
     },
     {
-      description: 'Game with errors',
+      description: 'Regular season game with errors',
       data: {
         ...scoresAllRegularTime.games[1],
         errors: [
           { error: 'MISSING-ALL-GOALS' },
+          { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 5 } },
+        ],
+      },
+    },
+    {
+      description: 'Playoff game with error',
+      data: {
+        ...scoresAllRegularTimePlayoffs.games[1],
+        errors: [
           { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 5 } },
         ],
       },
