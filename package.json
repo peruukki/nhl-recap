@@ -20,7 +20,7 @@
     "browserify_args": "app/src/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
     "browserify_gallery_args": "gallery/src/main.ts -p [ tsify --project ./gallery ]",
     "rollup_sw_args": "app/src/service-worker/service-worker.ts -c --file public/service-worker.js",
-    "hashmark_args": "-s -r -c public -m public/assets.json -l 8 public/{name}-{hash}{ext}"
+    "hashmark_args": "-s -r -c public -m assets.json -l 8 {name}-{hash}{ext}"
   },
   "scripts": {
     "autoprefix": "postcss --use autoprefixer --replace public/main.css",
@@ -109,7 +109,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-watch": "^8.0.0",
-    "hashmark": "^3.1.0",
+    "hashmark": "^5.0.0",
     "http-server": "^14.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
