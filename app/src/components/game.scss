@@ -2,7 +2,8 @@
   width: $game-card-width;
   margin: $game-card-margin;
   float: left;
-  transition: transform $focus-duration $focus-timing-function,
+  transition:
+    transform $focus-duration $focus-timing-function,
     background-color $focus-duration $focus-timing-function;
   border-radius: $border-radius;
   background: $background-game;
