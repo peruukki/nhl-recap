@@ -3,6 +3,7 @@
     "allowJs": true,
     "baseUrl": ".",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
     "lib": ["dom", "ESNext"],
     "module": "commonjs",
     "noEmit": true,
