@@ -30,7 +30,7 @@
         "@rollup/plugin-node-resolve": "^13.3.0",
         "@rollup/plugin-replace": "^4.0.0",
         "@types/jest": "^29.2.3",
-        "@types/lodash": "^4.14.182",
+        "@types/lodash": "^4.14.202",
         "@typescript-eslint/eslint-plugin": "^5.22.0",
         "@typescript-eslint/parser": "^5.44.0",
         "autoprefixer": "^10.4.7",
@@ -3422,9 +3422,9 @@
       "dev": true
     },
     "node_modules/@types/lodash": {
-      "version": "4.14.182",
-      "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.182.tgz",
-      "integrity": "sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==",
+      "version": "4.14.202",
+      "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.202.tgz",
+      "integrity": "sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==",
       "dev": true
     },
     "node_modules/@types/node": {
@@ -19765,9 +19765,9 @@
       "dev": true
     },
     "@types/lodash": {
-      "version": "4.14.182",
-      "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.182.tgz",
-      "integrity": "sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==",
+      "version": "4.14.202",
+      "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.202.tgz",
+      "integrity": "sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==",
       "dev": true
     },
     "@types/node": {
