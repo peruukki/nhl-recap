@@ -19,7 +19,7 @@
   "config": {
     "browserify_args": "app/src/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
     "browserify_gallery_args": "gallery/src/main.ts -p [ tsify --project ./gallery ]",
-    "rollup_sw_args": "app/src/service-worker/service-worker.ts -c --file public/service-worker.js",
+    "rollup_sw_args": "app/src/service-worker/service-worker.ts -c --file public/service-worker.js --bundleConfigAsCjs",
     "hashmark_args": "-s -r -c public -m assets.json -l 8 {name}-{hash}{ext}"
   },
   "scripts": {
@@ -93,8 +93,8 @@
     "@babel/core": "^7.23.6",
     "@babel/preset-env": "^7.23.6",
     "@babel/preset-typescript": "^7.23.3",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
     "@types/jest": "^29.5.11",
     "@types/lodash": "^4.14.202",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
@@ -120,7 +120,7 @@
     "postcss-cli": "^11.0.0",
     "prettier": "^3.1.1",
     "replaceinfiles": "^1.1.3",
-    "rollup": "^2.72.0",
+    "rollup": "^4.9.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-workbox-inject": "^2.0.0",
     "sass": "^1.69.5",
