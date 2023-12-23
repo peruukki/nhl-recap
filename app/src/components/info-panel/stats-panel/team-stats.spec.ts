@@ -379,7 +379,7 @@ function assertPreGameStatsAreShown(
   goals: Goal[],
 ) {
   assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (selector?: string) =>
-    expect(selector).toEqual('div.stats.stats--team-stats'),
+    expect(selector).toEqual('div.stats'),
   );
 }
 function assertPreGameStatsAreNotShown(
@@ -388,7 +388,7 @@ function assertPreGameStatsAreNotShown(
   goals: Goal[],
 ) {
   assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (selector?: string) =>
-    expect(selector).not.toEqual('div.stats.stats--team-stats'),
+    expect(selector).not.toEqual('div.stats'),
   );
 }
 function assertAfterGameStatsAreShown(
@@ -397,7 +397,7 @@ function assertAfterGameStatsAreShown(
   goals: Goal[],
 ) {
   assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (selector?: string) =>
-    expect(selector).toEqual('div.stats.stats--team-stats.stats--after-game'),
+    expect(selector).toEqual('div.stats'),
   );
 }
 function assertAfterGameStatsAreNotShown(
@@ -406,7 +406,7 @@ function assertAfterGameStatsAreNotShown(
   goals: Goal[],
 ) {
   assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (selector?: string) =>
-    expect(selector).not.toEqual('div.stats.stats--team-stats.stats--after-game'),
+    expect(selector).not.toEqual('div.stats'),
   );
 }
 function assertStatsExistence(

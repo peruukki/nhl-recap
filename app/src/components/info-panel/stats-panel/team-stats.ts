@@ -6,12 +6,10 @@ import { renderStat } from './common';
 export default function TeamStats(
   teams: Teams,
   fadeIn: boolean,
-  showAfterGameStats: boolean,
   isPlayoffGame: boolean,
   stats?: TeamStatsT,
 ): VNode {
-  const modifierClass = showAfterGameStats ? '.stats--after-game' : '';
-  return div(`.stats.stats--team-stats${modifierClass}`, { class: { 'fade-in': fadeIn } }, [
+  return div('.stats', { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
     renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderStat(teams, stats?.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
