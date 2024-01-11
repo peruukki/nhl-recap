@@ -21,7 +21,7 @@ export default function ScorePanel({
 }: Props): VNode {
   const scoreVisibilityClass = isBeforeGame ? '.team-panel__team-score--hidden' : '.fade-in';
   const delimiterVisibilityClass = isBeforeGame ? '' : '.fade-in';
-  return div('.game__score-panel', [
+  return div('.score-panel', [
     div('.team-panel.team-panel--away', [
       TeamLogo(teams.away.abbreviation, 'away'),
       span('.team-panel__team-name', teams.away.abbreviation),

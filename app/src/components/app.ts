@@ -1,4 +1,4 @@
-import { button, div, h1, header, MainDOMSource, section, span, VNode } from '@cycle/dom';
+import { MainDOMSource, VNode, button, div, h1, header, main, span } from '@cycle/dom';
 import { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { Stream } from 'xstream';
@@ -61,7 +61,7 @@ function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuc
 
 type Options = { fetchStatusDelayMs: number };
 
-export default function main(
+export default function app(
   animations: Animations,
   $window: Window,
   options: Options,
@@ -225,10 +225,7 @@ function view(state$: Stream<State>): Stream<VNode> {
             date: scores.date,
           }),
         ),
-        section(
-          '.score-panel',
-          renderScores({ games: scores.games, currentGoals, status, gameDisplays }),
-        ),
+        main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
       ]),
   );
 }

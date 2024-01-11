@@ -63,7 +63,7 @@ function highlightGoalCountChange(classModifier: string, gameIndex: number): voi
 }
 
 function highlightLatestGoalChange(gameIndex: number): void {
-  const element = document.querySelectorAll('.game__info-panel')[gameIndex];
+  const element = document.querySelectorAll('.info-panel')[gameIndex];
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 750 });
   }

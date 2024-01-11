@@ -58,12 +58,12 @@ export default function InfoPanel({
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
 
   return div(
-    '.game__info-panel',
+    '.info-panel',
     {
       class: {
-        'game__info-panel--playoff': isPlayoffGame,
-        'game__info-panel--with-game-stats': !isPlayoffGame && gameStats,
-        'game__info-panel--playoff--with-game-stats': isPlayoffGame && gameStats,
+        'info-panel--playoff': isPlayoffGame,
+        'info-panel--with-game-stats': !isPlayoffGame && gameStats,
+        'info-panel--playoff--with-game-stats': isPlayoffGame && gameStats,
       },
     },
     [
