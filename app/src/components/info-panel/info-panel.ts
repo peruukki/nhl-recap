@@ -17,6 +17,7 @@ import {
 import { truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import PlayerLogo from './player-logo';
+import { getTeamStatCount } from './stat-counts';
 import StatsPanel from './stats-panel';
 
 type Props = {
@@ -56,14 +57,16 @@ export default function InfoPanel({
   const showPreGameStats = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
   const showAfterGameStats = gameDisplay === 'post-game-finished';
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
+  const teamStatLineCount = teamStats
+    ? getTeamStatCount(Object.keys(teamStats), isPlayoffGame) + 1
+    : 0;
 
   return div(
     '.info-panel',
     {
       class: {
-        'info-panel--playoff': isPlayoffGame,
-        'info-panel--with-game-stats': !isPlayoffGame && gameStats,
-        'info-panel--playoff--with-game-stats': isPlayoffGame && gameStats,
+        'info-panel--with-game-stats': gameStats,
+        [`info-panel--team-stats-line-count-${teamStatLineCount}`]: !!teamStatLineCount,
       },
     },
     [

@@ -15,9 +15,7 @@ $latest-goal-padding-height: $panel-padding-height;
 $content-width: 2 * ($game-card-width + 2 * $game-card-margin) + 0.1rem;
 
 $game-stats-line-count: 9;
-$team-stats-line-count-not-finished: 3;
-$team-stats-line-count-finished: 7;
-$team-stats-line-count-playoff: 4;
+$team-stats-line-count-max: 7;
 
 @function get-stats-section-height($line-count) {
   @return $panel-padding-height + $line-count * $stats-line-height;
