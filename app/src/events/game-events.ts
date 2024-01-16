@@ -1,8 +1,5 @@
 import _ from 'lodash';
 
-import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './constants';
-import periodEvents from './period-events';
-import shootoutEvents from './shootout-events';
 import {
   Game,
   GameEndTime,
@@ -10,29 +7,35 @@ import {
   GameProgress,
   Goal,
   GoalWithUpdateFields,
-  isShootoutGoal,
   PauseEvent,
   PeriodGameEvents,
   TextualPeriod,
+  isShootoutGoal,
 } from '../types';
+import {
+  GAMES_START_PAUSE_EVENT_COUNT,
+  GAME_PRE_SUMMARY_PAUSE_EVENT_COUNT,
+  GAME_SUMMARY_PAUSE_EVENT_COUNT,
+  GOAL_PAUSE_EVENT_COUNT,
+  PERIOD_END_PAUSE_EVENT_COUNT,
+  PERIOD_OVERTIME,
+  PERIOD_SHOOTOUT,
+} from './constants';
+import periodEvents from './period-events';
+import shootoutEvents from './shootout-events';
 import { elapsedTimeToRemainingTime, getPeriodOrdinal, hasGameFinished } from './utils';
 
 export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
-  // These event counts determine for how many number of extra events we pause the clock
-  const pauseMultiplier = 50;
-  const gamesStartPauseEventCount = 1 * pauseMultiplier;
-  const periodEndPauseEventCount = 3 * pauseMultiplier;
-  const goalPauseEventCount = 2 * pauseMultiplier;
-  const gamePreSummaryPauseEventCount = 1 * pauseMultiplier;
-  const gameSummaryPauseEventCount = 1 * pauseMultiplier;
-
   const endTime = getClockEndTime(scores);
-  const eventsByPeriod = getAllPeriodEvents(scores, endTime, goalPauseEventCount);
+  const eventsByPeriod = getAllPeriodEvents(scores, endTime, GOAL_PAUSE_EVENT_COUNT);
   const completedPeriodEvents = endTime.inProgress
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
   const periodEnds = completedPeriodEvents.map((onePeriodEvents) =>
-    appendDelay({ period: onePeriodEvents.period, type: 'period-end' }, periodEndPauseEventCount),
+    appendDelay(
+      { period: onePeriodEvents.period, type: 'period-end' },
+      PERIOD_END_PAUSE_EVENT_COUNT,
+    ),
   );
   const allPeriodEvents = eventsByPeriod.map((onePeriodEvents) => onePeriodEvents.events);
   const periodSequences = _.chain(allPeriodEvents)
@@ -43,13 +46,16 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
     .value();
 
   return _.concat(
-    appendDelay({ type: 'start' }, gamesStartPauseEventCount),
+    appendDelay({ type: 'start' }, GAMES_START_PAUSE_EVENT_COUNT),
     ...periodSequences,
     appendDelay(
       { type: 'pre-summary', inProgress: !!endTime.inProgress },
-      gamePreSummaryPauseEventCount,
+      GAME_PRE_SUMMARY_PAUSE_EVENT_COUNT,
     ),
-    appendDelay({ type: 'summary', inProgress: !!endTime.inProgress }, gameSummaryPauseEventCount),
+    appendDelay(
+      { type: 'summary', inProgress: !!endTime.inProgress },
+      GAME_SUMMARY_PAUSE_EVENT_COUNT,
+    ),
     {
       type: 'end',
       inProgress: !!endTime.inProgress,

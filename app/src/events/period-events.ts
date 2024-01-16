@@ -1,15 +1,14 @@
 import _ from 'lodash';
 
 import type {
-  GameEvent,
-  GoalWithUpdateFields,
   GameEndTime,
+  GameEvent,
   GameEventClockTime,
+  GoalWithUpdateFields,
   PauseEvent,
 } from '../types';
+import { ADVANCE_CLOCK_STEP } from './constants';
 import { getGoalEvents, hasGoalBeenScored } from './utils';
-
-const advanceClockStep = 3;
 
 export default function periodEvents(
   period: number | 'OT',
@@ -70,7 +69,7 @@ function generateTenthOfASecondEvents(
   const minute = 0;
   return _.flatten(
     secondRange(minute, lastMinute, lastSecond).map((second) =>
-      _.range(9, -1, -advanceClockStep).map((tenthOfASecond) => ({
+      _.range(9, -1, -ADVANCE_CLOCK_STEP).map((tenthOfASecond) => ({
         type: 'clock',
         period,
         minute,
@@ -86,8 +85,8 @@ function minuteRange(firstMinute: number, lastMinute: number): number[] {
 }
 
 function secondRange(minute: number, lastMinute: number, lastSecond: number): number[] {
-  const rangeEnd = minute === lastMinute ? Math.max(lastSecond - advanceClockStep, -1) : -1;
-  const initialRange = _.range(59, rangeEnd, -advanceClockStep);
+  const rangeEnd = minute === lastMinute ? Math.max(lastSecond - ADVANCE_CLOCK_STEP, -1) : -1;
+  const initialRange = _.range(59, rangeEnd, -ADVANCE_CLOCK_STEP);
   // Ensure the final seconds of the last minute are included
   const isLastMinute = minute === lastMinute || (minute === 0 && lastMinute === -1);
   const lastIncludedSecond = _.last(initialRange) as number;
