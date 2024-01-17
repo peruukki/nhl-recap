@@ -20,7 +20,14 @@ const baseGoal = {
 
 describe('periodEvents', () => {
   it('should include full period events if no end time is given', () => {
-    const clockEvents = periodEvents(1, periodLengthInMinutes, null, [], goalPauseEventCount);
+    const clockEvents = periodEvents(
+      1,
+      periodLengthInMinutes,
+      null,
+      [],
+      goalPauseEventCount,
+      clockAdvanceStep,
+    );
     expect(clockEvents.length).toEqual(62);
     expect(_.last(clockEvents)).toEqual({ type: 'clock', period: 1, minute: 0, second: 0 });
   });
@@ -34,6 +41,7 @@ describe('periodEvents', () => {
       endTime,
       [],
       goalPauseEventCount,
+      clockAdvanceStep,
     );
 
     const secondEvents = _.range(59, endTime.second - 1, -clockAdvanceStep).map((second) => ({
@@ -51,7 +59,7 @@ describe('periodEvents', () => {
     const period = 1;
     const clockEventCount = ((periodLengthInMinutes - 1) * 60) / clockAdvanceStep + 1;
     const clockEvents = _.take(
-      periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCount),
+      periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCount, clockAdvanceStep),
       clockEventCount,
     );
 
@@ -69,7 +77,14 @@ describe('periodEvents', () => {
     ([1, 2, 'OT'] as const).forEach((period) => {
       // Use only one minute period length to speed up and simplify the test
       const periodLength = 1;
-      const clockEvents = periodEvents(period, periodLength, null, [], goalPauseEventCount);
+      const clockEvents = periodEvents(
+        period,
+        periodLength,
+        null,
+        [],
+        goalPauseEventCount,
+        clockAdvanceStep,
+      );
 
       const secondEvents = _.range(59, -1, -clockAdvanceStep)
         .concat(0)
@@ -90,7 +105,7 @@ describe('periodEvents', () => {
     const periodLength = 1;
     // Take only the first second to speed up and simplify the test
     const clockEvents = _.take(
-      periodEvents(period, periodLength, null, [], goalPauseEventCount),
+      periodEvents(period, periodLength, null, [], goalPauseEventCount, clockAdvanceStep),
       5,
     );
 
@@ -120,6 +135,7 @@ describe('periodEvents', () => {
         null,
         allGoalsSorted,
         EVENT_COUNTS.pause,
+        clockAdvanceStep,
       );
 
       expect(_.last(clockEvents)).toEqual({ type: 'clock', period: 1, minute: 0, second: 0 });
@@ -215,6 +231,7 @@ function assertFinalSecondsGoalUpdate(
     gameEndTime,
     [goal],
     goalPauseEventCount,
+    clockAdvanceStep,
   );
 
   const expected = {

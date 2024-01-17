@@ -14,7 +14,12 @@ import {
   PauseEvent,
   Period,
 } from '../types';
-import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from './constants';
+import {
+  ADVANCE_CLOCK_STEP_MAX,
+  ADVANCE_CLOCK_STEP_MIN,
+  PERIOD_OVERTIME,
+  PERIOD_SHOOTOUT,
+} from './constants';
 
 export function remainingTimeToElapsedTime({ period, minute, second }: ClockTimeRemaining): {
   period: number | string;
@@ -106,4 +111,16 @@ export function getGoalEvents(
     ..._.times(goalPauseEventCount, () => ({ type: 'pause' as const })),
     { ...currentGameEvent, type: 'game-update', update: { gameIndex, type: 'end' } },
   ];
+}
+
+export function getAdvanceClockStep(gameCount: number): number {
+  const maxGameCount = 16;
+  const normalizedGameCount = Math.min(Math.max(gameCount - 1, 0), maxGameCount - 1); // 0–15
+  // Spread evenly across min and max clock step according to game count
+  return (
+    ADVANCE_CLOCK_STEP_MIN +
+    Math.floor(
+      (normalizedGameCount / maxGameCount) * (ADVANCE_CLOCK_STEP_MAX - ADVANCE_CLOCK_STEP_MIN + 1),
+    )
+  );
 }

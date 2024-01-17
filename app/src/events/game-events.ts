@@ -23,11 +23,22 @@ import {
 } from './constants';
 import periodEvents from './period-events';
 import shootoutEvents from './shootout-events';
-import { elapsedTimeToRemainingTime, getPeriodOrdinal, hasGameFinished } from './utils';
+import {
+  elapsedTimeToRemainingTime,
+  getAdvanceClockStep,
+  getPeriodOrdinal,
+  hasGameFinished,
+} from './utils';
 
 export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
+  const advanceClockStep = getAdvanceClockStep(scores.length);
   const endTime = getClockEndTime(scores);
-  const eventsByPeriod = getAllPeriodEvents(scores, endTime, GOAL_PAUSE_EVENT_COUNT);
+  const eventsByPeriod = getAllPeriodEvents(
+    scores,
+    endTime,
+    GOAL_PAUSE_EVENT_COUNT,
+    advanceClockStep,
+  );
   const completedPeriodEvents = endTime.inProgress
     ? _.dropRight(eventsByPeriod, 1)
     : eventsByPeriod;
@@ -71,10 +82,11 @@ function getAllPeriodEvents(
   scores: Game[],
   endTime: GameEndTime,
   goalPauseEventCount: number,
+  advanceClockStep: number,
 ): PeriodGameEvents[] {
   const allGoalsSorted = getAllGoalsSorted(scores);
-  return getRegularPeriodGameEvents(endTime, allGoalsSorted, goalPauseEventCount)
-    .concat(getOvertimeGameEvents(endTime, allGoalsSorted, goalPauseEventCount))
+  return getRegularPeriodGameEvents(endTime, allGoalsSorted, goalPauseEventCount, advanceClockStep)
+    .concat(getOvertimeGameEvents(endTime, allGoalsSorted, goalPauseEventCount, advanceClockStep))
     .concat(getShootoutGameEvents(endTime, allGoalsSorted, goalPauseEventCount));
 }
 
@@ -82,6 +94,7 @@ function getRegularPeriodGameEvents(
   endTime: GameEndTime,
   allGoalsSorted: GoalWithUpdateFields[],
   goalPauseEventCount: number,
+  advanceClockStep: number,
 ): PeriodGameEvents[] {
   const partialPeriodNumber = getPartialPeriodNumber(endTime);
   const lastFullPeriodNumber = partialPeriodNumber
@@ -89,13 +102,20 @@ function getRegularPeriodGameEvents(
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map((period) => ({
     period,
-    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount),
+    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount, advanceClockStep),
   }));
 
   if (partialPeriodNumber) {
     const partialPeriod = {
       period: partialPeriodNumber,
-      events: periodEvents(partialPeriodNumber, 20, endTime, allGoalsSorted, goalPauseEventCount),
+      events: periodEvents(
+        partialPeriodNumber,
+        20,
+        endTime,
+        allGoalsSorted,
+        goalPauseEventCount,
+        advanceClockStep,
+      ),
     };
     return fullPeriods.concat(partialPeriod);
   }
@@ -118,6 +138,7 @@ function getOvertimeGameEvents(
   endTime: GameEndTime,
   allGoalsSorted: GoalWithUpdateFields[],
   goalPauseEventCount: number,
+  advanceClockStep: number,
 ): PeriodGameEvents[] {
   if (endTime.period !== PERIOD_SHOOTOUT && endTime.period !== PERIOD_OVERTIME) {
     return [];
@@ -126,7 +147,14 @@ function getOvertimeGameEvents(
   return [
     {
       period: PERIOD_OVERTIME,
-      events: periodEvents(PERIOD_OVERTIME, 5, periodEnd, allGoalsSorted, goalPauseEventCount),
+      events: periodEvents(
+        PERIOD_OVERTIME,
+        5,
+        periodEnd,
+        allGoalsSorted,
+        goalPauseEventCount,
+        advanceClockStep,
+      ),
     },
   ];
 }

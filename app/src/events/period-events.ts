@@ -7,7 +7,6 @@ import type {
   GoalWithUpdateFields,
   PauseEvent,
 } from '../types';
-import { ADVANCE_CLOCK_STEP } from './constants';
 import { getGoalEvents, hasGoalBeenScored } from './utils';
 
 export default function periodEvents(
@@ -16,12 +15,19 @@ export default function periodEvents(
   endTime: Pick<GameEndTime, 'minute' | 'second'> | null,
   allGoalsSorted: GoalWithUpdateFields[],
   goalPauseEventCount: number,
+  advanceClockStep: number,
 ): (GameEvent | PauseEvent)[] {
   const lastMinute = endTime?.minute ?? -1;
   const lastSecond = endTime?.second ?? -1;
 
   // Advance clock by second for all minutes but the last one of the 3rd period
-  const allSecondEvents = generateSecondEvents(period, durationInMinutes, lastMinute, lastSecond);
+  const allSecondEvents = generateSecondEvents(
+    period,
+    durationInMinutes,
+    lastMinute,
+    lastSecond,
+    advanceClockStep,
+  );
   const secondEvents =
     period === 3
       ? _.dropRightWhile(allSecondEvents, (event) => event.minute === 0)
@@ -30,7 +36,7 @@ export default function periodEvents(
   // Advance clock by tenth of a second for the last minute of the 3rd period
   const tenthOfASecondEvents =
     period === 3 && lastMinute < 1
-      ? generateTenthOfASecondEvents(period, lastMinute, lastSecond)
+      ? generateTenthOfASecondEvents(period, lastMinute, lastSecond, advanceClockStep)
       : [];
 
   const firstEvent: GameEventClockTime = {
@@ -48,10 +54,11 @@ function generateSecondEvents(
   durationInMinutes: number,
   lastMinute: number,
   lastSecond: number,
+  advanceClockStep: number,
 ): GameEventClockTime[] {
   return _.flatten(
     minuteRange(durationInMinutes, lastMinute).map((minute) =>
-      secondRange(minute, lastMinute, lastSecond).map((second) => ({
+      secondRange(minute, lastMinute, lastSecond, advanceClockStep).map((second) => ({
         type: 'clock',
         period,
         minute,
@@ -65,11 +72,12 @@ function generateTenthOfASecondEvents(
   period: GameEventClockTime['period'],
   lastMinute: number,
   lastSecond: number,
+  advanceClockStep: number,
 ): GameEventClockTime[] {
   const minute = 0;
   return _.flatten(
-    secondRange(minute, lastMinute, lastSecond).map((second) =>
-      _.range(9, -1, -ADVANCE_CLOCK_STEP).map((tenthOfASecond) => ({
+    secondRange(minute, lastMinute, lastSecond, advanceClockStep).map((second) =>
+      _.range(9, -1, -advanceClockStep).map((tenthOfASecond) => ({
         type: 'clock',
         period,
         minute,
@@ -84,9 +92,14 @@ function minuteRange(firstMinute: number, lastMinute: number): number[] {
   return _.range(firstMinute - 1, Math.max(lastMinute - 1, -1), -1);
 }
 
-function secondRange(minute: number, lastMinute: number, lastSecond: number): number[] {
-  const rangeEnd = minute === lastMinute ? Math.max(lastSecond - ADVANCE_CLOCK_STEP, -1) : -1;
-  const initialRange = _.range(59, rangeEnd, -ADVANCE_CLOCK_STEP);
+function secondRange(
+  minute: number,
+  lastMinute: number,
+  lastSecond: number,
+  advanceClockStep: number,
+): number[] {
+  const rangeEnd = minute === lastMinute ? Math.max(lastSecond - advanceClockStep, -1) : -1;
+  const initialRange = _.range(59, rangeEnd, -advanceClockStep);
   // Ensure the final seconds of the last minute are included
   const isLastMinute = minute === lastMinute || (minute === 0 && lastMinute === -1);
   const lastIncludedSecond = _.last(initialRange) as number;
