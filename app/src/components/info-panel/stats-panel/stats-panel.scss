@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  height: 0; // For expand animation
   background-color: $background-stats-panel;
 
   @media (prefers-reduced-motion: no-preference) {
