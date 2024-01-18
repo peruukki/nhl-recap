@@ -4,7 +4,7 @@ import type { GameStats as GameStatsT, Teams } from '../../../types';
 import { renderStat } from './common';
 
 export default function GameStats(teams: Teams, stats: GameStatsT) {
-  return div('.stats.stats--game-stats', { class: { 'fade-in': true } }, [
+  return div('.stats.stats--game-stats', [
     div('.stats__heading', 'Game stats'),
     renderStat(teams, stats.shots, 'Shots', getPositiveNumericalRating, renderPlainValue),
     renderStat(teams, stats.blocked, 'Blocked', getPositiveNumericalRating, renderPlainValue),

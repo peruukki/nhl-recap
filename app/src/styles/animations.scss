@@ -19,6 +19,12 @@ $height-timing-function: ease-in-out;
   animation: ($fade-duration * 2) fade-in;
 }
 
+@mixin fade-in-with-slide-animation {
+  animation:
+    $fade-duration fade-in,
+    ($fade-duration * 0.5) slide-down;
+}
+
 // Need two separate animation names to re-trigger animation
 @keyframes fade-in {
   from {
@@ -90,6 +96,15 @@ $height-timing-function: ease-in-out;
   }
 }
 
+@keyframes slide-down {
+  from {
+    transform: translateY(-0.25rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 @keyframes hidden {
   from {
     opacity: 0;
@@ -102,6 +117,10 @@ $height-timing-function: ease-in-out;
 @mixin delayed-animation {
   animation-fill-mode: both;
   animation-delay: ($fade-duration * 0.25);
+}
+@mixin delayed-animation-short {
+  animation-fill-mode: both;
+  animation-delay: ($fade-duration * 0.125);
 }
 
 // Adapted from https://github.com/erictreacy/mimic.css/blob/master/mimic.css
