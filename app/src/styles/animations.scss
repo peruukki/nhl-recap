@@ -61,13 +61,11 @@ $height-timing-function: ease-in-out;
         $delay hidden,
         $expand-duration $expand-timing-function expand $delay,
         ($fade-duration * 0.5) ease-in fade-in $delay;
-      will-change: opacity, transform;
 
       @media (prefers-reduced-motion) {
         animation:
           $delay hidden,
           ($fade-duration * 0.5) ease-in fade-in $delay;
-        will-change: opacity;
       }
     }
   }
