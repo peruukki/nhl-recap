@@ -21,7 +21,6 @@ export default function TeamStats(
       renderWinPercentage,
     ),
     renderStat(teams, stats?.records, 'Record', renderWinPercentage, renderRecord),
-    renderStat(teams, stats?.streaks || undefined, 'Streak', getStreakRating, renderStreak),
     renderStat(
       teams,
       isPlayoffGame ? undefined : stats?.standings,
@@ -29,6 +28,7 @@ export default function TeamStats(
       getPlayoffSpotRating,
       renderPlayoffSpot,
     ),
+    renderStat(teams, stats?.streaks || undefined, 'Streak', getStreakRating, renderStreak),
   ]);
 }
 

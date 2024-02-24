@@ -17,8 +17,8 @@ const statIndexes = {
   leagueRank: 2,
   pointPct: 3,
   record: 4,
-  streak: 5,
-  playoffSpotPts: 6,
+  playoffSpotPts: 5,
+  streak: 6,
 };
 
 describe('team stats', () => {
