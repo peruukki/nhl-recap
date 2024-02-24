@@ -129,13 +129,20 @@ Build the app to the `public` directory:
 npm run build
 ```
 
-## Publishing the app on GitHub pages
+## Deployment
 
 The `publish` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
-create a commit, and push the commit to the `gh-pages` branch in `origin`:
+create a commit, and push the commit to the `gh-pages` branch in `origin`.
 
-```
+Usual deployment process:
+
+```sh
+# Bump version
+npm version <major|minor|patch>
+# Deploy to GitHub Pages
 npm run publish
+# Push to Git
+git push origin master --tags
 ```
 
 ## Generating SVG icon data with different fill colors
