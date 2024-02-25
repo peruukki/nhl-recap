@@ -19,7 +19,7 @@
   "config": {
     "browserify_args": "app/src/main.ts -p [ tsify --project ./app ] -t [ envify purge ]",
     "browserify_gallery_args": "gallery/src/main.ts -p [ tsify --project ./gallery ]",
-    "rollup_sw_args": "app/src/service-worker/service-worker.ts -c --file public/service-worker.js --bundleConfigAsCjs",
+    "rollup_sw_args": "app/src/service-worker/service-worker.js -c --file public/service-worker.js --bundleConfigAsCjs",
     "hashmark_args": "-s -r -c public -m assets.json -l 8 {name}-{hash}{ext}"
   },
   "scripts": {
@@ -104,10 +104,6 @@
     "browserify": "^17.0.0",
     "envify": "^4.1.0",
     "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
     "eslint-watch": "^8.0.0",
     "hashmark": "^5.0.0",
     "http-server": "^14.1.1",

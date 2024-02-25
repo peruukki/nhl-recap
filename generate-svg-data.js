@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-console */
 const fs = require('fs');
 

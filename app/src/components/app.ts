@@ -88,7 +88,7 @@ function intent(
 ): Actions {
   const apiResponseWithErrors$ = HTTP.select()
     .map((response$) =>
-      response$.replaceError((error) => xs.of({ error }) as unknown as Stream<Response>),
+      response$.replaceError((error: unknown) => xs.of({ error }) as unknown as Stream<Response>),
     )
     .flatten()
     .map<ApiResponse>((response) => {
@@ -155,7 +155,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
           animations.highlightGame(gameUpdate.gameIndex);
           break;
         default:
-          throw new Error(`Unknown game update type ${(gameUpdate as any).type}`);
+          throw new Error(`Unknown game update type ${(gameUpdate as { type: string }).type}`);
       }
     },
   });

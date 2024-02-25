@@ -1,7 +1,7 @@
 import { Stream } from 'xstream';
 
 export function addListener<T>(
-  done: (error?: Error) => void,
+  done: (error?: unknown) => void,
   stream$: Stream<T>,
   assertFn: (value: T) => void,
 ): void {

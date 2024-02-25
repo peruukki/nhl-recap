@@ -10,7 +10,7 @@ describe('delayAtLeast', () => {
       next: (x: string) => {
         expect(x).toEqual(expected.shift());
       },
-      error: (err: Error) => done(err),
+      error: (err: unknown) => void done(err),
       complete: () => {
         expect(expected).toHaveLength(0);
         done();
@@ -25,7 +25,7 @@ describe('delayAtLeast', () => {
       next: (x: string) => {
         expect(x).toEqual(expected.shift());
       },
-      error: (err: Error) => done(err),
+      error: (err: unknown) => void done(err),
       complete: () => {
         expect(expected).toHaveLength(0);
         done();
@@ -37,8 +37,8 @@ describe('delayAtLeast', () => {
     const stream = fromDiagram('---|', { timeUnit: 20 }).compose(delayAtLeast(30));
     stream.addListener({
       next: () => fail(new Error('Stream should not emit')),
-      error: (err: Error) => done(err),
-      complete: () => done(),
+      error: (err: unknown) => void done(err),
+      complete: () => void done(),
     });
   });
 });

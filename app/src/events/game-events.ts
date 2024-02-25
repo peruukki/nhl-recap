@@ -52,8 +52,8 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   const periodSequences = _.chain(allPeriodEvents)
     .zip(periodEnds)
     .flatten()
-    // @ts-ignore
-    .filter<GameEvent>(_.identity)
+    // @ts-expect-error Can't get types match
+    .filter<GameEvent>((event) => !!event)
     .value();
 
   return _.concat(
@@ -171,14 +171,11 @@ function getShootoutGameEvents(
 
 function getClockEndTime(scores: Game[]): GameEndTime {
   const gameEndTimes = scores.map(getGameEndTime);
-  return (
-    _.chain(gameEndTimes)
-      .filter(_.identity)
-      // @ts-ignore
-      .sortBy([getPeriodIteratee, getMinuteIteratee, getSecondIteratee])
-      .last()
-      .value()
-  );
+  return _.chain(gameEndTimes)
+    .filter((time): time is GameEndTime => !!time)
+    .sortBy([getPeriodIteratee, getMinuteIteratee, getSecondIteratee])
+    .last()
+    .value();
 }
 
 function getPeriodIteratee(event: GameEndTime): number {
