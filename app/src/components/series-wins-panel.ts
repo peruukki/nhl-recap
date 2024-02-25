@@ -38,7 +38,7 @@ export default function SeriesWinsPanel({
 }
 
 function getSeriesWinsDescription(
-  seriesWins: { [team: TeamAbbreviation]: number },
+  seriesWins: Record<TeamAbbreviation, number>,
   playoffRound: number,
 ): string | (VNode | string)[] {
   const teamsWithWins = _.map(seriesWins, (wins, team) => ({ team, wins }));
@@ -79,7 +79,7 @@ function getPlayoffSeriesWins(
   homeGoals: Goal[],
   playoffSeries: TeamPlayoffSeries,
   addCurrentGameToWins: boolean,
-): { [team: TeamAbbreviation]: number } {
+): Record<TeamAbbreviation, number> {
   return addCurrentGameToWins
     ? getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals)
     : playoffSeries.wins;
@@ -90,7 +90,7 @@ function getPlayoffSeriesWinsAfterGame(
   teams: Props['teams'],
   awayGoals: Props['awayGoals'],
   homeGoals: Props['homeGoals'],
-): { [team: TeamAbbreviation]: number } {
+): Record<TeamAbbreviation, number> {
   const updatedWinCount =
     awayGoals.length > homeGoals.length
       ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }

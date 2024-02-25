@@ -110,7 +110,7 @@ export type TeamStats = {
 
 export type TeamStreak = { count: number; type: 'WINS' | 'LOSSES' | 'OT' };
 
-export type TeamValues<T> = { [team: TeamAbbreviation]: T };
+export type TeamValues<T> = Record<TeamAbbreviation, T>;
 
 type TimeElapsed = {
   period: string;

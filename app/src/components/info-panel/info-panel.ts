@@ -281,7 +281,7 @@ function renderGameStatus(
 
 function renderCurrentProgress(progress: GameProgress): string | (VNode | string)[] {
   const label = 'In progress';
-  if (!progress || !progress.currentPeriodOrdinal) {
+  if (!progress?.currentPeriodOrdinal) {
     return label;
   }
   const progressTime = renderCurrentProgressTime(progress);

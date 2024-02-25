@@ -28,7 +28,7 @@ describe('info panel', () => {
 
     it('should show the latest goal when the playback reaches a goal scoring time', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('playback', teams, _.take(goals, 1), _.first(goals) as Goal);
+      assertLatestGoal('playback', teams, _.take(goals, 1), _.first(goals)!);
     });
 
     it('should show the summary when the playback reaches the end of the game', () => {
@@ -44,7 +44,7 @@ describe('info panel', () => {
 
     it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
       const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('in-progress', teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('in-progress', teams, goals, _.last(goals)!);
     });
 
     it('should show the summary of an in-progress game when playback has finished', () => {
@@ -60,7 +60,7 @@ describe('info panel', () => {
 
     it('should show goals scored in overtime', () => {
       const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertLatestGoal('playback', teams, goals, _.last(goals) as Goal);
+      assertLatestGoal('playback', teams, goals, _.last(goals)!);
     });
   });
 

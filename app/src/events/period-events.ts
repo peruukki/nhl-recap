@@ -102,7 +102,7 @@ function secondRange(
   const initialRange = _.range(59, rangeEnd, -advanceClockStep);
   // Ensure the final seconds of the last minute are included
   const isLastMinute = minute === lastMinute || (minute === 0 && lastMinute === -1);
-  const lastIncludedSecond = _.last(initialRange) as number;
+  const lastIncludedSecond = _.last(initialRange)!;
   const areFinalSecondsExcluded = isLastMinute && lastSecond < lastIncludedSecond;
   return areFinalSecondsExcluded ? initialRange.concat(0) : initialRange;
 }
@@ -116,15 +116,15 @@ function createGoalEvents(
     _.flatten(
       _.zip(_.dropRight(clockEvents), _.drop(clockEvents)).map(([previousClock, currentClock]) => {
         const goalsScoredSincePreviousTime = getGoalsScoredInTimeRange(
-          previousClock as GameEventClockTime,
-          currentClock as GameEventClockTime,
+          previousClock!,
+          currentClock!,
           allGoalsSorted,
         );
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock as GameEvent]
           : _.flatten(
               goalsScoredSincePreviousTime.map((goal) =>
-                getGoalEvents(currentClock as GameEventClockTime, goal, goalPauseEventCount),
+                getGoalEvents(currentClock!, goal, goalPauseEventCount),
               ),
             );
       }),
