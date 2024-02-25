@@ -39,8 +39,5 @@
     "no-restricted-globals": "off",
     "no-use-before-define": "off",
     "semi": "off"
-  },
-  "settings": {
-    "import/resolver": { "node": { "paths": ["."] } }
   }
 }
