@@ -131,7 +131,7 @@ npm run build
 
 ## Deployment
 
-The `publish` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
+The `deploy` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
 create a commit, and push the commit to the `gh-pages` branch in `origin`.
 
 Usual deployment process:
@@ -140,7 +140,7 @@ Usual deployment process:
 # Bump version
 npm version <major|minor|patch>
 # Deploy to GitHub Pages
-npm run publish
+npm run deploy
 # Push to Git
 git push origin master --tags
 ```

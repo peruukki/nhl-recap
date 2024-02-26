@@ -48,7 +48,7 @@
     "postinstall": "npm run copy:normalize",
     "prebuild": "npm run clean:build",
     "prewatch": "npm run clean:build",
-    "publish": "npm run build && npm run clone:dist && npm run clean:dist && npm run copy:dist && npm run commit:dist && npm run push:dist",
+    "deploy": "npm run build && npm run clone:dist && npm run clean:dist && npm run copy:dist && npm run commit:dist && npm run push:dist",
     "push:dist": "cd dist && git push origin gh-pages",
     "sass": "sass app/src/main.scss public/main.css --style compressed",
     "sass:gallery": "sass gallery/src/main.scss public/main-gallery.css --style compressed",
