@@ -1,4 +1,4 @@
-# EditorConfig is awesome: http://EditorConfig.org
+# EditorConfig is awesome: https://EditorConfig.org
 
 # Top-most EditorConfig file
 root = true
@@ -7,3 +7,4 @@ root = true
 indent_style = space
 indent_size = 2
 insert_final_newline = true
+trim_trailing_whitespace = true
