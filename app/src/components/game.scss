@@ -20,17 +20,20 @@
     background: $background-game-in-focus;
   }
 
-  &__series-wins {
-    padding: $panel-padding-height 0;
-    background-color: $background-series-wins;
-    color: $color-main;
-    font-size: 1rem;
-    text-transform: uppercase;
+  &__secondary-panel {
+    background-color: $background-secondary-panel;
 
     &:last-child {
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
+  }
+
+  &__series-wins {
+    padding: $panel-padding-height 0;
+    color: $color-main;
+    font-size: 1rem;
+    text-transform: uppercase;
   }
 
   &__errors {

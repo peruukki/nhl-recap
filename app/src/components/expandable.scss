@@ -1,0 +1,23 @@
+.expandable {
+  @include delayed-animation;
+  display: grid;
+  overflow: hidden;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: grid-template-rows $height-duration $height-timing-function;
+  }
+
+  &--hidden {
+    visibility: hidden;
+    grid-template-rows: 0fr;
+  }
+
+  &--shown {
+    visibility: visible;
+    grid-template-rows: 1fr;
+  }
+
+  &__container {
+    min-height: 0;
+  }
+}

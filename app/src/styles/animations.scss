@@ -4,10 +4,12 @@ $fade-duration: 1s;
 $expand-duration: 0.45s;
 $focus-duration: 0.25s;
 $height-duration: 0.25s;
+$hover-duration: 0.25s;
 
 $expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
 $focus-timing-function: ease-out;
 $height-timing-function: ease-in-out;
+$hover-timing-function: ease-out;
 
 .fade-in {
   animation: $fade-duration fade-in;
@@ -115,6 +117,10 @@ $height-timing-function: ease-in-out;
 @mixin delayed-animation {
   animation-fill-mode: both;
   animation-delay: ($fade-duration * 0.25);
+}
+@mixin delayed-animation-later {
+  animation-fill-mode: both;
+  animation-delay: ($fade-duration * 0.4);
 }
 
 // Adapted from https://github.com/erictreacy/mimic.css/blob/master/mimic.css

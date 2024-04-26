@@ -13,9 +13,11 @@ $yellow-medium: hsl(54, 100%, 67%);
 $background-body: $blue-light;
 $background-game: $blue-dark-semi-transparent;
 $background-game-in-focus: $blue-dark;
+$background-link-hover: $blue-medium;
+$background-expandable: $blue-dark;
 $background-stats-panel: $blue-dark-semi-transparent;
 $background-header: $blue-dark-semi-transparent;
-$background-series-wins: $blue-dark;
+$background-secondary-panel: $blue-dark;
 
 // Foreground colors
 $color-highlight: $yellow-dark;
@@ -26,3 +28,6 @@ $color-accent-light: $white;
 $color-main: $gray;
 $color-score-panel: $white;
 $color-shadow: $gray-semi-transparent;
+
+// Border colors
+$border-color-link: $blue-medium;

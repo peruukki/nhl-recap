@@ -3,6 +3,7 @@ export type Game = {
   gameStats: GameStats;
   goals: Goal[];
   errors?: StatError[];
+  links?: Links;
   preGameStats?: TeamStats;
   startTime: string;
   status: GameStatus;
@@ -54,6 +55,12 @@ export type Goal = GoalInGamePlay | GoalInShootout;
 export function isShootoutGoal(goal: Goal): goal is GoalInShootout {
   return goal.period === 'SO';
 }
+
+export type Links = {
+  gameCenter?: string;
+  playoffSeries?: string;
+  videoRecap?: string;
+};
 
 type PointScorer = {
   player: string;

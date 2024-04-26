@@ -205,7 +205,7 @@ function assertPlayoffSeriesWins(
 }
 
 function getPlayoffSeriesWinsPanel(vtree: VNode) {
-  return getGameCard(vtree)?.children?.[2];
+  return (getGameCard(vtree)?.children?.[2] as VNode | undefined)?.children?.[1];
 }
 
 function expectedPlayoffSeriesWinsPanel(
