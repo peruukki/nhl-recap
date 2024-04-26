@@ -294,6 +294,11 @@
           "shortName": "NY Rangers",
           "teamName": "Rangers"
         }
+      },
+      "links": {
+        "gameCenter": "https://www.nhl.com/gamecenter/tor-vs-bos/2024/04/22/2023030122",
+        "videoRecap": "https://www.nhl.com/video/recap-leafs-at-bruins-4-22-24-6351438219112",
+        "playoffSeries": "https://www.nhl.com/schedule/playoff-series/2024/series-b/bruins-vs-mapleleafs"
       }
     },
     {

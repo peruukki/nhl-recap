@@ -33,6 +33,28 @@
     }
   }
 
+  &__links {
+    padding: $panel-padding-height 0;
+
+    &__heading {
+      color: $color-accent-light;
+      font-size: 1rem;
+      text-transform: uppercase;
+      }
+
+    &__link {
+      display: block;
+      font-size: 1.2rem;
+      color: $color-main;
+      margin-top: 0.5rem;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+
   &__errors {
     padding: $panel-padding-height 0;
     font-size: 1rem;
