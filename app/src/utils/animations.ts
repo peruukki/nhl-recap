@@ -6,7 +6,7 @@ function clearGameInFocus(element: HTMLElement): void {
   element.classList.remove(gameInFocusClass);
   // Keep element's "in front" styling until it reaches its normal position
   // Use setTimeout instead of ontransitionend due to much better browser support
-  // The delay should match $focus-duration in _base.scss
+  // The delay should match $focus-duration in animations.scss
   setTimeout(() => {
     // Keep the game in front if it has gained focus again
     if (!element.classList.contains(gameInFocusClass)) {
