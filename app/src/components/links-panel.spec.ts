@@ -1,4 +1,5 @@
 import type { VNode } from '@cycle/dom';
+import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime } from '../test/data';
 import Game from './game';

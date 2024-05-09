@@ -1,5 +1,6 @@
 import { div, span, VNode } from '@cycle/dom';
 import _ from 'lodash';
+import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../test/data';
 import type { GameDisplay, GameStatus, Game as GameT, Goal, Teams } from '../../types';

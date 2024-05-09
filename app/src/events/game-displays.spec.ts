@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import xs, { Stream } from 'xstream';
 
 import { addListener } from '../test/test-utils';
@@ -19,13 +20,14 @@ describe('gameDisplays', () => {
     ['PREVIEW', 'LIVE', 'FINAL'].forEach((gameState) => {
       const expected = getExpectedGameDisplay(clockState, gameState);
 
-      it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, (done) => {
-        const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
-        // Ignore intermediate values and assert the last one
-        addListener(done, gameDisplays$.last(), (gameDisplays) => {
-          expect(gameDisplays).toEqual([expected]);
-        });
-      });
+      it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, () =>
+        new Promise((done) => {
+          const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
+          // Ignore intermediate values and assert the last one
+          addListener(done, gameDisplays$.last(), (gameDisplays) => {
+            expect(gameDisplays).toEqual([expected]);
+          });
+        }));
     });
   });
 

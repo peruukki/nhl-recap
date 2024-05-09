@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { describe, expect, it } from 'vitest';
 
 import type { GoalWithUpdateFields } from '../types';
 import shootoutEvents from './shootout-events';

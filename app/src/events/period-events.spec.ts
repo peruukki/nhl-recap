@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { describe, expect, it, test } from 'vitest';
 
 import type { GameEndTime, GoalWithUpdateFields } from '../types';
 import { PERIOD_OVERTIME } from './constants';

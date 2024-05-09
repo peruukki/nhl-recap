@@ -15,6 +15,7 @@ export default {
       globPatterns: ['**/*.{css,html,ico,js,png,svg,ttf,xml}'],
     }),
     nodeResolve(),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     terser(),
   ],
 };

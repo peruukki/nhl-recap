@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { getTeamStatCount } from './stat-counts';
 
 describe('getTeamStatCount', () => {

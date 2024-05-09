@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowImportingTsExtensions": true,
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": false,
-    "lib": ["dom", "ESNext"],
-    "module": "commonjs",
+    "isolatedModules": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2015"
+    "target": "ES2015"
   }
 }

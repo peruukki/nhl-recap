@@ -1,4 +1,5 @@
 import { div, VNode } from '@cycle/dom';
+import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime } from '../test/data';
 import type { StatError } from '../types';

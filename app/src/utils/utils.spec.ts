@@ -1,4 +1,5 @@
 import { getGameAnimationIndexes, truncatePlayerName } from './utils';
+import { describe, expect, it } from 'vitest';
 
 describe('utils', () => {
   describe('truncatePlayerName', () => {

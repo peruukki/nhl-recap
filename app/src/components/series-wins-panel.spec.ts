@@ -1,5 +1,6 @@
 import { div, span, VNode } from '@cycle/dom';
 import _ from 'lodash';
+import { describe, expect, it } from 'vitest';
 
 import {
   scoresAllRegularTime,

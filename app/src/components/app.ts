@@ -76,7 +76,7 @@ export default function app(
 }
 
 function getApiUrl(): string {
-  const host = process.env.SCORE_API_HOST || 'https://nhl-score-api.herokuapp.com';
+  const host = import.meta.env.VITE_SCORE_API_HOST || 'https://nhl-score-api.herokuapp.com';
   return `${host}/api/scores/latest`;
 }
 
