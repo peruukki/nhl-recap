@@ -51,7 +51,7 @@ Then you can run the app connecting to the local server with `npm run start:loca
 This project has its own poor person’s component gallery that currently just shows the game component in all
 its possible states, so that you don’t need to play back games in different states to see them.
 
-The gallery is available at http://localhost:8008/gallery/ when running the development server locally. (Note
+The gallery is available at http://localhost:8008/nhl-recap/gallery/ when running the development server locally. (Note
 that the trailing slash is required.)
 
 ## Formatting with Prettier
