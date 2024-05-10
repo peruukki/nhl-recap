@@ -19,7 +19,7 @@ To run the app and re-build on file changes:
 npm start
 ```
 
-The app is available at http://localhost:8008/, and the command should open a browser automatically.
+The app is available at http://localhost:8008/nhl-recap/, and the command should open a browser automatically.
 
 ## Running a production build
 
