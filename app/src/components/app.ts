@@ -18,6 +18,7 @@ import { delayAtLeast } from '../utils/delay';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import Game from './game';
+import Icon from './icon';
 
 type Sources = {
   DOM: MainDOMSource;
@@ -237,8 +238,10 @@ function renderHeader(
   const isFinished = state.event?.type === 'end';
   const buttonText = state.isPlaying ? 'Pause' : 'Play';
   const buttonType = state.isPlaying ? 'pause' : 'play';
+  const showIcon = state.gameCount > 0;
+
   const dynamicClassNames = {
-    [`button--${buttonType}`]: state.gameCount > 0,
+    [`button--${buttonType}`]: showIcon,
     'expand--last': state.gameCount > 0 && hasNotStarted,
     'button--hidden': isFinished,
   };
@@ -246,7 +249,10 @@ function renderHeader(
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
     button('.button.play-pause-button', { class: dynamicClassNames }, [
-      span('.visible-button', span('.visually-hidden', buttonText)),
+      span('.visible-button', [
+        showIcon ? Icon(buttonType) : null,
+        span('.visually-hidden', buttonText),
+      ]),
     ]),
     hasNotStarted && state.date ? renderDate(state.date) : state.clockVtree,
   ]);

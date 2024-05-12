@@ -140,19 +140,6 @@ npm run deploy
 git push origin master --tags
 ```
 
-## Generating SVG icon data with different fill colors
-
-The `app/icons` directory contains SVG icons with a placeholder fill color `${fillColor}`. The `generate-svg-data.js`
-script takes a filename and fill color and generates URI encoded SVG data that can be used in a `background-image` CSS
-declaration. This helps to generate differently colored versions of the same icon, for example for different button
-states.
-
-You can use the `svg` `npm` script to generate the SVG data, for example:
-
-```
-npm run svg play.svg '#D0D1E2'
-```
-
 ## License
 
 [MIT](LICENSE)

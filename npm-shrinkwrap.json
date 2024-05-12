@@ -16,6 +16,7 @@
         "classnames": "^2.5.1",
         "lodash": "^4.17.21",
         "normalize.css": "^8.0.1",
+        "snabby": "^6.1.1",
         "timeago.js": "^4.0.2",
         "workbox-expiration": "^7.0.0",
         "workbox-precaching": "^7.0.0",
@@ -6611,6 +6612,19 @@
         "node": ">=10.17.0"
       }
     },
+    "node_modules/hyperscript-attribute-to-property": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/hyperscript-attribute-to-property/-/hyperscript-attribute-to-property-1.0.2.tgz",
+      "integrity": "sha512-oerMul16jZCmrbNsUw8QgrtDzF8lKgFri1bKQjReLw1IhiiNkI59CWuzZjJDGT79UQ1YiWqXhJMv/tRMVqgtkA=="
+    },
+    "node_modules/hyperx": {
+      "version": "3.0.1",
+      "resolved": "https://registry.npmjs.org/hyperx/-/hyperx-3.0.1.tgz",
+      "integrity": "sha512-gIqI/O3pgataWKjJTPwe0Uv73DWoaWpFA0iIs8zKWrEo1+eMLuk5XjdwJ7C5ymyF4EdMGpPUwoYCuelHUjOGag==",
+      "dependencies": {
+        "hyperscript-attribute-to-property": "^1.0.0"
+      }
+    },
     "node_modules/idb": {
       "version": "7.1.1",
       "resolved": "https://registry.npmjs.org/idb/-/idb-7.1.1.tgz",
@@ -6706,6 +6720,11 @@
       "engines": {
         "node": ">= 0.10"
       }
+    },
+    "node_modules/is-boolean-attribute": {
+      "version": "0.0.1",
+      "resolved": "https://registry.npmjs.org/is-boolean-attribute/-/is-boolean-attribute-0.0.1.tgz",
+      "integrity": "sha512-0kXT52Scokg2Miscvsn5UVqg6y1691vcLJcagie1YHJB4zOEuAhMERLX992jtvaStGy2xQTqOtJhvmG/MK1T5w=="
     },
     "node_modules/is-builtin-module": {
       "version": "3.2.1",
@@ -8854,6 +8873,19 @@
       },
       "peerDependencies": {
         "snabbdom": "*"
+      }
+    },
+    "node_modules/snabby": {
+      "version": "6.1.1",
+      "resolved": "https://registry.npmjs.org/snabby/-/snabby-6.1.1.tgz",
+      "integrity": "sha512-PF0iHW9TPv0n35ZquImnzw9iQytXHBjT8y6YVL9/BeboguCZmK0kvA8tISVjkuq2JC2HRig80Sgnn58xUcoCNw==",
+      "dependencies": {
+        "hyperx": "^3.0.0",
+        "is-boolean-attribute": "^0.0.1",
+        "snabbdom": "^3.0.3"
+      },
+      "engines": {
+        "node": ">=12.17"
       }
     },
     "node_modules/source-map-js": {
@@ -15338,6 +15370,19 @@
       "integrity": "sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==",
       "dev": true
     },
+    "hyperscript-attribute-to-property": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/hyperscript-attribute-to-property/-/hyperscript-attribute-to-property-1.0.2.tgz",
+      "integrity": "sha512-oerMul16jZCmrbNsUw8QgrtDzF8lKgFri1bKQjReLw1IhiiNkI59CWuzZjJDGT79UQ1YiWqXhJMv/tRMVqgtkA=="
+    },
+    "hyperx": {
+      "version": "3.0.1",
+      "resolved": "https://registry.npmjs.org/hyperx/-/hyperx-3.0.1.tgz",
+      "integrity": "sha512-gIqI/O3pgataWKjJTPwe0Uv73DWoaWpFA0iIs8zKWrEo1+eMLuk5XjdwJ7C5ymyF4EdMGpPUwoYCuelHUjOGag==",
+      "requires": {
+        "hyperscript-attribute-to-property": "^1.0.0"
+      }
+    },
     "idb": {
       "version": "7.1.1",
       "resolved": "https://registry.npmjs.org/idb/-/idb-7.1.1.tgz",
@@ -15420,6 +15465,11 @@
       "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
       "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
       "dev": true
+    },
+    "is-boolean-attribute": {
+      "version": "0.0.1",
+      "resolved": "https://registry.npmjs.org/is-boolean-attribute/-/is-boolean-attribute-0.0.1.tgz",
+      "integrity": "sha512-0kXT52Scokg2Miscvsn5UVqg6y1691vcLJcagie1YHJB4zOEuAhMERLX992jtvaStGy2xQTqOtJhvmG/MK1T5w=="
     },
     "is-builtin-module": {
       "version": "3.2.1",
@@ -17101,6 +17151,16 @@
       "integrity": "sha512-bJgpomacLM3jVhghsFxLcws8B6k+GVcnB/Af3avannj/zavIM1vLagvQHTFXzRVkf6nfxYaf/q58gekClDJoYA==",
       "requires": {
         "tree-selector": "^2.1.0"
+      }
+    },
+    "snabby": {
+      "version": "6.1.1",
+      "resolved": "https://registry.npmjs.org/snabby/-/snabby-6.1.1.tgz",
+      "integrity": "sha512-PF0iHW9TPv0n35ZquImnzw9iQytXHBjT8y6YVL9/BeboguCZmK0kvA8tISVjkuq2JC2HRig80Sgnn58xUcoCNw==",
+      "requires": {
+        "hyperx": "^3.0.0",
+        "is-boolean-attribute": "^0.0.1",
+        "snabbdom": "^3.0.3"
       }
     },
     "source-map-js": {
