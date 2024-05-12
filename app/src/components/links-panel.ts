@@ -1,12 +1,14 @@
-import { a, div } from '@cycle/dom';
+import { a, div, span } from '@cycle/dom';
+
 import type { GameDisplay, Links } from '../types';
 import Expandable from './expandable';
+import Icon from './icon';
 
 function Link(label: string, url: string) {
   return a(
     '.links-panel__link',
     { props: { href: url, rel: 'nofollow noreferrer', target: '_blank' } },
-    label,
+    [label, span('.links-panel__link-icon-container', Icon('externalLink'))],
   );
 }
 

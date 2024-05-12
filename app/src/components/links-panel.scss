@@ -34,18 +34,17 @@
     font-size: 1.2rem;
     text-decoration: none;
 
-    &::after {
-      display: inline-block;
-      position: relative;
-      top: 0.05rem;
-      width: 1rem;
-      margin-left: 0.5rem;
-      content: url('/external-link.svg');
-    }
-
     &:hover,
     &:active {
       background-color: $background-link-hover;
     }
+  }
+
+  &__link-icon-container {
+    display: inline-block;
+    position: relative;
+    top: 0.05rem;
+    width: 1rem;
+    margin-left: 0.5rem;
   }
 }
