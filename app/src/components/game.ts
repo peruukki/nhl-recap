@@ -40,7 +40,7 @@ export default function Game(
         latestGoal,
       }),
       div('.game__secondary-panel', [
-        LinksPanel({ gameDisplay, links }),
+        LinksPanel({ gameDisplay, links, teams }),
         SeriesWinsPanel({
           teams,
           awayGoals,
