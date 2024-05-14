@@ -248,12 +248,16 @@ function renderHeader(
 
   return div('.header__container', [
     h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button('.button.play-pause-button', { class: dynamicClassNames }, [
-      span('.visible-button', [
-        showIcon ? Icon(buttonType) : null,
-        span('.visually-hidden', buttonText),
-      ]),
-    ]),
+    button(
+      '.button.play-pause-button',
+      { props: { ariaLive: 'polite' }, class: dynamicClassNames },
+      [
+        span('.visible-button', [
+          showIcon ? Icon(buttonType) : null,
+          span('.visually-hidden', buttonText),
+        ]),
+      ],
+    ),
     hasNotStarted && state.date ? renderDate(state.date) : state.clockVtree,
   ]);
 }
