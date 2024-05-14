@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18.0"
+    "node": ">=20.0"
   },
   "config": {
     "rollup_sw_args": "app/src/service-worker/service-worker.js -c --file public/service-worker.js --bundleConfigAsCjs"
