@@ -1,1804 +1,1763 @@
 {
   "latest": {
-    "date": { "raw": "2019-10-03", "pretty": "Thu Oct 3" },
+    "date": { "raw": "2024-12-23", "pretty": "Mon Dec 23" },
     "games": [
       {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-02T23:00:00Z",
+        "currentStats": {
+          "records": {
+            "NYR": { "wins": 16, "losses": 17, "ot": 1 },
+            "NJD": { "wins": 23, "losses": 11, "ot": 3 }
+          },
+          "streaks": {
+            "NYR": { "type": "LOSSES", "count": 2 },
+            "NJD": { "type": "WINS", "count": 2 }
+          },
+          "standings": {
+            "NYR": { "divisionRank": "7", "leagueRank": "23", "pointsFromPlayoffSpot": "-5" },
+            "NJD": { "divisionRank": "1", "leagueRank": "3", "pointsFromPlayoffSpot": "+12" }
+          }
+        },
         "goals": [
           {
-            "team": "OTT",
+            "team": "NJD",
             "period": "1",
-            "scorer": { "player": "Brady Tkachuk", "seasonTotal": 1 },
+            "scorer": { "player": "Jack Hughes", "playerId": 8481559, "seasonTotal": 14 },
             "assists": [
-              { "player": "Connor Brown", "seasonTotal": 1 },
-              { "player": "Colin White", "seasonTotal": 1 }
-            ],
-            "min": 0,
-            "sec": 25
-          },
-          {
-            "team": "TOR",
-            "period": "2",
-            "scorer": { "player": "Frederik Gauthier", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Tyson Barrie", "seasonTotal": 1 },
-              { "player": "Dmytro Timashov", "seasonTotal": 1 }
-            ],
-            "min": 2,
-            "sec": 20
-          },
-          {
-            "team": "TOR",
-            "period": "2",
-            "scorer": { "player": "Trevor Moore", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Ilya Mikheyev", "seasonTotal": 1 },
-              { "player": "Rasmus Sandin", "seasonTotal": 1 }
+              { "player": "Jesper Bratt", "playerId": 8479407, "seasonTotal": 30 },
+              { "player": "Dougie Hamilton", "playerId": 8476462, "seasonTotal": 18 }
             ],
             "min": 4,
-            "sec": 42
+            "sec": 29
           },
           {
-            "team": "OTT",
+            "team": "NJD",
             "period": "2",
-            "scorer": { "player": "Scott Sabourin", "seasonTotal": 1 },
+            "scorer": { "player": "Timo Meier", "playerId": 8478414, "seasonTotal": 13 },
             "assists": [
-              { "player": "Filip Chlapik", "seasonTotal": 1 },
-              { "player": "Jean-Gabriel Pageau", "seasonTotal": 1 }
+              { "player": "Dawson Mercer", "playerId": 8482110, "seasonTotal": 10 },
+              { "player": "Ondrej Palat", "playerId": 8476292, "seasonTotal": 8 }
             ],
-            "min": 5,
-            "sec": 51
-          },
-          {
-            "team": "TOR",
-            "period": "2",
-            "scorer": { "player": "Auston Matthews", "seasonTotal": 1 },
-            "assists": [
-              { "player": "William Nylander", "seasonTotal": 1 },
-              { "player": "Morgan Rielly", "seasonTotal": 1 }
-            ],
-            "min": 8,
-            "sec": 2
-          },
-          {
-            "team": "TOR",
-            "period": "2",
-            "scorer": { "player": "Auston Matthews", "seasonTotal": 2 },
-            "assists": [
-              { "player": "Mitchell Marner", "seasonTotal": 1 },
-              { "player": "John Tavares", "seasonTotal": 1 }
-            ],
-            "min": 14,
-            "sec": 50,
-            "strength": "PPG"
-          },
-          {
-            "team": "TOR",
-            "period": "3",
-            "scorer": { "player": "Ilya Mikheyev", "seasonTotal": 1 },
-            "assists": [{ "player": "Tyson Barrie", "seasonTotal": 2 }],
-            "min": 9,
-            "sec": 43
-          },
-          {
-            "team": "OTT",
-            "period": "3",
-            "scorer": { "player": "Bobby Ryan", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Chris Tierney", "seasonTotal": 1 },
-              { "player": "Mark Borowiecki", "seasonTotal": 1 }
-            ],
-            "min": 17,
-            "sec": 45
-          }
-        ],
-        "scores": { "OTT": 3, "TOR": 5 },
-        "teams": {
-          "away": { "abbreviation": "OTT", "id": 9 },
-          "home": { "abbreviation": "TOR", "id": 10 }
-        },
-        "gameStats": {
-          "blocked": {
-            "OTT": 5,
-            "TOR": 7
-          },
-          "faceOffWinPercentage": {
-            "OTT": "51.1",
-            "TOR": "48.9"
-          },
-          "giveaways": {
-            "OTT": 11,
-            "TOR": 8
-          },
-          "hits": {
-            "OTT": 26,
-            "TOR": 22
-          },
-          "pim": {
-            "OTT": 13,
-            "TOR": 6
-          },
-          "powerPlay": {
-            "OTT": {
-              "goals": 2,
-              "opportunities": 4,
-              "percentage": "50.0"
-            },
-            "TOR": {
-              "goals": 1,
-              "opportunities": 3,
-              "percentage": "33.3"
-            }
-          },
-          "shots": {
-            "OTT": 25,
-            "TOR": 32
-          },
-          "takeaways": {
-            "OTT": 5,
-            "TOR": 10
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "TOR": { "wins": 3, "losses": 3, "ot": 1 },
-            "OTT": { "wins": 1, "losses": 3, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "TOR": { "wins": 4, "losses": 3, "ot": 1 },
-            "OTT": { "wins": 1, "losses": 4, "ot": 0 }
-          },
-          "streaks": {
-            "OTT": { "type": "LOSSES", "count": 2 },
-            "TOR": { "type": "OT", "count": 1 }
-          },
-          "standings": {
-            "OTT": { "leagueRank": "29", "pointsFromPlayoffSpot": "-3" },
-            "TOR": { "leagueRank": "12", "pointsFromPlayoffSpot": "+4" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T00:00:00Z",
-        "goals": [
-          {
-            "team": "STL",
-            "period": "1",
-            "scorer": { "player": "Sammy Blais", "seasonTotal": 1 },
-            "assists": [
-              { "player": "David Perron", "seasonTotal": 1 },
-              { "player": "Ryan O'Reilly", "seasonTotal": 1 }
-            ],
-            "min": 0,
-            "sec": 53
-          },
-          {
-            "team": "STL",
-            "period": "1",
-            "scorer": { "player": "Alex Pietrangelo", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Justin Faulk", "seasonTotal": 1 },
-              { "player": "Ryan O'Reilly", "seasonTotal": 2 }
-            ],
-            "min": 7,
-            "sec": 55,
-            "strength": "PPG"
-          },
-          {
-            "team": "WSH",
-            "period": "1",
-            "scorer": { "player": "Alex Ovechkin", "seasonTotal": 1 },
-            "assists": [
-              { "player": "John Carlson", "seasonTotal": 1 },
-              { "player": "Lars Eller", "seasonTotal": 1 }
-            ],
-            "min": 15,
-            "sec": 37
-          },
-          {
-            "team": "WSH",
-            "period": "2",
-            "scorer": { "player": "Dmitry Orlov", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Nick Jensen", "seasonTotal": 1 },
-              { "player": "Lars Eller", "seasonTotal": 2 }
-            ],
-            "min": 12,
-            "sec": 28,
-            "strength": "PPG"
-          },
-          {
-            "team": "WSH",
-            "period": "OT",
-            "scorer": { "player": "Jakub Vrana", "seasonTotal": 1 },
-            "assists": [
-              { "player": "John Carlson", "seasonTotal": 2 },
-              { "player": "T.J. Oshie", "seasonTotal": 1 }
-            ],
-            "min": 2,
-            "sec": 51
-          }
-        ],
-        "scores": { "WSH": 3, "STL": 2, "overtime": true },
-        "teams": {
-          "away": { "abbreviation": "WSH", "id": 15 },
-          "home": { "abbreviation": "STL", "id": 19 }
-        },
-        "gameStats": {
-          "blocked": {
-            "WSH": 6,
-            "STL": 6
-          },
-          "faceOffWinPercentage": {
-            "WSH": "45.5",
-            "STL": "54.5"
-          },
-          "giveaways": {
-            "WSH": 7,
-            "STL": 2
-          },
-          "hits": {
-            "WSH": 12,
-            "STL": 34
-          },
-          "pim": {
-            "WSH": 2,
-            "STL": 2
-          },
-          "powerPlay": {
-            "WSH": {
-              "goals": 1,
-              "opportunities": 1,
-              "percentage": "100.0"
-            },
-            "STL": {
-              "goals": 0,
-              "opportunities": 1,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "WSH": 27,
-            "STL": 21
-          },
-          "takeaways": {
-            "WSH": 5,
-            "STL": 7
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "WSH": { "wins": 3, "losses": 2, "ot": 2 },
-            "STL": { "wins": 3, "losses": 1, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "WSH": { "wins": 4, "losses": 2, "ot": 2 },
-            "STL": { "wins": 3, "losses": 1, "ot": 2 }
-          },
-          "streaks": {
-            "WSH": { "type": "WINS", "count": 1 },
-            "STL": { "type": "OT", "count": 2 }
-          },
-          "standings": {
-            "WSH": { "leagueRank": "6", "pointsFromPlayoffSpot": "+8" },
-            "STL": { "leagueRank": "11", "pointsFromPlayoffSpot": "+13" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T02:00:00Z",
-        "goals": [
-          {
-            "team": "EDM",
-            "period": "1",
-            "scorer": { "player": "Leon Draisaitl", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Zack Kassian", "seasonTotal": 1 },
-              { "player": "Matt Benning", "seasonTotal": 1 }
-            ],
-            "min": 5,
-            "sec": 42
-          },
-          {
-            "team": "VAN",
-            "period": "2",
-            "scorer": { "player": "Alexander Edler", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Brock Boeser", "seasonTotal": 1 },
-              { "player": "J.T. Miller", "seasonTotal": 1 }
-            ],
-            "min": 11,
-            "sec": 58
-          },
-          {
-            "team": "VAN",
-            "period": "3",
-            "scorer": { "player": "Tanner Pearson", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Tyler Myers", "seasonTotal": 1 },
-              { "player": "Quinn Hughes", "seasonTotal": 1 }
-            ],
-            "min": 9,
-            "sec": 41
-          },
-          {
-            "team": "EDM",
-            "period": "3",
-            "scorer": { "player": "Zack Kassian", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Leon Draisaitl", "seasonTotal": 1 },
-              { "player": "Darnell Nurse", "seasonTotal": 1 }
-            ],
-            "min": 10,
-            "sec": 52
-          },
-          {
-            "team": "EDM",
-            "period": "3",
-            "scorer": { "player": "Connor McDavid", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Leon Draisaitl", "seasonTotal": 2 },
-              { "player": "Matt Benning", "seasonTotal": 2 }
-            ],
-            "min": 14,
-            "sec": 37
-          }
-        ],
-        "scores": { "VAN": 2, "EDM": 3 },
-        "teams": {
-          "away": { "abbreviation": "VAN", "id": 23 },
-          "home": { "abbreviation": "EDM", "id": 22 }
-        },
-        "gameStats": {
-          "blocked": {
-            "EDM": 3,
-            "VAN": 5
-          },
-          "faceOffWinPercentage": {
-            "EDM": "48.0",
-            "VAN": "52.0"
-          },
-          "giveaways": {
-            "EDM": 6,
-            "VAN": 6
-          },
-          "hits": {
-            "EDM": 16,
-            "VAN": 18
-          },
-          "pim": {
-            "EDM": 7,
-            "VAN": 6
-          },
-          "powerPlay": {
-            "EDM": {
-              "goals": 1,
-              "opportunities": 3,
-              "percentage": "33.3"
-            },
-            "VAN": {
-              "goals": 1,
-              "opportunities": 2,
-              "percentage": "50.0"
-            }
-          },
-          "shots": {
-            "EDM": 32,
-            "VAN": 35
-          },
-          "takeaways": {
-            "EDM": 6,
-            "VAN": 4
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "EDM": { "wins": 5, "losses": 1, "ot": 0 },
-            "VAN": { "wins": 3, "losses": 1, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "EDM": { "wins": 6, "losses": 1, "ot": 0 },
-            "VAN": { "wins": 3, "losses": 2, "ot": 0 }
-          },
-          "streaks": {
-            "VAN": { "type": "OT", "count": 1 },
-            "EDM": { "type": "WINS", "count": 1 }
-          },
-          "standings": {
-            "VAN": { "leagueRank": "14", "pointsFromPlayoffSpot": "-9" },
-            "EDM": { "leagueRank": "1", "pointsFromPlayoffSpot": "-11" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T02:30:00Z",
-        "goals": [
-          {
-            "team": "VGK",
-            "period": "1",
-            "scorer": { "player": "Mark Stone", "seasonTotal": 1 },
-            "assists": [],
-            "min": 3,
-            "sec": 46,
-            "strength": "PPG"
-          },
-          {
-            "team": "VGK",
-            "period": "1",
-            "scorer": { "player": "Reilly Smith", "seasonTotal": 1 },
-            "assists": [{ "player": "William Karlsson", "seasonTotal": 1 }],
-            "min": 5,
-            "sec": 21
-          },
-          {
-            "team": "SJS",
-            "period": "1",
-            "scorer": { "player": "Marcus Sorensen", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Logan Couture", "seasonTotal": 1 },
-              { "player": "Brent Burns", "seasonTotal": 1 }
-            ],
-            "min": 12,
-            "sec": 14
-          },
-          {
-            "team": "VGK",
-            "period": "2",
-            "scorer": { "player": "Cody Glass", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Max Pacioretty", "seasonTotal": 1 },
-              { "player": "Mark Stone", "seasonTotal": 1 }
-            ],
-            "min": 2,
-            "sec": 12
-          },
-          {
-            "team": "VGK",
-            "period": "3",
-            "scorer": { "player": "Reilly Smith", "seasonTotal": 2 },
-            "assists": [{ "player": "William Karlsson", "seasonTotal": 2 }],
             "min": 4,
-            "sec": 1,
-            "strength": "SHG"
-          }
-        ],
-        "scores": { "SJS": 1, "VGK": 4 },
-        "teams": {
-          "away": { "abbreviation": "SJS", "id": 28 },
-          "home": { "abbreviation": "VGK", "id": 54 }
-        },
-        "gameStats": {
-          "blocked": {
-            "SJS": 2,
-            "VGK": 3
-          },
-          "faceOffWinPercentage": {
-            "SJS": "51.1",
-            "VGK": "48.9"
-          },
-          "giveaways": {
-            "SJS": 13,
-            "VGK": 15
-          },
-          "hits": {
-            "SJS": 13,
-            "VGK": 16
-          },
-          "pim": {
-            "SJS": 6,
-            "VGK": 12
-          },
-          "powerPlay": {
-            "SJS": {
-              "goals": 0,
-              "opportunities": 5,
-              "percentage": "0.0"
-            },
-            "VGK": {
-              "goals": 0,
-              "opportunities": 2,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "SJS": 23,
-            "VGK": 23
-          },
-          "takeaways": {
-            "SJS": 9,
-            "VGK": 3
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "VGK": { "wins": 3, "losses": 3, "ot": 0 },
-            "SJS": { "wins": 3, "losses": 3, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "VGK": { "wins": 4, "losses": 3, "ot": 0 },
-            "SJS": { "wins": 3, "losses": 4, "ot": 0 }
-          },
-          "streaks": {
-            "SJS": { "type": "LOSSES", "count": 2 },
-            "VGK": { "type": "WINS", "count": 2 }
-          },
-          "standings": {
-            "SJS": { "leagueRank": "22", "pointsFromPlayoffSpot": "+15" },
-            "VGK": { "leagueRank": "9", "pointsFromPlayoffSpot": "+7" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T23:00:00Z",
-        "goals": [
-          {
-            "team": "TBL",
-            "period": "1",
-            "scorer": { "player": "Nikita Kucherov", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Mikhail Sergachev", "seasonTotal": 1 },
-              { "player": "Mathieu Joseph", "seasonTotal": 1 }
-            ],
-            "min": 6,
-            "sec": 39
-          },
-          {
-            "team": "FLA",
-            "period": "2",
-            "scorer": { "player": "Mike Hoffman", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Vincent Trocheck", "seasonTotal": 1 },
-              { "player": "Brett Connolly", "seasonTotal": 1 }
-            ],
-            "min": 2,
-            "sec": 35
-          },
-          {
-            "team": "TBL",
-            "period": "2",
-            "scorer": { "player": "Kevin Shattenkirk", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Mikhail Sergachev", "seasonTotal": 2 },
-              { "player": "Alex Killorn", "seasonTotal": 1 }
-            ],
-            "min": 10,
-            "sec": 28
-          },
-          {
-            "team": "FLA",
-            "period": "3",
-            "scorer": { "player": "Vincent Trocheck", "seasonTotal": 1 },
-            "assists": [{ "player": "Aaron Ekblad", "seasonTotal": 1 }],
-            "min": 8,
-            "sec": 49,
-            "strength": "SHG"
-          },
-          {
-            "team": "TBL",
-            "period": "3",
-            "scorer": { "player": "Ondrej Palat", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Alex Killorn", "seasonTotal": 2 },
-              { "player": "Mikhail Sergachev", "seasonTotal": 3 }
-            ],
-            "min": 9,
-            "sec": 34,
-            "strength": "PPG"
-          },
-          {
-            "team": "TBL",
-            "period": "3",
-            "scorer": { "player": "Pat Maroon", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Victor Hedman", "seasonTotal": 1 },
-              { "player": "Nikita Kucherov", "seasonTotal": 1 }
-            ],
-            "min": 13,
-            "sec": 51
-          },
-          {
-            "team": "TBL",
-            "period": "3",
-            "scorer": { "player": "Erik Cernak", "seasonTotal": 1 },
-            "assists": [{ "player": "Anthony Cirelli", "seasonTotal": 1 }],
-            "min": 19,
-            "sec": 14,
-            "emptyNet": true
-          }
-        ],
-        "scores": { "FLA": 2, "TBL": 5 },
-        "teams": {
-          "away": { "abbreviation": "FLA", "id": 13 },
-          "home": { "abbreviation": "TBL", "id": 14 }
-        },
-        "gameStats": {
-          "blocked": {
-            "FLA": 8,
-            "TBL": 9
-          },
-          "faceOffWinPercentage": {
-            "FLA": "50.0",
-            "TBL": "50.0"
-          },
-          "giveaways": {
-            "FLA": 5,
-            "TBL": 12
-          },
-          "hits": {
-            "FLA": 22,
-            "TBL": 22
-          },
-          "pim": {
-            "FLA": 0,
-            "TBL": 0
-          },
-          "powerPlay": {
-            "FLA": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            },
-            "TBL": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "FLA": 37,
-            "TBL": 25
-          },
-          "takeaways": {
-            "FLA": 8,
-            "TBL": 9
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "TBL": { "wins": 2, "losses": 2, "ot": 1 },
-            "FLA": { "wins": 2, "losses": 1, "ot": 2 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "TBL": { "wins": 3, "losses": 2, "ot": 1 },
-            "FLA": { "wins": 2, "losses": 2, "ot": 2 }
-          },
-          "streaks": {
-            "FLA": { "type": "LOSSES", "count": 1 },
-            "TBL": { "type": "WINS", "count": 1 }
-          },
-          "standings": {
-            "FLA": { "leagueRank": "21", "pointsFromPlayoffSpot": "-1" },
-            "TBL": { "leagueRank": "10", "pointsFromPlayoffSpot": "+2" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T23:00:00Z",
-        "goals": [
-          {
-            "team": "NYR",
-            "period": "1",
-            "scorer": { "player": "Marc Staal", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Mika Zibanejad", "seasonTotal": 1 },
-              { "player": "Tony DeAngelo", "seasonTotal": 1 }
-            ],
-            "min": 11,
-            "sec": 35
-          },
-          {
-            "team": "WPG",
-            "period": "1",
-            "scorer": { "player": "Mark Scheifele", "seasonTotal": 1 },
-            "assists": [{ "player": "Nikolaj Ehlers", "seasonTotal": 1 }],
-            "min": 17,
-            "sec": 23
-          },
-          {
-            "team": "NYR",
-            "period": "2",
-            "scorer": { "player": "Artemi Panarin", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Mika Zibanejad", "seasonTotal": 2 },
-              { "player": "Jacob Trouba", "seasonTotal": 1 }
-            ],
-            "min": 0,
-            "sec": 27,
-            "strength": "PPG"
-          },
-          {
-            "team": "WPG",
-            "period": "2",
-            "scorer": { "player": "Blake Wheeler", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Nikolaj Ehlers", "seasonTotal": 2 },
-              { "player": "Ville Heinola", "seasonTotal": 1 }
-            ],
-            "min": 0,
-            "sec": 57
-          },
-          {
-            "team": "NYR",
-            "period": "2",
-            "scorer": { "player": "Jacob Trouba", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Chris Kreider", "seasonTotal": 1 },
-              { "player": "Artemi Panarin", "seasonTotal": 1 }
-            ],
-            "min": 6,
-            "sec": 3
-          },
-          {
-            "team": "WPG",
-            "period": "2",
-            "scorer": { "player": "Blake Wheeler", "seasonTotal": 2 },
-            "assists": [
-              { "player": "Nikolaj Ehlers", "seasonTotal": 3 },
-              { "player": "Dmitry Kulikov", "seasonTotal": 1 }
-            ],
-            "min": 6,
-            "sec": 12
-          },
-          {
-            "team": "WPG",
-            "period": "3",
-            "scorer": { "player": "Kyle Connor", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Josh Morrissey", "seasonTotal": 1 },
-              { "player": "Patrik Laine", "seasonTotal": 1 }
-            ],
-            "min": 2,
             "sec": 41,
             "strength": "PPG"
           },
           {
-            "team": "NYR",
-            "period": "3",
-            "scorer": { "player": "Mika Zibanejad", "seasonTotal": 1 },
+            "team": "NJD",
+            "period": "2",
+            "scorer": { "player": "Jack Hughes", "playerId": 8481559, "seasonTotal": 15 },
             "assists": [
-              { "player": "Jacob Trouba", "seasonTotal": 2 },
-              { "player": "Libor Hajek", "seasonTotal": 1 }
+              { "player": "Luke Hughes", "playerId": 8482684, "seasonTotal": 12 },
+              { "player": "Jesper Bratt", "playerId": 8479407, "seasonTotal": 31 }
             ],
-            "min": 5,
-            "sec": 4
+            "min": 11,
+            "sec": 13,
+            "strength": "PPG"
           },
           {
-            "team": "NYR",
+            "team": "NJD",
             "period": "3",
-            "scorer": { "player": "Brett Howden", "seasonTotal": 1 },
+            "scorer": { "player": "Stefan Noesen", "playerId": 8476474, "seasonTotal": 16 },
             "assists": [
-              { "player": "Jesper Fast", "seasonTotal": 1 },
-              { "player": "Brady Skjei", "seasonTotal": 1 }
+              { "player": "Nico Hischier", "playerId": 8480002, "seasonTotal": 16 },
+              { "player": "Timo Meier", "playerId": 8478414, "seasonTotal": 14 }
             ],
-            "min": 15,
-            "sec": 51
+            "min": 8,
+            "sec": 0
           },
           {
-            "team": "NYR",
+            "team": "NJD",
             "period": "3",
-            "scorer": { "player": "Brendan Smith", "seasonTotal": 1 },
-            "assists": [{ "player": "Mika Zibanejad", "seasonTotal": 3 }],
-            "min": 19,
-            "sec": 43,
-            "emptyNet": true,
-            "strength": "SHG"
+            "scorer": { "player": "Dawson Mercer", "playerId": 8482110, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Jack Hughes", "playerId": 8481559, "seasonTotal": 30 },
+              { "player": "Luke Hughes", "playerId": 8482684, "seasonTotal": 13 }
+            ],
+            "min": 12,
+            "sec": 35,
+            "strength": "PPG"
           }
         ],
-        "scores": { "WPG": 4, "NYR": 6 },
-        "teams": {
-          "away": { "abbreviation": "WPG", "id": 52 },
-          "home": { "abbreviation": "NYR", "id": 3 }
-        },
-        "gameStats": {
-          "blocked": {
-            "WPG": 8,
-            "NYR": 12
-          },
-          "faceOffWinPercentage": {
-            "WPG": "58.2",
-            "NYR": "41.8"
-          },
-          "giveaways": {
-            "WPG": 5,
-            "NYR": 5
-          },
-          "hits": {
-            "WPG": 18,
-            "NYR": 24
-          },
-          "pim": {
-            "WPG": 7,
-            "NYR": 15
-          },
-          "powerPlay": {
-            "WPG": {
-              "goals": 3,
-              "opportunities": 4,
-              "percentage": "75.0"
-            },
-            "NYR": {
-              "goals": 1,
-              "opportunities": 1,
-              "percentage": "100.0"
-            }
-          },
-          "shots": {
-            "WPG": 33,
-            "NYR": 28
-          },
-          "takeaways": {
-            "WPG": 9,
-            "NYR": 14
-          }
-        },
+        "startTime": "2024-12-23T18:00:00Z",
         "preGameStats": {
           "records": {
-            "NYR": { "wins": 1, "losses": 1, "ot": 0 },
-            "WPG": { "wins": 4, "losses": 3, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "NYR": { "wins": 2, "losses": 1, "ot": 0 },
-            "WPG": { "wins": 4, "losses": 4, "ot": 0 }
+            "NYR": { "wins": 16, "losses": 16, "ot": 1 },
+            "NJD": { "wins": 22, "losses": 11, "ot": 3 }
           },
           "streaks": {
-            "WPG": { "type": "LOSSES", "count": 1 },
-            "NYR": { "type": "WINS", "count": 1 }
+            "NYR": { "type": "LOSSES", "count": 1 },
+            "NJD": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "WPG": { "leagueRank": "18", "pointsFromPlayoffSpot": "0" },
-            "NYR": { "leagueRank": "26", "pointsFromPlayoffSpot": "-2" }
+            "NYR": { "divisionRank": "6", "leagueRank": "22", "pointsFromPlayoffSpot": "-5" },
+            "NJD": { "divisionRank": "2", "leagueRank": "4", "pointsFromPlayoffSpot": "+12" }
           }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "NYR",
+            "id": 3,
+            "locationName": "New York",
+            "shortName": "NY Rangers",
+            "teamName": "Rangers"
+          },
+          "home": {
+            "abbreviation": "NJD",
+            "id": 1,
+            "locationName": "New Jersey",
+            "shortName": "New Jersey",
+            "teamName": "Devils"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "NYR": 0, "NJD": 5 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/nyr-vs-njd/2024/12/23/2024020545",
+          "videoRecap": "https://www.nhl.com/video/nyr-at-njd-recap-6366384168112"
+        },
+        "gameStats": {
+          "blocked": { "NYR": 8, "NJD": 13 },
+          "faceOffWinPercentage": { "NYR": "55.0", "NJD": "45.0" },
+          "giveaways": { "NYR": 18, "NJD": 17 },
+          "hits": { "NYR": 26, "NJD": 16 },
+          "pim": { "NYR": 24, "NJD": 24 },
+          "powerPlay": {
+            "NYR": { "goals": 0, "opportunities": 4, "percentage": "0.0" },
+            "NJD": { "goals": 3, "opportunities": 4, "percentage": "75.0" }
+          },
+          "shots": { "NYR": 12, "NJD": 29 },
+          "takeaways": { "NYR": 1, "NJD": 5 }
         }
       },
       {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T23:00:00Z",
+        "currentStats": {
+          "records": {
+            "WPG": { "wins": 25, "losses": 10, "ot": 1 },
+            "TOR": { "wins": 21, "losses": 12, "ot": 2 }
+          },
+          "streaks": {
+            "WPG": { "type": "WINS", "count": 2 },
+            "TOR": { "type": "LOSSES", "count": 2 }
+          },
+          "standings": {
+            "WPG": { "divisionRank": "1", "leagueRank": "1", "pointsFromPlayoffSpot": "+12" },
+            "TOR": { "divisionRank": "2", "leagueRank": "8", "pointsFromPlayoffSpot": "+7" }
+          }
+        },
         "goals": [
           {
-            "team": "BUF",
+            "team": "WPG",
             "period": "1",
-            "scorer": { "player": "Conor Sheary", "seasonTotal": 1 },
-            "assists": [{ "player": "Casey Mittelstadt", "seasonTotal": 1 }],
-            "min": 5,
-            "sec": 23
-          },
-          {
-            "team": "PIT",
-            "period": "2",
-            "scorer": { "player": "Evgeni Malkin", "seasonTotal": 1 },
+            "scorer": { "player": "Kyle Connor", "playerId": 8478398, "seasonTotal": 20 },
             "assists": [
-              { "player": "Kris Letang", "seasonTotal": 1 },
-              { "player": "Sidney Crosby", "seasonTotal": 1 }
-            ],
-            "min": 5,
-            "sec": 50,
-            "strength": "PPG"
-          },
-          {
-            "team": "BUF",
-            "period": "2",
-            "scorer": { "player": "Conor Sheary", "seasonTotal": 2 },
-            "assists": [
-              { "player": "Casey Mittelstadt", "seasonTotal": 2 },
-              { "player": "Colin Miller", "seasonTotal": 1 }
-            ],
-            "min": 14,
-            "sec": 3,
-            "strength": "PPG"
-          },
-          {
-            "team": "BUF",
-            "period": "2",
-            "scorer": { "player": "Rasmus Dahlin", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Sam Reinhart", "seasonTotal": 1 },
-              { "player": "Victor Olofsson", "seasonTotal": 1 }
-            ],
-            "min": 19,
-            "sec": 16
-          }
-        ],
-        "scores": { "BUF": 3, "PIT": 1 },
-        "teams": {
-          "away": { "abbreviation": "BUF", "id": 7 },
-          "home": { "abbreviation": "PIT", "id": 5 }
-        },
-        "gameStats": {
-          "blocked": {
-            "BUF": 7,
-            "PIT": 4
-          },
-          "faceOffWinPercentage": {
-            "BUF": "44.6",
-            "PIT": "55.4"
-          },
-          "giveaways": {
-            "BUF": 5,
-            "PIT": 3
-          },
-          "hits": {
-            "BUF": 25,
-            "PIT": 24
-          },
-          "pim": {
-            "BUF": 6,
-            "PIT": 4
-          },
-          "powerPlay": {
-            "BUF": {
-              "goals": 0,
-              "opportunities": 1,
-              "percentage": "0.0"
-            },
-            "PIT": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "BUF": 18,
-            "PIT": 25
-          },
-          "takeaways": {
-            "BUF": 7,
-            "PIT": 2
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "BUF": { "wins": 4, "losses": 1, "ot": 1 },
-            "PIT": { "wins": 5, "losses": 1, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "BUF": { "wins": 5, "losses": 1, "ot": 1 },
-            "PIT": { "wins": 5, "losses": 2, "ot": 0 }
-          },
-          "streaks": {
-            "BUF": { "type": "WINS", "count": 1 },
-            "PIT": { "type": "LOSSES", "count": 1 }
-          },
-          "standings": {
-            "BUF": { "leagueRank": "3", "pointsFromPlayoffSpot": "+2" },
-            "PIT": { "leagueRank": "5", "pointsFromPlayoffSpot": "-1" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-03T23:00:00Z",
-        "goals": [
-          {
-            "team": "CAR",
-            "period": "1",
-            "scorer": { "player": "Lucas Wallmark", "seasonTotal": 1 },
-            "assists": [{ "player": "Brett Pesce", "seasonTotal": 1 }],
-            "min": 17,
-            "sec": 19
-          },
-          {
-            "team": "CAR",
-            "period": "2",
-            "scorer": { "player": "Martin Necas", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Dougie Hamilton", "seasonTotal": 1 },
-              { "player": "Teuvo Teravainen", "seasonTotal": 1 }
-            ],
-            "min": 2,
-            "sec": 19,
-            "strength": "PPG"
-          },
-          {
-            "team": "MTL",
-            "period": "2",
-            "scorer": { "player": "Tomas Tatar", "seasonTotal": 1 },
-            "assists": [],
-            "min": 4,
-            "sec": 18,
-            "strength": "PPG"
-          },
-          {
-            "team": "MTL",
-            "period": "2",
-            "scorer": { "player": "Jesperi Kotkaniemi", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Artturi Lehkonen", "seasonTotal": 1 },
-              { "player": "Jonathan Drouin", "seasonTotal": 1 }
-            ],
-            "min": 5,
-            "sec": 22
-          },
-          {
-            "team": "MTL",
-            "period": "2",
-            "scorer": { "player": "Jordan Weal", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Paul Byron", "seasonTotal": 1 },
-              { "player": "Nate Thompson", "seasonTotal": 1 }
-            ],
-            "min": 16,
-            "sec": 36
-          },
-          {
-            "team": "CAR",
-            "period": "3",
-            "scorer": { "player": "Erik Haula", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Dougie Hamilton", "seasonTotal": 2 },
-              { "player": "Ryan Dzingel", "seasonTotal": 1 }
-            ],
-            "min": 6,
-            "sec": 55
-          },
-          {
-            "team": "CAR",
-            "period": "SO",
-            "scorer": { "player": "Dougie Hamilton" }
-          }
-        ],
-        "scores": { "MTL": 3, "CAR": 4, "shootout": true },
-        "teams": {
-          "away": { "abbreviation": "MTL", "id": 8 },
-          "home": { "abbreviation": "CAR", "id": 12 }
-        },
-        "gameStats": {
-          "blocked": {
-            "MTL": 7,
-            "CAR": 8
-          },
-          "faceOffWinPercentage": {
-            "MTL": "41.4",
-            "CAR": "58.6"
-          },
-          "giveaways": {
-            "MTL": 7,
-            "CAR": 7
-          },
-          "hits": {
-            "MTL": 23,
-            "CAR": 17
-          },
-          "pim": {
-            "MTL": 6,
-            "CAR": 6
-          },
-          "powerPlay": {
-            "MTL": {
-              "goals": 1,
-              "opportunities": 3,
-              "percentage": "33.3"
-            },
-            "CAR": {
-              "goals": 2,
-              "opportunities": 3,
-              "percentage": "66.7"
-            }
-          },
-          "shots": {
-            "MTL": 28,
-            "CAR": 37
-          },
-          "takeaways": {
-            "MTL": 6,
-            "CAR": 13
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "CAR": { "wins": 5, "losses": 2, "ot": 0 },
-            "MTL": { "wins": 2, "losses": 2, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "CAR": { "wins": 6, "losses": 2, "ot": 0 },
-            "MTL": { "wins": 2, "losses": 2, "ot": 2 }
-          },
-          "streaks": {
-            "MTL": { "type": "OT", "count": 1 },
-            "CAR": { "type": "WINS", "count": 1 }
-          },
-          "standings": {
-            "MTL": { "leagueRank": "17", "pointsFromPlayoffSpot": "+1" },
-            "CAR": { "leagueRank": "7", "pointsFromPlayoffSpot": "+2" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-04T00:00:00Z",
-        "goals": [
-          {
-            "team": "NSH",
-            "period": "2",
-            "scorer": { "player": "Ryan Ellis", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Filip Forsberg", "seasonTotal": 1 },
-              { "player": "Matt Duchene", "seasonTotal": 1 }
-            ],
-            "min": 3,
-            "sec": 37
-          },
-          {
-            "team": "MIN",
-            "period": "2",
-            "scorer": { "player": "Jason Zucker", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Brad Hunt", "seasonTotal": 1 },
-              { "player": "Mikko Koivu", "seasonTotal": 1 }
+              { "player": "Gabriel Vilardi", "playerId": 8480014, "seasonTotal": 15 },
+              { "player": "Josh Morrissey", "playerId": 8477504, "seasonTotal": 29 }
             ],
             "min": 16,
             "sec": 4,
             "strength": "PPG"
           },
           {
-            "team": "MIN",
+            "team": "WPG",
             "period": "2",
-            "scorer": { "player": "Matt Dumba", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Marcus Foligno", "seasonTotal": 1 },
-              { "player": "Ryan Suter", "seasonTotal": 1 }
-            ],
-            "min": 16,
-            "sec": 47
+            "scorer": { "player": "Kyle Connor", "playerId": 8478398, "seasonTotal": 21 },
+            "assists": [{ "player": "Mark Scheifele", "playerId": 8476460, "seasonTotal": 21 }],
+            "min": 1,
+            "sec": 16
           },
           {
-            "team": "NSH",
-            "period": "3",
-            "scorer": { "player": "Mikael Granlund", "seasonTotal": 1 },
+            "team": "TOR",
+            "period": "2",
+            "scorer": { "player": "John Tavares", "playerId": 8475166, "seasonTotal": 16 },
             "assists": [
-              { "player": "Roman Josi", "seasonTotal": 1 },
-              { "player": "Matt Duchene", "seasonTotal": 2 }
+              { "player": "Mitch Marner", "playerId": 8478483, "seasonTotal": 36 },
+              { "player": "William Nylander", "playerId": 8477939, "seasonTotal": 16 }
             ],
-            "min": 0,
+            "min": 5,
+            "sec": 25,
+            "strength": "PPG"
+          },
+          {
+            "team": "WPG",
+            "period": "3",
+            "scorer": { "player": "Mark Scheifele", "playerId": 8476460, "seasonTotal": 19 },
+            "assists": [
+              { "player": "Gabriel Vilardi", "playerId": 8480014, "seasonTotal": 16 },
+              { "player": "Kyle Connor", "playerId": 8478398, "seasonTotal": 25 }
+            ],
+            "min": 3,
             "sec": 27
           },
           {
-            "team": "NSH",
+            "team": "WPG",
             "period": "3",
-            "scorer": { "player": "Austin Watson", "seasonTotal": 1 },
+            "scorer": { "player": "Mark Scheifele", "playerId": 8476460, "seasonTotal": 20 },
             "assists": [
-              { "player": "Ryan Ellis", "seasonTotal": 1 },
-              { "player": "Nick Bonino", "seasonTotal": 1 }
+              { "player": "Gabriel Vilardi", "playerId": 8480014, "seasonTotal": 17 },
+              { "player": "Josh Morrissey", "playerId": 8477504, "seasonTotal": 30 }
             ],
-            "min": 1,
-            "sec": 56
+            "min": 11,
+            "sec": 57
           },
           {
-            "team": "NSH",
+            "team": "TOR",
             "period": "3",
-            "scorer": { "player": "Viktor Arvidsson", "seasonTotal": 1 },
+            "scorer": { "player": "John Tavares", "playerId": 8475166, "seasonTotal": 17 },
             "assists": [
-              { "player": "Craig Smith", "seasonTotal": 1 },
-              { "player": "Ryan Johansen", "seasonTotal": 1 }
+              { "player": "Jake McCabe", "playerId": 8476931, "seasonTotal": 9 },
+              { "player": "William Nylander", "playerId": 8477939, "seasonTotal": 17 }
             ],
-            "min": 7,
-            "sec": 32
+            "min": 13,
+            "sec": 42
           },
           {
-            "team": "NSH",
+            "team": "WPG",
             "period": "3",
-            "scorer": { "player": "Filip Forsberg", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Mattias Ekholm", "seasonTotal": 1 },
-              { "player": "Matt Duchene", "seasonTotal": 3 }
-            ],
-            "min": 18,
-            "sec": 34,
+            "scorer": { "player": "Mark Scheifele", "playerId": 8476460, "seasonTotal": 21 },
+            "assists": [{ "player": "Kyle Connor", "playerId": 8478398, "seasonTotal": 26 }],
+            "min": 19,
+            "sec": 39,
             "emptyNet": true
           }
         ],
-        "scores": { "MIN": 2, "NSH": 5 },
-        "teams": {
-          "away": { "abbreviation": "MIN", "id": 30 },
-          "home": { "abbreviation": "NSH", "id": 18 }
-        },
-        "gameStats": {
-          "blocked": {
-            "MIN": 8,
-            "NSH": 6
-          },
-          "faceOffWinPercentage": {
-            "MIN": "49.9",
-            "NSH": "50.1"
-          },
-          "giveaways": {
-            "MIN": 13,
-            "NSH": 7
-          },
-          "hits": {
-            "MIN": 16,
-            "NSH": 14
-          },
-          "pim": {
-            "MIN": 4,
-            "NSH": 0
-          },
-          "powerPlay": {
-            "MIN": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            },
-            "NSH": {
-              "goals": 0,
-              "opportunities": 2,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "MIN": 28,
-            "NSH": 28
-          },
-          "takeaways": {
-            "MIN": 7,
-            "NSH": 8
-          }
-        },
+        "startTime": "2024-12-23T19:00:00Z",
         "preGameStats": {
           "records": {
-            "NSH": { "wins": 3, "losses": 2, "ot": 0 },
-            "MIN": { "wins": 1, "losses": 4, "ot": 0 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "NSH": { "wins": 4, "losses": 2, "ot": 0 },
-            "MIN": { "wins": 1, "losses": 5, "ot": 0 }
+            "WPG": { "wins": 24, "losses": 10, "ot": 1 },
+            "TOR": { "wins": 21, "losses": 11, "ot": 2 }
           },
           "streaks": {
-            "MIN": { "type": "LOSSES", "count": 1 },
-            "NSH": { "type": "WINS", "count": 1 }
+            "WPG": { "type": "WINS", "count": 1 },
+            "TOR": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "MIN": { "leagueRank": "31", "pointsFromPlayoffSpot": "0" },
-            "NSH": { "leagueRank": "15", "pointsFromPlayoffSpot": "+2" }
+            "WPG": { "divisionRank": "1", "leagueRank": "1", "pointsFromPlayoffSpot": "+11" },
+            "TOR": { "divisionRank": "2", "leagueRank": "6", "pointsFromPlayoffSpot": "+9" }
           }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "WPG",
+            "id": 52,
+            "locationName": "Winnipeg",
+            "shortName": "Winnipeg",
+            "teamName": "Jets"
+          },
+          "home": {
+            "abbreviation": "TOR",
+            "id": 10,
+            "locationName": "Toronto",
+            "shortName": "Toronto",
+            "teamName": "Maple Leafs"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "WPG": 5, "TOR": 2 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/wpg-vs-tor/2024/12/23/2024020546",
+          "videoRecap": "https://www.nhl.com/video/wpg-at-tor-recap-6366385406112"
+        },
+        "gameStats": {
+          "blocked": { "WPG": 22, "TOR": 6 },
+          "faceOffWinPercentage": { "WPG": "46.9", "TOR": "53.1" },
+          "giveaways": { "WPG": 8, "TOR": 10 },
+          "hits": { "WPG": 15, "TOR": 29 },
+          "pim": { "WPG": 11, "TOR": 9 },
+          "powerPlay": {
+            "WPG": { "goals": 1, "opportunities": 2, "percentage": "50.0" },
+            "TOR": { "goals": 1, "opportunities": 3, "percentage": "33.3" }
+          },
+          "shots": { "WPG": 27, "TOR": 25 },
+          "takeaways": { "WPG": 4, "TOR": 2 }
         }
       },
       {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-04T00:30:00Z",
+        "currentStats": {
+          "records": {
+            "WSH": { "wins": 23, "losses": 9, "ot": 2 },
+            "BOS": { "wins": 19, "losses": 13, "ot": 4 }
+          },
+          "streaks": {
+            "WSH": { "type": "LOSSES", "count": 1 },
+            "BOS": { "type": "WINS", "count": 2 }
+          },
+          "standings": {
+            "WSH": { "divisionRank": "2", "leagueRank": "4", "pointsFromPlayoffSpot": "+11" },
+            "BOS": { "divisionRank": "3", "leagueRank": "12", "pointsFromPlayoffSpot": "+5" }
+          }
+        },
         "goals": [
           {
             "team": "BOS",
             "period": "1",
-            "scorer": { "player": "Brett Ritchie", "seasonTotal": 1 },
-            "assists": [{ "player": "Charlie Coyle", "seasonTotal": 1 }],
-            "min": 1,
-            "sec": 9
-          },
-          {
-            "team": "BOS",
-            "period": "1",
-            "scorer": { "player": "Danton Heinen", "seasonTotal": 1 },
+            "scorer": { "player": "Justin Brazeau", "playerId": 8479638, "seasonTotal": 7 },
             "assists": [
-              { "player": "Matt Grzelcyk", "seasonTotal": 1 },
-              { "player": "Charlie McAvoy", "seasonTotal": 1 }
+              { "player": "Morgan Geekie", "playerId": 8479987, "seasonTotal": 7 },
+              { "player": "Mason Lohrei", "playerId": 8482511, "seasonTotal": 14 }
             ],
-            "min": 5,
-            "sec": 59,
+            "min": 19,
+            "sec": 12,
             "strength": "PPG"
           },
           {
-            "team": "DAL",
+            "team": "WSH",
             "period": "2",
-            "scorer": { "player": "Roope Hintz", "seasonTotal": 1 },
+            "scorer": { "player": "Jakub Vrana", "playerId": 8477944, "seasonTotal": 7 },
             "assists": [
-              { "player": "Mattias Janmark", "seasonTotal": 1 },
-              { "player": "Joe Pavelski", "seasonTotal": 1 }
+              { "player": "Rasmus Sandin", "playerId": 8480873, "seasonTotal": 10 },
+              { "player": "Pierre-Luc Dubois", "playerId": 8479400, "seasonTotal": 21 }
             ],
-            "min": 7,
-            "sec": 55
-          }
-        ],
-        "scores": { "BOS": 2, "DAL": 1 },
-        "teams": {
-          "away": { "abbreviation": "BOS", "id": 6 },
-          "home": { "abbreviation": "DAL", "id": 25 }
-        },
-        "gameStats": {
-          "blocked": {
-            "BOS": 11,
-            "DAL": 3
-          },
-          "faceOffWinPercentage": {
-            "WSH": "40.0",
-            "STL": "60.0"
-          },
-          "giveaways": {
-            "BOS": 4,
-            "DAL": 5
-          },
-          "hits": {
-            "BOS": 12,
-            "DAL": 17
-          },
-          "pim": {
-            "BOS": 8,
-            "DAL": 4
-          },
-          "powerPlay": {
-            "BOS": {
-              "goals": 1,
-              "opportunities": 2,
-              "percentage": "50.0"
-            },
-            "DAL": {
-              "goals": 2,
-              "opportunities": 4,
-              "percentage": "50.0"
-            }
-          },
-          "shots": {
-            "BOS": 37,
-            "DAL": 26
-          },
-          "takeaways": {
-            "BOS": 2,
-            "DAL": 6
-          }
-        },
-        "preGameStats": {
-          "records": {
-            "BOS": { "wins": 4, "losses": 1, "ot": 0 },
-            "DAL": { "wins": 1, "losses": 5, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "BOS": { "wins": 5, "losses": 1, "ot": 0 },
-            "DAL": { "wins": 1, "losses": 6, "ot": 1 }
-          },
-          "streaks": {
-            "BOS": { "type": "WINS", "count": 1 },
-            "DAL": { "type": "LOSSES", "count": 1 }
-          },
-          "standings": {
-            "BOS": { "leagueRank": "8", "pointsFromPlayoffSpot": "+2" },
-            "DAL": { "leagueRank": "30", "pointsFromPlayoffSpot": "0" }
-          }
-        }
-      },
-      {
-        "status": { "state": "FINAL" },
-        "startTime": "2019-10-04T01:00:00Z",
-        "goals": [
-          {
-            "team": "COL",
-            "period": "1",
-            "scorer": { "player": "Joonas Donskoi", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Samuel Girard", "seasonTotal": 1 },
-              { "player": "Andre Burakovsky", "seasonTotal": 1 }
-            ],
-            "min": 5,
-            "sec": 59,
-            "strength": "PPG"
-          },
-          {
-            "team": "CGY",
-            "period": "1",
-            "scorer": { "player": "Sean Monahan", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Johnny Gaudreau", "seasonTotal": 1 },
-              { "player": "Elias Lindholm", "seasonTotal": 1 }
-            ],
-            "min": 8,
-            "sec": 33,
-            "strength": "PPG"
-          },
-          {
-            "team": "COL",
-            "period": "1",
-            "scorer": { "player": "Mikko Rantanen", "seasonTotal": 1 },
-            "assists": [{ "player": "Gabriel Landeskog", "seasonTotal": 1 }],
-            "min": 16,
-            "sec": 8
-          },
-          {
-            "team": "CGY",
-            "period": "2",
-            "scorer": { "player": "Johnny Gaudreau", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Sean Monahan", "seasonTotal": 1 },
-              { "player": "Matthew Tkachuk", "seasonTotal": 1 }
-            ],
-            "min": 1,
+            "min": 4,
             "sec": 50,
             "strength": "PPG"
           },
           {
-            "team": "COL",
-            "period": "2",
-            "scorer": { "player": "J.T. Compher", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Matt Calvert", "seasonTotal": 1 },
-              { "player": "Nikita Zadorov", "seasonTotal": 1 }
-            ],
-            "min": 12,
-            "sec": 22
-          },
-          {
-            "team": "COL",
-            "period": "2",
-            "scorer": { "player": "Mikko Rantanen", "seasonTotal": 2 },
-            "assists": [
-              { "player": "Nathan MacKinnon", "seasonTotal": 1 },
-              { "player": "Cale Makar", "seasonTotal": 1 }
-            ],
-            "min": 16,
-            "sec": 51,
-            "strength": "PPG"
-          },
-          {
-            "team": "CGY",
-            "period": "2",
-            "scorer": { "player": "Mark Giordano", "seasonTotal": 1 },
-            "assists": [
-              { "player": "Sam Bennett", "seasonTotal": 1 },
-              { "player": "Derek Ryan", "seasonTotal": 1 }
-            ],
-            "min": 17,
-            "sec": 7
-          },
-          {
-            "team": "COL",
+            "team": "BOS",
             "period": "3",
-            "scorer": { "player": "Joonas Donskoi", "seasonTotal": 2 },
+            "scorer": { "player": "Elias Lindholm", "playerId": 8477496, "seasonTotal": 6 },
             "assists": [
-              { "player": "Matt Nieto", "seasonTotal": 1 },
-              { "player": "Ryan Graves", "seasonTotal": 1 }
+              { "player": "Brad Marchand", "playerId": 8473419, "seasonTotal": 14 },
+              { "player": "Charlie Coyle", "playerId": 8475745, "seasonTotal": 3 }
             ],
+            "min": 13,
+            "sec": 41
+          },
+          {
+            "team": "BOS",
+            "period": "3",
+            "scorer": { "player": "Charlie Coyle", "playerId": 8475745, "seasonTotal": 9 },
+            "assists": [
+              { "player": "Brad Marchand", "playerId": 8473419, "seasonTotal": 15 },
+              { "player": "Charlie McAvoy", "playerId": 8479325, "seasonTotal": 11 }
+            ],
+            "min": 15,
+            "sec": 59
+          },
+          {
+            "team": "BOS",
+            "period": "3",
+            "scorer": { "player": "Brad Marchand", "playerId": 8473419, "seasonTotal": 15 },
+            "assists": [],
             "min": 18,
-            "sec": 51,
+            "sec": 38,
             "emptyNet": true
           }
         ],
-        "scores": { "CGY": 3, "COL": 5 },
-        "teams": {
-          "away": { "abbreviation": "CGY", "id": 20 },
-          "home": { "abbreviation": "COL", "id": 21 }
-        },
-        "gameStats": {
-          "blocked": {
-            "CGY": 8,
-            "COL": 7
-          },
-          "faceOffWinPercentage": {
-            "CGY": "40.6",
-            "COL": "59.4"
-          },
-          "giveaways": {
-            "CGY": 6,
-            "COL": 8
-          },
-          "hits": {
-            "CGY": 17,
-            "COL": 11
-          },
-          "pim": {
-            "CGY": 4,
-            "COL": 4
-          },
-          "powerPlay": {
-            "CGY": {
-              "goals": 1,
-              "opportunities": 1,
-              "percentage": "100.0"
-            },
-            "COL": {
-              "goals": 0,
-              "opportunities": 1,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "CGY": 23,
-            "COL": 22
-          },
-          "takeaways": {
-            "CGY": 4,
-            "COL": 6
-          }
-        },
+        "startTime": "2024-12-24T00:00:00Z",
         "preGameStats": {
           "records": {
-            "COL": { "wins": 4, "losses": 0, "ot": 1 },
-            "CGY": { "wins": 3, "losses": 2, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "COL": { "wins": 5, "losses": 0, "ot": 1 },
-            "CGY": { "wins": 3, "losses": 3, "ot": 1 }
+            "WSH": { "wins": 23, "losses": 8, "ot": 2 },
+            "BOS": { "wins": 18, "losses": 13, "ot": 4 }
           },
           "streaks": {
-            "CGY": { "type": "LOSSES", "count": 1 },
-            "COL": { "type": "WINS", "count": 1 }
+            "WSH": { "type": "WINS", "count": 2 },
+            "BOS": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "CGY": { "leagueRank": "13", "pointsFromPlayoffSpot": "0" },
-            "COL": { "leagueRank": "2", "pointsFromPlayoffSpot": "+2" }
+            "WSH": { "divisionRank": "1", "leagueRank": "2", "pointsFromPlayoffSpot": "+13" },
+            "BOS": { "divisionRank": "3", "leagueRank": "12", "pointsFromPlayoffSpot": "+5" }
           }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "WSH",
+            "id": 15,
+            "locationName": "Washington",
+            "shortName": "Washington",
+            "teamName": "Capitals"
+          },
+          "home": {
+            "abbreviation": "BOS",
+            "id": 6,
+            "locationName": "Boston",
+            "shortName": "Boston",
+            "teamName": "Bruins"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "WSH": 1, "BOS": 4 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/wsh-vs-bos/2024/12/23/2024020547",
+          "videoRecap": "https://www.nhl.com/video/wsh-at-bos-recap-6366393588112"
+        },
+        "gameStats": {
+          "blocked": { "WSH": 11, "BOS": 17 },
+          "faceOffWinPercentage": { "WSH": "34.0", "BOS": "66.0" },
+          "giveaways": { "WSH": 14, "BOS": 12 },
+          "hits": { "WSH": 18, "BOS": 19 },
+          "pim": { "WSH": 12, "BOS": 23 },
+          "powerPlay": {
+            "WSH": { "goals": 1, "opportunities": 3, "percentage": "33.3" },
+            "BOS": { "goals": 1, "opportunities": 4, "percentage": "25.0" }
+          },
+          "shots": { "WSH": 11, "BOS": 22 },
+          "takeaways": { "WSH": 6, "BOS": 4 }
         }
       },
       {
-        "status": {
-          "state": "LIVE",
-          "progress": {
-            "currentPeriod": 1,
-            "currentPeriodOrdinal": "1st",
-            "currentPeriodTimeRemaining": {
-              "pretty": "17:22",
-              "min": 17,
-              "sec": 22
-            }
+        "currentStats": {
+          "records": {
+            "STL": { "wins": 16, "losses": 16, "ot": 4 },
+            "DET": { "wins": 13, "losses": 17, "ot": 4 }
+          },
+          "streaks": {
+            "STL": { "type": "WINS", "count": 1 },
+            "DET": { "type": "LOSSES", "count": 3 }
+          },
+          "standings": {
+            "STL": { "divisionRank": "6", "leagueRank": "20", "pointsFromPlayoffSpot": "-4" },
+            "DET": { "divisionRank": "7", "leagueRank": "28", "pointsFromPlayoffSpot": "-8" }
           }
         },
-        "startTime": "2019-10-04T02:00:00Z",
         "goals": [
           {
-            "team": "ANA",
+            "team": "STL",
             "period": "1",
-            "scorer": { "player": "Derek Grant", "seasonTotal": 1 },
+            "scorer": { "player": "Dylan Holloway", "playerId": 8482077, "seasonTotal": 11 },
             "assists": [
-              { "player": "Devin Shore", "seasonTotal": 1 },
-              { "player": "Hampus Lindholm", "seasonTotal": 1 }
+              { "player": "Cam Fowler", "playerId": 8475764, "seasonTotal": 6 },
+              { "player": "Jordan Kyrou", "playerId": 8479385, "seasonTotal": 15 }
             ],
-            "min": 1,
-            "sec": 32
+            "min": 16,
+            "sec": 14
+          },
+          {
+            "team": "STL",
+            "period": "2",
+            "scorer": { "player": "Alexandre Texier", "playerId": 8480074, "seasonTotal": 2 },
+            "assists": [
+              { "player": "Robert Thomas", "playerId": 8480023, "seasonTotal": 19 },
+              { "player": "Pavel Buchnevich", "playerId": 8477402, "seasonTotal": 14 }
+            ],
+            "min": 0,
+            "sec": 18
+          },
+          {
+            "team": "STL",
+            "period": "2",
+            "scorer": { "player": "Dylan Holloway", "playerId": 8482077, "seasonTotal": 12 },
+            "assists": [
+              { "player": "Brayden Schenn", "playerId": 8475170, "seasonTotal": 13 },
+              { "player": "Colton Parayko", "playerId": 8476892, "seasonTotal": 12 }
+            ],
+            "min": 7,
+            "sec": 45
+          },
+          {
+            "team": "STL",
+            "period": "3",
+            "scorer": { "player": "Dylan Holloway", "playerId": 8482077, "seasonTotal": 13 },
+            "assists": [
+              { "player": "Colton Parayko", "playerId": 8476892, "seasonTotal": 13 },
+              { "player": "Robert Thomas", "playerId": 8480023, "seasonTotal": 20 }
+            ],
+            "min": 15,
+            "sec": 54,
+            "emptyNet": true
           }
         ],
-        "scores": { "ARI": 1, "ANA": 0 },
-        "teams": {
-          "away": { "abbreviation": "ARI", "id": 53 },
-          "home": { "abbreviation": "ANA", "id": 24 }
-        },
-        "gameStats": {
-          "blocked": {
-            "ARI": 0,
-            "ANA": 1
-          },
-          "faceOffWinPercentage": {
-            "ARI": "57.0",
-            "ANA": "43.0"
-          },
-          "giveaways": {
-            "ARI": 0,
-            "ANA": 0
-          },
-          "hits": {
-            "ARI": 2,
-            "ANA": 1
-          },
-          "pim": {
-            "ARI": 0,
-            "ANA": 2
-          },
-          "powerPlay": {
-            "ARI": {
-              "goals": 0,
-              "opportunities": 1,
-              "percentage": "0.0"
-            },
-            "ANA": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "ARI": 2,
-            "ANA": 0
-          },
-          "takeaways": {
-            "ARI": 1,
-            "ANA": 0
-          }
-        },
+        "startTime": "2024-12-24T00:00:00Z",
         "preGameStats": {
           "records": {
-            "ANA": { "wins": 4, "losses": 2, "ot": 0 },
-            "ARI": { "wins": 2, "losses": 1, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "ANA": { "wins": 4, "losses": 2, "ot": 0 },
-            "ARI": { "wins": 2, "losses": 1, "ot": 1 }
+            "STL": { "wins": 15, "losses": 16, "ot": 4 },
+            "DET": { "wins": 13, "losses": 16, "ot": 4 }
           },
           "streaks": {
-            "ARI": { "type": "LOSSES", "count": 1 },
-            "ANA": { "type": "WINS", "count": 1 }
+            "STL": { "type": "OT", "count": 1 },
+            "DET": { "type": "LOSSES", "count": 2 }
           },
           "standings": {
-            "ARI": { "leagueRank": "19", "pointsFromPlayoffSpot": "0" },
-            "ANA": { "leagueRank": "4", "pointsFromPlayoffSpot": "+2" }
+            "STL": { "divisionRank": "6", "leagueRank": "21", "pointsFromPlayoffSpot": "-5" },
+            "DET": { "divisionRank": "7", "leagueRank": "28", "pointsFromPlayoffSpot": "-8" }
           }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "STL",
+            "id": 19,
+            "locationName": "St. Louis",
+            "shortName": "St Louis",
+            "teamName": "Blues"
+          },
+          "home": {
+            "abbreviation": "DET",
+            "id": 17,
+            "locationName": "Detroit",
+            "shortName": "Detroit",
+            "teamName": "Red Wings"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "STL": 4, "DET": 0 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/stl-vs-det/2024/12/23/2024020548",
+          "videoRecap": "https://www.nhl.com/video/stl-at-det-recap-6366392788112"
+        },
+        "gameStats": {
+          "blocked": { "STL": 12, "DET": 15 },
+          "faceOffWinPercentage": { "STL": "48.0", "DET": "52.0" },
+          "giveaways": { "STL": 10, "DET": 12 },
+          "hits": { "STL": 21, "DET": 13 },
+          "pim": { "STL": 2, "DET": 4 },
+          "powerPlay": {
+            "STL": { "goals": 0, "opportunities": 2, "percentage": "0.0" },
+            "DET": { "goals": 0, "opportunities": 1, "percentage": "0.0" }
+          },
+          "shots": { "STL": 21, "DET": 19 },
+          "takeaways": { "STL": 5, "DET": 2 }
         }
       },
       {
-        "status": {
-          "state": "LIVE",
-          "progress": {
-            "currentPeriod": 1,
-            "currentPeriodOrdinal": "1st",
-            "currentPeriodTimeRemaining": {
-              "pretty": "11:58",
-              "min": 11,
-              "sec": 58
-            }
+        "currentStats": {
+          "records": {
+            "TBL": { "wins": 19, "losses": 11, "ot": 2 },
+            "FLA": { "wins": 22, "losses": 12, "ot": 2 }
+          },
+          "streaks": {
+            "TBL": { "type": "WINS", "count": 1 },
+            "FLA": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "TBL": { "divisionRank": "4", "leagueRank": "14", "pointsFromPlayoffSpot": "+3" },
+            "FLA": { "divisionRank": "1", "leagueRank": "6", "pointsFromPlayoffSpot": "+9" }
           }
         },
-        "startTime": "2019-10-04T18:00:00Z",
         "goals": [
+          {
+            "team": "TBL",
+            "period": "1",
+            "scorer": { "player": "Nikita Kucherov", "playerId": 8476453, "seasonTotal": 15 },
+            "assists": [
+              { "player": "Victor Hedman", "playerId": 8475167, "seasonTotal": 23 },
+              { "player": "Anthony Cirelli", "playerId": 8478519, "seasonTotal": 16 }
+            ],
+            "min": 6,
+            "sec": 56
+          },
+          {
+            "team": "TBL",
+            "period": "1",
+            "scorer": { "player": "Jake Guentzel", "playerId": 8477404, "seasonTotal": 19 },
+            "assists": [
+              { "player": "Brandon Hagel", "playerId": 8479542, "seasonTotal": 23 },
+              { "player": "Victor Hedman", "playerId": 8475167, "seasonTotal": 24 }
+            ],
+            "min": 9,
+            "sec": 20
+          },
+          {
+            "team": "TBL",
+            "period": "1",
+            "scorer": { "player": "Mitchell Chaffee", "playerId": 8482070, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Anthony Cirelli", "playerId": 8478519, "seasonTotal": 17 },
+              { "player": "Nick Paul", "playerId": 8477426, "seasonTotal": 11 }
+            ],
+            "min": 16,
+            "sec": 24,
+            "strength": "PPG"
+          },
+          {
+            "team": "TBL",
+            "period": "3",
+            "scorer": { "player": "Brandon Hagel", "playerId": 8479542, "seasonTotal": 16 },
+            "assists": [{ "player": "Erik Cernak", "playerId": 8478416, "seasonTotal": 8 }],
+            "min": 14,
+            "sec": 18,
+            "emptyNet": true,
+            "strength": "SHG"
+          }
+        ],
+        "startTime": "2024-12-24T00:00:00Z",
+        "preGameStats": {
+          "records": {
+            "TBL": { "wins": 18, "losses": 11, "ot": 2 },
+            "FLA": { "wins": 22, "losses": 11, "ot": 2 }
+          },
+          "streaks": {
+            "TBL": { "type": "LOSSES", "count": 1 },
+            "FLA": { "type": "WINS", "count": 4 }
+          },
+          "standings": {
+            "TBL": { "divisionRank": "4", "leagueRank": "15", "pointsFromPlayoffSpot": "+3" },
+            "FLA": { "divisionRank": "1", "leagueRank": "5", "pointsFromPlayoffSpot": "+11" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "TBL",
+            "id": 14,
+            "locationName": "Tampa Bay",
+            "shortName": "Tampa Bay",
+            "teamName": "Lightning"
+          },
+          "home": {
+            "abbreviation": "FLA",
+            "id": 13,
+            "locationName": "Florida",
+            "shortName": "Florida",
+            "teamName": "Panthers"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "TBL": 4, "FLA": 0 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/tbl-vs-fla/2024/12/23/2024020549",
+          "videoRecap": "https://www.nhl.com/video/tbl-at-fla-recap-6366393687112"
+        },
+        "gameStats": {
+          "blocked": { "TBL": 16, "FLA": 20 },
+          "faceOffWinPercentage": { "TBL": "52.5", "FLA": "47.5" },
+          "giveaways": { "TBL": 14, "FLA": 16 },
+          "hits": { "TBL": 13, "FLA": 32 },
+          "pim": { "TBL": 37, "FLA": 26 },
+          "powerPlay": {
+            "TBL": { "goals": 1, "opportunities": 3, "percentage": "33.3" },
+            "FLA": { "goals": 0, "opportunities": 4, "percentage": "0.0" }
+          },
+          "shots": { "TBL": 29, "FLA": 36 },
+          "takeaways": { "TBL": 4, "FLA": 2 }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "PHI": { "wins": 15, "losses": 16, "ot": 4 },
+            "PIT": { "wins": 16, "losses": 15, "ot": 5 }
+          },
+          "streaks": {
+            "PHI": { "type": "LOSSES", "count": 1 },
+            "PIT": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "PHI": { "divisionRank": "6", "leagueRank": "22", "pointsFromPlayoffSpot": "-4" },
+            "PIT": { "divisionRank": "4", "leagueRank": "19", "pointsFromPlayoffSpot": "-1" }
+          }
+        },
+        "goals": [
+          {
+            "team": "PIT",
+            "period": "1",
+            "scorer": { "player": "Bryan Rust", "playerId": 8475810, "seasonTotal": 15 },
+            "assists": [
+              { "player": "Sidney Crosby", "playerId": 8471675, "seasonTotal": 27 },
+              { "player": "Rickard Rakell", "playerId": 8476483, "seasonTotal": 12 }
+            ],
+            "min": 1,
+            "sec": 29
+          },
           {
             "team": "PHI",
             "period": "1",
-            "scorer": { "player": "Travis Konecny", "seasonTotal": 1 },
-            "assists": [],
+            "scorer": { "player": "Egor Zamula", "playerId": 8481178, "seasonTotal": 2 },
+            "assists": [
+              { "player": "Ryan Poehling", "playerId": 8480068, "seasonTotal": 9 },
+              { "player": "Scott Laughton", "playerId": 8476872, "seasonTotal": 10 }
+            ],
             "min": 6,
-            "sec": 24
+            "sec": 12
           },
+          {
+            "team": "PIT",
+            "period": "1",
+            "scorer": { "player": "Rickard Rakell", "playerId": 8476483, "seasonTotal": 16 },
+            "assists": [
+              { "player": "Bryan Rust", "playerId": 8475810, "seasonTotal": 12 },
+              { "player": "Erik Karlsson", "playerId": 8474578, "seasonTotal": 20 }
+            ],
+            "min": 11,
+            "sec": 53
+          },
+          {
+            "team": "PIT",
+            "period": "1",
+            "scorer": { "player": "Michael Bunting", "playerId": 8478047, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Evgeni Malkin", "playerId": 8471215, "seasonTotal": 21 },
+              { "player": "Sidney Crosby", "playerId": 8471675, "seasonTotal": 28 }
+            ],
+            "min": 16,
+            "sec": 15,
+            "strength": "PPG"
+          },
+          {
+            "team": "PIT",
+            "period": "1",
+            "scorer": { "player": "Philip Tomasino", "playerId": 8481577, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Sidney Crosby", "playerId": 8471675, "seasonTotal": 29 },
+              { "player": "Rickard Rakell", "playerId": 8476483, "seasonTotal": 13 }
+            ],
+            "min": 17,
+            "sec": 44,
+            "strength": "PPG"
+          },
+          {
+            "team": "PHI",
+            "period": "2",
+            "scorer": { "player": "Noah Cates", "playerId": 8480220, "seasonTotal": 6 },
+            "assists": [
+              { "player": "Bobby Brink", "playerId": 8481553, "seasonTotal": 11 },
+              { "player": "Cam York", "playerId": 8481546, "seasonTotal": 4 }
+            ],
+            "min": 4,
+            "sec": 29
+          },
+          {
+            "team": "PHI",
+            "period": "2",
+            "scorer": { "player": "Sean Couturier", "playerId": 8476461, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Travis Konecny", "playerId": 8478439, "seasonTotal": 25 },
+              { "player": "Scott Laughton", "playerId": 8476872, "seasonTotal": 11 }
+            ],
+            "min": 13,
+            "sec": 6
+          },
+          {
+            "team": "PIT",
+            "period": "2",
+            "scorer": { "player": "Michael Bunting", "playerId": 8478047, "seasonTotal": 9 },
+            "assists": [
+              { "player": "Evgeni Malkin", "playerId": 8471215, "seasonTotal": 22 },
+              { "player": "Erik Karlsson", "playerId": 8474578, "seasonTotal": 21 }
+            ],
+            "min": 18,
+            "sec": 48
+          },
+          {
+            "team": "PIT",
+            "period": "3",
+            "scorer": { "player": "Sidney Crosby", "playerId": 8471675, "seasonTotal": 10 },
+            "assists": [],
+            "min": 17,
+            "sec": 30,
+            "emptyNet": true
+          },
+          {
+            "team": "PIT",
+            "period": "3",
+            "scorer": { "player": "Blake Lizotte", "playerId": 8481481, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Ryan Shea", "playerId": 8478854, "seasonTotal": 2 },
+              { "player": "Matt Nieto", "playerId": 8476442, "seasonTotal": 1 }
+            ],
+            "min": 19,
+            "sec": 48,
+            "strength": "PPG"
+          }
+        ],
+        "startTime": "2024-12-24T00:00:00Z",
+        "preGameStats": {
+          "records": {
+            "PHI": { "wins": 15, "losses": 15, "ot": 4 },
+            "PIT": { "wins": 15, "losses": 15, "ot": 5 }
+          },
+          "streaks": {
+            "PHI": { "type": "WINS", "count": 1 },
+            "PIT": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "PHI": { "divisionRank": "5", "leagueRank": "20", "pointsFromPlayoffSpot": "-4" },
+            "PIT": { "divisionRank": "4", "leagueRank": "19", "pointsFromPlayoffSpot": "-3" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "PHI",
+            "id": 4,
+            "locationName": "Philadelphia",
+            "shortName": "Philadelphia",
+            "teamName": "Flyers"
+          },
+          "home": {
+            "abbreviation": "PIT",
+            "id": 5,
+            "locationName": "Pittsburgh",
+            "shortName": "Pittsburgh",
+            "teamName": "Penguins"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "PHI": 3, "PIT": 7 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/phi-vs-pit/2024/12/23/2024020550",
+          "videoRecap": "https://www.nhl.com/video/phi-at-pit-recap-6366393658112"
+        },
+        "gameStats": {
+          "blocked": { "PHI": 8, "PIT": 11 },
+          "faceOffWinPercentage": { "PHI": "40.8", "PIT": "59.2" },
+          "giveaways": { "PHI": 8, "PIT": 16 },
+          "hits": { "PHI": 26, "PIT": 21 },
+          "pim": { "PHI": 6, "PIT": 0 },
+          "powerPlay": {
+            "PHI": { "goals": 0, "opportunities": 0, "percentage": "0.0" },
+            "PIT": { "goals": 3, "opportunities": 3, "percentage": "100.0" }
+          },
+          "shots": { "PHI": 27, "PIT": 22 },
+          "takeaways": { "PHI": 7, "PIT": 6 }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "MTL": { "wins": 14, "losses": 17, "ot": 3 },
+            "CBJ": { "wins": 14, "losses": 15, "ot": 6 }
+          },
+          "streaks": {
+            "MTL": { "type": "LOSSES", "count": 1 },
+            "CBJ": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "MTL": { "divisionRank": "6", "leagueRank": "26", "pointsFromPlayoffSpot": "-7" },
+            "CBJ": { "divisionRank": "5", "leagueRank": "21", "pointsFromPlayoffSpot": "-4" }
+          }
+        },
+        "goals": [
+          {
+            "team": "CBJ",
+            "period": "1",
+            "scorer": { "player": "Dmitri Voronkov", "playerId": 8481716, "seasonTotal": 9 },
+            "assists": [{ "player": "Sean Monahan", "playerId": 8477497, "seasonTotal": 18 }],
+            "min": 12,
+            "sec": 3
+          },
+          {
+            "team": "CBJ",
+            "period": "1",
+            "scorer": { "player": "Kent Johnson", "playerId": 8482660, "seasonTotal": 10 },
+            "assists": [
+              { "player": "Zach Werenski", "playerId": 8478460, "seasonTotal": 22 },
+              { "player": "Mathieu Olivier", "playerId": 8479671, "seasonTotal": 6 }
+            ],
+            "min": 18,
+            "sec": 45
+          },
+          {
+            "team": "MTL",
+            "period": "2",
+            "scorer": { "player": "David Savard", "playerId": 8475233, "seasonTotal": 1 },
+            "assists": [
+              { "player": "Cole Caufield", "playerId": 8481540, "seasonTotal": 14 },
+              { "player": "Nick Suzuki", "playerId": 8480018, "seasonTotal": 24 }
+            ],
+            "min": 2,
+            "sec": 3
+          },
+          {
+            "team": "CBJ",
+            "period": "2",
+            "scorer": { "player": "Jordan Harris", "playerId": 8480887, "seasonTotal": 1 },
+            "assists": [
+              { "player": "Sean Monahan", "playerId": 8477497, "seasonTotal": 19 },
+              { "player": "Kirill Marchenko", "playerId": 8480893, "seasonTotal": 23 }
+            ],
+            "min": 3,
+            "sec": 34
+          },
+          {
+            "team": "MTL",
+            "period": "2",
+            "scorer": { "player": "Lane Hutson", "playerId": 8483457, "seasonTotal": 2 },
+            "assists": [
+              { "player": "Juraj Slafkovsky", "playerId": 8483515, "seasonTotal": 15 },
+              { "player": "Cole Caufield", "playerId": 8481540, "seasonTotal": 15 }
+            ],
+            "min": 7,
+            "sec": 3
+          },
+          {
+            "team": "MTL",
+            "period": "2",
+            "scorer": { "player": "Jake Evans", "playerId": 8478133, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Emil Heineman", "playerId": 8482476, "seasonTotal": 6 },
+              { "player": "David Savard", "playerId": 8475233, "seasonTotal": 8 }
+            ],
+            "min": 14,
+            "sec": 26
+          },
+          {
+            "team": "MTL",
+            "period": "3",
+            "scorer": { "player": "Joel Armia", "playerId": 8476469, "seasonTotal": 6 },
+            "assists": [
+              { "player": "Jake Evans", "playerId": 8478133, "seasonTotal": 13 },
+              { "player": "Alexandre Carrier", "playerId": 8478851, "seasonTotal": 8 }
+            ],
+            "min": 0,
+            "sec": 20
+          },
+          {
+            "team": "CBJ",
+            "period": "3",
+            "scorer": { "player": "Dmitri Voronkov", "playerId": 8481716, "seasonTotal": 10 },
+            "assists": [
+              { "player": "Kirill Marchenko", "playerId": 8480893, "seasonTotal": 24 },
+              { "player": "Zach Werenski", "playerId": 8478460, "seasonTotal": 23 }
+            ],
+            "min": 3,
+            "sec": 24,
+            "strength": "PPG"
+          },
+          {
+            "team": "CBJ",
+            "period": "3",
+            "scorer": { "player": "Kirill Marchenko", "playerId": 8480893, "seasonTotal": 13 },
+            "assists": [
+              { "player": "Sean Monahan", "playerId": 8477497, "seasonTotal": 20 },
+              { "player": "Zach Werenski", "playerId": 8478460, "seasonTotal": 24 }
+            ],
+            "min": 17,
+            "sec": 48
+          }
+        ],
+        "startTime": "2024-12-24T00:00:00Z",
+        "preGameStats": {
+          "records": {
+            "MTL": { "wins": 14, "losses": 16, "ot": 3 },
+            "CBJ": { "wins": 13, "losses": 15, "ot": 6 }
+          },
+          "streaks": { "MTL": { "type": "WINS", "count": 3 }, "CBJ": { "type": "OT", "count": 1 } },
+          "standings": {
+            "MTL": { "divisionRank": "6", "leagueRank": "26", "pointsFromPlayoffSpot": "-7" },
+            "CBJ": { "divisionRank": "8", "leagueRank": "24", "pointsFromPlayoffSpot": "-6" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "MTL",
+            "id": 8,
+            "locationName": "Montr\u00e9al",
+            "shortName": "Montr\u00e9al",
+            "teamName": "Canadiens"
+          },
+          "home": {
+            "abbreviation": "CBJ",
+            "id": 29,
+            "locationName": "Columbus",
+            "shortName": "Columbus",
+            "teamName": "Blue Jackets"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "MTL": 4, "CBJ": 5 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/mtl-vs-cbj/2024/12/23/2024020551",
+          "videoRecap": "https://www.nhl.com/video/mtl-at-cbj-recap-6366393484112"
+        },
+        "gameStats": {
+          "blocked": { "MTL": 15, "CBJ": 15 },
+          "faceOffWinPercentage": { "MTL": "53.0", "CBJ": "47.0" },
+          "giveaways": { "MTL": 17, "CBJ": 14 },
+          "hits": { "MTL": 15, "CBJ": 18 },
+          "pim": { "MTL": 6, "CBJ": 4 },
+          "powerPlay": {
+            "MTL": { "goals": 0, "opportunities": 2, "percentage": "0.0" },
+            "CBJ": { "goals": 1, "opportunities": 3, "percentage": "33.3" }
+          },
+          "shots": { "MTL": 31, "CBJ": 32 },
+          "takeaways": { "MTL": 7, "CBJ": 5 }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "BUF": { "wins": 12, "losses": 19, "ot": 4 },
+            "NYI": { "wins": 13, "losses": 15, "ot": 7 }
+          },
+          "streaks": {
+            "BUF": { "type": "WINS", "count": 1 },
+            "NYI": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "BUF": { "divisionRank": "8", "leagueRank": "30", "pointsFromPlayoffSpot": "-10" },
+            "NYI": { "divisionRank": "8", "leagueRank": "24", "pointsFromPlayoffSpot": "-5" }
+          }
+        },
+        "goals": [
+          {
+            "team": "BUF",
+            "period": "1",
+            "scorer": { "player": "Beck Malenstyn", "playerId": 8479359, "seasonTotal": 3 },
+            "assists": [
+              { "player": "Jacob Bryson", "playerId": 8480196, "seasonTotal": 3 },
+              { "player": "Ryan McLeod", "playerId": 8480802, "seasonTotal": 10 }
+            ],
+            "min": 2,
+            "sec": 7
+          },
+          {
+            "team": "BUF",
+            "period": "1",
+            "scorer": { "player": "Jiri Kulich", "playerId": 8483468, "seasonTotal": 5 },
+            "assists": [
+              { "player": "Dylan Cozens", "playerId": 8481528, "seasonTotal": 9 },
+              { "player": "Rasmus Dahlin", "playerId": 8480839, "seasonTotal": 14 }
+            ],
+            "min": 16,
+            "sec": 49
+          },
+          {
+            "team": "BUF",
+            "period": "2",
+            "scorer": { "player": "Jason Zucker", "playerId": 8475722, "seasonTotal": 9 },
+            "assists": [
+              { "player": "Jack Quinn", "playerId": 8482097, "seasonTotal": 5 },
+              { "player": "Rasmus Dahlin", "playerId": 8480839, "seasonTotal": 15 }
+            ],
+            "min": 6,
+            "sec": 53,
+            "strength": "PPG"
+          },
+          {
+            "team": "BUF",
+            "period": "2",
+            "scorer": { "player": "Zach Benson", "playerId": 8484145, "seasonTotal": 5 },
+            "assists": [
+              { "player": "Rasmus Dahlin", "playerId": 8480839, "seasonTotal": 16 },
+              { "player": "Jiri Kulich", "playerId": 8483468, "seasonTotal": 2 }
+            ],
+            "min": 15,
+            "sec": 45
+          },
+          {
+            "team": "BUF",
+            "period": "2",
+            "scorer": { "player": "Jack Quinn", "playerId": 8482097, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Dylan Cozens", "playerId": 8481528, "seasonTotal": 10 },
+              { "player": "JJ Peterka", "playerId": 8482175, "seasonTotal": 15 }
+            ],
+            "min": 18,
+            "sec": 21
+          },
+          {
+            "team": "NYI",
+            "period": "2",
+            "scorer": { "player": "Kyle Palmieri", "playerId": 8475151, "seasonTotal": 12 },
+            "assists": [
+              { "player": "Anthony Duclair", "playerId": 8477407, "seasonTotal": 3 },
+              { "player": "Isaiah George", "playerId": 8483448, "seasonTotal": 4 }
+            ],
+            "min": 19,
+            "sec": 5
+          },
+          {
+            "team": "BUF",
+            "period": "3",
+            "scorer": { "player": "Tage Thompson", "playerId": 8479420, "seasonTotal": 17 },
+            "assists": [{ "player": "Rasmus Dahlin", "playerId": 8480839, "seasonTotal": 17 }],
+            "min": 10,
+            "sec": 7,
+            "emptyNet": true
+          },
+          {
+            "team": "BUF",
+            "period": "3",
+            "scorer": { "player": "Jiri Kulich", "playerId": 8483468, "seasonTotal": 6 },
+            "assists": [],
+            "min": 15,
+            "sec": 49
+          }
+        ],
+        "startTime": "2024-12-24T00:30:00Z",
+        "preGameStats": {
+          "records": {
+            "BUF": { "wins": 11, "losses": 19, "ot": 4 },
+            "NYI": { "wins": 13, "losses": 14, "ot": 7 }
+          },
+          "streaks": {
+            "BUF": { "type": "LOSSES", "count": 6 },
+            "NYI": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "BUF": { "divisionRank": "8", "leagueRank": "32", "pointsFromPlayoffSpot": "-12" },
+            "NYI": { "divisionRank": "7", "leagueRank": "23", "pointsFromPlayoffSpot": "-5" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "BUF",
+            "id": 7,
+            "locationName": "Buffalo",
+            "shortName": "Buffalo",
+            "teamName": "Sabres"
+          },
+          "home": {
+            "abbreviation": "NYI",
+            "id": 2,
+            "locationName": "New York",
+            "shortName": "NY Islanders",
+            "teamName": "Islanders"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "BUF": 7, "NYI": 1 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/buf-vs-nyi/2024/12/23/2024020552",
+          "videoRecap": "https://www.nhl.com/video/buf-at-nyi-recap-6366394304112"
+        },
+        "gameStats": {
+          "blocked": { "BUF": 30, "NYI": 9 },
+          "faceOffWinPercentage": { "BUF": "42.2", "NYI": "57.8" },
+          "giveaways": { "BUF": 17, "NYI": 23 },
+          "hits": { "BUF": 17, "NYI": 19 },
+          "pim": { "BUF": 8, "NYI": 12 },
+          "powerPlay": {
+            "BUF": { "goals": 1, "opportunities": 3, "percentage": "33.3" },
+            "NYI": { "goals": 0, "opportunities": 1, "percentage": "0.0" }
+          },
+          "shots": { "BUF": 25, "NYI": 28 },
+          "takeaways": { "BUF": 2, "NYI": 6 }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "CAR": { "wins": 21, "losses": 12, "ot": 1 },
+            "NSH": { "wins": 11, "losses": 17, "ot": 7 }
+          },
+          "streaks": {
+            "CAR": { "type": "LOSSES", "count": 1 },
+            "NSH": { "type": "WINS", "count": 2 }
+          },
+          "standings": {
+            "CAR": { "divisionRank": "3", "leagueRank": "9", "pointsFromPlayoffSpot": "+6" },
+            "NSH": { "divisionRank": "7", "leagueRank": "29", "pointsFromPlayoffSpot": "-11" }
+          }
+        },
+        "goals": [
+          {
+            "team": "NSH",
+            "period": "1",
+            "scorer": { "player": "Steven Stamkos", "playerId": 8474564, "seasonTotal": 10 },
+            "assists": [{ "player": "Filip Forsberg", "playerId": 8476887, "seasonTotal": 18 }],
+            "min": 13,
+            "sec": 34
+          },
+          {
+            "team": "NSH",
+            "period": "2",
+            "scorer": { "player": "Jonathan Marchessault", "playerId": 8476539, "seasonTotal": 11 },
+            "assists": [
+              { "player": "Tommy Novak", "playerId": 8478438, "seasonTotal": 4 },
+              { "player": "Luke Evangelista", "playerId": 8482146, "seasonTotal": 10 }
+            ],
+            "min": 11,
+            "sec": 45
+          },
+          {
+            "team": "NSH",
+            "period": "3",
+            "scorer": { "player": "Ryan O'Reilly", "playerId": 8475158, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Filip Forsberg", "playerId": 8476887, "seasonTotal": 19 },
+              { "player": "Jonathan Marchessault", "playerId": 8476539, "seasonTotal": 12 }
+            ],
+            "min": 0,
+            "sec": 30,
+            "strength": "PPG"
+          },
+          {
+            "team": "NSH",
+            "period": "3",
+            "scorer": { "player": "Mark Jankowski", "playerId": 8476873, "seasonTotal": 2 },
+            "assists": [{ "player": "Colton Sissons", "playerId": 8476925, "seasonTotal": 1 }],
+            "min": 2,
+            "sec": 52
+          },
+          {
+            "team": "CAR",
+            "period": "3",
+            "scorer": { "player": "Jordan Staal", "playerId": 8473533, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Jordan Martinook", "playerId": 8476921, "seasonTotal": 9 },
+              { "player": "William Carrier", "playerId": 8477478, "seasonTotal": 5 }
+            ],
+            "min": 4,
+            "sec": 37
+          },
+          {
+            "team": "CAR",
+            "period": "3",
+            "scorer": { "player": "Sebastian Aho", "playerId": 8478427, "seasonTotal": 11 },
+            "assists": [
+              { "player": "Seth Jarvis", "playerId": 8482093, "seasonTotal": 12 },
+              { "player": "Jack Roslovic", "playerId": 8478458, "seasonTotal": 6 }
+            ],
+            "min": 5,
+            "sec": 17
+          },
+          {
+            "team": "NSH",
+            "period": "3",
+            "scorer": { "player": "Jonathan Marchessault", "playerId": 8476539, "seasonTotal": 12 },
+            "assists": [{ "player": "Filip Forsberg", "playerId": 8476887, "seasonTotal": 20 }],
+            "min": 16,
+            "sec": 48,
+            "emptyNet": true
+          }
+        ],
+        "startTime": "2024-12-24T01:00:00Z",
+        "preGameStats": {
+          "records": {
+            "CAR": { "wins": 21, "losses": 11, "ot": 1 },
+            "NSH": { "wins": 10, "losses": 17, "ot": 7 }
+          },
+          "streaks": {
+            "CAR": { "type": "WINS", "count": 1 },
+            "NSH": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "CAR": { "divisionRank": "3", "leagueRank": "9", "pointsFromPlayoffSpot": "+8" },
+            "NSH": { "divisionRank": "7", "leagueRank": "30", "pointsFromPlayoffSpot": "-12" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "CAR",
+            "id": 12,
+            "locationName": "Carolina",
+            "shortName": "Carolina",
+            "teamName": "Hurricanes"
+          },
+          "home": {
+            "abbreviation": "NSH",
+            "id": 18,
+            "locationName": "Nashville",
+            "shortName": "Nashville",
+            "teamName": "Predators"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "CAR": 2, "NSH": 5 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/car-vs-nsh/2024/12/23/2024020553",
+          "videoRecap": "https://www.nhl.com/video/car-at-nsh-recap-6366395389112"
+        },
+        "gameStats": {
+          "blocked": { "CAR": 10, "NSH": 15 },
+          "faceOffWinPercentage": { "CAR": "49.1", "NSH": "50.9" },
+          "giveaways": { "CAR": 24, "NSH": 18 },
+          "hits": { "CAR": 29, "NSH": 25 },
+          "pim": { "CAR": 6, "NSH": 4 },
+          "powerPlay": {
+            "CAR": { "goals": 0, "opportunities": 1, "percentage": "0.0" },
+            "NSH": { "goals": 1, "opportunities": 2, "percentage": "50.0" }
+          },
+          "shots": { "CAR": 27, "NSH": 25 },
+          "takeaways": { "CAR": 9, "NSH": 3 }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "CHI": { "wins": 12, "losses": 21, "ot": 2 },
+            "MIN": { "wins": 21, "losses": 10, "ot": 4 }
+          },
+          "streaks": {
+            "CHI": { "type": "LOSSES", "count": 2 },
+            "MIN": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "CHI": { "divisionRank": "8", "leagueRank": "32", "pointsFromPlayoffSpot": "-14" },
+            "MIN": { "divisionRank": "2", "leagueRank": "5", "pointsFromPlayoffSpot": "+7" }
+          }
+        },
+        "goals": [
           {
             "team": "CHI",
             "period": "1",
-            "scorer": { "player": "Alexander Nylander", "seasonTotal": 1 },
-            "assists": [{ "player": "Patrick Kane", "seasonTotal": 1 }],
+            "scorer": { "player": "Connor Bedard", "playerId": 8484144, "seasonTotal": 9 },
+            "assists": [{ "player": "Taylor Hall", "playerId": 8475791, "seasonTotal": 10 }],
+            "min": 6,
+            "sec": 47
+          },
+          {
+            "team": "MIN",
+            "period": "1",
+            "scorer": { "player": "Kirill Kaprizov", "playerId": 8478864, "seasonTotal": 23 },
+            "assists": [
+              { "player": "Marco Rossi", "playerId": 8482079, "seasonTotal": 16 },
+              { "player": "Mats Zuccarello", "playerId": 8475692, "seasonTotal": 12 }
+            ],
+            "min": 11,
+            "sec": 11
+          },
+          {
+            "team": "CHI",
+            "period": "2",
+            "scorer": { "player": "Nick Foligno", "playerId": 8473422, "seasonTotal": 8 },
+            "assists": [
+              { "player": "Frank Nazar", "playerId": 8483493, "seasonTotal": 1 },
+              { "player": "Ryan Donato", "playerId": 8477987, "seasonTotal": 9 }
+            ],
+            "min": 6,
+            "sec": 16
+          },
+          {
+            "team": "MIN",
+            "period": "2",
+            "scorer": { "player": "Jared Spurgeon", "playerId": 8474716, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Yakov Trenin", "playerId": 8478508, "seasonTotal": 2 },
+              { "player": "Devin Shore", "playerId": 8476913, "seasonTotal": 1 }
+            ],
             "min": 7,
-            "sec": 44
+            "sec": 5
+          },
+          {
+            "team": "MIN",
+            "period": "3",
+            "scorer": { "player": "Brock Faber", "playerId": 8482122, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Jonas Brodin", "playerId": 8476463, "seasonTotal": 8 },
+              { "player": "Marat Khusnutdinov", "playerId": 8482177, "seasonTotal": 3 }
+            ],
+            "min": 2,
+            "sec": 43
+          },
+          {
+            "team": "MIN",
+            "period": "3",
+            "scorer": { "player": "Marcus Foligno", "playerId": 8475220, "seasonTotal": 5 },
+            "assists": [{ "player": "Yakov Trenin", "playerId": 8478508, "seasonTotal": 3 }],
+            "min": 18,
+            "sec": 36,
+            "emptyNet": true
+          },
+          {
+            "team": "CHI",
+            "period": "3",
+            "scorer": { "player": "Jason Dickinson", "playerId": 8477450, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Lukas Reichel", "playerId": 8482117, "seasonTotal": 7 },
+              { "player": "Taylor Hall", "playerId": 8475791, "seasonTotal": 11 }
+            ],
+            "min": 19,
+            "sec": 27
           }
         ],
-        "scores": { "CHI": 1, "PHI": 1 },
-        "teams": {
-          "away": { "abbreviation": "CHI", "id": 16 },
-          "home": { "abbreviation": "PHI", "id": 4 }
-        },
-        "gameStats": {
-          "blocked": {
-            "CHI": 1,
-            "PHI": 0
-          },
-          "faceOffWinPercentage": {
-            "CHI": "46.4",
-            "PHI": "53.6"
-          },
-          "giveaways": {
-            "CHI": 1,
-            "PHI": 2
-          },
-          "hits": {
-            "CHI": 4,
-            "PHI": 2
-          },
-          "pim": {
-            "CHI": 0,
-            "PHI": 0
-          },
-          "powerPlay": {
-            "CHI": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            },
-            "PHI": {
-              "goals": 0,
-              "opportunities": 0,
-              "percentage": "0.0"
-            }
-          },
-          "shots": {
-            "CHI": 4,
-            "PHI": 2
-          },
-          "takeaways": {
-            "CHI": 1,
-            "PHI": 0
-          }
-        },
+        "startTime": "2024-12-24T01:00:00Z",
         "preGameStats": {
           "records": {
-            "PHI": { "wins": 1, "losses": 2, "ot": 1 },
-            "CHI": { "wins": 1, "losses": 1, "ot": 1 }
-          }
-        },
-        "currentStats": {
-          "records": {
-            "PHI": { "wins": 1, "losses": 2, "ot": 1 },
-            "CHI": { "wins": 1, "losses": 1, "ot": 1 }
+            "CHI": { "wins": 12, "losses": 20, "ot": 2 },
+            "MIN": { "wins": 20, "losses": 10, "ot": 4 }
           },
           "streaks": {
             "CHI": { "type": "LOSSES", "count": 1 },
-            "PHI": { "type": "WINS", "count": 1 }
+            "MIN": { "type": "LOSSES", "count": 4 }
           },
           "standings": {
-            "CHI": { "leagueRank": "25", "pointsFromPlayoffSpot": "0" },
-            "PHI": { "leagueRank": "24", "pointsFromPlayoffSpot": "+1" }
+            "CHI": { "divisionRank": "8", "leagueRank": "31", "pointsFromPlayoffSpot": "-13" },
+            "MIN": { "divisionRank": "2", "leagueRank": "7", "pointsFromPlayoffSpot": "+6" }
           }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "CHI",
+            "id": 16,
+            "locationName": "Chicago",
+            "shortName": "Chicago",
+            "teamName": "Blackhawks"
+          },
+          "home": {
+            "abbreviation": "MIN",
+            "id": 30,
+            "locationName": "Minnesota",
+            "shortName": "Minnesota",
+            "teamName": "Wild"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "CHI": 3, "MIN": 4 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/chi-vs-min/2024/12/23/2024020554",
+          "videoRecap": "https://www.nhl.com/video/chi-at-min-recap-6366395616112"
+        },
+        "gameStats": {
+          "blocked": { "CHI": 17, "MIN": 13 },
+          "faceOffWinPercentage": { "CHI": "50.0", "MIN": "50.0" },
+          "giveaways": { "CHI": 11, "MIN": 16 },
+          "hits": { "CHI": 29, "MIN": 26 },
+          "pim": { "CHI": 2, "MIN": 0 },
+          "powerPlay": {
+            "CHI": { "goals": 0, "opportunities": 0, "percentage": "0.0" },
+            "MIN": { "goals": 0, "opportunities": 1, "percentage": "0.0" }
+          },
+          "shots": { "CHI": 31, "MIN": 27 },
+          "takeaways": { "CHI": 4, "MIN": 1 }
         }
       },
       {
-        "status": { "state": "PREVIEW" },
-        "startTime": "2019-10-04T18:00:00Z",
-        "goals": [],
-        "teams": {
-          "away": { "abbreviation": "CBJ", "id": 29 },
-          "home": { "abbreviation": "NJD", "id": 1 }
-        },
-        "preGameStats": {
-          "records": {
-            "CBJ": { "wins": 3, "losses": 3, "ot": 0 },
-            "NJD": { "wins": 0, "losses": 4, "ot": 2 }
-          }
-        },
         "currentStats": {
           "records": {
-            "CBJ": { "wins": 3, "losses": 3, "ot": 0 },
-            "NJD": { "wins": 0, "losses": 4, "ot": 2 }
+            "SJS": { "wins": 11, "losses": 20, "ot": 6 },
+            "VAN": { "wins": 17, "losses": 10, "ot": 7 }
+          },
+          "streaks": {
+            "SJS": { "type": "LOSSES", "count": 1 },
+            "VAN": { "type": "WINS", "count": 1 }
+          },
+          "standings": {
+            "SJS": { "divisionRank": "8", "leagueRank": "31", "pointsFromPlayoffSpot": "-12" },
+            "VAN": { "divisionRank": "4", "leagueRank": "13", "pointsFromPlayoffSpot": "+2" }
           }
+        },
+        "goals": [
+          {
+            "team": "SJS",
+            "period": "1",
+            "scorer": { "player": "William Eklund", "playerId": 8482667, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Mikael Granlund", "playerId": 8475798, "seasonTotal": 22 },
+              { "player": "Macklin Celebrini", "playerId": 8484801, "seasonTotal": 13 }
+            ],
+            "min": 11,
+            "sec": 36,
+            "strength": "PPG"
+          },
+          {
+            "team": "VAN",
+            "period": "1",
+            "scorer": { "player": "Brock Boeser", "playerId": 8478444, "seasonTotal": 11 },
+            "assists": [
+              { "player": "Quinn Hughes", "playerId": 8480800, "seasonTotal": 33 },
+              { "player": "Vincent Desharnais", "playerId": 8479576, "seasonTotal": 3 }
+            ],
+            "min": 14,
+            "sec": 10
+          },
+          {
+            "team": "VAN",
+            "period": "2",
+            "scorer": { "player": "Kiefer Sherwood", "playerId": 8480748, "seasonTotal": 12 },
+            "assists": [
+              { "player": "Teddy Blueger", "playerId": 8476927, "seasonTotal": 11 },
+              { "player": "Nils Hoglander", "playerId": 8481535, "seasonTotal": 4 }
+            ],
+            "min": 16,
+            "sec": 42
+          },
+          {
+            "team": "VAN",
+            "period": "2",
+            "scorer": { "player": "Elias Pettersson", "playerId": 8480012, "seasonTotal": 9 },
+            "assists": [
+              { "player": "Jake DeBrusk", "playerId": 8478498, "seasonTotal": 10 },
+              { "player": "Conor Garland", "playerId": 8478856, "seasonTotal": 19 }
+            ],
+            "min": 17,
+            "sec": 8
+          },
+          {
+            "team": "VAN",
+            "period": "2",
+            "scorer": { "player": "Elias Pettersson", "playerId": 8480012, "seasonTotal": 10 },
+            "assists": [
+              { "player": "J.T. Miller", "playerId": 8476468, "seasonTotal": 15 },
+              { "player": "Quinn Hughes", "playerId": 8480800, "seasonTotal": 34 }
+            ],
+            "min": 17,
+            "sec": 52,
+            "strength": "PPG"
+          },
+          {
+            "team": "SJS",
+            "period": "3",
+            "scorer": { "player": "Cody Ceci", "playerId": 8476879, "seasonTotal": 2 },
+            "assists": [{ "player": "Fabian Zetterlund", "playerId": 8480188, "seasonTotal": 13 }],
+            "min": 4,
+            "sec": 21
+          },
+          {
+            "team": "SJS",
+            "period": "3",
+            "scorer": { "player": "Luke Kunin", "playerId": 8479316, "seasonTotal": 10 },
+            "assists": [
+              { "player": "Macklin Celebrini", "playerId": 8484801, "seasonTotal": 14 },
+              { "player": "Tyler Toffoli", "playerId": 8475726, "seasonTotal": 10 }
+            ],
+            "min": 19,
+            "sec": 54
+          }
+        ],
+        "startTime": "2024-12-24T02:00:00Z",
+        "preGameStats": {
+          "records": {
+            "SJS": { "wins": 11, "losses": 19, "ot": 6 },
+            "VAN": { "wins": 16, "losses": 10, "ot": 7 }
+          },
+          "streaks": { "SJS": { "type": "OT", "count": 1 }, "VAN": { "type": "OT", "count": 1 } },
+          "standings": {
+            "SJS": { "divisionRank": "8", "leagueRank": "29", "pointsFromPlayoffSpot": "-11" },
+            "VAN": { "divisionRank": "4", "leagueRank": "13", "pointsFromPlayoffSpot": "+1" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "SJS",
+            "id": 28,
+            "locationName": "San Jose",
+            "shortName": "San Jose",
+            "teamName": "Sharks"
+          },
+          "home": {
+            "abbreviation": "VAN",
+            "id": 23,
+            "locationName": "Vancouver",
+            "shortName": "Vancouver",
+            "teamName": "Canucks"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "SJS": 3, "VAN": 4 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/sjs-vs-van/2024/12/23/2024020555",
+          "videoRecap": "https://www.nhl.com/video/sjs-at-van-recap-6366397406112"
+        },
+        "gameStats": {
+          "blocked": { "SJS": 7, "VAN": 22 },
+          "faceOffWinPercentage": { "SJS": "40.7", "VAN": "59.3" },
+          "giveaways": { "SJS": 19, "VAN": 17 },
+          "hits": { "SJS": 18, "VAN": 27 },
+          "pim": { "SJS": 24, "VAN": 30 },
+          "powerPlay": {
+            "SJS": { "goals": 1, "opportunities": 3, "percentage": "33.3" },
+            "VAN": { "goals": 1, "opportunities": 5, "percentage": "20.0" }
+          },
+          "shots": { "SJS": 29, "VAN": 24 },
+          "takeaways": { "SJS": 3, "VAN": 3 }
         }
       },
       {
-        "status": { "state": "PREVIEW" },
-        "startTime": "2019-10-04T18:00:00Z",
-        "goals": [],
-        "teams": {
-          "away": { "abbreviation": "DET", "id": 17 },
-          "home": { "abbreviation": "NYI", "id": 2 }
-        },
-        "preGameStats": {
-          "records": {
-            "DET": { "wins": 3, "losses": 3, "ot": 0 },
-            "NYI": { "wins": 3, "losses": 3, "ot": 0 }
-          }
-        },
         "currentStats": {
           "records": {
-            "DET": { "wins": 3, "losses": 3, "ot": 0 },
-            "NYI": { "wins": 3, "losses": 3, "ot": 0 }
+            "DAL": { "wins": 20, "losses": 13, "ot": 0 },
+            "UTA": { "wins": 16, "losses": 12, "ot": 6 }
+          },
+          "streaks": {
+            "DAL": { "type": "WINS", "count": 1 },
+            "UTA": { "type": "LOSSES", "count": 1 }
+          },
+          "standings": {
+            "DAL": { "divisionRank": "4", "leagueRank": "15", "pointsFromPlayoffSpot": "+1" },
+            "UTA": { "divisionRank": "5", "leagueRank": "18", "pointsFromPlayoffSpot": "-2" }
           }
+        },
+        "goals": [
+          {
+            "team": "DAL",
+            "period": "1",
+            "scorer": { "player": "Colin Blackwell", "playerId": 8476278, "seasonTotal": 4 },
+            "assists": [{ "player": "Oskar B\u00e4ck", "playerId": 8480840, "seasonTotal": 8 }],
+            "min": 11,
+            "sec": 2
+          },
+          {
+            "team": "UTA",
+            "period": "1",
+            "scorer": { "player": "Kevin Stenlund", "playerId": 8478831, "seasonTotal": 6 },
+            "assists": [
+              { "player": "Ian Cole", "playerId": 8474013, "seasonTotal": 8 },
+              { "player": "Michael Carcone", "playerId": 8479619, "seasonTotal": 5 }
+            ],
+            "min": 12,
+            "sec": 41
+          },
+          {
+            "team": "DAL",
+            "period": "2",
+            "scorer": { "player": "Roope Hintz", "playerId": 8478449, "seasonTotal": 15 },
+            "assists": [
+              { "player": "Mavrik Bourque", "playerId": 8482145, "seasonTotal": 5 },
+              { "player": "Jason Robertson", "playerId": 8480027, "seasonTotal": 16 }
+            ],
+            "min": 12,
+            "sec": 39
+          },
+          {
+            "team": "DAL",
+            "period": "2",
+            "scorer": { "player": "Jamie Benn", "playerId": 8473994, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Wyatt Johnston", "playerId": 8482740, "seasonTotal": 14 },
+              { "player": "Thomas Harley", "playerId": 8481581, "seasonTotal": 11 }
+            ],
+            "min": 17,
+            "sec": 50
+          },
+          {
+            "team": "UTA",
+            "period": "3",
+            "scorer": { "player": "Barrett Hayton", "playerId": 8480849, "seasonTotal": 7 },
+            "assists": [
+              { "player": "Nick Schmaltz", "playerId": 8477951, "seasonTotal": 22 },
+              { "player": "Clayton Keller", "playerId": 8479343, "seasonTotal": 23 }
+            ],
+            "min": 11,
+            "sec": 39
+          }
+        ],
+        "startTime": "2024-12-24T02:00:00Z",
+        "preGameStats": {
+          "records": {
+            "DAL": { "wins": 19, "losses": 13, "ot": 0 },
+            "UTA": { "wins": 16, "losses": 11, "ot": 6 }
+          },
+          "streaks": {
+            "DAL": { "type": "LOSSES", "count": 2 },
+            "UTA": { "type": "OT", "count": 1 }
+          },
+          "standings": {
+            "DAL": { "divisionRank": "4", "leagueRank": "16", "pointsFromPlayoffSpot": "-1" },
+            "UTA": { "divisionRank": "5", "leagueRank": "17", "pointsFromPlayoffSpot": "-1" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "DAL",
+            "id": 25,
+            "locationName": "Dallas",
+            "shortName": "Dallas",
+            "teamName": "Stars"
+          },
+          "home": {
+            "abbreviation": "UTA",
+            "id": 59,
+            "locationName": "Utah",
+            "shortName": "Utah",
+            "teamName": "Hockey Club"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "DAL": 3, "UTA": 2 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/dal-vs-uta/2024/12/23/2024020556",
+          "videoRecap": "https://www.nhl.com/video/dal-at-uta-recap-6366398751112"
+        },
+        "gameStats": {
+          "blocked": { "DAL": 20, "UTA": 21 },
+          "faceOffWinPercentage": { "DAL": "55.4", "UTA": "44.6" },
+          "giveaways": { "DAL": 8, "UTA": 18 },
+          "hits": { "DAL": 20, "UTA": 19 },
+          "pim": { "DAL": 4, "UTA": 6 },
+          "powerPlay": {
+            "DAL": { "goals": 0, "opportunities": 3, "percentage": "0.0" },
+            "UTA": { "goals": 0, "opportunities": 2, "percentage": "0.0" }
+          },
+          "shots": { "DAL": 29, "UTA": 26 },
+          "takeaways": { "DAL": 5, "UTA": 6 }
         }
       },
       {
-        "status": { "state": "PREVIEW" },
-        "startTime": "2019-10-04T18:00:00Z",
-        "goals": [],
-        "teams": {
-          "away": { "abbreviation": "LAK", "id": 26 },
-          "home": { "abbreviation": "WSH", "id": 15 }
-        },
-        "preGameStats": {
-          "records": {
-            "LAK": { "wins": 2, "losses": 4, "ot": 0 },
-            "WSH": { "wins": 4, "losses": 2, "ot": 2 }
-          }
-        },
         "currentStats": {
           "records": {
-            "LAK": { "wins": 2, "losses": 4, "ot": 0 },
-            "WSH": { "wins": 4, "losses": 2, "ot": 2 }
+            "ANA": { "wins": 13, "losses": 16, "ot": 4 },
+            "VGK": { "wins": 23, "losses": 8, "ot": 3 }
+          },
+          "streaks": {
+            "ANA": { "type": "LOSSES", "count": 1 },
+            "VGK": { "type": "WINS", "count": 4 }
+          },
+          "standings": {
+            "ANA": { "divisionRank": "7", "leagueRank": "27", "pointsFromPlayoffSpot": "-10" },
+            "VGK": { "divisionRank": "1", "leagueRank": "2", "pointsFromPlayoffSpot": "+10" }
           }
+        },
+        "goals": [
+          {
+            "team": "VGK",
+            "period": "1",
+            "scorer": { "player": "Tanner Pearson", "playerId": 8476871, "seasonTotal": 6 },
+            "assists": [{ "player": "Keegan Kolesar", "playerId": 8478434, "seasonTotal": 6 }],
+            "min": 19,
+            "sec": 19,
+            "strength": "SHG"
+          },
+          {
+            "team": "ANA",
+            "period": "3",
+            "scorer": { "player": "Mason McTavish", "playerId": 8482745, "seasonTotal": 4 },
+            "assists": [
+              { "player": "Radko Gudas", "playerId": 8475462, "seasonTotal": 6 },
+              { "player": "Robby Fabbri", "playerId": 8477952, "seasonTotal": 3 }
+            ],
+            "min": 1,
+            "sec": 13
+          },
+          {
+            "team": "VGK",
+            "period": "3",
+            "scorer": { "player": "Tomas Hertl", "playerId": 8476881, "seasonTotal": 10 },
+            "assists": [
+              { "player": "Jack Eichel", "playerId": 8478403, "seasonTotal": 36 },
+              { "player": "Shea Theodore", "playerId": 8477447, "seasonTotal": 24 }
+            ],
+            "min": 9,
+            "sec": 36
+          },
+          {
+            "team": "VGK",
+            "period": "3",
+            "scorer": { "player": "Keegan Kolesar", "playerId": 8478434, "seasonTotal": 9 },
+            "assists": [
+              { "player": "William Karlsson", "playerId": 8476448, "seasonTotal": 9 },
+              { "player": "Tomas Hertl", "playerId": 8476881, "seasonTotal": 14 }
+            ],
+            "min": 15,
+            "sec": 50
+          }
+        ],
+        "startTime": "2024-12-24T03:00:00Z",
+        "preGameStats": {
+          "records": {
+            "ANA": { "wins": 13, "losses": 15, "ot": 4 },
+            "VGK": { "wins": 22, "losses": 8, "ot": 3 }
+          },
+          "streaks": {
+            "ANA": { "type": "WINS", "count": 1 },
+            "VGK": { "type": "WINS", "count": 3 }
+          },
+          "standings": {
+            "ANA": { "divisionRank": "7", "leagueRank": "27", "pointsFromPlayoffSpot": "-9" },
+            "VGK": { "divisionRank": "1", "leagueRank": "3", "pointsFromPlayoffSpot": "+9" }
+          }
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "ANA",
+            "id": 24,
+            "locationName": "Anaheim",
+            "shortName": "Anaheim",
+            "teamName": "Ducks"
+          },
+          "home": {
+            "abbreviation": "VGK",
+            "id": 54,
+            "locationName": "Vegas",
+            "shortName": "Vegas",
+            "teamName": "Golden Knights"
+          }
+        },
+        "status": { "state": "FINAL" },
+        "scores": { "ANA": 1, "VGK": 3 },
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/ana-vs-vgk/2024/12/23/2024020557",
+          "videoRecap": "https://www.nhl.com/video/ana-at-vgk-recap-6366399773112"
+        },
+        "gameStats": {
+          "blocked": { "ANA": 10, "VGK": 16 },
+          "faceOffWinPercentage": { "ANA": "50.0", "VGK": "50.0" },
+          "giveaways": { "ANA": 6, "VGK": 9 },
+          "hits": { "ANA": 18, "VGK": 13 },
+          "pim": { "ANA": 6, "VGK": 8 },
+          "powerPlay": {
+            "ANA": { "goals": 0, "opportunities": 4, "percentage": "0.0" },
+            "VGK": { "goals": 0, "opportunities": 3, "percentage": "0.0" }
+          },
+          "shots": { "ANA": 32, "VGK": 33 },
+          "takeaways": { "ANA": 3, "VGK": 4 }
         }
       }
     ]
