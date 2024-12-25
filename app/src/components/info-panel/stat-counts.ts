@@ -19,7 +19,7 @@ export function getTeamStatCount(statKeys: string[], isPlayoffGame: boolean) {
     (count, stat) =>
       count +
       (anyGameStatCounts[stat] ?? 0) +
-      (isPlayoffGame ? 0 : nonPlayoffGameStatCounts[stat] ?? 0),
+      (isPlayoffGame ? 0 : (nonPlayoffGameStatCounts[stat] ?? 0)),
     0,
   );
 }
