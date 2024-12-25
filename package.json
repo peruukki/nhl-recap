@@ -82,7 +82,7 @@
     "rollup-plugin-workbox-inject": "^2.0.0",
     "sass": "^1.83.0",
     "sass-lint": "^1.13.1",
-    "typescript": "^5.3.3",
+    "typescript": "~5.7.2",
     "vite": "^5.4.11",
     "vitest": "^1.6.0",
     "watch": "^1.0.2"
