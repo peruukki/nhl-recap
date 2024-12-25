@@ -45,9 +45,7 @@
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
     "test": "npm run lint && npm run ts && npm run spec",
     "ts": "tsc",
-    "ts:watch": "tsc -w",
-    "watch:lint:js": "esw --ext .js,.ts --color -w *.js app/src gallery/src",
-    "watch:lint:css": "watch 'npm run lint:css' app/src"
+    "ts:watch": "tsc -w"
   },
   "dependencies": {
     "@cycle/dom": "^23.1.0",
@@ -73,7 +71,6 @@
     "@vitest/coverage-v8": "^1.6.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
-    "eslint-watch": "^8.0.0",
     "json-server": "^0.17.4",
     "nock": "^13.5.6",
     "prettier": "^3.4.2",
@@ -84,8 +81,7 @@
     "sass-lint": "^1.13.1",
     "typescript": "~5.7.2",
     "vite": "^5.4.11",
-    "vitest": "^1.6.0",
-    "watch": "^1.0.2"
+    "vitest": "^1.6.0"
   },
   "private": true
 }
