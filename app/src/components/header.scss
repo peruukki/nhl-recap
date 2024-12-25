@@ -1,10 +1,13 @@
+@use '../styles/base';
+@use '../styles/colors';
+
 .header {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: $background-header;
-  color: $color-header;
-  box-shadow: 0 0 4px 0 $color-shadow;
+  background-color: colors.$background-header;
+  color: colors.$color-header;
+  box-shadow: 0 0 4px 0 colors.$color-shadow;
   overflow: hidden;
   z-index: 1;
 
@@ -19,7 +22,7 @@
   }
 
   &__title {
-    @include stretch;
+    @include base.stretch;
     display: inline;
     margin: 0;
     font-size: 1.6rem;

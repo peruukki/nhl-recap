@@ -1,3 +1,5 @@
+@use 'colors';
+
 @import url('https://indestructibletype.com/fonts/Jost.css');
 
 html {
@@ -17,9 +19,9 @@ html {
 body {
   margin: 0;
   padding-bottom: 1rem;
-  background-color: $background-body;
+  background-color: colors.$background-body;
   background-image: url('/ice.svg');
-  color: $color-main;
+  color: colors.$color-main;
   font-family: 'Jost', sans-serif;
   font-size: 1.6em;
   text-align: center;

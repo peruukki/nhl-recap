@@ -1,10 +1,12 @@
+@use '../styles/animations';
+
 .expandable {
-  @include delayed-animation;
+  @include animations.delayed-animation;
   display: grid;
   overflow: hidden;
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: grid-template-rows $height-duration $height-timing-function;
+    transition: grid-template-rows animations.$height-duration animations.$height-timing-function;
   }
 
   &--hidden {

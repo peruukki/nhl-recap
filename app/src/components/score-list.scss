@@ -1,6 +1,8 @@
+@use '../styles/sizes';
+
 .score-list {
   display: inline-grid;
-  max-width: $content-width;
+  max-width: sizes.$content-width;
   margin: auto;
   grid-template-columns: repeat(2, 1fr);
 

@@ -1,3 +1,5 @@
+@use '../styles/colors';
+
 .team-panel {
   display: flex;
   flex-basis: 1rem;
@@ -11,7 +13,7 @@
   &__team-score {
     position: relative;
     top: 2px;
-    color: $color-highlight;
+    color: colors.$color-highlight;
     font-size: 1.7rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
@@ -29,7 +31,7 @@
 
   &__delimiter {
     width: 1em;
-    color: $color-main;
+    color: colors.$color-main;
     text-align: center;
   }
 

@@ -1,3 +1,6 @@
+@use '../styles/animations';
+@use '../styles/colors';
+
 .button {
   padding: 0.25rem;
   border: 0;
@@ -9,12 +12,12 @@
     display: inline-block;
     width: 3.5rem;
     height: 3.5rem;
-    transition: color $hover-duration $hover-timing-function;
-    color: $gray;
-    animation: $fade-duration fade-in;
+    transition: color animations.$hover-duration animations.$hover-timing-function;
+    color: colors.$gray;
+    animation: animations.$fade-duration fade-in;
 
     &:hover {
-      color: $white;
+      color: colors.$white;
     }
   }
 
@@ -22,7 +25,7 @@
   // source https://stackoverflow.com/a/45191208/305436
   &:focus {
     .visible-button {
-      outline: 2px solid $color-main;
+      outline: 2px solid colors.$color-main;
     }
     &:not(:focus-visible) {
       .visible-button {
@@ -34,6 +37,6 @@
   &--hidden {
     cursor: default;
     opacity: 0;
-    animation: $fade-duration hidden;
+    animation: animations.$fade-duration hidden;
   }
 }

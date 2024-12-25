@@ -1,43 +1,47 @@
+@use '../styles/animations';
+@use '../styles/colors';
+@use '../styles/sizes';
+
 .game {
-  width: $game-card-width;
-  margin: $game-card-margin;
+  width: sizes.$game-card-width;
+  margin: sizes.$game-card-margin;
   float: left;
   transition:
-    transform $focus-duration $focus-timing-function,
-    background-color $focus-duration $focus-timing-function;
-  border-radius: $border-radius;
-  background: $background-game;
+    transform animations.$focus-duration animations.$focus-timing-function,
+    background-color animations.$focus-duration animations.$focus-timing-function;
+  border-radius: sizes.$border-radius;
+  background: colors.$background-game;
   font-size: 1.4rem;
   box-sizing: border-box;
 
   &.in-front {
     position: relative;
-    box-shadow: $color-shadow 0 5px 10px;
+    box-shadow: colors.$color-shadow 0 5px 10px;
     z-index: 1;
   }
 
   &.in-focus {
-    background: $background-game-in-focus;
+    background: colors.$background-game-in-focus;
   }
 
   &__secondary-panel {
-    background-color: $background-secondary-panel;
+    background-color: colors.$background-secondary-panel;
 
     &:last-child {
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
+      border-bottom-left-radius: sizes.$border-radius;
+      border-bottom-right-radius: sizes.$border-radius;
     }
   }
 
   &__series-wins {
-    padding: $panel-padding-height 0;
-    color: $color-main;
+    padding: sizes.$panel-padding-height 0;
+    color: colors.$color-main;
     font-size: 1rem;
     text-transform: uppercase;
   }
 
   &__errors {
-    padding: $panel-padding-height 0;
+    padding: sizes.$panel-padding-height 0;
     font-size: 1rem;
   }
 }

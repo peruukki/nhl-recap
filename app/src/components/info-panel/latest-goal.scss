@@ -1,25 +1,28 @@
+@use '../../styles/colors';
+@use '../../styles/sizes';
+
 .latest-goal {
-  height: $latest-goal-height - $latest-goal-padding-height;
-  padding-bottom: $latest-goal-padding-height;
+  height: sizes.$latest-goal-height - sizes.$latest-goal-padding-height;
+  padding-bottom: sizes.$latest-goal-padding-height;
   &__time,
   &__goal-count {
-    color: $color-main;
+    color: colors.$color-main;
   }
 
   &__team {
     margin-left: 0.7rem;
-    color: $color-accent-light;
+    color: colors.$color-accent-light;
   }
 
   &__strength,
   &__empty-net {
     margin-left: 0.7rem;
-    color: $color-accent;
+    color: colors.$color-accent;
   }
 
   &__scorer,
   &__assister {
-    color: $color-highlight;
+    color: colors.$color-highlight;
     white-space: nowrap;
     overflow: hidden;
   }

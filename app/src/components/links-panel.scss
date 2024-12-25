@@ -1,6 +1,10 @@
+@use '../styles/animations';
+@use '../styles/colors';
+@use '../styles/sizes';
+
 .links-panel {
-  padding: $panel-padding-height 0;
-  color: $color-main;
+  padding: sizes.$panel-padding-height 0;
+  color: colors.$color-main;
 
   .expandable:not(:last-child) & {
     padding-bottom: 0;
@@ -8,12 +12,12 @@
 
   .game--post-game-in-progress &,
   .game--post-game-finished & {
-    @include fade-in-with-slide-animation;
-    @include delayed-animation-later;
+    @include animations.fade-in-with-slide-animation;
+    @include animations.delayed-animation-later;
   }
 
   &__heading {
-    color: $color-accent-light;
+    color: colors.$color-accent-light;
     font-size: 1rem;
     text-transform: uppercase;
   }
@@ -27,16 +31,16 @@
     display: inline-block;
     margin-top: 0.5rem;
     padding: 0.5rem 1rem;
-    transition: background-color $hover-duration $hover-timing-function;
-    border: 1px solid $border-color-link;
-    border-radius: $link-border-radius;
-    color: $color-main;
+    transition: background-color animations.$hover-duration animations.$hover-timing-function;
+    border: 1px solid colors.$border-color-link;
+    border-radius: sizes.$link-border-radius;
+    color: colors.$color-main;
     font-size: 1.2rem;
     text-decoration: none;
 
     &:hover,
     &:active {
-      background-color: $background-link-hover;
+      background-color: colors.$background-link-hover;
     }
   }
 

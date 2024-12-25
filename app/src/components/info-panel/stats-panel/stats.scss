@@ -1,19 +1,22 @@
+@use '../../../styles/animations';
+@use '../../../styles/colors';
+
 .stats {
-  @include delayed-animation;
+  @include animations.delayed-animation;
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
 
   &__heading {
-    color: $color-accent-light;
+    color: colors.$color-accent-light;
     font-size: 1rem;
     text-transform: uppercase;
   }
 
   .game--post-game-in-progress &,
   .game--post-game-finished & {
-    @include fade-in-with-slide-animation;
-    @include delayed-animation;
+    @include animations.fade-in-with-slide-animation;
+    @include animations.delayed-animation;
   }
 }

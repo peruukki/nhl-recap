@@ -1,9 +1,12 @@
+@use '../../../styles/base';
+@use '../../../styles/colors';
+
 .stat {
   display: flex;
   width: 100%;
 
   &__value {
-    @include stretch;
+    @include base.stretch;
 
     &--away {
       text-align: right;
@@ -12,14 +15,14 @@
       text-align: left;
     }
     &--highlight {
-      color: $color-highlight;
+      color: colors.$color-highlight;
     }
   }
 
   &__label {
     display: inline-block;
     width: 5.5rem;
-    color: $color-main;
+    color: colors.$color-main;
     font-size: 0.8rem;
     text-transform: uppercase;
   }

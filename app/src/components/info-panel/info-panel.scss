@@ -1,54 +1,59 @@
+@use '../../styles/animations';
+@use '../../styles/sizes';
+
 .info-panel {
   position: relative;
-  padding-bottom: $panel-padding-height;
+  padding-bottom: sizes.$panel-padding-height;
   font-size: 1.2rem;
   line-height: 1.5rem;
   box-sizing: border-box;
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: height $height-duration $height-timing-function;
+    transition: height animations.$height-duration animations.$height-timing-function;
   }
 
   &:last-child > *:last-child {
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: sizes.$border-radius;
+    border-bottom-right-radius: sizes.$border-radius;
   }
 
   .game--playback &,
   .game--pre-summary-finished &,
   .game--summary-finished & {
-    height: $latest-goal-height;
+    height: sizes.$latest-goal-height;
   }
 
   .game--in-progress &,
   .game--pre-summary-in-progress &,
   .game--summary-in-progress & {
-    height: $latest-goal-height + $game-description-height;
+    height: sizes.$latest-goal-height + sizes.$game-description-height;
   }
 
-  @for $i from 1 through $team-stats-line-count-max {
+  @for $i from 1 through sizes.$team-stats-line-count-max {
     &--team-stats-line-count-#{$i} {
       .game--pre-game & {
-        height: $game-description-height + get-stats-panel-height($i);
+        height: sizes.$game-description-height + sizes.get-stats-panel-height($i);
       }
 
       .game--post-game-finished & {
-        height: $latest-goal-height + get-stats-panel-height($i);
+        height: sizes.$latest-goal-height + sizes.get-stats-panel-height($i);
       }
       .game--post-game-finished &.info-panel--with-game-stats {
-        height: $latest-goal-height +
-          get-stats-panel-height($i) +
-          get-stats-section-height($game-stats-line-count);
+        height: sizes.$latest-goal-height +
+          sizes.get-stats-panel-height($i) +
+          sizes.get-stats-section-height(sizes.$game-stats-line-count);
       }
 
       .game--post-game-in-progress & {
-        height: $latest-goal-height + $game-description-height + get-stats-panel-height($i);
+        height: sizes.$latest-goal-height +
+          sizes.$game-description-height +
+          sizes.get-stats-panel-height($i);
       }
       .game--post-game-in-progress &.info-panel--with-game-stats {
-        height: $latest-goal-height +
-          $game-description-height +
-          get-stats-panel-height($i) +
-          get-stats-section-height($game-stats-line-count);
+        height: sizes.$latest-goal-height +
+          sizes.$game-description-height +
+          sizes.get-stats-panel-height($i) +
+          sizes.get-stats-section-height(sizes.$game-stats-line-count);
       }
     }
   }

@@ -1,4 +1,6 @@
+@use '../styles/base';
+
 .date {
-  @include stretch;
+  @include base.stretch;
   text-align: right;
 }

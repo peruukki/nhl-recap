@@ -1,5 +1,7 @@
+@use '../styles/base';
+
 .clock {
-  @include stretch;
+  @include base.stretch;
   text-align: right;
 
   &__time {

@@ -1,14 +1,18 @@
+@use '../../styles/animations';
+@use '../../styles/colors';
+@use '../../styles/sizes';
+
 .game-description {
-  padding-bottom: $panel-padding-height;
-  color: $color-main;
+  padding-bottom: sizes.$panel-padding-height;
+  color: colors.$color-main;
   text-align: center;
 
   .game--in-progress & {
-    @include delayed-animation;
+    @include animations.delayed-animation;
   }
 
   &__value {
     padding-left: 0.25rem;
-    color: $color-accent-light;
+    color: colors.$color-accent-light;
   }
 }

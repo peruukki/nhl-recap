@@ -1,23 +1,28 @@
+@use '../../../styles/animations';
+@use '../../../styles/colors';
+@use '../../../styles/sizes';
+
 .stats-panel {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   height: 0; // For expand animation
-  background-color: $background-stats-panel;
+  background-color: colors.$background-stats-panel;
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: height $height-duration $height-timing-function;
+    transition: height animations.$height-duration animations.$height-timing-function;
   }
 
-  @for $i from 1 through $team-stats-line-count-max {
+  @for $i from 1 through sizes.$team-stats-line-count-max {
     .info-panel--team-stats-line-count-#{$i} & {
       .game--pre-game & {
-        height: get-stats-panel-height($i);
+        height: sizes.get-stats-panel-height($i);
       }
 
       .game--post-game-in-progress &,
       .game--post-game-finished & {
-        height: get-stats-panel-height($i) + get-stats-section-height($game-stats-line-count);
+        height: sizes.get-stats-panel-height($i) +
+          sizes.get-stats-section-height(sizes.$game-stats-line-count);
       }
     }
   }
