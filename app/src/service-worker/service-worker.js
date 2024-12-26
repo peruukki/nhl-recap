@@ -5,7 +5,6 @@ import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategi
 
 // Adapted from https://developers.google.com/web/tools/workbox/guides/get-started#routing_and_caching_strategies
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Network First strategy: page navigations (HTML)
