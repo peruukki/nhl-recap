@@ -1,5 +1,5 @@
 import autoprefixer from 'autoprefixer';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   base: '/nhl-recap/',
