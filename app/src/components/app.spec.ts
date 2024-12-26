@@ -159,11 +159,11 @@ function expectedDateVtree(date: string) {
 }
 
 function getHeaderNode(vtree: VNode) {
-  return (vtree.children?.[0] as VNode)?.children?.[0] as VNode | undefined;
+  return (vtree.children?.[0] as VNode | undefined)?.children?.[0] as VNode | undefined;
 }
 
 function getStatusNode(vtree: VNode) {
-  return (vtree.children?.[1] as VNode)?.children?.[0] as VNode | undefined;
+  return (vtree.children?.[1] as VNode | undefined)?.children?.[0] as VNode | undefined;
 }
 
 function getPlayButtonNode(vtree: VNode) {

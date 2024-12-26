@@ -195,7 +195,7 @@ function getTimeValueIteratee(value: number | undefined): number {
 
 function getGameEndTime(game: Game): GameEndTime | null {
   const isPlayoffGame = !!game.preGameStats && !!game.preGameStats.playoffSeries;
-  return game.status && game.status.state === 'LIVE'
+  return game.status.state === 'LIVE'
     ? getGameEndTimeFromProgress(game.status.progress, isPlayoffGame)
     : getGameEndTimeFromGoals(game.goals);
 }
@@ -239,10 +239,7 @@ export function getAllGoalsSorted(scores: Game[]): GoalWithUpdateFields[] {
   return _.chain(
     scores.map((game, gameIndex) =>
       _.chain(game.goals)
-        .reject(
-          (goal) =>
-            goal.period === PERIOD_SHOOTOUT && game.status && !hasGameFinished(game.status.state),
-        )
+        .reject((goal) => goal.period === PERIOD_SHOOTOUT && !hasGameFinished(game.status.state))
         .map((goal) => ({
           ...goal,
           gameIndex,

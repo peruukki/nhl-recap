@@ -161,7 +161,7 @@ function assertPlayoffSeriesLead(
   animationClass?: string,
   leadingText = 'leads',
 ) {
-  return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
+  assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
     ` ${leadingText} `,
     span('.series-wins__leading-count', String(leadingWins)),
@@ -179,7 +179,7 @@ function assertPlayoffSeriesTied(
   wins: number,
   animationClass?: string,
 ) {
-  return assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
+  assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
     'Series ',
     span('.series-wins__tied', 'tied'),
     ' ',
@@ -214,6 +214,6 @@ function expectedPlayoffSeriesWinsPanel(
   animationClass: string | undefined,
 ) {
   return seriesWinsVtree
-    ? div(`.game__series-wins${animationClass || ''}`, seriesWinsVtree)
+    ? div(`.game__series-wins${animationClass ?? ''}`, seriesWinsVtree)
     : seriesWinsVtree;
 }

@@ -6,12 +6,22 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   eslint.configs.recommended,
-  tseslint.configs.strict,
-  tseslint.configs.stylistic,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   {
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
       '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
     },
   },
   {
@@ -33,5 +43,9 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-empty-function': 'off',
     },
+  },
+  {
+    files: ['**/*.js'],
+    extends: [tseslint.configs.disableTypeChecked],
   },
 );

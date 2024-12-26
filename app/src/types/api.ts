@@ -1,6 +1,6 @@
 export type Game = {
   currentStats?: TeamStats;
-  gameStats: GameStats;
+  gameStats?: GameStats;
   goals: Goal[];
   errors?: StatError[];
   links?: Links;

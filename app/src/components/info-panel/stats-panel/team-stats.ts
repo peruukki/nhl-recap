@@ -28,7 +28,7 @@ export default function TeamStats(
       getPlayoffSpotRating,
       renderPlayoffSpot,
     ),
-    renderStat(teams, stats?.streaks || undefined, 'Streak', getStreakRating, renderStreak),
+    renderStat(teams, stats?.streaks ?? undefined, 'Streak', getStreakRating, renderStreak),
   ]);
 }
 
@@ -38,7 +38,7 @@ function getPointPercentage({ wins, losses, ot = 0 }: TeamRecord): number {
   return points / maxPoints;
 }
 
-function getStreakRating(streak: TeamStreak): number {
+function getStreakRating(streak?: TeamStreak): number {
   return streak ? streak.count * getStreakMultiplier(streak.type) : 0;
 }
 

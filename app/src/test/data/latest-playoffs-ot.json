@@ -5,6 +5,9 @@
   },
   "games": [
     {
+      "status": {
+        "state": "FINAL"
+      },
       "goals": [
         {
           "team": "STL",
@@ -71,6 +74,9 @@
       }
     },
     {
+      "status": {
+        "state": "FINAL"
+      },
       "goals": [
         {
           "team": "ANA",

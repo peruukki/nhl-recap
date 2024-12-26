@@ -117,7 +117,7 @@ function getDelimiter(vtree: VNode) {
 
 function getGameChildrenWithClass(vtree: VNode, className: string) {
   const stripHtmlElement = (sel?: string) => sel?.replace(/^\w\./, '');
-  return (getGameCard(vtree)?.children?.[0] as VNode)?.children?.filter((node) =>
+  return (getGameCard(vtree)?.children?.[0] as VNode | undefined)?.children?.filter((node) =>
     _.includes(stripHtmlElement(typeof node !== 'string' ? node.sel : node)?.split('.'), className),
   );
 }

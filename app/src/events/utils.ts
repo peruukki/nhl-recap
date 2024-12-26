@@ -27,7 +27,7 @@ export function remainingTimeToElapsedTime({ period, minute, second }: ClockTime
   second: number;
 } {
   const periodLengthInMinutes = period === 'OT' ? 5 : 20;
-  const secondsRemaining = 60 * (minute || 0) + (second || 0);
+  const secondsRemaining = 60 * (minute ?? 0) + (second ?? 0);
   const secondsElapsed = periodLengthInMinutes * 60 - secondsRemaining;
   const elapsedMinute = Math.floor(secondsElapsed / 60);
   const elapsedSecond = secondsElapsed - 60 * elapsedMinute;

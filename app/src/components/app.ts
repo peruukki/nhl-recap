@@ -77,7 +77,7 @@ export default function app(
 }
 
 function getApiUrl(): string {
-  const host = import.meta.env.VITE_SCORE_API_HOST || 'https://nhl-score-api.herokuapp.com';
+  const host = import.meta.env.VITE_SCORE_API_HOST ?? 'https://nhl-score-api.herokuapp.com';
   return `${host}/api/scores/latest`;
 }
 
@@ -93,6 +93,7 @@ function intent(
     )
     .flatten()
     .map<ApiResponse>((response) => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (response.error) {
         return { error: { expected: false } };
       }
@@ -125,7 +126,7 @@ function intent(
       .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
       .map<FetchStatus>(({ error }) => ({
         isDone: true,
-        message: error.message || getUnexpectedErrorMessage(),
+        message: error.message ?? getUnexpectedErrorMessage(),
       })),
   };
 }

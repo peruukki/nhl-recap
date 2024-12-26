@@ -12,7 +12,7 @@ describe('delayAtLeast', () => {
         next: (x: string) => {
           expect(x).toEqual(expected.shift());
         },
-        error: (err: unknown) => void done(err),
+        error: (err: unknown) => done(err),
         complete: () => {
           expect(expected).toHaveLength(0);
           done(undefined);
@@ -28,7 +28,7 @@ describe('delayAtLeast', () => {
         next: (x: string) => {
           expect(x).toEqual(expected.shift());
         },
-        error: (err: unknown) => void done(err),
+        error: (err: unknown) => done(err),
         complete: () => {
           expect(expected).toHaveLength(0);
           done(undefined);
@@ -43,8 +43,8 @@ describe('delayAtLeast', () => {
         next: () => {
           throw new Error('Stream should not emit');
         },
-        error: (err: unknown) => void done(err),
-        complete: () => void done(undefined),
+        error: (err: unknown) => done(err),
+        complete: () => done(undefined),
       });
     }));
 });

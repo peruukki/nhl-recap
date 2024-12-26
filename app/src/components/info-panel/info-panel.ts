@@ -24,7 +24,7 @@ type Props = {
   currentGoals: Goal[];
   currentStats?: TeamStatsT;
   gameDisplay: GameDisplay;
-  gameStats: GameStatsT;
+  gameStats?: GameStatsT;
   isPlayoffGame: boolean;
   latestGoal?: Goal;
   preGameStats?: TeamStatsT;
@@ -53,7 +53,7 @@ export default function InfoPanel({
     'post-game-in-progress',
   ].includes(gameDisplay);
   const showGameStats =
-    gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
+    !!gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
   const showPreGameStats = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
   const showAfterGameStats = gameDisplay === 'post-game-finished';
   const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
@@ -171,8 +171,8 @@ function getTopPointScorers(teams: Teams, allGoals: Goal[]) {
   );
   const sortedPointScorers = allPointScorers.sort(
     (a, b) =>
-      [b.points - a.points, b.goals - a.goals, b.assists - a.assists].find((diff) => diff) ||
-      b.goalsSeason + b.assistsSeason - (a.goalsSeason + a.assistsSeason) ||
+      ([b.points - a.points, b.goals - a.goals, b.assists - a.assists].find((diff) => diff) ??
+        b.goalsSeason + b.assistsSeason - (a.goalsSeason + a.assistsSeason)) ||
       (a.assists > a.goals ? b.assistsSeason - a.assistsSeason : b.goalsSeason - a.goalsSeason),
   );
   return sortedPointScorers.slice(0, (sortedPointScorers[3]?.points ?? 0) > 1 ? 4 : 3);
@@ -244,7 +244,7 @@ export function renderLatestGoalScorer(latestGoal: Goal): VNode | VNode[] {
 }
 
 export function renderLatestGoalAssists(latestGoal: Goal): VNode | VNode[] | string {
-  if (isShootoutGoal(latestGoal) || !latestGoal.assists) {
+  if (isShootoutGoal(latestGoal)) {
     return '';
   }
   if (latestGoal.assists.length === 0) {
@@ -279,7 +279,7 @@ function renderGameStatus(
   }
 }
 
-function renderCurrentProgress(progress: GameProgress): string | (VNode | string)[] {
+function renderCurrentProgress(progress?: GameProgress): string | (VNode | string)[] {
   const label = 'In progress';
   if (!progress?.currentPeriodOrdinal) {
     return label;

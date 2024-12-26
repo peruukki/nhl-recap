@@ -5,7 +5,7 @@ import GameStats from './game-stats';
 import TeamStats from './team-stats';
 
 type Props = {
-  gameStats: GameStatsT;
+  gameStats?: GameStatsT;
   isPlayoffGame: boolean;
   showAfterGameStats: boolean;
   showGameStats: boolean;
@@ -29,7 +29,7 @@ export default function StatsPanel({
     '.stats-panel',
     showGameStats || ((showPreGameStats || showAfterGameStats) && teamStats)
       ? [
-          showGameStats ? GameStats(teams, gameStats) : null,
+          showGameStats && gameStats ? GameStats(teams, gameStats) : null,
           (showPreGameStats || showAfterGameStats) && teamStats
             ? TeamStats(teams, showProgressInfo || showAfterGameStats, isPlayoffGame, teamStats)
             : null,

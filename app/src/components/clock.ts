@@ -55,7 +55,7 @@ function view(state$: Stream<GameEvent>) {
     const isUpdateEvent = ['clock', 'game-update'].includes(event.type);
     const animationClass = isUpdateEvent ? '.fade-in-fast' : '';
     return span(`.clock${animationClass}`, [
-      span('.clock__period', event ? renderPeriod(event) : ''),
+      span('.clock__period', renderPeriod(event)),
       isUpdateEvent ? span('.clock__time', renderTime(event as GameEventClockTime)) : '',
     ]);
   });
@@ -115,7 +115,7 @@ export function renderTime(clock: {
   const showTenthsOfASecond = clock.tenthOfASecond !== undefined;
   const minute = !showTenthsOfASecond ? `${clock.minute}:` : '';
   const second =
-    (clock.second || 0) >= 10 || showTenthsOfASecond ? clock.second : `0${clock.second}`;
+    (clock.second ?? 0) >= 10 || showTenthsOfASecond ? String(clock.second) : `0${clock.second}`;
   const tenthOfASecond = showTenthsOfASecond ? `.${clock.tenthOfASecond}` : '';
   return minute + second + tenthOfASecond;
 }
