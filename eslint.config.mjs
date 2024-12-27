@@ -4,6 +4,7 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+/** @type {import('typescript-eslint').Config} */
 export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
