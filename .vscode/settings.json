@@ -8,5 +8,6 @@
     "public/": true
   },
   "editor.rulers": [100],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "eslint.useFlatConfig": true
 }
