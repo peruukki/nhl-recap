@@ -1,4 +1,4 @@
-@import '../../app/src/styles/colors';
+@use '../../app/src/styles/colors';
 
 @mixin gallery-description {
   display: table-cell;
@@ -31,7 +31,7 @@
 .gallery-heading {
   &__description {
     @include gallery-description;
-    color: $color-accent-light;
+    color: colors.$color-accent-light;
   }
 
   &__toggle {
