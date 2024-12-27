@@ -9,5 +9,15 @@
   },
   "editor.rulers": [100],
   "editor.formatOnSave": true,
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "stylelint.validate": [
+    "css",
+    "postcss",
+    "scss"
+  ],
+  "stylelint.snippet": [
+    "css",
+    "postcss",
+    "scss"
+  ]
 }
