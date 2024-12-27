@@ -1,13 +1,13 @@
 // Color values
-$blue-dark: hsl(227, 77%, 25%);
-$blue-dark-semi-transparent: hsla(227, 77%, 25%, 0.5);
-$blue-light: hsl(226, 47%, 49%);
-$blue-medium: hsl(227, 51%, 38%);
-$gray: hsl(198, 16%, 84%);
+$blue-dark: hsl(227deg, 77%, 25%);
+$blue-dark-semi-transparent: hsla(227deg, 77%, 25%, 0.5);
+$blue-light: hsl(226deg, 47%, 49%);
+$blue-medium: hsl(227deg, 51%, 38%);
+$gray: hsl(198deg, 16%, 84%);
 $gray-semi-transparent: rgba(0, 0, 0, 0.5);
-$white: hsl(0, 0%, 97%);
-$yellow-dark: hsl(43, 96%, 58%);
-$yellow-medium: hsl(54, 100%, 67%);
+$white: hsl(0deg, 0%, 97%);
+$yellow-dark: hsl(43deg, 96%, 58%);
+$yellow-medium: hsl(54deg, 100%, 67%);
 
 // Background colors
 $background-body: $blue-light;

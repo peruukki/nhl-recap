@@ -59,6 +59,7 @@ $hover-timing-function: ease-out;
     &--#{$i} {
       // easeOutCubic for delay
       $delay: 50ms + cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) * 500ms;
+
       animation:
         $delay hidden,
         $expand-duration $expand-timing-function expand $delay,
@@ -75,6 +76,7 @@ $hover-timing-function: ease-out;
 
 .expand--last {
   $delay: 1000ms;
+
   animation:
     $delay hidden,
     $expand-duration $expand-timing-function expand $delay,

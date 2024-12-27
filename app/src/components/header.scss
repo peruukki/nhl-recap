@@ -23,6 +23,7 @@
 
   &__title {
     @include base.stretch;
+
     display: inline;
     margin: 0;
     font-size: 1.6rem;

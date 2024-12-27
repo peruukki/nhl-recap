@@ -2,6 +2,7 @@
 
 .expandable {
   @include animations.delayed-animation;
+
   display: grid;
   overflow: hidden;
 

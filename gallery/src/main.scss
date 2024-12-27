@@ -31,6 +31,7 @@
 .gallery-heading {
   &__description {
     @include gallery-description;
+
     color: colors.$color-accent-light;
   }
 
@@ -44,6 +45,7 @@
 
   &__description {
     @include gallery-description;
+
     font-size: 1.2rem;
     text-align: left;
   }

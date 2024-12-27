@@ -3,6 +3,7 @@
 
 .stats {
   @include animations.delayed-animation;
+
   display: flex;
   flex-direction: column;
   width: 100%;
