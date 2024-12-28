@@ -1,4 +1,4 @@
-import { MainDOMSource, VNode, button, div, h1, header, main, span } from '@cycle/dom';
+import { MainDOMSource, VNode, div, main, span } from '@cycle/dom';
 import { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { Stream } from 'xstream';
@@ -11,14 +11,13 @@ import type {
   GameUpdateGoal,
   Goal,
   Scores,
-  ScoresDate,
 } from '../types';
 import type { Animations } from '../utils/animations';
 import { delayAtLeast } from '../utils/delay';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
 import Game from './game';
-import Icon from './icon';
+import Header from './header';
 
 type Sources = {
   DOM: MainDOMSource;
@@ -217,50 +216,10 @@ function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
     ({ scores, currentGoals, isPlaying, status, clockVtree, event, gameDisplays, gameCount }) =>
       div([
-        header(
-          '.header',
-          renderHeader({
-            clockVtree,
-            event,
-            gameCount,
-            isPlaying,
-            date: scores.date,
-          }),
-        ),
+        Header({ clockVtree, event, date: scores.date, gameCount, isPlaying }),
         main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
       ]),
   );
-}
-
-function renderHeader(
-  state: Pick<State, 'event' | 'clockVtree' | 'gameCount' | 'isPlaying'> & { date: Scores['date'] },
-): VNode {
-  const hasNotStarted = !state.event;
-  const isFinished = state.event?.type === 'end';
-  const buttonText = state.isPlaying ? 'Pause' : 'Play';
-  const buttonType = state.isPlaying ? 'pause' : 'play';
-  const showIcon = state.gameCount > 0;
-
-  const dynamicClassNames = {
-    [`button--${buttonType}`]: showIcon,
-    'expand--last': state.gameCount > 0 && hasNotStarted,
-    'button--hidden': isFinished,
-  };
-
-  return div('.header__container', [
-    h1('.header__title', [span('.all-caps', 'NHL'), ' Recap']),
-    button(
-      '.button.play-pause-button',
-      { props: { ariaLive: 'polite' }, class: dynamicClassNames },
-      [
-        span('.visible-button', [
-          showIcon ? Icon(buttonType) : null,
-          span('.visually-hidden', buttonText),
-        ]),
-      ],
-    ),
-    hasNotStarted && state.date ? renderDate(state.date) : state.clockVtree,
-  ]);
 }
 
 function renderScores(
@@ -286,8 +245,4 @@ function renderScores(
     : div(`.status${state.status.isDone ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
         state.status.message,
       ]);
-}
-
-function renderDate(date: ScoresDate): VNode {
-  return span('.date.fade-in-slow', date.pretty);
 }
