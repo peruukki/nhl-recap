@@ -8,12 +8,20 @@
   background-color: transparent;
   font-size: 0; // Remove extra height due to inline-block child, see https://ourcodeworld.com/articles/read/658/removing-whitespaces-between-inline-block-elements-with-css
 
+  &--play,
+  &--pause {
+    .visible-button {
+      background-color: colors.$gray-semi-transparent;
+    }
+  }
+
   .visible-button {
     display: inline-block;
     width: 3.5rem;
     height: 3.5rem;
     transition: color animations.$hover-duration animations.$hover-timing-function;
     color: colors.$gray;
+    border-radius: 50%;
     animation: animations.$fade-duration fade-in;
 
     &:hover {

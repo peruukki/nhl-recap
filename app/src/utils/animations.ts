@@ -72,7 +72,7 @@ function highlightLatestGoalChange(gameIndex: number): void {
 }
 
 function highlightPlayPauseButtonChange(): void {
-  const element = document.querySelector('.play-pause-button');
+  const element = document.querySelector('.play-pause-button .icon');
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250 });
   }
