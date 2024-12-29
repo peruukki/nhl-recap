@@ -1,0 +1,10 @@
+/**
+ * Remove rectangle shaped background color when tapping in iOS Safari.
+ *
+ * See:
+ * - https://goulet.dev/posts/fix-css-tap-effects-on-ios/
+ * - https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color
+ */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
