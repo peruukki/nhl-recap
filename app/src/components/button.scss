@@ -12,6 +12,7 @@
   &--pause {
     .visible-button {
       background-color: colors.$gray-semi-transparent;
+      border-radius: 50%;
     }
   }
 
@@ -21,7 +22,6 @@
     height: 3.5rem;
     transition: color animations.$hover-duration animations.$hover-timing-function;
     color: colors.$gray;
-    border-radius: 50%;
     animation: animations.$fade-duration fade-in;
 
     &:hover {
