@@ -38,7 +38,7 @@ export default function Header({ clockVtree, date, event, gameCount, isPlaying }
           ]),
         ],
       ),
-      hasNotStarted && date ? span('.date.fade-in-slow', date.pretty) : clockVtree,
+      hasNotStarted && date ? span('.header__date.date.fade-in-slow', date.pretty) : clockVtree,
     ]),
   );
 }
