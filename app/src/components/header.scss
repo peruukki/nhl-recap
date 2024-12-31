@@ -1,10 +1,15 @@
 @use '../styles/base';
 @use '../styles/colors';
+@use '../styles/sizes';
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   width: 100%;
+  height: sizes.$header-height;
   background-color: colors.$background-header;
   color: colors.$color-header;
   box-shadow: 0 0 4px 0 colors.$color-shadow;
@@ -14,6 +19,7 @@
   &__container {
     display: flex;
     align-items: center;
+    width: 100%;
     max-width: 34rem;
     margin: auto;
     padding: 0 0.8rem;
