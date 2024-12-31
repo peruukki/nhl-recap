@@ -155,7 +155,7 @@ function expectedStatusVtree(message: string, animationClass: string) {
 }
 
 function expectedDateVtree(date: string) {
-  return span('.date.fade-in-slow', date);
+  return span('.header__date.fade-in-slow', date);
 }
 
 function getHeaderNode(vtree: VNode) {

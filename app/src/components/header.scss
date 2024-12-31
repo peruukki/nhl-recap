@@ -43,6 +43,9 @@
   }
 
   &__date {
+    @include base.stretch;
+
+    text-align: right;
     padding-top: 0.2rem;
   }
 }
