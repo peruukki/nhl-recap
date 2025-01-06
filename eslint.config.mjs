@@ -43,6 +43,7 @@ export default tseslint.config(
     files: ['app/src/test/test-animations.ts'],
     rules: {
       '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   {
