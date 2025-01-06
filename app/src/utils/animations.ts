@@ -8,20 +8,33 @@ function clearGameInFocus(element: HTMLElement): void {
   // Use setTimeout instead of ontransitionend due to much better browser support
   // The delay should match $focus-duration in animations.scss
   setTimeout(() => {
-    // Keep the game in front if it has gained focus again
-    if (!element.classList.contains(gameInFocusClass)) {
-      element.classList.remove(gameInFrontClass);
+    // Don't make changes if the game has gained focus again
+    if (element.classList.contains(gameInFocusClass)) {
+      return;
     }
+    element.classList.remove(gameInFrontClass);
+    // Clear initial position so that it gets recalculated on next animation, to
+    // get correct values if the viewport dimensions change
+    element.dataset.initialCenterX = '';
+    element.dataset.initialCenterY = '';
   }, 250);
 }
 
-function animateGame(element: HTMLElement, windowWidth: number, windowHeight: number): void {
+function storeGameInitialPosition(element: HTMLElement): void {
   const { left, right, top, bottom } = element.getBoundingClientRect();
+  element.dataset.initialCenterX = String((left + right) / 2);
+  element.dataset.initialCenterY = String((top + bottom) / 2);
+}
+
+function animateGame(element: HTMLElement, windowWidth: number, windowHeight: number): void {
+  if (!element.dataset.initialCenterX || !element.dataset.initialCenterY) {
+    storeGameInitialPosition(element);
+  }
+  const elementCenterX = parseFloat(element.dataset.initialCenterX!);
+  const elementCenterY = parseFloat(element.dataset.initialCenterY!);
 
   const windowCenterX = windowWidth / 2;
   const windowCenterY = windowHeight / 2;
-  const elementCenterX = (left + right) / 2;
-  const elementCenterY = (top + bottom) / 2;
 
   const translateX = windowCenterX - elementCenterX;
   const translateY = windowCenterY - elementCenterY;
