@@ -1,0 +1,16 @@
+/* Adapted from #4 in https://css-loaders.com/classic/ */
+.loader {
+  width: fit-content;
+  clip-path: inset(0 2ch 0 0);
+  animation: l4 1.5s steps(8) infinite;
+}
+
+.loader::before {
+  content: '...';
+}
+
+@keyframes l4 {
+  to {
+    clip-path: inset(0 -2ch 0 0);
+  }
+}

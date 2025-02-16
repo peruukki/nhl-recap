@@ -19,7 +19,7 @@ describe('app', () => {
       const sinks = run(xs.empty());
       addListener(done, sinks.DOM.take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree('Fetching latest scores...', '.fade-in'),
+          expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-in'),
         );
       });
     }));
@@ -102,7 +102,7 @@ describe('app', () => {
       const sinks = run(xs.of(nhlScoreApiUrl));
       addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree('No latest scores available.', '.fade-in-fast.nope-animation'),
+          expectedStatusVtree(['No latest scores available.'], '.fade-in-fast.nope-animation'),
         );
       });
     }));
@@ -118,7 +118,7 @@ describe('app', () => {
       addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(
-            'Failed to fetch latest scores: the network is offline.',
+            ['Failed to fetch latest scores: the network is offline.'],
             '.fade-in-fast.nope-animation',
           ),
         );
@@ -135,7 +135,7 @@ describe('app', () => {
       const sinks = run(xs.of(nhlScoreApiUrl));
       addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree('Failed to fetch latest scores.', '.fade-in-fast.nope-animation'),
+          expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
         );
       });
     }));
@@ -150,8 +150,8 @@ function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
   });
 }
 
-function expectedStatusVtree(message: string, animationClass: string) {
-  return div(`.status${animationClass}`, [message]);
+function expectedStatusVtree(status: (string | VNode)[], animationClass: string) {
+  return div(`.status${animationClass}`, status);
 }
 
 function expectedDateVtree(date: string) {

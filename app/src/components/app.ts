@@ -193,7 +193,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       scores$,
       currentGoals$.startWith([]),
       actions.isPlaying$.startWith(false),
-      actions.status$.startWith({ isDone: false, message: 'Fetching latest scores...' }),
+      actions.status$.startWith({ isDone: false, message: 'Fetching latest scores' }),
       clock.DOM.startWith(span('.clock')),
       clock.events$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
@@ -244,5 +244,6 @@ function renderScores(
       )
     : div(`.status${state.status.isDone ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
         state.status.message,
+        ...(state.status.isDone ? [] : [span('.loader')]),
       ]);
 }
