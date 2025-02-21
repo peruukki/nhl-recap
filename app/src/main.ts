@@ -11,7 +11,7 @@ if (import.meta.env.PROD) {
   registerServiceWorker();
 }
 
-run(app(animations, window, { fetchStatusDelayMs: 1000 }), {
+run(app(animations, window, { fetchStatusDelayMs: 1200 }), {
   DOM: makeDOMDriver('#app'),
   HTTP: makeHTTPDriver(),
 });
