@@ -3,7 +3,7 @@
 A web app playing back the goal information from the latest NHL games. I made this to have a more exciting way of checking
 the scores while I brush my teeth in the morning, as the games are usually played at night time in Finland.
 
-The app is running at [GitHub pages](https://peruukki.github.io/nhl-recap/). Add it to your home screen on an Android
+The app is running at [GitHub Pages](https://peruukki.github.io/nhl-recap/). Add it to your home screen on an Android
 or iOS device for a more app-like, chromeless experience.
 
 Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
@@ -125,6 +125,10 @@ npm run build
 ```
 
 ## Deployment
+
+Deployments to GitHub Pages are done by running the [Deployment workflow](https://github.com/peruukki/nhl-recap/actions/workflows/deployment.yml).
+
+### Alternative deployment method
 
 The `deploy` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
 create a commit, and push the commit to the `gh-pages` branch in `origin`.
