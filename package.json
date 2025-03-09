@@ -44,7 +44,7 @@
     "start:local": "VITE_SCORE_API_HOST=http://localhost:8080 npm start",
     "start:production": "npm run build && vite preview",
     "start:server": "json-server server/db.json --routes server/routes.json --port 8080 --host 0.0.0.0 --watch",
-    "test": "npm run format:check && npm run lint && npm run ts && npm run spec",
+    "test": "concurrently -n format,lint,types,test \"npm run format:check\" \"npm run lint\" \"npm run ts\" \"npm run spec\"",
     "ts": "tsc",
     "ts:watch": "tsc -w"
   },
@@ -70,6 +70,7 @@
     "@types/lodash": "^4.17.13",
     "@vitest/coverage-v8": "^2.1.8",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
     "json-server": "^0.17.4",
