@@ -60,7 +60,7 @@ JavaScript is formatted using [Prettier](https://prettier.io/). Prettier is the 
 but it is also run as part of the linting tasks:
 
 ```
-npm run lint:format
+npm run format
 ```
 
 ## Linting JavaScript
@@ -98,7 +98,7 @@ npm run watch:lint:css
 
 ## Testing
 
-Lint SASS, lint JavaScript, run Prettier and run unit tests:
+Lint SASS, lint JavaScript, check code formatting and run unit tests:
 
 ```
 npm test
