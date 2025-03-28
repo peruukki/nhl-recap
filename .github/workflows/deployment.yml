@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version-bump:
-        description: 'Version bump type (patch|minor|major)'
-        required: false
+        description: 'Version bump type (select none to skip version bump)'
         default: 'none'
         type: choice
         options:
