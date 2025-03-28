@@ -1,24 +1,25 @@
 @use 'sass:math';
 
-$fade-duration: 1s;
+$fade-duration: 0.5s;
 $expand-duration: 0.45s;
 $focus-duration: 0.25s;
 $height-duration: 0.25s;
 $hover-duration: 0.25s;
 
+$fade-timing-function: ease-in;
 $expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
 $focus-timing-function: ease-out;
 $height-timing-function: ease-in-out;
 $hover-timing-function: ease-out;
 
 .fade-in {
-  animation: $fade-duration fade-in;
+  animation: $fade-duration $fade-timing-function fade-in;
 }
 .fade-in-fast {
-  animation: ($fade-duration * 0.5) fade-in-fast;
+  animation: ($fade-duration * 0.5) $fade-timing-function fade-in-fast;
 }
 .fade-in-slow {
-  animation: ($fade-duration * 2) fade-in;
+  animation: ($fade-duration * 2) $fade-timing-function fade-in;
 }
 
 @mixin fade-in-with-slide-animation {

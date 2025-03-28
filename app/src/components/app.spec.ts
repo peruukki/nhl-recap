@@ -79,7 +79,7 @@ describe('app', () => {
       });
     }));
 
-  it('should show the date of the latest scores with a slow fade-in', () =>
+  it('should show the date of the latest scores with a fade-in', () =>
     new Promise((done) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
@@ -155,7 +155,7 @@ function expectedStatusVtree(status: (string | VNode)[], animationClass: string)
 }
 
 function expectedDateVtree(date: string) {
-  return span('.header__date.fade-in-slow', date);
+  return span('.header__date.fade-in', date);
 }
 
 function getHeaderNode(vtree: VNode) {
