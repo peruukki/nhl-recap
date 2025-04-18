@@ -125,6 +125,21 @@ describe('app', () => {
       });
     }));
 
+  it('should show a message if fetching latest scores fails due to non-JSON response content', () =>
+    new Promise((done) => {
+      nock(nhlScoreApiHost)
+        .get(nhlScoreApiPath)
+        .times(2) // Dunno why two HTTP requests are sent
+        .reply(200, '<!DOCTYPE html><html></html>', { 'Content-Type': 'text/html; charset=utf-8' });
+
+      const sinks = run(xs.of(nhlScoreApiUrl));
+      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+        expect(getStatusNode(vtree)).toEqual(
+          expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
+        );
+      });
+    }));
+
   it('should show a message if fetching latest scores fails due to unknown error', () =>
     new Promise((done) => {
       nock(nhlScoreApiHost)

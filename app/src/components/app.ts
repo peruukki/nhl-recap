@@ -96,10 +96,16 @@ function intent(
       if (response.error) {
         return { error: { expected: false } };
       }
-      const responseJson = JSON.parse(response.text) as Scores;
-      return responseJson.games.length > 0
-        ? { success: responseJson }
-        : { error: { message: 'No latest scores available.', expected: true } };
+      try {
+        const responseJson = JSON.parse(response.text) as Scores;
+        return responseJson.games.length > 0
+          ? { success: responseJson }
+          : { error: { message: 'No latest scores available.', expected: true } };
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return { error: { expected: false } };
+      }
     })
     .compose(delayAtLeast(options.fetchStatusDelayMs));
   const successApiResponse$ = apiResponseWithErrors$
