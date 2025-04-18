@@ -15,9 +15,9 @@ describe('app', () => {
   const nhlScoreApiUrl = nhlScoreApiHost + nhlScoreApiPath;
 
   it('should initially show a message about fetching latest scores', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       const sinks = run(xs.empty());
-      addListener(done, sinks.DOM.take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-in'),
         );
@@ -25,22 +25,22 @@ describe('app', () => {
     }));
 
   it('should fetch latest scores', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       const sinks = run(xs.empty());
-      addListener(done, sinks.HTTP, (request) => {
+      addListener(resolve, reject, sinks.HTTP, (request) => {
         expect(request.url).toEqual(nhlScoreApiUrl);
       });
     }));
 
   it('should render fetched latest scores', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, apiResponse);
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         const scoreListNode = getScoreListNode(vtree);
         expect(scoreListNode?.sel).toEqual('div.score-list');
 
@@ -52,55 +52,55 @@ describe('app', () => {
     }));
 
   it('should set single game classname', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, { ...apiResponse, games: apiResponse.games.slice(0, 1) });
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         const scoreListNode = getScoreListNode(vtree);
         expect(scoreListNode?.sel).toEqual('div.score-list.score-list--single-game');
       });
     }));
 
   it('should show a delayed and animated play button', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, apiResponse);
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         const playButtonNode = getPlayButtonNode(vtree);
         expect(playButtonNode?.sel).toEqual('button.button.play-pause-button');
       });
     }));
 
   it('should show the date of the latest scores with a fade-in', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, apiResponse);
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getDateNode(vtree)).toEqual(expectedDateVtree('Tue Oct 17'));
       });
     }));
 
   it('should show a message if there are no latest scores available', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, { date: {}, games: [] });
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(['No latest scores available.'], '.fade-in-fast.nope-animation'),
         );
@@ -108,14 +108,14 @@ describe('app', () => {
     }));
 
   it('should show a message if fetching latest scores fails due to network offline', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(404, 'Fake error');
 
       const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(
             ['Failed to fetch latest scores: the network is offline.'],
@@ -126,14 +126,14 @@ describe('app', () => {
     }));
 
   it('should show a message if fetching latest scores fails due to non-JSON response content', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(200, '<!DOCTYPE html><html></html>', { 'Content-Type': 'text/html; charset=utf-8' });
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
         );
@@ -141,14 +141,14 @@ describe('app', () => {
     }));
 
   it('should show a message if fetching latest scores fails due to unknown error', () =>
-    new Promise((done) => {
+    new Promise((resolve, reject) => {
       nock(nhlScoreApiHost)
         .get(nhlScoreApiPath)
         .times(2) // Dunno why two HTTP requests are sent
         .reply(404, 'Fake error');
 
       const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(done, sinks.DOM.drop(1).take(1), (vtree) => {
+      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
         expect(getStatusNode(vtree)).toEqual(
           expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
         );

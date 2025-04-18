@@ -21,10 +21,10 @@ describe('gameDisplays', () => {
       const expected = getExpectedGameDisplay(clockState, gameState);
 
       it(`should return ${expected} for clock state ${clockState} and game state ${gameState}`, () =>
-        new Promise((done) => {
+        new Promise((resolve, reject) => {
           const gameDisplays$ = getGameDisplays$(getClock$(clockState), getScores$(gameState));
           // Ignore intermediate values and assert the last one
-          addListener(done, gameDisplays$.last(), (gameDisplays) => {
+          addListener(resolve, reject, gameDisplays$.last(), (gameDisplays) => {
             expect(gameDisplays).toEqual([expected]);
           });
         }));
