@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 import animations from '../test/test-animations';
 import { scoresAllRegularTime as apiResponse } from '../test/data';
-import { addListener } from '../test/test-utils';
+import { assertStreamValues } from '../test/test-utils';
 import app from './app';
 
 describe('app', () => {
@@ -14,146 +14,137 @@ describe('app', () => {
   const nhlScoreApiPath = '/api/scores/latest';
   const nhlScoreApiUrl = nhlScoreApiHost + nhlScoreApiPath;
 
-  it('should initially show a message about fetching latest scores', () =>
-    new Promise((resolve, reject) => {
-      const sinks = run(xs.empty());
-      addListener(resolve, reject, sinks.DOM.take(1), (vtree) => {
-        expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-in'),
-        );
-      });
-    }));
+  it('should initially show a message about fetching latest scores', async () => {
+    const sinks = run(xs.empty());
+    await assertStreamValues(sinks.DOM.take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-in'),
+      );
+    });
+  });
 
-  it('should fetch latest scores', () =>
-    new Promise((resolve, reject) => {
-      const sinks = run(xs.empty());
-      addListener(resolve, reject, sinks.HTTP, (request) => {
-        expect(request.url).toEqual(nhlScoreApiUrl);
-      });
-    }));
+  it('should fetch latest scores', async () => {
+    const sinks = run(xs.empty());
+    await assertStreamValues(sinks.HTTP, (request) => {
+      expect(request.url).toEqual(nhlScoreApiUrl);
+    });
+  });
 
-  it('should render fetched latest scores', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, apiResponse);
+  it('should render fethed latest scores', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, apiResponse);
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        const scoreListNode = getScoreListNode(vtree);
-        expect(scoreListNode?.sel).toEqual('div.score-list');
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      const scoreListNode = getScoreListNode(vtree);
+      expect(scoreListNode?.sel).toEqual('div.score-list');
 
-        const gameScoreNodes = scoreListNode?.children;
-        expect(gameScoreNodes?.map((node) => (typeof node !== 'string' ? node.sel : node))).toEqual(
-          ['div.game-container', 'div.game-container'],
-        );
-      });
-    }));
+      const gameScoreNodes = scoreListNode?.children;
+      expect(gameScoreNodes?.map((node) => (typeof node !== 'string' ? node.sel : node))).toEqual([
+        'div.game-container',
+        'div.game-container',
+      ]);
+    });
+  });
 
-  it('should set single game classname', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, { ...apiResponse, games: apiResponse.games.slice(0, 1) });
+  it('should set single game classname', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, { ...apiResponse, games: apiResponse.games.slice(0, 1) });
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        const scoreListNode = getScoreListNode(vtree);
-        expect(scoreListNode?.sel).toEqual('div.score-list.score-list--single-game');
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      const scoreListNode = getScoreListNode(vtree);
+      expect(scoreListNode?.sel).toEqual('div.score-list.score-list--single-game');
+    });
+  });
 
-  it('should show a delayed and animated play button', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, apiResponse);
+  it('should show a delayed and animated play button', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, apiResponse);
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        const playButtonNode = getPlayButtonNode(vtree);
-        expect(playButtonNode?.sel).toEqual('button.button.play-pause-button');
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      const playButtonNode = getPlayButtonNode(vtree);
+      expect(playButtonNode?.sel).toEqual('button.button.play-pause-button');
+    });
+  });
 
-  it('should show the date of the latest scores with a fade-in', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, apiResponse);
+  it('should show the date of the latest scores with a fade-in', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, apiResponse);
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        expect(getDateNode(vtree)).toEqual(expectedDateVtree('Tue Oct 17'));
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      expect(getDateNode(vtree)).toEqual(expectedDateVtree('Tue Oct 17'));
+    });
+  });
 
-  it('should show a message if there are no latest scores available', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, { date: {}, games: [] });
+  it('should show a mesage if there are no latest scores available', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, { date: {}, games: [] });
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree(['No latest scores available.'], '.fade-in-fast.nope-animation'),
-        );
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(['No latest scores available.'], '.fade-in-fast.nope-animation'),
+      );
+    });
+  });
 
-  it('should show a message if fetching latest scores fails due to network offline', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(404, 'Fake error');
+  it('should show a message if fetching latest scores fails due to network offline', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(404, 'Fake error');
 
-      const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree(
-            ['Failed to fetch latest scores: the network is offline.'],
-            '.fade-in-fast.nope-animation',
-          ),
-        );
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(
+          ['Failed to fetch latest scores: the network is offline.'],
+          '.fade-in-fast.nope-animation',
+        ),
+      );
+    });
+  });
 
-  it('should show a message if fetching latest scores fails due to non-JSON response content', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(200, '<!DOCTYPE html><html></html>', { 'Content-Type': 'text/html; charset=utf-8' });
+  it('should show a message if fetching latest scores fails due to non-JSON response content', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(503, '<!DOCTYPE html><html></html>', { 'Content-Type': 'text/html; charset=utf-8' });
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
-        );
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
+      );
+    });
+  });
 
-  it('should show a message if fetching latest scores fails due to unknown error', () =>
-    new Promise((resolve, reject) => {
-      nock(nhlScoreApiHost)
-        .get(nhlScoreApiPath)
-        .times(2) // Dunno why two HTTP requests are sent
-        .reply(404, 'Fake error');
+  it('should show a message if fetching latest scores fails due to unknown error', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(404, 'Fake error');
 
-      const sinks = run(xs.of(nhlScoreApiUrl));
-      addListener(resolve, reject, sinks.DOM.drop(1).take(1), (vtree) => {
-        expect(getStatusNode(vtree)).toEqual(
-          expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
-        );
-      });
-    }));
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
+      );
+    });
+  });
 });
 
 function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
