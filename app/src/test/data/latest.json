@@ -116,11 +116,13 @@
         "standings": {
           "STL": {
             "divisionRank": "7",
+            "conferenceRank": "9",
             "leagueRank": "11",
             "pointsFromPlayoffSpot": "+4"
           },
           "BOS": {
             "divisionRank": "3",
+            "conferenceRank": "5",
             "leagueRank": "8",
             "pointsFromPlayoffSpot": "+4"
           }
@@ -306,11 +308,13 @@
         "standings": {
           "ANA": {
             "divisionRank": "2",
+            "conferenceRank": "3",
             "leagueRank": "4",
             "pointsFromPlayoffSpot": "+2"
           },
           "NYR": {
             "divisionRank": "8",
+            "conferenceRank": "14",
             "leagueRank": "26",
             "pointsFromPlayoffSpot": "-2"
           }

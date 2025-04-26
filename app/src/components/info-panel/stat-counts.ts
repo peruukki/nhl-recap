@@ -4,7 +4,7 @@ export type StatKey = Exclude<keyof TeamStats, 'playoffSeries'>;
 
 const anyGameStatCounts: Record<string, number> = {
   records: 1,
-  standings: 2,
+  standings: 3,
   streaks: 1,
 } satisfies Record<StatKey, number>;
 

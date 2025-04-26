@@ -46,10 +46,12 @@
         "standings": {
           "STL": {
             "divisionRank": "7",
+            "conferenceRank": "8",
             "leagueRank": "11"
           },
           "BOS": {
             "divisionRank": "3",
+            "conferenceRank": "5",
             "leagueRank": "8"
           }
         },
@@ -75,10 +77,12 @@
         "standings": {
           "STL": {
             "divisionRank": "7",
+            "conferenceRank": "8",
             "leagueRank": "11"
           },
           "BOS": {
             "divisionRank": "3",
+            "conferenceRank": "5",
             "leagueRank": "8"
           }
         },
@@ -237,10 +241,12 @@
         "standings": {
           "ANA": {
             "divisionRank": "2",
+            "conferenceRank": "3",
             "leagueRank": "4"
           },
           "NYR": {
             "divisionRank": "8",
+            "conferenceRank": "14",
             "leagueRank": "26"
           }
         },
@@ -266,10 +272,12 @@
         "standings": {
           "ANA": {
             "divisionRank": "2",
+            "conferenceRank": "3",
             "leagueRank": "4"
           },
           "NYR": {
             "divisionRank": "8",
+            "conferenceRank": "14",
             "leagueRank": "26"
           }
         },
@@ -349,10 +357,12 @@
         "standings": {
           "STL": {
             "divisionRank": "7",
+            "conferenceRank": "8",
             "leagueRank": "11"
           },
           "BOS": {
             "divisionRank": "3",
+            "conferenceRank": "5",
             "leagueRank": "8"
           }
         },
@@ -378,10 +388,12 @@
         "standings": {
           "STL": {
             "divisionRank": "7",
+            "conferenceRank": "8",
             "leagueRank": "11"
           },
           "BOS": {
             "divisionRank": "3",
+            "conferenceRank": "5",
             "leagueRank": "8"
           }
         },

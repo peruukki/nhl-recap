@@ -12,6 +12,13 @@ export default function TeamStats(
   return div('.stats', { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
     renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
+    renderStat(
+      teams,
+      stats?.standings,
+      'Conf. rank',
+      getConferenceRankRating,
+      renderConferenceRank,
+    ),
     renderStat(teams, stats?.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
     renderStat(
       teams,
@@ -65,6 +72,10 @@ function getDivisionRankRating({ divisionRank }: { divisionRank: string }): numb
   return -parseInt(divisionRank, 10);
 }
 
+function getConferenceRankRating({ conferenceRank }: { conferenceRank: string }): number {
+  return -parseInt(conferenceRank, 10);
+}
+
 function getLeagueRankRating({ leagueRank }: { leagueRank: string }): number {
   return -parseInt(leagueRank, 10);
 }
@@ -108,6 +119,10 @@ function renderPlayoffSpot({ pointsFromPlayoffSpot }: { pointsFromPlayoffSpot: s
 
 function renderDivisionRank({ divisionRank }: { divisionRank: string }): string {
   return divisionRank || '';
+}
+
+function renderConferenceRank({ conferenceRank }: { conferenceRank: string }): string {
+  return conferenceRank || '';
 }
 
 function renderLeagueRank({ leagueRank }: { leagueRank: string }): string {

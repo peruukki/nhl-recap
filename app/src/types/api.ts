@@ -108,6 +108,7 @@ export type TeamStats = {
   playoffSeries?: TeamPlayoffSeries;
   records: TeamValues<TeamRecord>;
   standings: TeamValues<{
+    conferenceRank: string;
     divisionRank: string;
     leagueRank: string;
     pointsFromPlayoffSpot: string;

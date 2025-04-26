@@ -13,8 +13,18 @@
             "NJD": { "type": "WINS", "count": 2 }
           },
           "standings": {
-            "NYR": { "divisionRank": "7", "leagueRank": "23", "pointsFromPlayoffSpot": "-5" },
-            "NJD": { "divisionRank": "1", "leagueRank": "3", "pointsFromPlayoffSpot": "+12" }
+            "NYR": {
+              "divisionRank": "7",
+              "conferenceRank": "15",
+              "leagueRank": "23",
+              "pointsFromPlayoffSpot": "-5"
+            },
+            "NJD": {
+              "divisionRank": "1",
+              "conferenceRank": "2",
+              "leagueRank": "3",
+              "pointsFromPlayoffSpot": "+12"
+            }
           }
         },
         "goals": [
@@ -88,8 +98,18 @@
             "NJD": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "NYR": { "divisionRank": "6", "leagueRank": "22", "pointsFromPlayoffSpot": "-5" },
-            "NJD": { "divisionRank": "2", "leagueRank": "4", "pointsFromPlayoffSpot": "+12" }
+            "NYR": {
+              "divisionRank": "6",
+              "conferenceRank": "14",
+              "leagueRank": "22",
+              "pointsFromPlayoffSpot": "-5"
+            },
+            "NJD": {
+              "divisionRank": "2",
+              "conferenceRank": "3",
+              "leagueRank": "4",
+              "pointsFromPlayoffSpot": "+12"
+            }
           }
         },
         "teams": {
@@ -139,8 +159,18 @@
             "TOR": { "type": "LOSSES", "count": 2 }
           },
           "standings": {
-            "WPG": { "divisionRank": "1", "leagueRank": "1", "pointsFromPlayoffSpot": "+12" },
-            "TOR": { "divisionRank": "2", "leagueRank": "8", "pointsFromPlayoffSpot": "+7" }
+            "WPG": {
+              "divisionRank": "1",
+              "conferenceRank": "1",
+              "leagueRank": "1",
+              "pointsFromPlayoffSpot": "+12"
+            },
+            "TOR": {
+              "divisionRank": "2",
+              "conferenceRank": "5",
+              "leagueRank": "8",
+              "pointsFromPlayoffSpot": "+7"
+            }
           }
         },
         "goals": [
@@ -230,8 +260,18 @@
             "TOR": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "WPG": { "divisionRank": "1", "leagueRank": "1", "pointsFromPlayoffSpot": "+11" },
-            "TOR": { "divisionRank": "2", "leagueRank": "6", "pointsFromPlayoffSpot": "+9" }
+            "WPG": {
+              "divisionRank": "1",
+              "conferenceRank": "1",
+              "leagueRank": "1",
+              "pointsFromPlayoffSpot": "+11"
+            },
+            "TOR": {
+              "divisionRank": "2",
+              "conferenceRank": "4",
+              "leagueRank": "6",
+              "pointsFromPlayoffSpot": "+9"
+            }
           }
         },
         "teams": {
@@ -281,8 +321,18 @@
             "BOS": { "type": "WINS", "count": 2 }
           },
           "standings": {
-            "WSH": { "divisionRank": "2", "leagueRank": "4", "pointsFromPlayoffSpot": "+11" },
-            "BOS": { "divisionRank": "3", "leagueRank": "12", "pointsFromPlayoffSpot": "+5" }
+            "WSH": {
+              "divisionRank": "2",
+              "conferenceRank": "3",
+              "leagueRank": "4",
+              "pointsFromPlayoffSpot": "+11"
+            },
+            "BOS": {
+              "divisionRank": "3",
+              "conferenceRank": "7",
+              "leagueRank": "12",
+              "pointsFromPlayoffSpot": "+5"
+            }
           }
         },
         "goals": [
@@ -353,8 +403,18 @@
             "BOS": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "WSH": { "divisionRank": "1", "leagueRank": "2", "pointsFromPlayoffSpot": "+13" },
-            "BOS": { "divisionRank": "3", "leagueRank": "12", "pointsFromPlayoffSpot": "+5" }
+            "WSH": {
+              "divisionRank": "1",
+              "conferenceRank": "1",
+              "leagueRank": "2",
+              "pointsFromPlayoffSpot": "+13"
+            },
+            "BOS": {
+              "divisionRank": "3",
+              "conferenceRank": "7",
+              "leagueRank": "12",
+              "pointsFromPlayoffSpot": "+5"
+            }
           }
         },
         "teams": {
@@ -404,8 +464,18 @@
             "DET": { "type": "LOSSES", "count": 3 }
           },
           "standings": {
-            "STL": { "divisionRank": "6", "leagueRank": "20", "pointsFromPlayoffSpot": "-4" },
-            "DET": { "divisionRank": "7", "leagueRank": "28", "pointsFromPlayoffSpot": "-8" }
+            "STL": {
+              "divisionRank": "6",
+              "conferenceRank": "13",
+              "leagueRank": "20",
+              "pointsFromPlayoffSpot": "-4"
+            },
+            "DET": {
+              "divisionRank": "7",
+              "conferenceRank": "17",
+              "leagueRank": "28",
+              "pointsFromPlayoffSpot": "-8"
+            }
           }
         },
         "goals": [
@@ -466,8 +536,18 @@
             "DET": { "type": "LOSSES", "count": 2 }
           },
           "standings": {
-            "STL": { "divisionRank": "6", "leagueRank": "21", "pointsFromPlayoffSpot": "-5" },
-            "DET": { "divisionRank": "7", "leagueRank": "28", "pointsFromPlayoffSpot": "-8" }
+            "STL": {
+              "divisionRank": "6",
+              "conferenceRank": "13",
+              "leagueRank": "21",
+              "pointsFromPlayoffSpot": "-5"
+            },
+            "DET": {
+              "divisionRank": "7",
+              "conferenceRank": "17",
+              "leagueRank": "28",
+              "pointsFromPlayoffSpot": "-8"
+            }
           }
         },
         "teams": {
@@ -517,8 +597,18 @@
             "FLA": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "TBL": { "divisionRank": "4", "leagueRank": "14", "pointsFromPlayoffSpot": "+3" },
-            "FLA": { "divisionRank": "1", "leagueRank": "6", "pointsFromPlayoffSpot": "+9" }
+            "TBL": {
+              "divisionRank": "4",
+              "conferenceRank": "9",
+              "leagueRank": "14",
+              "pointsFromPlayoffSpot": "+3"
+            },
+            "FLA": {
+              "divisionRank": "1",
+              "conferenceRank": "3",
+              "leagueRank": "6",
+              "pointsFromPlayoffSpot": "+9"
+            }
           }
         },
         "goals": [
@@ -578,8 +668,18 @@
             "FLA": { "type": "WINS", "count": 4 }
           },
           "standings": {
-            "TBL": { "divisionRank": "4", "leagueRank": "15", "pointsFromPlayoffSpot": "+3" },
-            "FLA": { "divisionRank": "1", "leagueRank": "5", "pointsFromPlayoffSpot": "+11" }
+            "TBL": {
+              "divisionRank": "4",
+              "conferenceRank": "9",
+              "leagueRank": "15",
+              "pointsFromPlayoffSpot": "+3"
+            },
+            "FLA": {
+              "divisionRank": "1",
+              "conferenceRank": "3",
+              "leagueRank": "5",
+              "pointsFromPlayoffSpot": "+11"
+            }
           }
         },
         "teams": {
@@ -629,8 +729,18 @@
             "PIT": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "PHI": { "divisionRank": "6", "leagueRank": "22", "pointsFromPlayoffSpot": "-4" },
-            "PIT": { "divisionRank": "4", "leagueRank": "19", "pointsFromPlayoffSpot": "-1" }
+            "PHI": {
+              "divisionRank": "6",
+              "conferenceRank": "14",
+              "leagueRank": "22",
+              "pointsFromPlayoffSpot": "-4"
+            },
+            "PIT": {
+              "divisionRank": "4",
+              "conferenceRank": "11",
+              "leagueRank": "19",
+              "pointsFromPlayoffSpot": "-1"
+            }
           }
         },
         "goals": [
@@ -757,8 +867,18 @@
             "PIT": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "PHI": { "divisionRank": "5", "leagueRank": "20", "pointsFromPlayoffSpot": "-4" },
-            "PIT": { "divisionRank": "4", "leagueRank": "19", "pointsFromPlayoffSpot": "-3" }
+            "PHI": {
+              "divisionRank": "5",
+              "conferenceRank": "12",
+              "leagueRank": "20",
+              "pointsFromPlayoffSpot": "-4"
+            },
+            "PIT": {
+              "divisionRank": "4",
+              "conferenceRank": "11",
+              "leagueRank": "19",
+              "pointsFromPlayoffSpot": "-3"
+            }
           }
         },
         "teams": {
@@ -808,8 +928,18 @@
             "CBJ": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "MTL": { "divisionRank": "6", "leagueRank": "26", "pointsFromPlayoffSpot": "-7" },
-            "CBJ": { "divisionRank": "5", "leagueRank": "21", "pointsFromPlayoffSpot": "-4" }
+            "MTL": {
+              "divisionRank": "6",
+              "conferenceRank": "16",
+              "leagueRank": "26",
+              "pointsFromPlayoffSpot": "-7"
+            },
+            "CBJ": {
+              "divisionRank": "5",
+              "conferenceRank": "13",
+              "leagueRank": "21",
+              "pointsFromPlayoffSpot": "-4"
+            }
           }
         },
         "goals": [
@@ -919,8 +1049,18 @@
           },
           "streaks": { "MTL": { "type": "WINS", "count": 3 }, "CBJ": { "type": "OT", "count": 1 } },
           "standings": {
-            "MTL": { "divisionRank": "6", "leagueRank": "26", "pointsFromPlayoffSpot": "-7" },
-            "CBJ": { "divisionRank": "8", "leagueRank": "24", "pointsFromPlayoffSpot": "-6" }
+            "MTL": {
+              "divisionRank": "6",
+              "conferenceRank": "16",
+              "leagueRank": "26",
+              "pointsFromPlayoffSpot": "-7"
+            },
+            "CBJ": {
+              "divisionRank": "8",
+              "conferenceRank": "16",
+              "leagueRank": "24",
+              "pointsFromPlayoffSpot": "-6"
+            }
           }
         },
         "teams": {
@@ -970,8 +1110,18 @@
             "NYI": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "BUF": { "divisionRank": "8", "leagueRank": "30", "pointsFromPlayoffSpot": "-10" },
-            "NYI": { "divisionRank": "8", "leagueRank": "24", "pointsFromPlayoffSpot": "-5" }
+            "BUF": {
+              "divisionRank": "8",
+              "conferenceRank": "19",
+              "leagueRank": "30",
+              "pointsFromPlayoffSpot": "-10"
+            },
+            "NYI": {
+              "divisionRank": "8",
+              "conferenceRank": "16",
+              "leagueRank": "24",
+              "pointsFromPlayoffSpot": "-5"
+            }
           }
         },
         "goals": [
@@ -1071,8 +1221,18 @@
             "NYI": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "BUF": { "divisionRank": "8", "leagueRank": "32", "pointsFromPlayoffSpot": "-12" },
-            "NYI": { "divisionRank": "7", "leagueRank": "23", "pointsFromPlayoffSpot": "-5" }
+            "BUF": {
+              "divisionRank": "8",
+              "conferenceRank": "20",
+              "leagueRank": "32",
+              "pointsFromPlayoffSpot": "-12"
+            },
+            "NYI": {
+              "divisionRank": "7",
+              "conferenceRank": "15",
+              "leagueRank": "23",
+              "pointsFromPlayoffSpot": "-5"
+            }
           }
         },
         "teams": {
@@ -1122,8 +1282,18 @@
             "NSH": { "type": "WINS", "count": 2 }
           },
           "standings": {
-            "CAR": { "divisionRank": "3", "leagueRank": "9", "pointsFromPlayoffSpot": "+6" },
-            "NSH": { "divisionRank": "7", "leagueRank": "29", "pointsFromPlayoffSpot": "-11" }
+            "CAR": {
+              "divisionRank": "3",
+              "conferenceRank": "6",
+              "leagueRank": "9",
+              "pointsFromPlayoffSpot": "+6"
+            },
+            "NSH": {
+              "divisionRank": "7",
+              "conferenceRank": "18",
+              "leagueRank": "29",
+              "pointsFromPlayoffSpot": "-11"
+            }
           }
         },
         "goals": [
@@ -1209,8 +1379,18 @@
             "NSH": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "CAR": { "divisionRank": "3", "leagueRank": "9", "pointsFromPlayoffSpot": "+8" },
-            "NSH": { "divisionRank": "7", "leagueRank": "30", "pointsFromPlayoffSpot": "-12" }
+            "CAR": {
+              "divisionRank": "3",
+              "conferenceRank": "6",
+              "leagueRank": "9",
+              "pointsFromPlayoffSpot": "+8"
+            },
+            "NSH": {
+              "divisionRank": "7",
+              "conferenceRank": "18",
+              "leagueRank": "30",
+              "pointsFromPlayoffSpot": "-12"
+            }
           }
         },
         "teams": {
@@ -1260,8 +1440,18 @@
             "MIN": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "CHI": { "divisionRank": "8", "leagueRank": "32", "pointsFromPlayoffSpot": "-14" },
-            "MIN": { "divisionRank": "2", "leagueRank": "5", "pointsFromPlayoffSpot": "+7" }
+            "CHI": {
+              "divisionRank": "8",
+              "conferenceRank": "20",
+              "leagueRank": "32",
+              "pointsFromPlayoffSpot": "-14"
+            },
+            "MIN": {
+              "divisionRank": "2",
+              "conferenceRank": "3",
+              "leagueRank": "5",
+              "pointsFromPlayoffSpot": "+7"
+            }
           }
         },
         "goals": [
@@ -1349,8 +1539,18 @@
             "MIN": { "type": "LOSSES", "count": 4 }
           },
           "standings": {
-            "CHI": { "divisionRank": "8", "leagueRank": "31", "pointsFromPlayoffSpot": "-13" },
-            "MIN": { "divisionRank": "2", "leagueRank": "7", "pointsFromPlayoffSpot": "+6" }
+            "CHI": {
+              "divisionRank": "8",
+              "conferenceRank": "19",
+              "leagueRank": "31",
+              "pointsFromPlayoffSpot": "-13"
+            },
+            "MIN": {
+              "divisionRank": "2",
+              "conferenceRank": "4",
+              "leagueRank": "7",
+              "pointsFromPlayoffSpot": "+6"
+            }
           }
         },
         "teams": {
@@ -1400,8 +1600,18 @@
             "VAN": { "type": "WINS", "count": 1 }
           },
           "standings": {
-            "SJS": { "divisionRank": "8", "leagueRank": "31", "pointsFromPlayoffSpot": "-12" },
-            "VAN": { "divisionRank": "4", "leagueRank": "13", "pointsFromPlayoffSpot": "+2" }
+            "SJS": {
+              "divisionRank": "8",
+              "conferenceRank": "19",
+              "leagueRank": "31",
+              "pointsFromPlayoffSpot": "-12"
+            },
+            "VAN": {
+              "divisionRank": "4",
+              "conferenceRank": "8",
+              "leagueRank": "13",
+              "pointsFromPlayoffSpot": "+2"
+            }
           }
         },
         "goals": [
@@ -1490,8 +1700,18 @@
           },
           "streaks": { "SJS": { "type": "OT", "count": 1 }, "VAN": { "type": "OT", "count": 1 } },
           "standings": {
-            "SJS": { "divisionRank": "8", "leagueRank": "29", "pointsFromPlayoffSpot": "-11" },
-            "VAN": { "divisionRank": "4", "leagueRank": "13", "pointsFromPlayoffSpot": "+1" }
+            "SJS": {
+              "divisionRank": "8",
+              "conferenceRank": "18",
+              "leagueRank": "29",
+              "pointsFromPlayoffSpot": "-11"
+            },
+            "VAN": {
+              "divisionRank": "4",
+              "conferenceRank": "8",
+              "leagueRank": "13",
+              "pointsFromPlayoffSpot": "+1"
+            }
           }
         },
         "teams": {
@@ -1541,8 +1761,18 @@
             "UTA": { "type": "LOSSES", "count": 1 }
           },
           "standings": {
-            "DAL": { "divisionRank": "4", "leagueRank": "15", "pointsFromPlayoffSpot": "+1" },
-            "UTA": { "divisionRank": "5", "leagueRank": "18", "pointsFromPlayoffSpot": "-2" }
+            "DAL": {
+              "divisionRank": "4",
+              "conferenceRank": "9",
+              "leagueRank": "15",
+              "pointsFromPlayoffSpot": "+1"
+            },
+            "UTA": {
+              "divisionRank": "5",
+              "conferenceRank": "11",
+              "leagueRank": "18",
+              "pointsFromPlayoffSpot": "-2"
+            }
           }
         },
         "goals": [
@@ -1610,8 +1840,18 @@
             "UTA": { "type": "OT", "count": 1 }
           },
           "standings": {
-            "DAL": { "divisionRank": "4", "leagueRank": "16", "pointsFromPlayoffSpot": "-1" },
-            "UTA": { "divisionRank": "5", "leagueRank": "17", "pointsFromPlayoffSpot": "-1" }
+            "DAL": {
+              "divisionRank": "4",
+              "conferenceRank": "10",
+              "leagueRank": "16",
+              "pointsFromPlayoffSpot": "-1"
+            },
+            "UTA": {
+              "divisionRank": "5",
+              "conferenceRank": "11",
+              "leagueRank": "17",
+              "pointsFromPlayoffSpot": "-1"
+            }
           }
         },
         "teams": {
@@ -1661,8 +1901,18 @@
             "VGK": { "type": "WINS", "count": 4 }
           },
           "standings": {
-            "ANA": { "divisionRank": "7", "leagueRank": "27", "pointsFromPlayoffSpot": "-10" },
-            "VGK": { "divisionRank": "1", "leagueRank": "2", "pointsFromPlayoffSpot": "+10" }
+            "ANA": {
+              "divisionRank": "7",
+              "conferenceRank": "17",
+              "leagueRank": "27",
+              "pointsFromPlayoffSpot": "-10"
+            },
+            "VGK": {
+              "divisionRank": "1",
+              "conferenceRank": "1",
+              "leagueRank": "2",
+              "pointsFromPlayoffSpot": "+10"
+            }
           }
         },
         "goals": [
@@ -1720,8 +1970,18 @@
             "VGK": { "type": "WINS", "count": 3 }
           },
           "standings": {
-            "ANA": { "divisionRank": "7", "leagueRank": "27", "pointsFromPlayoffSpot": "-9" },
-            "VGK": { "divisionRank": "1", "leagueRank": "3", "pointsFromPlayoffSpot": "+9" }
+            "ANA": {
+              "divisionRank": "7",
+              "conferenceRank": "17",
+              "leagueRank": "27",
+              "pointsFromPlayoffSpot": "-9"
+            },
+            "VGK": {
+              "divisionRank": "1",
+              "conferenceRank": "1",
+              "leagueRank": "3",
+              "pointsFromPlayoffSpot": "+9"
+            }
           }
         },
         "teams": {

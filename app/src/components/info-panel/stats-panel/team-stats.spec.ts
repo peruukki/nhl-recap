@@ -15,11 +15,12 @@ const inProgressGameProgress = {
 
 const statIndexes = {
   divisionRank: 1,
-  leagueRank: 2,
-  pointPct: 3,
-  record: 4,
-  playoffSpotPts: 5,
-  streak: 6,
+  conferenceRank: 2,
+  leagueRank: 3,
+  pointPct: 4,
+  record: 5,
+  playoffSpotPts: 6,
+  streak: 7,
 };
 
 describe('team stats', () => {
@@ -91,6 +92,33 @@ describe('team stats', () => {
         {
           away: { value: '2', className: '--highlight' },
           home: { value: '8' },
+          label,
+        },
+      );
+    });
+
+    it("should show teams' conference ranks, highlighting the better one", () => {
+      const gameDisplay = 'pre-game';
+      const label = 'Conf. rank';
+
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[0],
+        statIndexes.conferenceRank,
+        {
+          away: { value: '8' },
+          home: { value: '5', className: '--highlight' },
+          label,
+        },
+      );
+
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[1],
+        statIndexes.conferenceRank,
+        {
+          away: { value: '3', className: '--highlight' },
+          home: { value: '14' },
           label,
         },
       );
@@ -247,6 +275,23 @@ describe('team stats', () => {
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.divisionRank, {
         away: { value: '2', className: '--highlight' },
         home: { value: '8' },
+        label,
+      });
+    });
+
+    it("should show teams' conference ranks, highlighting the better one", () => {
+      const gameDisplay = 'post-game-finished';
+      const label = 'Conf. rank';
+
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.conferenceRank, {
+        away: { value: '9' },
+        home: { value: '5', className: '--highlight' },
+        label,
+      });
+
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.conferenceRank, {
+        away: { value: '3', className: '--highlight' },
+        home: { value: '14' },
         label,
       });
     });
