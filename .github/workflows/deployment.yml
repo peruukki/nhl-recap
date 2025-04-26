@@ -38,10 +38,11 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       - name: Version bump
         if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
-        run: |
-          npm version ${{ inputs.version-bump }}
-          git push --follow-tags
+        run: npm version ${{ inputs.version-bump }}
       - run: npm run build
+      - name: Push version bump
+        if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
+        run: git push --follow-tags
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public/
