@@ -27,7 +27,13 @@ export default function TeamStats(
       renderWinPercentage,
       renderWinPercentage,
     ),
-    renderStat(teams, stats?.records, 'Record', renderWinPercentage, renderRecord),
+    renderStat(
+      teams,
+      stats?.records,
+      isPlayoffGame ? 'Season pts' : 'Record',
+      isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
+      isPlayoffGame ? getRegularSeasonPoints : renderRecord,
+    ),
     renderStat(
       teams,
       isPlayoffGame ? undefined : stats?.standings,
@@ -78,6 +84,10 @@ function getConferenceRankRating({ conferenceRank }: { conferenceRank: string })
 
 function getLeagueRankRating({ leagueRank }: { leagueRank: string }): number {
   return -parseInt(leagueRank, 10);
+}
+
+function getRegularSeasonPoints(record: TeamRecord): number {
+  return 2 * record.wins + (record.ot ?? 0);
 }
 
 function renderWinPercentage(record: TeamRecord): string {

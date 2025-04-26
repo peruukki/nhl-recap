@@ -18,7 +18,7 @@ const statIndexes = {
   conferenceRank: 2,
   leagueRank: 3,
   pointPct: 4,
-  record: 5,
+  recordOrSeasonPts: 5,
   playoffSpotPts: 6,
   streak: 7,
 };
@@ -171,17 +171,17 @@ describe('team stats', () => {
       });
     });
 
-    it("should show teams' regular season records, highlighting the better one", () => {
+    it("should show teams' records in regular season games, highlighting the better one", () => {
       const gameDisplay = 'pre-game';
       const label = 'Record';
 
-      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.recordOrSeasonPts, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
         label,
       });
 
-      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.recordOrSeasonPts, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: {
           value: [7, renderedDelimiter, 2, renderedDelimiter, 4],
@@ -191,21 +191,31 @@ describe('team stats', () => {
       });
     });
 
-    it("should show teams' playoff records, highlighting the better one", () => {
+    it("should show teams' regular season points in playoff games, highlighting the better one", () => {
       const gameDisplay = 'pre-game';
-      const label = 'Record';
+      const label = 'Season pts';
 
-      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
-        away: { value: [7, renderedDelimiter, 3] },
-        home: { value: [7, renderedDelimiter, 3] },
-        label,
-      });
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[0],
+        statIndexes.recordOrSeasonPts,
+        {
+          away: { value: '99', className: '--highlight' },
+          home: { value: '91' },
+          label,
+        },
+      );
 
-      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
-        away: { value: [7, renderedDelimiter, 5], className: '--highlight' },
-        home: { value: [5, renderedDelimiter, 9] },
-        label,
-      });
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[1],
+        statIndexes.recordOrSeasonPts,
+        {
+          away: { value: '105' },
+          home: { value: '105' },
+          label,
+        },
+      );
     });
   });
 
@@ -343,11 +353,11 @@ describe('team stats', () => {
       });
     });
 
-    it("should show teams' regular season records, highlighting the better one", () => {
+    it("should show teams' records in regular season games, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
       const label = 'Record';
 
-      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.record, {
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.recordOrSeasonPts, {
         away: {
           value: [9, renderedDelimiter, 4, renderedDelimiter, 1],
           className: '--highlight',
@@ -356,7 +366,7 @@ describe('team stats', () => {
         label,
       });
 
-      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.record, {
+      assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.recordOrSeasonPts, {
         away: { value: [8, renderedDelimiter, 5, renderedDelimiter, 1] },
         home: {
           value: [8, renderedDelimiter, 2, renderedDelimiter, 4],
@@ -366,21 +376,31 @@ describe('team stats', () => {
       });
     });
 
-    it("should show teams' playoff records, highlighting the better one", () => {
+    it("should show teams' regular season points in playoff games, highlighting the better one", () => {
       const gameDisplay = 'post-game-finished';
-      const label = 'Record';
+      const label = 'Season pts';
 
-      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[0], statIndexes.record, {
-        away: { value: [8, renderedDelimiter, 3], className: '--highlight' },
-        home: { value: [7, renderedDelimiter, 4] },
-        label,
-      });
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[0],
+        statIndexes.recordOrSeasonPts,
+        {
+          away: { value: '99', className: '--highlight' },
+          home: { value: '91' },
+          label,
+        },
+      );
 
-      assertTeamStats(gameDisplay, scoresAllRegularTimePlayoffs.games[1], statIndexes.record, {
-        away: { value: [7, renderedDelimiter, 6], className: '--highlight' },
-        home: { value: [6, renderedDelimiter, 9] },
-        label,
-      });
+      assertTeamStats(
+        gameDisplay,
+        scoresAllRegularTimePlayoffs.games[1],
+        statIndexes.recordOrSeasonPts,
+        {
+          away: { value: '105' },
+          home: { value: '105' },
+          label,
+        },
+      );
     });
 
     it("should show teams' streaks, highlighting the better one", () => {
