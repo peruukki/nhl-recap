@@ -30,10 +30,11 @@ type Sinks = {
 };
 
 type Actions = {
-  successApiResponse$: Stream<Scores>;
+  date?: string;
   isPlaying$: Stream<boolean>;
   playbackHasStarted$: Stream<boolean>;
   status$: Stream<FetchStatus>;
+  successApiResponse$: Stream<Scores>;
 };
 
 type State = {
@@ -67,17 +68,21 @@ export default function app(
   options: Options,
 ): (sources: Sources) => Sinks {
   return ({ DOM, HTTP }) => {
-    const url = getApiUrl();
+    const date = import.meta.env.VITE_SCORE_DATE;
+    if (date && isNaN(new Date(date).getTime())) {
+      throw new Error(`Invalid date string "${date}"`);
+    }
+    const url = date ? getApiUrl(date) : getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, $window, options), animations)),
+      DOM: view(model(intent(DOM, HTTP, $window, options), animations, date)),
       HTTP: xs.of({ url }),
     };
   };
 }
 
-function getApiUrl(): string {
+function getApiUrl(date?: string): string {
   const host = import.meta.env.VITE_SCORE_API_HOST ?? 'https://nhl-score-api.herokuapp.com';
-  return `${host}/api/scores/latest`;
+  return `${host}/api/scores${date ? `?startDate=${date}` : '/latest'}`;
 }
 
 function intent(
@@ -97,10 +102,11 @@ function intent(
         return { error: { expected: false } };
       }
       try {
-        const responseJson = JSON.parse(response.text) as Scores;
-        return responseJson.games.length > 0
-          ? { success: responseJson }
-          : { error: { message: 'No latest scores available.', expected: true } };
+        const responseJson = JSON.parse(response.text) as Scores | Scores[];
+        const scores = Array.isArray(responseJson) ? responseJson[0] : responseJson;
+        return scores.games.length > 0
+          ? { success: scores }
+          : { error: { message: 'No scores available.', expected: true } };
       } catch (error) {
         console.error(error);
         return { error: { expected: false } };
@@ -117,7 +123,7 @@ function intent(
   const playbackHasStarted$ = playClicks$.take(1);
 
   const getUnexpectedErrorMessage = () => {
-    const baseMessage = 'Failed to fetch latest scores';
+    const baseMessage = 'Failed to fetch scores';
     const details = !$window.navigator.onLine ? ': the network is offline' : '';
     return `${baseMessage}${details}.`;
   };
@@ -135,7 +141,7 @@ function intent(
   };
 }
 
-function model(actions: Actions, animations: Animations): Stream<State> {
+function model(actions: Actions, animations: Animations, date?: string): Stream<State> {
   const initialState = { games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 
@@ -193,12 +199,21 @@ function model(actions: Actions, animations: Animations): Stream<State> {
     next: animations.highlightPlayPauseButtonChange,
   });
 
+  const initialStatusMessage = date
+    ? `Fetching scores for ${new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+      })} ${new Date(date).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+      })}`
+    : 'Fetching latest scores';
+
   return xs
     .combine(
       scores$,
       currentGoals$.startWith([]),
       actions.isPlaying$.startWith(false),
-      actions.status$.startWith({ isDone: false, message: 'Fetching latest scores' }),
+      actions.status$.startWith({ isDone: false, message: initialStatusMessage }),
       clock.DOM.startWith(span('.clock')),
       clock.events$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),

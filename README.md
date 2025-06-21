@@ -29,6 +29,15 @@ To create a production build and preview it locally:
 npm run start:production
 ```
 
+## Running the app with a custom score date
+
+Instead of fetching the latest scores, you can specify a custom date with the `VITE_SCORE_DATE` environment variable when
+starting the server:
+
+```
+VITE_SCORE_DATE=2025-06-17 npm start
+```
+
 ## Running the app with local API server
 
 To run the app connecting to a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:

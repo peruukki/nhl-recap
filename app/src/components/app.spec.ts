@@ -96,7 +96,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree(['No latest scores available.'], '.fade-in-fast.nope-animation'),
+        expectedStatusVtree(['No scores available.'], '.fade-in-fast.nope-animation'),
       );
     });
   });
@@ -111,7 +111,7 @@ describe('app', () => {
     await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(
-          ['Failed to fetch latest scores: the network is offline.'],
+          ['Failed to fetch scores: the network is offline.'],
           '.fade-in-fast.nope-animation',
         ),
       );
@@ -127,7 +127,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
+        expectedStatusVtree(['Failed to fetch scores.'], '.fade-in-fast.nope-animation'),
       );
     });
   });
@@ -141,7 +141,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree(['Failed to fetch latest scores.'], '.fade-in-fast.nope-animation'),
+        expectedStatusVtree(['Failed to fetch scores.'], '.fade-in-fast.nope-animation'),
       );
     });
   });
