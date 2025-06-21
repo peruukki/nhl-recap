@@ -15,7 +15,7 @@ https://github.com/peruukki/nhl-recap/assets/1781172/ee217216-da23-42b3-8798-6f4
 
 To run the app and re-build on file changes:
 
-```
+```shell
 npm start
 ```
 
@@ -25,7 +25,7 @@ The app is available at http://localhost:8008/nhl-recap/, and the command should
 
 To create a production build and preview it locally:
 
-```
+```shell
 npm run start:production
 ```
 
@@ -34,7 +34,7 @@ npm run start:production
 Instead of fetching the latest scores, you can specify a custom date with the `VITE_SCORE_DATE` environment variable when
 starting the server:
 
-```
+```shell
 VITE_SCORE_DATE=2025-06-17 npm start
 ```
 
@@ -42,14 +42,14 @@ VITE_SCORE_DATE=2025-06-17 npm start
 
 To run the app connecting to a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:
 
-```
+```shell
 npm run start:local
 ```
 
 Instead of a real `nhl-score-api` server, you can also start a mock [json-server](https://github.com/typicode/json-server)
 API server that returns a static response from the [`server/db.json`](server/db.json) file:
 
-```
+```shell
 npm run start:server
 ```
 
@@ -68,7 +68,7 @@ that the trailing slash is required.)
 JavaScript is formatted using [Prettier](https://prettier.io/). Prettier is the most convenient to run via your IDE,
 but it is also run as part of the linting tasks:
 
-```
+```shell
 npm run format
 ```
 
@@ -76,13 +76,13 @@ npm run format
 
 One-time lint run:
 
-```
+```shell
 npm run lint:js
 ```
 
 Lint on file changes:
 
-```
+```shell
 npm run watch:lint:js
 ```
 
@@ -95,13 +95,13 @@ The lint scripts have a `css` suffix (instead of `sass` that you might expect) f
 
 One-time lint run:
 
-```
+```shell
 npm run lint:css
 ```
 
 Lint on file changes:
 
-```
+```shell
 npm run watch:lint:css
 ```
 
@@ -109,19 +109,19 @@ npm run watch:lint:css
 
 Lint SASS, lint JavaScript, check code formatting and run unit tests:
 
-```
+```shell
 npm test
 ```
 
 Run only unit tests, including coverage:
 
-```
+```shell
 npm run spec
 ```
 
 Run only unit tests in watch mode:
 
-```
+```shell
 npm run spec:watch
 ```
 
@@ -129,7 +129,7 @@ npm run spec:watch
 
 Build the app to the `public` directory:
 
-```
+```shell
 npm run build
 ```
 
@@ -144,7 +144,7 @@ create a commit, and push the commit to the `gh-pages` branch in `origin`.
 
 Usual deployment process:
 
-```sh
+```shell
 # Bump version
 npm version <major|minor|patch>
 # Deploy to GitHub Pages
