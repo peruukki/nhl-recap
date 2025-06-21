@@ -102,7 +102,6 @@ function intent(
           ? { success: responseJson }
           : { error: { message: 'No latest scores available.', expected: true } };
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error(error);
         return { error: { expected: false } };
       }
