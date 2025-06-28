@@ -1,12 +1,12 @@
 {
   "name": "nhl-recap",
-  "version": "1.64.17",
+  "version": "1.64.18",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "nhl-recap",
-      "version": "1.64.17",
+      "version": "1.64.18",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
