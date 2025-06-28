@@ -23,10 +23,17 @@ describe('app', () => {
     });
   });
 
-  it('should fetch latest scores', async () => {
+  it('should fetch latest scores by default', async () => {
     const sinks = run(xs.empty());
     await assertStreamValues(sinks.HTTP, (request) => {
       expect(request.url).toEqual(nhlScoreApiUrl);
+    });
+  });
+
+  it('should fetch scores for specific date when date parameter is set', async () => {
+    const sinks = run(xs.empty(), { search: '?date=2024-01-15' });
+    await assertStreamValues(sinks.HTTP, (request) => {
+      expect(request.url).toEqual(`${nhlScoreApiHost}/api/scores?startDate=2024-01-15`);
     });
   });
 
@@ -132,6 +139,15 @@ describe('app', () => {
     });
   });
 
+  it('should show a message if an invalid date parameter is set', async () => {
+    const sinks = run(xs.empty(), { search: '?date=oh-no' });
+    await assertStreamValues(sinks.DOM.take(1), (vtree) => {
+      expect(getStatusNode(vtree)).toEqual(
+        expectedStatusVtree(['Invalid date parameter "oh-no".'], '.fade-in-fast.nope-animation'),
+      );
+    });
+  });
+
   it('should show a message if fetching latest scores fails due to unknown error', async () => {
     nock(nhlScoreApiHost)
       .get(nhlScoreApiPath)
@@ -147,9 +163,15 @@ describe('app', () => {
   });
 });
 
-function run(httpRequest$: Stream<string>, options = { isOnline: true }) {
+function run(
+  httpRequest$: Stream<string>,
+  options: { isOnline?: boolean; search?: string } = { isOnline: true, search: '' },
+) {
   const driver = makeHTTPDriver();
-  const $window = { navigator: { onLine: options.isOnline } } as Window;
+  const $window = {
+    location: { search: options.search ?? '' },
+    navigator: { onLine: options.isOnline ?? true },
+  } as Window;
   return app(animations, $window, { fetchStatusDelayMs: 0 })({
     DOM: mockDOMSource({}) as unknown as MainDOMSource,
     HTTP: driver(httpRequest$ as Stream<RequestInput | string>),

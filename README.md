@@ -3,8 +3,11 @@
 A web app playing back the goal information from the latest NHL games. I made this to have a more exciting way of checking
 the scores while I brush my teeth in the morning, as the games are usually played at night time in Finland.
 
-The app is running at [GitHub Pages](https://peruukki.github.io/nhl-recap/). Add it to your home screen on an Android
+The app is running at https://peruukki.github.io/nhl-recap/. Add it to your home screen on an Android
 or iOS device for a more app-like, chromeless experience.
+
+By default, the app shows the latest scores, but you can also specify a custom date with the `date` URL search parameter,
+for example https://peruukki.github.io/nhl-recap/?date=2025-06-17. The date needs to be in `YYYY-MM-DD` format.
 
 Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
 as its backed.
@@ -27,15 +30,6 @@ To create a production build and preview it locally:
 
 ```shell
 npm run start:production
-```
-
-## Running the app with a custom score date
-
-Instead of fetching the latest scores, you can specify a custom date with the `VITE_SCORE_DATE` environment variable when
-starting the server:
-
-```shell
-VITE_SCORE_DATE=2025-06-17 npm start
 ```
 
 ## Running the app with local API server

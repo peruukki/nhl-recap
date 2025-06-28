@@ -62,20 +62,29 @@ function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuc
 
 type Options = { fetchStatusDelayMs: number };
 
+function parseSearchParams($window: Window) {
+  const searchParams = new URLSearchParams($window.location.search);
+  const dateParam = searchParams.get('date') ?? undefined;
+  const isDateParamValid =
+    !dateParam || (/^\d{4}-\d{2}-\d{2}$/.test(dateParam) && !isNaN(new Date(dateParam).getTime()));
+  return {
+    date: dateParam,
+    error: !isDateParamValid ? new Error(`Invalid date parameter "${dateParam}".`) : undefined,
+  };
+}
+
 export default function app(
   animations: Animations,
   $window: Window,
   options: Options,
 ): (sources: Sources) => Sinks {
   return ({ DOM, HTTP }) => {
-    const date = import.meta.env.VITE_SCORE_DATE;
-    if (date && isNaN(new Date(date).getTime())) {
-      throw new Error(`Invalid date string "${date}"`);
-    }
+    const { date, error } = parseSearchParams($window);
+    const error$ = error ? xs.of(error) : xs.empty();
     const url = date ? getApiUrl(date) : getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, $window, options), animations, date)),
-      HTTP: xs.of({ url }),
+      DOM: view(model(intent(DOM, HTTP, error$, $window, options), animations, date)),
+      HTTP: error ? xs.empty() : xs.of({ url }),
     };
   };
 }
@@ -88,6 +97,7 @@ function getApiUrl(date?: string): string {
 function intent(
   DOM: Sources['DOM'],
   HTTP: Sources['HTTP'],
+  error$: Stream<Error>,
   $window: Window,
   options: Options,
 ): Actions {
@@ -113,9 +123,16 @@ function intent(
       }
     })
     .compose(delayAtLeast(options.fetchStatusDelayMs));
+
   const successApiResponse$ = apiResponseWithErrors$
     .filter((response): response is ApiResponseSuccess => isSuccessApiResponse(response))
     .map((response) => response.success);
+
+  const nonApiError$ = error$.map((error) => ({
+    error: { message: error.message, expected: true },
+  }));
+
+  const apiResponseOrError$ = xs.merge(apiResponseWithErrors$, nonApiError$);
 
   const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
@@ -132,7 +149,7 @@ function intent(
     successApiResponse$,
     isPlaying$,
     playbackHasStarted$,
-    status$: apiResponseWithErrors$
+    status$: apiResponseOrError$
       .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
       .map<FetchStatus>(({ error }) => ({
         isDone: true,
