@@ -24,7 +24,7 @@ npm start
 
 The app is available at http://localhost:8008/nhl-recap/, and the command should open a browser automatically.
 
-## Running a production build
+### Running a production build
 
 To create a production build and preview it locally:
 
@@ -32,7 +32,7 @@ To create a production build and preview it locally:
 npm run start:production
 ```
 
-## Running the app with local API server
+### Running the app against local API server
 
 To run the app connecting to a local [nhl-score-api](https://github.com/peruukki/nhl-score-api) server on port 8080:
 
@@ -66,7 +66,9 @@ but it is also run as part of the linting tasks:
 npm run format
 ```
 
-## Linting JavaScript
+## Linting
+
+### Linting JavaScript
 
 One-time lint run:
 
@@ -80,7 +82,7 @@ Lint on file changes:
 npm run watch:lint:js
 ```
 
-## Linting SASS
+### Linting SASS
 
 I'm trying out the [BEM (Block-Element-Modifier)](http://getbem.com/introduction/) [naming convention](http://getbem.com/naming/)
 in this project.
