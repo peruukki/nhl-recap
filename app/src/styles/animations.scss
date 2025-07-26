@@ -17,7 +17,7 @@ $delay-large: calc($animation-speed * 0.45s);
 // The base and stagger delays are used as components in calculations, so we don't apply $animation
 // on them directly, but on the calculated values
 $expand-delay-base: 0.05s;
-$expand-delay-stagger: 0.2s;
+$expand-delay-stagger: 1s;
 
 $expand-delay-last: calc($animation-speed * 1s);
 
