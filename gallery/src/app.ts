@@ -1,10 +1,10 @@
-import { div, input, label, MainDOMSource, VNode } from '@cycle/dom';
+import { div, h, MainDOMSource, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
 import fromEvent from 'xstream/extra/fromEvent';
 
 import Game from '../../app/src/components/game';
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../app/src/test/data';
-import type { Game as GameT, GameDisplay, GameStats, GameStatus, Goal } from '../../app/src/types';
+import type { GameDisplay, GameStats, GameStatus, Game as GameT, Goal } from '../../app/src/types';
 import { getGameStateToggleChecked, setGameStateToggleChecked } from './storage';
 
 type Sources = {
@@ -48,7 +48,7 @@ type GameStateDefinition = {
   } | null)[];
 };
 
-const gameStateToggleSelector = '.game-state-toggle';
+const gameStateToggleSelector = '.gallery-game-state';
 
 export default function main(): (sources: Sources) => Sinks {
   return ({ DOM }) => ({ DOM: view(model(intent(DOM))) });
@@ -57,7 +57,7 @@ export default function main(): (sources: Sources) => Sinks {
 function intent(DOM: Sources['DOM']): Actions {
   const gameStateToggleChange$ = DOM.select(gameStateToggleSelector)
     .elements()
-    .map((elements) => xs.merge(...elements.map((element) => fromEvent(element, 'change'))))
+    .map((elements) => xs.merge(...elements.map((element) => fromEvent(element, 'toggle'))))
     .flatten();
 
   const progress = {
@@ -173,23 +173,23 @@ function model({ gameStateToggleChange$, stateDefinitions }: Actions): State {
   ];
 
   const gameStateToggleStateUpdate$ = gameStateToggleChange$.map((event) => {
-    const element = event.target as HTMLInputElement;
-    return { checked: element.checked, index: Number(element.dataset.index) };
+    const element = event.target as HTMLDetailsElement;
+    return { open: element.open, index: Number(element.dataset.index) };
   });
 
   // Persist across page reloads
   gameStateToggleStateUpdate$.addListener({
-    next: (update) => setGameStateToggleChecked(update.index, update.checked),
+    next: (update) => setGameStateToggleChecked(update.index, update.open),
   });
   const initialGameStateToggleStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
     .map((_, index) => getGameStateToggleChecked(index));
 
   const gameStateToggleStates$ = gameStateToggleStateUpdate$.fold(
-    (checkedStates, update) => [
-      ...checkedStates.slice(0, update.index),
-      update.checked,
-      ...checkedStates.slice(update.index + 1),
+    (openStates, update) => [
+      ...openStates.slice(0, update.index),
+      update.open,
+      ...openStates.slice(update.index + 1),
     ],
     initialGameStateToggleStates,
   );
@@ -229,28 +229,25 @@ function view({ gameStateToggleStates$, gameStates$ }: State): Stream<VNode> {
     .combine(gameStateToggleStates$, gameStates$)
     .map(([gameStateTogglesChecked, gameStates]) =>
       div(
-        '.score-list',
+        '.gallery',
         gameStates.flatMap(({ gameDescription, games }, index) => [
-          div(
-            '.gallery-heading',
-            label('.gallery-heading__description', [
-              input(`.gallery-heading__toggle${gameStateToggleSelector}`, {
-                attrs: {
-                  'data-index': index,
-                  type: 'checkbox',
-                  checked: gameStateTogglesChecked[index],
-                },
-              }),
-              gameDescription,
-            ]),
-          ),
-          ...games.map((game, gameIndex) =>
-            game && gameStateTogglesChecked[index]
-              ? div('.gallery-game', [
-                  div('.gallery-game__description', [game.description]),
-                  Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
-                ])
-              : div(),
+          h(
+            'details.gallery-game-state',
+            { attrs: { 'data-index': index, open: gameStateTogglesChecked[index] } },
+            [
+              h('summary.gallery-heading', gameDescription),
+              div(
+                '.gallery-games',
+                games.map((game, gameIndex) =>
+                  game
+                    ? div('.gallery-game', [
+                        div('.gallery-game__description', [game.description]),
+                        Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
+                      ])
+                    : div(),
+                ),
+              ),
+            ],
           ),
         ]),
       ),

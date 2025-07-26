@@ -2,9 +2,7 @@
 
 @mixin gallery-description {
   display: table-cell;
-  height: 3rem;
   font-size: 1.2rem;
-  vertical-align: bottom;
 
   &:has(input:not(:checked)) {
     height: unset;
@@ -22,13 +20,22 @@
   }
 }
 
-.score-list {
-  max-width: unset;
-  column-gap: 1rem;
-  grid-template-columns: auto repeat(3, 1fr);
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 1rem;
+}
+
+.gallery-game-state {
+  & + & {
+    margin-top: 1rem;
+  }
 }
 
 .gallery-heading {
+  text-align: left;
+
   &__description {
     @include gallery-description;
 
@@ -40,9 +47,14 @@
   }
 }
 
-.gallery-game {
-  width: 16.5rem;
+.gallery-games {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 2rem;
+  padding-top: 1rem;
+}
 
+.gallery-game {
   &__description {
     @include gallery-description;
 
