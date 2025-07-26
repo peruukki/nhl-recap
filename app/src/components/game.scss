@@ -7,8 +7,9 @@
   margin: sizes.$game-card-margin;
   float: left;
   transition:
-    transform animations.$focus-duration animations.$focus-timing-function,
-    background-color animations.$focus-duration animations.$focus-timing-function;
+    transform animations.$focus-timing-function,
+    background-color animations.$focus-timing-function;
+  transition-duration: animations.$focus-duration-exit, animations.$focus-duration-exit;
   border-radius: sizes.$border-radius;
   background: colors.$background-game;
   font-size: 1.4rem;
@@ -22,6 +23,7 @@
 
   &.in-focus {
     background: colors.$background-game-in-focus;
+    transition-duration: animations.$focus-duration-enter, animations.$focus-duration-enter;
   }
 
   &__secondary-panel {
