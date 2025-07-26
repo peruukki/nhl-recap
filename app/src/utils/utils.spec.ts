@@ -55,11 +55,11 @@ describe('utils', () => {
     });
 
     it('should return correct indexes for an even number of games', () => {
-      expect(getGameAnimationIndexes(8)).toEqual([0, 14, 2, 12, 4, 10, 6, 8]);
+      expect(getGameAnimationIndexes(8)).toEqual([0, 2, 4, 6, 8, 10, 12, 14]);
     });
 
     it('should return correct indexes for an odd number of games', () => {
-      expect(getGameAnimationIndexes(7)).toEqual([0, 14, 2, 11, 5, 9, 7]);
+      expect(getGameAnimationIndexes(7)).toEqual([0, 2, 5, 7, 9, 11, 14]);
     });
   });
 });

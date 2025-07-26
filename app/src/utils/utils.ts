@@ -33,10 +33,7 @@ export function truncatePlayerName(name: string, maxLength = 20): string {
 export function getGameAnimationIndexes(gameCount: number): number[] {
   const maxGameCount = 16;
   return _.times(gameCount, (index) => {
-    const isEven = index % 2 === 0;
-    // Animate first column (evens) from top to bottom, then second column (odds) from bottom to top
-    const animationOrderIndex = isEven ? index / 2 : gameCount - 1 - Math.floor(index / 2);
     // Spread animation indexes across the whole range
-    return Math.round((maxGameCount / gameCount) * animationOrderIndex);
+    return Math.round((maxGameCount / gameCount) * index);
   });
 }
