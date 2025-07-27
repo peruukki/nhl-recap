@@ -222,10 +222,9 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
       case 'expandAll':
       case 'collapseAll':
         return openStates.map(() => update.type === 'expandAll');
-      default: {
+      default:
         update satisfies never;
         return openStates;
-      }
     }
   }, initialGameStateToggleStates);
 
