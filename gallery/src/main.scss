@@ -27,10 +27,15 @@
   padding: 0 1rem;
 }
 
+.expand-collapse-all {
+  color: colors.$blue-dark;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 2rem;
+}
+
 .gallery-game-state {
-  & + & {
-    margin-top: 1rem;
-  }
+  margin-top: 1rem;
 }
 
 .gallery-heading {
