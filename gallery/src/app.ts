@@ -190,8 +190,6 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
 
   const expandCollapseAllUpdate$ = expandCollapseAll$.map((action) => ({ type: action }));
 
-  const allToggleUpdates$ = xs.merge(gameStateToggleStateUpdate$, expandCollapseAllUpdate$);
-
   // Persist across page reloads
   expandCollapseAllUpdate$.addListener({
     next: (update) => {
@@ -211,22 +209,24 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
     .fill(null)
     .map((_, index) => getGameStateToggleChecked(index));
 
-  const gameStateToggleStates$ = allToggleUpdates$.fold((openStates, update) => {
-    switch (update.type) {
-      case 'toggleSection':
-        return [
-          ...openStates.slice(0, update.index),
-          update.open,
-          ...openStates.slice(update.index + 1),
-        ];
-      case 'expandAll':
-      case 'collapseAll':
-        return openStates.map(() => update.type === 'expandAll');
-      default:
-        update satisfies never;
-        return openStates;
-    }
-  }, initialGameStateToggleStates);
+  const gameStateToggleStates$ = xs
+    .merge(gameStateToggleStateUpdate$, expandCollapseAllUpdate$)
+    .fold((openStates, update) => {
+      switch (update.type) {
+        case 'toggleSection':
+          return [
+            ...openStates.slice(0, update.index),
+            update.open,
+            ...openStates.slice(update.index + 1),
+          ];
+        case 'expandAll':
+        case 'collapseAll':
+          return openStates.map(() => update.type === 'expandAll');
+        default:
+          update satisfies never;
+          return openStates;
+      }
+    }, initialGameStateToggleStates);
 
   const gameDisplayIndex$ = xs
     .periodic(1000)
