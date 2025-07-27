@@ -193,23 +193,17 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
   const allToggleUpdates$ = xs.merge(gameStateToggleStateUpdate$, expandCollapseAllUpdate$);
 
   // Persist across page reloads
-  allToggleUpdates$.addListener({
+  expandCollapseAllUpdate$.addListener({
     next: (update) => {
-      switch (update.type) {
-        case 'toggleSection':
-          setGameStateToggleChecked(update.index, update.open);
-          break;
-        case 'expandAll':
-        case 'collapseAll': {
-          const count = stateDefinitions.length * gamesData.length;
-          for (let i = 0; i < count; ++i) {
-            setGameStateToggleChecked(i, update.type === 'expandAll');
-          }
-          break;
-        }
-        default:
-          update satisfies never;
+      const count = stateDefinitions.length * gamesData.length;
+      for (let i = 0; i < count; ++i) {
+        setGameStateToggleChecked(i, update.type === 'expandAll');
       }
+    },
+  });
+  gameStateToggleStateUpdate$.addListener({
+    next: (update) => {
+      setGameStateToggleChecked(update.index, update.open);
     },
   });
 
