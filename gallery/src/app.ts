@@ -206,7 +206,7 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
   });
 
   const gameStateToggleStates$ = gameStateToggleChanges$.fold(
-    (openStates, updates: { open: boolean; index: number }[]) =>
+    (openStates, updates) =>
       updates.reduce(
         (acc, update) => [
           ...acc.slice(0, update.index),
