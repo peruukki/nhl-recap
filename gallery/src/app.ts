@@ -179,23 +179,36 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
     },
   ];
 
+  const initialGameStateToggleStates = Array(stateDefinitions.length * gamesData.length)
+    .fill(null)
+    .map((_, index) => getGameStateToggleChecked(index));
+
   const gameStateToggleStateUpdate$ = gameStateToggleChange$.map((event) => {
     const element = event.target as HTMLDetailsElement;
     return {
-      type: 'toggleSection' as const,
       open: element.open,
       index: Number(element.dataset.index),
     };
   });
 
-  const expandCollapseAllUpdate$ = expandCollapseAll$.map((action) => ({ type: action }));
+  // Transform expand/collapse all to individual toggle updates
+  const expandCollapseAllUpdate$ = expandCollapseAll$
+    .map((action) =>
+      xs.fromArray(
+        initialGameStateToggleStates.map((_, index) => ({
+          open: action === 'expandAll',
+          index,
+        })),
+      ),
+    )
+    .flatten();
 
   // Persist across page reloads
-  expandCollapseAllUpdate$.addListener({
-    next: (update) => {
+  expandCollapseAll$.addListener({
+    next: (action) => {
       const count = stateDefinitions.length * gamesData.length;
       for (let i = 0; i < count; ++i) {
-        setGameStateToggleChecked(i, update.type === 'expandAll');
+        setGameStateToggleChecked(i, action === 'expandAll');
       }
     },
   });
@@ -205,28 +218,16 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
     },
   });
 
-  const initialGameStateToggleStates = Array(stateDefinitions.length * gamesData.length)
-    .fill(null)
-    .map((_, index) => getGameStateToggleChecked(index));
-
   const gameStateToggleStates$ = xs
     .merge(gameStateToggleStateUpdate$, expandCollapseAllUpdate$)
-    .fold((openStates, update) => {
-      switch (update.type) {
-        case 'toggleSection':
-          return [
-            ...openStates.slice(0, update.index),
-            update.open,
-            ...openStates.slice(update.index + 1),
-          ];
-        case 'expandAll':
-        case 'collapseAll':
-          return openStates.map(() => update.type === 'expandAll');
-        default:
-          update satisfies never;
-          return openStates;
-      }
-    }, initialGameStateToggleStates);
+    .fold(
+      (openStates, update: { open: boolean; index: number }) => [
+        ...openStates.slice(0, update.index),
+        update.open,
+        ...openStates.slice(update.index + 1),
+      ],
+      initialGameStateToggleStates,
+    );
 
   const gameDisplayIndex$ = xs
     .periodic(1000)
