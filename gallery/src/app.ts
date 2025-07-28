@@ -183,44 +183,38 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
     .fill(null)
     .map((_, index) => getGameStateToggleChecked(index));
 
-  const individualGameStateToggleChange$ = gameStateToggle$.map((event) => {
+  const individualGameStateToggleChanges$ = gameStateToggle$.map((event) => {
     const element = event.target as HTMLDetailsElement;
-    return {
-      open: element.open,
-      index: Number(element.dataset.index),
-    };
+    return [{ open: element.open, index: Number(element.dataset.index) }];
   });
 
   // Transform expand/collapse all to individual toggle updates
-  const expandCollapseAllChange$ = expandCollapseAll$
-    .map((action) =>
-      xs.fromArray(
-        initialGameStateToggleStates.map((_, index) => ({
-          open: action === 'expandAll',
-          index,
-        })),
-      ),
-    )
-    .flatten();
+  const expandCollapseAllChanges$ = expandCollapseAll$.map((action) =>
+    initialGameStateToggleStates.map((_, index) => ({ open: action === 'expandAll', index })),
+  );
 
-  const gameStateToggleChange$ = xs.merge(
-    individualGameStateToggleChange$,
-    expandCollapseAllChange$,
+  const gameStateToggleChanges$ = xs.merge(
+    individualGameStateToggleChanges$,
+    expandCollapseAllChanges$,
   );
 
   // Persist across page reloads
-  gameStateToggleChange$.addListener({
-    next: (update) => {
-      setGameStateToggleChecked(update.index, update.open);
+  gameStateToggleChanges$.addListener({
+    next: (updates) => {
+      updates.forEach((update) => setGameStateToggleChecked(update.index, update.open));
     },
   });
 
-  const gameStateToggleStates$ = gameStateToggleChange$.fold(
-    (openStates, update: { open: boolean; index: number }) => [
-      ...openStates.slice(0, update.index),
-      update.open,
-      ...openStates.slice(update.index + 1),
-    ],
+  const gameStateToggleStates$ = gameStateToggleChanges$.fold(
+    (openStates, updates: { open: boolean; index: number }[]) =>
+      updates.reduce(
+        (acc, update) => [
+          ...acc.slice(0, update.index),
+          update.open,
+          ...acc.slice(update.index + 1),
+        ],
+        openStates,
+      ),
     initialGameStateToggleStates,
   );
 
