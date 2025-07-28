@@ -5,7 +5,7 @@ import fromEvent from 'xstream/extra/fromEvent';
 import Game from '../../app/src/components/game';
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../app/src/test/data';
 import type { GameDisplay, GameStats, GameStatus, Game as GameT, Goal } from '../../app/src/types';
-import { getGameStateToggleChecked, setGameStateToggleChecked } from './storage';
+import { getGameStateToggleOpen, setGameStateToggleOpen } from './storage';
 
 type Sources = {
   DOM: MainDOMSource;
@@ -181,7 +181,7 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
 
   const initialGameStateToggleStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
-    .map((_, index) => getGameStateToggleChecked(index));
+    .map((_, index) => getGameStateToggleOpen(index));
 
   const individualGameStateToggleChanges$ = gameStateToggle$.map((event) => {
     const element = event.target as HTMLDetailsElement;
@@ -201,7 +201,7 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
   // Persist across page reloads
   gameStateToggleChanges$.addListener({
     next: (updates) => {
-      updates.forEach((update) => setGameStateToggleChecked(update.index, update.open));
+      updates.forEach((update) => setGameStateToggleOpen(update.index, update.open));
     },
   });
 
@@ -251,8 +251,8 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
 function view({ gameStateToggleStates$, gameStates$ }: State): Stream<VNode> {
   return xs
     .combine(gameStateToggleStates$, gameStates$)
-    .map(([gameStateTogglesChecked, gameStates]) => {
-      const isAllExpanded = gameStateTogglesChecked.every((state) => state);
+    .map(([gameStateTogglesOpen, gameStates]) => {
+      const isAllExpanded = gameStateTogglesOpen.every((state) => state);
 
       return div('.gallery', [
         div('.gallery-controls', [
@@ -265,7 +265,7 @@ function view({ gameStateToggleStates$, gameStates$ }: State): Stream<VNode> {
         ...gameStates.flatMap(({ gameDescription, games }, index) => [
           h(
             'details.gallery-game-state',
-            { attrs: { 'data-index': index, open: gameStateTogglesChecked[index] } },
+            { attrs: { 'data-index': index, open: gameStateTogglesOpen[index] } },
             [
               h('summary.gallery-heading', gameDescription),
               div(

@@ -1,13 +1,13 @@
-const getGameStateToggleCheckedKey = (index: number) => `game-state-toggle-checked-${index}`;
+const getGameStateToggleOpenKey = (index: number) => `game-state-toggle-open-${index}`;
 
-export function getGameStateToggleChecked(index: number): boolean {
-  return sessionStorage.getItem(getGameStateToggleCheckedKey(index)) !== 'false';
+export function getGameStateToggleOpen(index: number): boolean {
+  return sessionStorage.getItem(getGameStateToggleOpenKey(index)) !== 'false';
 }
 
-export function setGameStateToggleChecked(index: number, checked: boolean): void {
-  if (checked) {
-    sessionStorage.removeItem(getGameStateToggleCheckedKey(index));
+export function setGameStateToggleOpen(index: number, open: boolean): void {
+  if (open) {
+    sessionStorage.removeItem(getGameStateToggleOpenKey(index));
   } else {
-    sessionStorage.setItem(getGameStateToggleCheckedKey(index), 'false');
+    sessionStorage.setItem(getGameStateToggleOpenKey(index), 'false');
   }
 }
