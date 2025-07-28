@@ -1,5 +1,6 @@
 import { div, h, MainDOMSource, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
+import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
 
 import Game from '../../app/src/components/game';
@@ -218,31 +219,45 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
     initialGameStateToggleStates,
   );
 
-  const gameDisplayIndex$ = xs
-    .periodic(1000)
-    .startWith(-1)
-    .map((index) => index + 1)
-    .take(4);
-  const transitionedGameStates$ = gameDisplayIndex$.map((gameDisplayIndex) =>
+  const sectionGameDisplayIndexes$ = initialGameStateToggleStates.map((_, index) =>
+    gameStateToggleStates$
+      .map((openStates) => openStates[index])
+      .compose(dropRepeats())
+      .filter((isOpen) => isOpen)
+      .map(() =>
+        xs
+          .periodic(1000)
+          .startWith(-1)
+          .map((i) => i + 1)
+          .take(4),
+      )
+      .flatten(),
+  );
+
+  const transitionedGameStates$ = xs.combine(...sectionGameDisplayIndexes$).map((displayIndexes) =>
     gamesData.flatMap((gameData) =>
-      stateDefinitions.map(({ gameStatus, states }) => ({
-        gameDescription: `${gameData.description} ${gameStatus.description}`,
-        games: states.map((state) =>
-          state
-            ? ({
-                description: state.description,
-                gameDisplay: state.gameDisplays[gameDisplayIndex],
-                gameState: {
-                  ...gameData.data,
-                  status: gameStatus.status,
-                  gameStats:
-                    'gameStats' in gameStatus ? gameStatus.gameStats : gameData.data.gameStats,
-                },
-                currentGoals: gameData.data.goals.slice(0, state.goalCount),
-              } as GalleryGameT)
-            : null,
-        ),
-      })),
+      stateDefinitions.map(({ gameStatus, states }, defIdx) => {
+        const sectionIndex = gamesData.indexOf(gameData) * stateDefinitions.length + defIdx;
+        const gameDisplayIndex = displayIndexes[sectionIndex];
+        return {
+          gameDescription: `${gameData.description} ${gameStatus.description}`,
+          games: states.map((state) =>
+            state
+              ? ({
+                  description: state.description,
+                  gameDisplay: state.gameDisplays[gameDisplayIndex],
+                  gameState: {
+                    ...gameData.data,
+                    status: gameStatus.status,
+                    gameStats:
+                      'gameStats' in gameStatus ? gameStatus.gameStats : gameData.data.gameStats,
+                  },
+                  currentGoals: gameData.data.goals.slice(0, state.goalCount),
+                } as GalleryGameT)
+              : null,
+          ),
+        };
+      }),
     ),
   );
   return { gameStateToggleStates$, gameStates$: transitionedGameStates$ };
@@ -271,7 +286,7 @@ function view({ gameStateToggleStates$, gameStates$ }: State): Stream<VNode> {
               div(
                 '.gallery-games',
                 games.map((game, gameIndex) =>
-                  game
+                  game && gameStateTogglesOpen[index]
                     ? div('.gallery-game', [
                         div('.gallery-game__description', [game.description]),
                         Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
