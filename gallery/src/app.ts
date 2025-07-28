@@ -17,7 +17,7 @@ type Sinks = {
 
 type Actions = {
   expandCollapseAll$: Stream<'expandAll' | 'collapseAll'>;
-  gameStateToggleChange$: Stream<Event>;
+  gameStateToggle$: Stream<Event>;
   stateDefinitions: GameStateDefinition[];
 };
 
@@ -61,7 +61,7 @@ function intent(DOM: Sources['DOM']): Actions {
       return button.textContent?.startsWith('Expand') ? 'expandAll' : 'collapseAll';
     });
 
-  const gameStateToggleChange$ = DOM.select('.gallery-game-state')
+  const gameStateToggle$ = DOM.select('.gallery-game-state')
     .elements()
     .map((elements) => xs.merge(...elements.map((element) => fromEvent(element, 'toggle'))))
     .flatten();
@@ -73,7 +73,7 @@ function intent(DOM: Sources['DOM']): Actions {
   };
   return {
     expandCollapseAll$,
-    gameStateToggleChange$,
+    gameStateToggle$,
     stateDefinitions: [
       {
         gameStatus: {
@@ -151,7 +151,7 @@ function intent(DOM: Sources['DOM']): Actions {
   };
 }
 
-function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }: Actions): State {
+function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actions): State {
   const gamesData = [
     { description: 'Regular season game', data: scoresAllRegularTime.games[1] },
     {
@@ -183,7 +183,7 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
     .fill(null)
     .map((_, index) => getGameStateToggleChecked(index));
 
-  const gameStateToggleStateUpdate$ = gameStateToggleChange$.map((event) => {
+  const individualGameStateToggleChange$ = gameStateToggle$.map((event) => {
     const element = event.target as HTMLDetailsElement;
     return {
       open: element.open,
@@ -192,7 +192,7 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
   });
 
   // Transform expand/collapse all to individual toggle updates
-  const expandCollapseAllUpdate$ = expandCollapseAll$
+  const expandCollapseAllChange$ = expandCollapseAll$
     .map((action) =>
       xs.fromArray(
         initialGameStateToggleStates.map((_, index) => ({
@@ -203,31 +203,26 @@ function model({ expandCollapseAll$, gameStateToggleChange$, stateDefinitions }:
     )
     .flatten();
 
+  const gameStateToggleChange$ = xs.merge(
+    individualGameStateToggleChange$,
+    expandCollapseAllChange$,
+  );
+
   // Persist across page reloads
-  expandCollapseAll$.addListener({
-    next: (action) => {
-      const count = stateDefinitions.length * gamesData.length;
-      for (let i = 0; i < count; ++i) {
-        setGameStateToggleChecked(i, action === 'expandAll');
-      }
-    },
-  });
-  gameStateToggleStateUpdate$.addListener({
+  gameStateToggleChange$.addListener({
     next: (update) => {
       setGameStateToggleChecked(update.index, update.open);
     },
   });
 
-  const gameStateToggleStates$ = xs
-    .merge(gameStateToggleStateUpdate$, expandCollapseAllUpdate$)
-    .fold(
-      (openStates, update: { open: boolean; index: number }) => [
-        ...openStates.slice(0, update.index),
-        update.open,
-        ...openStates.slice(update.index + 1),
-      ],
-      initialGameStateToggleStates,
-    );
+  const gameStateToggleStates$ = gameStateToggleChange$.fold(
+    (openStates, update: { open: boolean; index: number }) => [
+      ...openStates.slice(0, update.index),
+      update.open,
+      ...openStates.slice(update.index + 1),
+    ],
+    initialGameStateToggleStates,
+  );
 
   const gameDisplayIndex$ = xs
     .periodic(1000)
