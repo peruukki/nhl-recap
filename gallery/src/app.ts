@@ -18,7 +18,7 @@ type Sinks = {
 
 type Actions = {
   expandCollapseAll$: Stream<'expandAll' | 'collapseAll'>;
-  gameStateToggle$: Stream<Event>;
+  expandCollapseSingle$: Stream<Event>;
   stateDefinitions: GameStateDefinition[];
 };
 
@@ -62,7 +62,7 @@ function intent(DOM: Sources['DOM']): Actions {
       return button.textContent?.startsWith('Expand') ? 'expandAll' : 'collapseAll';
     });
 
-  const gameStateToggle$ = DOM.select('.gallery-game-state')
+  const expandCollapseSingle$ = DOM.select('.gallery-game-state')
     .elements()
     .map((elements) => xs.merge(...elements.map((element) => fromEvent(element, 'toggle'))))
     .flatten();
@@ -74,7 +74,7 @@ function intent(DOM: Sources['DOM']): Actions {
   };
   return {
     expandCollapseAll$,
-    gameStateToggle$,
+    expandCollapseSingle$,
     stateDefinitions: [
       {
         gameStatus: {
@@ -152,7 +152,7 @@ function intent(DOM: Sources['DOM']): Actions {
   };
 }
 
-function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actions): State {
+function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: Actions): State {
   const gamesData = [
     { description: 'Regular season game', data: scoresAllRegularTime.games[1] },
     {
@@ -184,7 +184,7 @@ function model({ expandCollapseAll$, gameStateToggle$, stateDefinitions }: Actio
     .fill(null)
     .map((_, index) => getGameStateToggleOpen(index));
 
-  const individualGameStateToggleChanges$ = gameStateToggle$.map((event) => {
+  const individualGameStateToggleChanges$ = expandCollapseSingle$.map((event) => {
     const element = event.target as HTMLDetailsElement;
     return [{ open: element.open, index: Number(element.dataset.index) }];
   });
