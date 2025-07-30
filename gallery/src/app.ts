@@ -231,7 +231,8 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
           .map((i) => i + 1)
           .take(4),
       )
-      .flatten(),
+      .flatten()
+      .startWith(-1),
   );
 
   const transitionedGameStates$ = xs.combine(...sectionGameDisplayIndexes$).map((displayIndexes) =>
