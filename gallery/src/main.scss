@@ -1,5 +1,17 @@
 @use '../../app/src/styles/colors';
 
+button {
+  background-color: colors.$blue-dark;
+  color: colors.$white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 2rem;
+
+  &:active {
+    background-color: colors.$blue-medium;
+  }
+}
+
 @mixin gallery-description {
   display: table-cell;
   font-size: 1.2rem;
@@ -27,15 +39,8 @@
   padding: 0 1rem;
 }
 
-.expand-collapse-all {
-  color: colors.$blue-dark;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 2rem;
-}
-
-.gallery-game-state {
-  margin-top: 1rem;
+.gallery-controls {
+  margin: 0.5rem 0;
 }
 
 .gallery-heading {
@@ -46,9 +51,14 @@
 
     color: colors.$color-accent-light;
   }
+}
 
-  &__toggle {
-    margin-right: 0.5rem;
+.replay-game-display-states {
+  visibility: hidden;
+  margin-left: 1rem;
+
+  .gallery-game-state[open] & {
+    visibility: visible;
   }
 }
 

@@ -1,4 +1,4 @@
-import { div, h, MainDOMSource, VNode } from '@cycle/dom';
+import { button, div, h, MainDOMSource, VNode } from '@cycle/dom';
 import xs, { Stream } from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
@@ -19,6 +19,7 @@ type Sinks = {
 type Actions = {
   expandCollapseAll$: Stream<'expand' | 'collapse'>;
   expandCollapseSections$: Stream<{ action: 'expand' | 'collapse'; index: number }>;
+  replayGameDisplayStates$: Stream<{ index: number }>;
 };
 
 type State = {
@@ -64,13 +65,25 @@ function intent(DOM: Sources['DOM']): Actions {
     )
     .flatten();
 
+  const replayGameDisplayStates$ = DOM.select('.replay-game-display-states')
+    .elements()
+    .map((elements) =>
+      xs.merge(...elements.map((element, index) => fromEvent(element, 'click').mapTo({ index }))),
+    )
+    .flatten();
+
   return {
     expandCollapseAll$,
     expandCollapseSections$,
+    replayGameDisplayStates$,
   };
 }
 
-function model({ expandCollapseAll$, expandCollapseSections$ }: Actions): State {
+function model({
+  expandCollapseAll$,
+  expandCollapseSections$,
+  replayGameDisplayStates$,
+}: Actions): State {
   const initialSectionExpandedStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
     .map((_, index) => getSectionExpandedState(index));
@@ -98,20 +111,27 @@ function model({ expandCollapseAll$, expandCollapseSections$ }: Actions): State 
     },
   });
 
-  const sectionGameDisplayIndexes$ = initialSectionExpandedStates.map((_, index) =>
-    sectionExpandedStates$
-      .map((openStates) => openStates[index])
-      .compose(dropRepeats())
-      .filter((isExpanded) => isExpanded)
-      .map(() =>
-        xs
-          .periodic(1000)
-          .startWith(-1)
-          .map((i) => i + 1)
-          .take(4),
-      )
-      .flatten()
-      .startWith(-1),
+  const replayGameDisplayStatesPerSection = initialSectionExpandedStates.map((_, index) =>
+    xs.merge(
+      sectionExpandedStates$
+        .map((expandedStates) => expandedStates[index])
+        .compose(dropRepeats())
+        .filter((isExpanded) => isExpanded),
+      replayGameDisplayStates$.filter((update) => update.index === index),
+    ),
+  );
+  const sectionGameDisplayIndexes$ = replayGameDisplayStatesPerSection.map(
+    (replayGameDisplayStates$) =>
+      replayGameDisplayStates$
+        .mapTo(
+          xs
+            .periodic(1000)
+            .startWith(-1)
+            .map((i) => i + 1)
+            .take(4),
+        )
+        .flatten()
+        .startWith(-1),
   );
 
   const transitionedGameStates$ = xs.combine(...sectionGameDisplayIndexes$).map((displayIndexes) =>
@@ -159,7 +179,10 @@ function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
         ]),
         ...gameStates.flatMap(({ gameDescription, games }, index) => [
           h('details.gallery-game-state', { attrs: { open: sectionExpandedStates[index] } }, [
-            h('summary.gallery-heading', gameDescription),
+            h('summary.gallery-heading', [
+              gameDescription,
+              button('.replay-game-display-states', { attrs: { type: 'button' } }, 'Replay'),
+            ]),
             div(
               '.gallery-games',
               games.map((game, gameIndex) =>
