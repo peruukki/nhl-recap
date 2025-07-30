@@ -6,7 +6,7 @@ import fromEvent from 'xstream/extra/fromEvent';
 import Game from '../../app/src/components/game';
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../app/src/test/data';
 import type { GameDisplay, GameStats, GameStatus, Game as GameT, Goal } from '../../app/src/types';
-import { getGameStateToggleOpen, setGameStateToggleOpen } from './storage';
+import { getSectionExpandedState, setSectionExpandedState } from './storage';
 
 type Sources = {
   DOM: MainDOMSource;
@@ -180,33 +180,33 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
     },
   ];
 
-  const initialGameStateToggleStates = Array(stateDefinitions.length * gamesData.length)
+  const initialSectionExpandedStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
-    .map((_, index) => getGameStateToggleOpen(index));
+    .map((_, index) => getSectionExpandedState(index));
 
-  const individualGameStateToggleChanges$ = expandCollapseSingle$.map((event) => {
+  const singleSectionExpandedStateChanges$ = expandCollapseSingle$.map((event) => {
     const element = event.target as HTMLDetailsElement;
     return [{ open: element.open, index: Number(element.dataset.index) }];
   });
 
-  // Transform expand/collapse all to individual toggle updates
+  // Transform expand/collapse all to single section updates
   const expandCollapseAllChanges$ = expandCollapseAll$.map((action) =>
-    initialGameStateToggleStates.map((_, index) => ({ open: action === 'expandAll', index })),
+    initialSectionExpandedStates.map((_, index) => ({ open: action === 'expandAll', index })),
   );
 
-  const gameStateToggleChanges$ = xs.merge(
-    individualGameStateToggleChanges$,
+  const sectionExpandedStateChanges$ = xs.merge(
+    singleSectionExpandedStateChanges$,
     expandCollapseAllChanges$,
   );
 
   // Persist across page reloads
-  gameStateToggleChanges$.addListener({
+  sectionExpandedStateChanges$.addListener({
     next: (updates) => {
-      updates.forEach((update) => setGameStateToggleOpen(update.index, update.open));
+      updates.forEach((update) => setSectionExpandedState(update.index, update.open));
     },
   });
 
-  const sectionExpandedStates$ = gameStateToggleChanges$.fold(
+  const sectionExpandedStates$ = sectionExpandedStateChanges$.fold(
     (openStates, updates) =>
       updates.reduce(
         (acc, update) => [
@@ -216,10 +216,10 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
         ],
         openStates,
       ),
-    initialGameStateToggleStates,
+    initialSectionExpandedStates,
   );
 
-  const sectionGameDisplayIndexes$ = initialGameStateToggleStates.map((_, index) =>
+  const sectionGameDisplayIndexes$ = initialSectionExpandedStates.map((_, index) =>
     sectionExpandedStates$
       .map((openStates) => openStates[index])
       .compose(dropRepeats())
@@ -266,8 +266,8 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
 function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
   return xs
     .combine(sectionExpandedStates$, gameStates$)
-    .map(([gameStateTogglesOpen, gameStates]) => {
-      const isAllExpanded = gameStateTogglesOpen.every((state) => state);
+    .map(([sectionExpandedStates, gameStates]) => {
+      const isAllExpanded = sectionExpandedStates.every((isOpen) => isOpen);
 
       return div('.gallery', [
         div('.gallery-controls', [
@@ -280,13 +280,13 @@ function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
         ...gameStates.flatMap(({ gameDescription, games }, index) => [
           h(
             'details.gallery-game-state',
-            { attrs: { 'data-index': index, open: gameStateTogglesOpen[index] } },
+            { attrs: { 'data-index': index, open: sectionExpandedStates[index] } },
             [
               h('summary.gallery-heading', gameDescription),
               div(
                 '.gallery-games',
                 games.map((game, gameIndex) =>
-                  game && gameStateTogglesOpen[index]
+                  game && sectionExpandedStates[index]
                     ? div('.gallery-game', [
                         div('.gallery-game__description', [game.description]),
                         Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),

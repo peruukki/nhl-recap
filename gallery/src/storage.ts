@@ -1,13 +1,13 @@
-const getGameStateToggleOpenKey = (index: number) => `game-state-toggle-open-${index}`;
+const getSectionExpandedStateKey = (index: number) => `gallery-section-expanded-${index}`;
 
-export function getGameStateToggleOpen(index: number): boolean {
-  return sessionStorage.getItem(getGameStateToggleOpenKey(index)) !== 'false';
+export function getSectionExpandedState(index: number): boolean {
+  return sessionStorage.getItem(getSectionExpandedStateKey(index)) !== 'false';
 }
 
-export function setGameStateToggleOpen(index: number, open: boolean): void {
+export function setSectionExpandedState(index: number, open: boolean): void {
   if (open) {
-    sessionStorage.removeItem(getGameStateToggleOpenKey(index));
+    sessionStorage.removeItem(getSectionExpandedStateKey(index));
   } else {
-    sessionStorage.setItem(getGameStateToggleOpenKey(index), 'false');
+    sessionStorage.setItem(getSectionExpandedStateKey(index), 'false');
   }
 }
