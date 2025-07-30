@@ -223,7 +223,7 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
     sectionExpandedStates$
       .map((openStates) => openStates[index])
       .compose(dropRepeats())
-      .filter((isOpen) => isOpen)
+      .filter((isExpanded) => isExpanded)
       .map(() =>
         xs
           .periodic(1000)
@@ -267,7 +267,7 @@ function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
   return xs
     .combine(sectionExpandedStates$, gameStates$)
     .map(([sectionExpandedStates, gameStates]) => {
-      const isAllExpanded = sectionExpandedStates.every((isOpen) => isOpen);
+      const isAllExpanded = sectionExpandedStates.every((isExpanded) => isExpanded);
 
       return div('.gallery', [
         div('.gallery-controls', [
