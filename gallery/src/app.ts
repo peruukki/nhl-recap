@@ -23,8 +23,8 @@ type Actions = {
 };
 
 type State = {
-  gameStateToggleStates$: Stream<boolean[]>;
   gameStates$: Stream<{ gameDescription: string; games: (GalleryGameT | null)[] }[]>;
+  sectionExpandedStates$: Stream<boolean[]>;
 };
 
 type GalleryGameT = {
@@ -206,7 +206,7 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
     },
   });
 
-  const gameStateToggleStates$ = gameStateToggleChanges$.fold(
+  const sectionExpandedStates$ = gameStateToggleChanges$.fold(
     (openStates, updates) =>
       updates.reduce(
         (acc, update) => [
@@ -220,7 +220,7 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
   );
 
   const sectionGameDisplayIndexes$ = initialGameStateToggleStates.map((_, index) =>
-    gameStateToggleStates$
+    sectionExpandedStates$
       .map((openStates) => openStates[index])
       .compose(dropRepeats())
       .filter((isOpen) => isOpen)
@@ -260,12 +260,12 @@ function model({ expandCollapseAll$, expandCollapseSingle$, stateDefinitions }: 
       }),
     ),
   );
-  return { gameStateToggleStates$, gameStates$: transitionedGameStates$ };
+  return { sectionExpandedStates$, gameStates$: transitionedGameStates$ };
 }
 
-function view({ gameStateToggleStates$, gameStates$ }: State): Stream<VNode> {
+function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
   return xs
-    .combine(gameStateToggleStates$, gameStates$)
+    .combine(sectionExpandedStates$, gameStates$)
     .map(([gameStateTogglesOpen, gameStates]) => {
       const isAllExpanded = gameStateTogglesOpen.every((state) => state);
 
