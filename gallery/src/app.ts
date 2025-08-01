@@ -84,6 +84,13 @@ function model({ expandCollapseAll$, expandCollapseSections$ }: Actions): State 
       ),
     )
     .flatten()
+    .compose(
+      dropRepeats(
+        (prevStates, nextStates) =>
+          prevStates.length === nextStates.length &&
+          prevStates.every((_, index) => prevStates[index] === nextStates[index]),
+      ),
+    )
     .startWith(initialSectionExpandedStates);
 
   // Persist across page reloads
