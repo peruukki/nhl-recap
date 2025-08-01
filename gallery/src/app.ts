@@ -17,8 +17,8 @@ type Sinks = {
 };
 
 type Actions = {
-  expandCollapseAll$: Stream<'expandAll' | 'collapseAll'>;
-  expandCollapseSingle$: Stream<Event>;
+  expandCollapseAll$: Stream<'expand' | 'collapse'>;
+  expandCollapseSections$: Stream<Stream<'expand' | 'collapse'>[]>;
 };
 
 type State = {
@@ -45,59 +45,53 @@ function intent(DOM: Sources['DOM']): Actions {
     .events('click')
     .map((event) => {
       const button = event.target as HTMLButtonElement;
-      return button.textContent?.startsWith('Expand') ? 'expandAll' : 'collapseAll';
+      return button.textContent?.startsWith('Expand') ? 'expand' : 'collapse';
     });
 
-  const expandCollapseSingle$ = DOM.select('.gallery-game-state')
+  const expandCollapseSections$ = DOM.select('.gallery-game-state')
     .elements()
-    .map((elements) => xs.merge(...elements.map((element) => fromEvent(element, 'toggle'))))
-    .flatten();
+    .filter((elements) => elements.length > 0)
+    .map((elements) =>
+      elements.map((element) => {
+        const details = element as HTMLDetailsElement;
+        return fromEvent(details, 'toggle').mapTo(
+          details.open ? ('expand' as const) : ('collapse' as const),
+        );
+      }),
+    );
 
   return {
     expandCollapseAll$,
-    expandCollapseSingle$,
+    expandCollapseSections$,
   };
 }
 
-function model({ expandCollapseAll$, expandCollapseSingle$ }: Actions): State {
+function model({ expandCollapseAll$, expandCollapseSections$ }: Actions): State {
   const initialSectionExpandedStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
     .map((_, index) => getSectionExpandedState(index));
 
-  const singleSectionExpandedStateChanges$ = expandCollapseSingle$.map((event) => {
-    const element = event.target as HTMLDetailsElement;
-    return [{ open: element.open, index: Number(element.dataset.index) }];
-  });
-
-  // Transform expand/collapse all to single section updates
-  const expandCollapseAllChanges$ = expandCollapseAll$.map((action) =>
-    initialSectionExpandedStates.map((_, index) => ({ open: action === 'expandAll', index })),
-  );
-
-  const sectionExpandedStateChanges$ = xs.merge(
-    singleSectionExpandedStateChanges$,
-    expandCollapseAllChanges$,
-  );
+  const sectionExpandedStates$ = expandCollapseSections$
+    .map((expandCollapseSections) =>
+      xs.combine(
+        ...expandCollapseSections.map((expandCollapseSection$, index) =>
+          xs
+            .merge(expandCollapseSection$, expandCollapseAll$)
+            .map((action) => action === 'expand')
+            // Get an up-to-date state from local storage
+            .startWith(getSectionExpandedState(index)),
+        ),
+      ),
+    )
+    .flatten()
+    .startWith(initialSectionExpandedStates);
 
   // Persist across page reloads
-  sectionExpandedStateChanges$.addListener({
-    next: (updates) => {
-      updates.forEach((update) => setSectionExpandedState(update.index, update.open));
+  sectionExpandedStates$.addListener({
+    next: (sectionsExpanded) => {
+      sectionsExpanded.forEach((isExpanded, index) => setSectionExpandedState(index, isExpanded));
     },
   });
-
-  const sectionExpandedStates$ = sectionExpandedStateChanges$.fold(
-    (openStates, updates) =>
-      updates.reduce(
-        (acc, update) => [
-          ...acc.slice(0, update.index),
-          update.open,
-          ...acc.slice(update.index + 1),
-        ],
-        openStates,
-      ),
-    initialSectionExpandedStates,
-  );
 
   const sectionGameDisplayIndexes$ = initialSectionExpandedStates.map((_, index) =>
     sectionExpandedStates$
@@ -159,24 +153,20 @@ function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
           ),
         ]),
         ...gameStates.flatMap(({ gameDescription, games }, index) => [
-          h(
-            'details.gallery-game-state',
-            { attrs: { 'data-index': index, open: sectionExpandedStates[index] } },
-            [
-              h('summary.gallery-heading', gameDescription),
-              div(
-                '.gallery-games',
-                games.map((game, gameIndex) =>
-                  game && sectionExpandedStates[index]
-                    ? div('.gallery-game', [
-                        div('.gallery-game__description', [game.description]),
-                        Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
-                      ])
-                    : div(),
-                ),
+          h('details.gallery-game-state', { attrs: { open: sectionExpandedStates[index] } }, [
+            h('summary.gallery-heading', gameDescription),
+            div(
+              '.gallery-games',
+              games.map((game, gameIndex) =>
+                game && sectionExpandedStates[index]
+                  ? div('.gallery-game', [
+                      div('.gallery-game__description', [game.description]),
+                      Game(game.gameDisplay, game.gameState, game.currentGoals, gameIndex),
+                    ])
+                  : div(),
               ),
-            ],
-          ),
+            ),
+          ]),
         ]),
       ]);
     });
