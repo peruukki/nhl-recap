@@ -18,7 +18,7 @@ type Sinks = {
 
 type Actions = {
   expandCollapseAll$: Stream<'expand' | 'collapse'>;
-  expandCollapseSections$: Stream<Stream<'expand' | 'collapse'>[]>;
+  expandCollapseSections$: Stream<{ action: 'expand' | 'collapse'; index: number }>;
 };
 
 type State = {
@@ -52,13 +52,17 @@ function intent(DOM: Sources['DOM']): Actions {
     .elements()
     .filter((elements) => elements.length > 0)
     .map((elements) =>
-      elements.map((element) => {
-        const details = element as HTMLDetailsElement;
-        return fromEvent(details, 'toggle').mapTo(
-          details.open ? ('expand' as const) : ('collapse' as const),
-        );
-      }),
-    );
+      xs.merge(
+        ...elements.map((element, index) => {
+          const details = element as HTMLDetailsElement;
+          return fromEvent(details, 'toggle').mapTo({
+            action: details.open ? ('expand' as const) : ('collapse' as const),
+            index,
+          });
+        }),
+      ),
+    )
+    .flatten();
 
   return {
     expandCollapseAll$,
@@ -71,24 +75,18 @@ function model({ expandCollapseAll$, expandCollapseSections$ }: Actions): State 
     .fill(null)
     .map((_, index) => getSectionExpandedState(index));
 
-  const sectionExpandedStates$ = expandCollapseSections$
-    .map((expandCollapseSections) =>
-      xs.combine(
-        ...expandCollapseSections.map((expandCollapseSection$, index) =>
-          xs
-            .merge(expandCollapseSection$, expandCollapseAll$)
-            .map((action) => action === 'expand')
-            // Get an up-to-date state from local storage
-            .startWith(getSectionExpandedState(index)),
-        ),
-      ),
-    )
-    .flatten()
-    .compose(
-      dropRepeats(
-        (prevStates, nextStates) =>
-          prevStates.length === nextStates.length &&
-          prevStates.every((_, index) => prevStates[index] === nextStates[index]),
+  const sectionExpandedStates$ = xs
+    .combine(
+      ...initialSectionExpandedStates.map((expandedState, index) =>
+        xs
+          .merge(
+            expandCollapseSections$
+              .filter((change) => change.index === index)
+              .map((change) => change.action),
+            expandCollapseAll$,
+          )
+          .map((action) => action === 'expand')
+          .startWith(expandedState),
       ),
     )
     .startWith(initialSectionExpandedStates);
