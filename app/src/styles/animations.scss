@@ -6,6 +6,12 @@ $focus-duration: 0.25s;
 $height-duration: 0.25s;
 $hover-duration: 0.25s;
 
+$delay-small: 0.125s;
+$delay-large: 0.2s;
+$expand-delay-base: 0.05s;
+$expand-delay-stagger: 0.2s;
+$expand-delay-last: 1s;
+
 $fade-timing-function: ease-out;
 $expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
 $focus-timing-function: ease-out;
@@ -59,7 +65,9 @@ $hover-timing-function: ease-out;
   @for $i from 0 through 15 {
     &--#{$i} {
       // easeOutCubic for delay
-      $delay: 50ms + cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) * 500ms;
+      $delay: $expand-delay-base +
+        cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
+        $expand-delay-stagger;
 
       animation:
         $delay hidden,
@@ -76,7 +84,7 @@ $hover-timing-function: ease-out;
 }
 
 .expand--last {
-  $delay: 1000ms;
+  $delay: $expand-delay-last;
 
   animation:
     $delay hidden,
@@ -119,11 +127,11 @@ $hover-timing-function: ease-out;
 
 @mixin delayed-animation {
   animation-fill-mode: both;
-  animation-delay: ($fade-duration * 0.25);
+  animation-delay: $delay-small;
 }
 @mixin delayed-animation-later {
   animation-fill-mode: both;
-  animation-delay: ($fade-duration * 0.4);
+  animation-delay: $delay-large;
 }
 
 // Adapted from https://github.com/erictreacy/mimic.css/blob/master/mimic.css
