@@ -1,16 +1,24 @@
 @use 'sass:math';
 
-$fade-duration: 0.5s;
-$expand-duration: 0.45s;
-$focus-duration: 0.25s;
-$height-duration: 0.25s;
-$hover-duration: 0.25s;
+$animation-speed: var(--animation-speed, 1);
 
-$delay-small: 0.125s;
-$delay-large: 0.2s;
+$fade-duration: calc($animation-speed * 0.5s);
+$fade-duration-fast: calc($animation-speed * 0.25s);
+$fade-duration-slow: calc($animation-speed * 1s);
+$expand-duration: calc($animation-speed * 0.45s);
+$focus-duration: calc($animation-speed * 0.25s);
+$height-duration: calc($animation-speed * 0.25s);
+$hover-duration: calc($animation-speed * 0.25s);
+
+$delay-small: calc($animation-speed * 0.125s);
+$delay-large: calc($animation-speed * 0.2s);
+
+// The base and stagger delays are used as components in calculations, so we don't apply $animation
+// on them directly, but on the calculated values
 $expand-delay-base: 0.05s;
 $expand-delay-stagger: 0.2s;
-$expand-delay-last: 1s;
+
+$expand-delay-last: calc($animation-speed * 1s);
 
 $fade-timing-function: ease-out;
 $expand-timing-function: cubic-bezier(0.53, 0.01, 0.6, 1.23);
@@ -22,16 +30,16 @@ $hover-timing-function: ease-out;
   animation: $fade-duration $fade-timing-function fade-in;
 }
 .fade-in-fast {
-  animation: ($fade-duration * 0.5) $fade-timing-function fade-in-fast;
+  animation: $fade-duration-fast $fade-timing-function fade-in-fast;
 }
 .fade-in-slow {
-  animation: ($fade-duration * 2) $fade-timing-function fade-in;
+  animation: $fade-duration-slow $fade-timing-function fade-in;
 }
 
 @mixin fade-in-with-slide-animation {
   animation:
     $fade-duration fade-in,
-    ($fade-duration * 0.5) slide-down;
+    $fade-duration-fast slide-down;
 }
 
 // Need two separate animation names to re-trigger animation
@@ -65,19 +73,24 @@ $hover-timing-function: ease-out;
   @for $i from 0 through 15 {
     &--#{$i} {
       // easeOutCubic for delay
-      $delay: $expand-delay-base +
-        cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
-        $expand-delay-stagger;
+      $delay: calc(
+        $animation-speed *
+          (
+            $expand-delay-base +
+              cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
+              $expand-delay-stagger
+          )
+      );
 
       animation:
         $delay hidden,
         $expand-duration $expand-timing-function expand $delay,
-        ($fade-duration * 0.5) ease-in fade-in $delay;
+        $fade-duration-fast ease-in fade-in $delay;
 
       @media (prefers-reduced-motion) {
         animation:
           $delay hidden,
-          ($fade-duration * 0.5) ease-in fade-in $delay;
+          $fade-duration-fast ease-in fade-in $delay;
       }
     }
   }
@@ -89,12 +102,12 @@ $hover-timing-function: ease-out;
   animation:
     $delay hidden,
     $expand-duration $expand-timing-function expand $delay,
-    ($fade-duration * 0.5) ease-in fade-in $delay;
+    $fade-duration-fast ease-in fade-in $delay;
 
   @media (prefers-reduced-motion) {
     animation:
       $delay hidden,
-      ($fade-duration * 0.5) ease-in fade-in $delay;
+      $fade-duration-fast ease-in fade-in $delay;
   }
 }
 

@@ -3,6 +3,8 @@
 @import url('https://indestructibletype.com/fonts/Jost.css');
 
 html {
+  --animation-speed: 1;
+
   font-size: 62.5%;
 
   @media (min-width: 360px) {
