@@ -84,6 +84,9 @@ function model({
   expandCollapseSections$,
   replayGameDisplayStates$,
 }: Actions): State {
+  //
+  // Section expanded/collapsed state
+  //
   const initialSectionExpandedStates = Array(stateDefinitions.length * gamesData.length)
     .fill(null)
     .map((_, index) => getSectionExpandedState(index));
@@ -111,6 +114,12 @@ function model({
     },
   });
 
+  //
+  // Game display states
+  //
+  const animationSpeed = Number(
+    getComputedStyle(document.documentElement).getPropertyValue('--animation-speed') || '1',
+  );
   const replayGameDisplayStatesPerSection = initialSectionExpandedStates.map((_, index) =>
     xs.merge(
       sectionExpandedStates$
@@ -125,7 +134,7 @@ function model({
       replayGameDisplayStates$
         .mapTo(
           xs
-            .periodic(1000)
+            .periodic(animationSpeed * 1000)
             .startWith(-1)
             .map((i) => i + 1)
             .take(4),
@@ -160,6 +169,7 @@ function model({
       }),
     ),
   );
+
   return { sectionExpandedStates$, gameStates$: transitionedGameStates$ };
 }
 
