@@ -2,23 +2,23 @@
 
 $animation-speed: var(--animation-speed, 1);
 
-$fade-duration: calc($animation-speed * 0.6s);
-$fade-duration-fast: calc($animation-speed * 0.3s);
-$fade-duration-slow: calc($animation-speed * 1s);
-$expand-duration: calc($animation-speed * 0.45s);
-$focus-duration-enter: calc($animation-speed * 0.45s);
-$focus-duration-exit: calc($animation-speed * 1s);
-$height-duration: calc($animation-speed * 0.45s);
-$hover-duration: calc($animation-speed * 0.25s);
+$fade-duration: calc(0.6s / $animation-speed);
+$fade-duration-fast: calc(0.3s / $animation-speed);
+$fade-duration-slow: calc(1s / $animation-speed);
+$expand-duration: calc(0.45s / $animation-speed);
+$focus-duration-enter: calc(0.45s / $animation-speed);
+$focus-duration-exit: calc(1s / $animation-speed);
+$height-duration: calc(0.45s / $animation-speed);
+$hover-duration: calc(0.25s / $animation-speed);
 
-$delay-small: calc($animation-speed * 0.3s);
-$delay-large: calc($animation-speed * 0.45s);
+$delay-small: calc(0.3s / $animation-speed);
+$delay-large: calc(0.45s / $animation-speed);
 
 // The stagger delays are used as components in calculations, so we don't apply $animation
 // on them directly, but on the calculated values
 $expand-delay-stagger: 1s;
 
-$expand-delay-last: calc($animation-speed * 0.75s);
+$expand-delay-last: calc(0.75s / $animation-speed);
 
 $fade-timing-function: ease-out;
 $focus-timing-function: cubic-bezier(0.14, 0.97, 0.29, 0.97);
@@ -74,11 +74,9 @@ $hover-timing-function: ease-out;
     &--#{$i} {
       // easeOutCubic for delay
       $delay: calc(
-        $animation-speed *
-          (
-            cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
-              $expand-delay-stagger
-          )
+        cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
+          $expand-delay-stagger /
+          $animation-speed
       );
 
       animation:

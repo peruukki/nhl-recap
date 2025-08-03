@@ -134,7 +134,7 @@ function model({
       replayGameDisplayStates$
         .mapTo(
           xs
-            .periodic(animationSpeed * 1000)
+            .periodic(1000 / animationSpeed)
             .startWith(-1)
             .map((i) => i + 1)
             .take(4),
