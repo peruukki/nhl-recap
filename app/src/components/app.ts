@@ -84,7 +84,7 @@ export default function app(
     const error$ = error ? xs.of(error) : xs.empty();
     const url = date ? getApiUrl(date) : getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, error$, $window, options), animations, date)),
+      DOM: view(model(intent(DOM, HTTP, error$, $window, options, date), animations)),
       HTTP: error ? xs.empty() : xs.of({ url }),
     };
   };
@@ -101,6 +101,7 @@ function intent(
   error$: Stream<Error>,
   $window: Window,
   options: Options,
+  date?: string,
 ): Actions {
   const apiResponseWithErrors$ = HTTP.select()
     .map((response$) =>
@@ -140,7 +141,7 @@ function intent(
 
   const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
-  const isPlaying$ = xs.merge(playClicks$, pauseClicks$);
+  const isPlaying$ = xs.merge(playClicks$, pauseClicks$).startWith(false);
   const playbackHasStarted$ = playClicks$.take(1);
 
   const getUnexpectedErrorMessage = () => {
@@ -148,6 +149,15 @@ function intent(
     const details = !$window.navigator.onLine ? ': the network is offline' : '';
     return `${baseMessage}${details}.`;
   };
+
+  const initialStatusMessage = date
+    ? `Fetching scores for ${new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+      })} ${new Date(date).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+      })}`
+    : 'Fetching latest scores';
 
   return {
     successApiResponse$,
@@ -159,11 +169,12 @@ function intent(
         isDone: true,
         message: error.message ?? getUnexpectedErrorMessage(),
       }))
+      .startWith({ isDone: false, message: initialStatusMessage })
       .debug(debugFn('status$')),
   };
 }
 
-function model(actions: Actions, animations: Animations, date?: string): Stream<State> {
+function model(actions: Actions, animations: Animations): Stream<State> {
   const initialState = { games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 
@@ -221,21 +232,12 @@ function model(actions: Actions, animations: Animations, date?: string): Stream<
     next: animations.highlightPlayPauseButtonChange,
   });
 
-  const initialStatusMessage = date
-    ? `Fetching scores for ${new Date(date).toLocaleDateString('en-US', {
-        weekday: 'long',
-      })} ${new Date(date).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-      })}`
-    : 'Fetching latest scores';
-
   return xs
     .combine(
       scores$,
       currentGoals$.startWith([]),
-      actions.isPlaying$.startWith(false),
-      actions.status$.startWith({ isDone: false, message: initialStatusMessage }),
+      actions.isPlaying$,
+      actions.status$,
       clock.DOM.startWith(span('.clock')),
       clock.events$.startWith(null as unknown as GameEvent),
       gameDisplays$.startWith([]),
