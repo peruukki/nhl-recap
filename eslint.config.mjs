@@ -23,7 +23,7 @@ export default tseslint.config(
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
-      'no-console': ['error', { allow: ['error', 'warn'] }],
+      'no-console': ['error', { allow: ['error', 'warn', 'debug'] }],
     },
   },
   {

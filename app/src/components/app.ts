@@ -13,6 +13,7 @@ import type {
   Scores,
 } from '../types';
 import type { Animations } from '../utils/animations';
+import { debugFn } from '../utils/debug';
 import { delayAtLeast } from '../utils/delay';
 import { getGameAnimationIndexes } from '../utils/utils';
 import Clock from './clock';
@@ -122,7 +123,8 @@ function intent(
         return { error: { expected: false } };
       }
     })
-    .compose(delayAtLeast(options.fetchStatusDelayMs));
+    .compose(delayAtLeast(options.fetchStatusDelayMs))
+    .debug(debugFn('apiResponseWithErrors$'));
 
   const successApiResponse$ = apiResponseWithErrors$
     .filter((response): response is ApiResponseSuccess => isSuccessApiResponse(response))
@@ -132,7 +134,9 @@ function intent(
     error: { message: error.message, expected: true },
   }));
 
-  const apiResponseOrError$ = xs.merge(apiResponseWithErrors$, nonApiError$);
+  const apiResponseOrError$ = xs
+    .merge(apiResponseWithErrors$, nonApiError$)
+    .debug(debugFn('apiResponseOrError$'));
 
   const playClicks$ = DOM.select('.button--play').events('click').mapTo(true);
   const pauseClicks$ = DOM.select('.button--pause').events('click').mapTo(false);
@@ -154,7 +158,8 @@ function intent(
       .map<FetchStatus>(({ error }) => ({
         isDone: true,
         message: error.message ?? getUnexpectedErrorMessage(),
-      })),
+      }))
+      .debug(debugFn('status$')),
   };
 }
 
@@ -246,7 +251,8 @@ function model(actions: Actions, animations: Animations, date?: string): Stream<
         gameDisplays,
         gameCount: scores.games.length,
       }),
-    );
+    )
+    .debug(debugFn('model$'));
 }
 
 function view(state$: Stream<State>): Stream<VNode> {
