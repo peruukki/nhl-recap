@@ -118,7 +118,6 @@ function model({
   //
   // Game display states
   //
-  const animationSpeed = animations.getAnimationSpeed();
   const replayGameDisplayStatesPerSection = initialSectionExpandedStates.map((_, index) =>
     xs.merge(
       sectionExpandedStates$
@@ -133,7 +132,7 @@ function model({
       replayGameDisplayStates$
         .mapTo(
           xs
-            .periodic(1000 / animationSpeed)
+            .periodic(animations.getAnimationDuration(1000))
             .startWith(-1)
             .map((i) => i + 1)
             .take(4),

@@ -164,7 +164,7 @@ function intent(
     : 'Fetching latest scores';
 
   const transitioningSuccessStatus$ = xs
-    .periodic(options.fetchStatusExitDurationMs / animations.getAnimationSpeed())
+    .periodic(animations.getAnimationDuration(options.fetchStatusExitDurationMs))
     .take(1)
     .mapTo<FetchStatus>({ state: 'done' })
     .startWith({ state: 'transitioning', message: initialStatusMessage });

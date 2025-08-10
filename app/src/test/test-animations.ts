@@ -1,7 +1,7 @@
 import { Animations } from 'app/src/utils/animations';
 
-function getAnimationSpeed(): number {
-  return 1;
+function getAnimationDuration(regularDurationMs: number): number {
+  return regularDurationMs;
 }
 
 function highlightGame(gameIndex: number): void {}
@@ -13,7 +13,7 @@ function highlightPlayPauseButtonChange(): void {}
 function stopGameHighlight(gameIndex: number): void {}
 
 const animations: Animations = {
-  getAnimationSpeed,
+  getAnimationDuration,
   highlightGame,
   highlightGoal,
   highlightPlayPauseButtonChange,

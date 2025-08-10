@@ -91,14 +91,21 @@ function highlightPlayPauseButtonChange(): void {
   }
 }
 
-function getAnimationSpeed() {
-  return Number(
-    getComputedStyle(document.documentElement).getPropertyValue('--animation-speed') || '1',
-  );
+const getAnimationSpeed = () =>
+  Number(getComputedStyle(document.documentElement).getPropertyValue('--animation-speed') || '1');
+
+/**
+ * Adjusts the given animation duration according to the global animation speed.
+ *
+ * @param regularDurationMs animation duration with regular animation speed (in milliseconds)
+ * @returns adjusted animation duration
+ */
+export function getAnimationDuration(regularDurationMs: number): number {
+  return regularDurationMs / getAnimationSpeed();
 }
 
 const animations = {
-  getAnimationSpeed,
+  getAnimationDuration,
   highlightGame,
   highlightGoal,
   highlightPlayPauseButtonChange,
