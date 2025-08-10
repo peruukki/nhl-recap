@@ -6,8 +6,8 @@ const eventCounts = new Map<string, number>();
  *
  * To enable debug logging, set the `VITE_DEBUG` environment variable to `true`.
  *
- * @param label The label for the stream's logs, usually the name of the stream
- * @returns A function to pass to a stream's .debug() method
+ * @param label the label for the stream's logs, usually the name of the stream
+ * @returns a function to pass to a stream's .debug() method
  */
 export const debugFn =
   import.meta.env.VITE_DEBUG === 'true'

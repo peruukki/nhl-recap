@@ -3,8 +3,8 @@ import { Stream } from 'xstream';
 /**
  * Calls `assertFn` for each value of `stream$`.
  *
- * @param stream$ An xstream Stream to listen to
- * @param assertFn An assertion function
+ * @param stream$ an xstream Stream to listen to
+ * @param assertFn an assertion function
  * @returns a Promise that resolves if the stream completes and rejects if the stream aborts due to an error
  */
 export function assertStreamValues<Value>(
