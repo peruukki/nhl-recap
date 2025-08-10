@@ -51,7 +51,7 @@ type State = {
 
 type FetchStatus = {
   isDone: boolean;
-  message: string;
+  message?: string;
 };
 
 type ApiResponseError = { error: { expected: boolean; message?: string } };
@@ -159,18 +159,24 @@ function intent(
       })}`
     : 'Fetching latest scores';
 
+  const status$ = xs
+    .merge(
+      successApiResponse$.mapTo({ isDone: true }),
+      apiResponseOrError$
+        .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
+        .map<FetchStatus>(({ error }) => ({
+          isDone: true,
+          message: error.message ?? getUnexpectedErrorMessage(),
+        })),
+    )
+    .startWith({ isDone: false, message: initialStatusMessage })
+    .debug(debugFn('status$'));
+
   return {
     successApiResponse$,
     isPlaying$,
     playbackHasStarted$,
-    status$: apiResponseOrError$
-      .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
-      .map<FetchStatus>(({ error }) => ({
-        isDone: true,
-        message: error.message ?? getUnexpectedErrorMessage(),
-      }))
-      .startWith({ isDone: false, message: initialStatusMessage })
-      .debug(debugFn('status$')),
+    status$,
   };
 }
 
@@ -228,29 +234,31 @@ function model(actions: Actions, animations: Animations): Stream<State> {
 
   const gameDisplays$ = getGameDisplays$(clock.events$, scores$);
 
+  const games$ = xs
+    .combine(scores$, actions.status$, currentGoals$.startWith([]), gameDisplays$.startWith([]))
+    .filter(([scores, status]) => scores.games.length === 0 || status.isDone)
+    .debug(debugFn('games$'));
+
   actions.isPlaying$.addListener({
     next: animations.highlightPlayPauseButtonChange,
   });
 
   return xs
     .combine(
-      scores$,
-      currentGoals$.startWith([]),
+      games$,
       actions.isPlaying$,
-      actions.status$,
       clock.DOM.startWith(span('.clock')),
       clock.events$.startWith(null as unknown as GameEvent),
-      gameDisplays$.startWith([]),
     )
     .map<State>(
-      ([scores, currentGoals, isPlaying, status, clockVtree, clockEvent, gameDisplays]) => ({
+      ([[scores, status, currentGoals, gameDisplays], isPlaying, clockVtree, clockEvent]) => ({
         scores,
-        currentGoals,
-        isPlaying,
         status,
+        currentGoals,
+        gameDisplays,
+        isPlaying,
         clockVtree,
         event: clockEvent,
-        gameDisplays,
         gameCount: scores.games.length,
       }),
     )
@@ -275,7 +283,7 @@ function renderScores(
     '.score-list': true,
     '.score-list--single-game': state.games.length === 1,
   }).replace(/\s/g, '');
-  return state.games.length > 0
+  return state.status.isDone && state.games.length > 0
     ? div(
         scoreListClass,
         state.games.map((game, index) =>
