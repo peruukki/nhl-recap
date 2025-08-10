@@ -94,7 +94,7 @@ describe('app', () => {
     });
   });
 
-  it('should show a mesage if there are no latest scores available', async () => {
+  it('should show a message if there are no latest scores available', async () => {
     nock(nhlScoreApiHost)
       .get(nhlScoreApiPath)
       .times(2) // Dunno why two HTTP requests are sent
