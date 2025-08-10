@@ -5,6 +5,7 @@
 html {
   --animation-speed: 1;
 
+  scrollbar-gutter: stable;
   font-size: 62.5%;
 
   @media (min-width: 360px) {
