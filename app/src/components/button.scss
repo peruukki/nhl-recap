@@ -22,7 +22,7 @@
     height: 3.5rem;
     transition: color animations.$hover-duration animations.$hover-timing-function;
     color: colors.$gray;
-    animation: animations.$fade-duration fade-in;
+    animation: animations.$fade-in-duration fade-in;
 
     &:hover {
       color: colors.$white;
@@ -45,6 +45,6 @@
   &--hidden {
     cursor: default;
     opacity: 0;
-    animation: animations.$fade-duration hidden;
+    animation: animations.$fade-in-duration hidden;
   }
 }

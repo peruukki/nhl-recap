@@ -2,9 +2,9 @@
 
 $animation-speed: var(--animation-speed, 1);
 
-$fade-duration: calc(0.6s / $animation-speed);
-$fade-duration-fast: calc(0.3s / $animation-speed);
-$fade-duration-slow: calc(1s / $animation-speed);
+$fade-in-duration: calc(0.6s / $animation-speed);
+$fade-in-duration-fast: calc(0.3s / $animation-speed);
+$fade-in-duration-slow: calc(1s / $animation-speed);
 $fade-out-duration: calc(0.2s / $animation-speed);
 $expand-duration: calc(0.45s / $animation-speed);
 $focus-duration-enter: calc(0.45s / $animation-speed);
@@ -28,13 +28,13 @@ $height-timing-function: $focus-timing-function;
 $hover-timing-function: ease-out;
 
 .fade-in {
-  animation: $fade-duration $fade-timing-function fade-in;
+  animation: $fade-in-duration $fade-timing-function fade-in;
 }
 .fade-in-fast {
-  animation: $fade-duration-fast $fade-timing-function fade-in-fast;
+  animation: $fade-in-duration-fast $fade-timing-function fade-in-fast;
 }
 .fade-in-slow {
-  animation: $fade-duration-slow $fade-timing-function fade-in;
+  animation: $fade-in-duration-slow $fade-timing-function fade-in;
 }
 
 .fade-out {
@@ -43,8 +43,8 @@ $hover-timing-function: ease-out;
 
 @mixin fade-in-with-slide-animation {
   animation:
-    $fade-duration fade-in,
-    $fade-duration-fast slide-down;
+    $fade-in-duration fade-in,
+    $fade-in-duration-fast slide-down;
 }
 
 // Need two separate animation names to re-trigger animation
@@ -96,12 +96,12 @@ $hover-timing-function: ease-out;
       animation:
         $delay hidden,
         $expand-duration $expand-timing-function expand-and-slide $delay,
-        $fade-duration-fast ease-in fade-in $delay;
+        $fade-in-duration-fast ease-in fade-in $delay;
 
       @media (prefers-reduced-motion) {
         animation:
           $delay hidden,
-          $fade-duration-fast ease-in fade-in $delay;
+          $fade-in-duration-fast ease-in fade-in $delay;
       }
     }
   }
@@ -113,12 +113,12 @@ $hover-timing-function: ease-out;
   animation:
     $delay hidden,
     $expand-duration $expand-timing-function expand-and-slide $delay,
-    $fade-duration-fast ease-in fade-in $delay;
+    $fade-in-duration-fast ease-in fade-in $delay;
 
   @media (prefers-reduced-motion) {
     animation:
       $delay hidden,
-      $fade-duration-fast ease-in fade-in $delay;
+      $fade-in-duration-fast ease-in fade-in $delay;
   }
 }
 
