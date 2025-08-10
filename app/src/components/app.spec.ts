@@ -11,7 +11,8 @@ import app from './app';
 
 const dropCounts = {
   finalStatusMessage: 1,
-  scores: 1,
+  scores: 2,
+  transitioningStatusMessage: 1,
 };
 
 describe('app', () => {
@@ -26,6 +27,23 @@ describe('app', () => {
         expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-in'),
       );
     });
+  });
+
+  it('should fade out the message about fetching latest scores', async () => {
+    nock(nhlScoreApiHost)
+      .get(nhlScoreApiPath)
+      .times(2) // Dunno why two HTTP requests are sent
+      .reply(200, apiResponse);
+
+    const sinks = run(xs.of(nhlScoreApiUrl));
+    await assertStreamValues(
+      sinks.DOM.drop(dropCounts.transitioningStatusMessage).take(1),
+      (vtree) => {
+        expect(getStatusNode(vtree)).toEqual(
+          expectedStatusVtree(['Fetching latest scores', span('.loader')], '.fade-out'),
+        );
+      },
+    );
   });
 
   it('should fetch latest scores by default', async () => {
@@ -177,7 +195,7 @@ function run(
     location: { search: options.search ?? '' },
     navigator: { onLine: options.isOnline ?? true },
   } as Window;
-  return app(animations, $window, { fetchStatusShowDurationMs: 0 })({
+  return app(animations, $window, { fetchStatusExitDurationMs: 0, fetchStatusShowDurationMs: 0 })({
     DOM: mockDOMSource({}) as unknown as MainDOMSource,
     HTTP: driver(httpRequest$ as Stream<RequestInput | string>),
   });

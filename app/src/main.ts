@@ -11,7 +11,7 @@ if (import.meta.env.PROD) {
   registerServiceWorker();
 }
 
-run(app(animations, window, { fetchStatusShowDurationMs: 1200 }), {
+run(app(animations, window, { fetchStatusExitDurationMs: 200, fetchStatusShowDurationMs: 1200 }), {
   DOM: makeDOMDriver('#app'),
   HTTP: makeHTTPDriver(),
 });

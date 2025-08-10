@@ -51,7 +51,7 @@ type State = {
 
 type FetchStatus = {
   message?: string;
-  state: 'fetching' | 'done';
+  state: 'done' | 'fetching' | 'transitioning';
 };
 
 type ApiResponseError = { error: { expected: boolean; message?: string } };
@@ -61,7 +61,10 @@ function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuc
   return !!(response as ApiResponseSuccess).success;
 }
 
-type Options = { fetchStatusShowDurationMs: number };
+type Options = {
+  fetchStatusExitDurationMs: number;
+  fetchStatusShowDurationMs: number;
+};
 
 function parseSearchParams($window: Window) {
   const searchParams = new URLSearchParams($window.location.search);
@@ -159,9 +162,15 @@ function intent(
       })}`
     : 'Fetching latest scores';
 
+  const transitioningSuccessStatus$ = xs
+    .periodic(options.fetchStatusExitDurationMs)
+    .take(1)
+    .mapTo<FetchStatus>({ state: 'done' })
+    .startWith({ state: 'transitioning', message: initialStatusMessage });
+
   const status$ = xs
     .merge(
-      successApiResponse$.mapTo<FetchStatus>({ state: 'done' }),
+      successApiResponse$.mapTo(transitioningSuccessStatus$).flatten(),
       apiResponseOrError$
         .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
         .map<FetchStatus>(({ error }) => ({
@@ -236,7 +245,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
 
   const games$ = xs
     .combine(scores$, actions.status$, currentGoals$.startWith([]), gameDisplays$.startWith([]))
-    .filter(([scores, status]) => scores.games.length === 0 || status.state === 'done')
+    .filter(([scores, status]) => scores.games.length === 0 || status.state !== 'fetching')
     .debug(debugFn('games$'));
 
   actions.isPlaying$.addListener({
@@ -269,7 +278,13 @@ function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
     ({ scores, currentGoals, isPlaying, status, clockVtree, event, gameDisplays, gameCount }) =>
       div([
-        Header({ clockVtree, event, date: scores.date, gameCount, isPlaying }),
+        Header({
+          clockVtree,
+          event,
+          date: status.state === 'done' ? scores.date : undefined,
+          gameCount,
+          isPlaying,
+        }),
         main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
       ]),
   );
@@ -283,6 +298,11 @@ function renderScores(
     '.score-list': true,
     '.score-list--single-game': state.games.length === 1,
   }).replace(/\s/g, '');
+  const statusClass = classNames({
+    '.fade-in': state.status.state === 'fetching',
+    '.fade-in-fast.nope-animation': state.status.state === 'done',
+    '.fade-out': state.status.state === 'transitioning',
+  }).replace(/\s/g, '');
   return state.status.state === 'done' && state.games.length > 0
     ? div(
         scoreListClass,
@@ -295,7 +315,7 @@ function renderScores(
           ),
         ),
       )
-    : div(`.status${state.status.state === 'done' ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
+    : div(`.status${statusClass}`, [
         state.status.message,
         ...(state.status.state === 'done' ? [] : [span('.loader')]),
       ]);
