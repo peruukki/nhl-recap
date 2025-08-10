@@ -61,7 +61,7 @@ function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuc
   return !!(response as ApiResponseSuccess).success;
 }
 
-type Options = { fetchStatusDelayMs: number };
+type Options = { fetchStatusShowDurationMs: number };
 
 function parseSearchParams($window: Window) {
   const searchParams = new URLSearchParams($window.location.search);
@@ -124,7 +124,7 @@ function intent(
         return { error: { expected: false } };
       }
     })
-    .compose(delayAtLeast(options.fetchStatusDelayMs))
+    .compose(delayAtLeast(options.fetchStatusShowDurationMs))
     .debug(debugFn('apiResponseWithErrors$'));
 
   const successApiResponse$ = apiResponseWithErrors$

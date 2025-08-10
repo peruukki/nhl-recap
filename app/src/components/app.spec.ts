@@ -177,7 +177,7 @@ function run(
     location: { search: options.search ?? '' },
     navigator: { onLine: options.isOnline ?? true },
   } as Window;
-  return app(animations, $window, { fetchStatusDelayMs: 0 })({
+  return app(animations, $window, { fetchStatusShowDurationMs: 0 })({
     DOM: mockDOMSource({}) as unknown as MainDOMSource,
     HTTP: driver(httpRequest$ as Stream<RequestInput | string>),
   });
