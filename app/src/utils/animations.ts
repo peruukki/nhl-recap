@@ -91,7 +91,14 @@ function highlightPlayPauseButtonChange(): void {
   }
 }
 
+function getAnimationSpeed() {
+  return Number(
+    getComputedStyle(document.documentElement).getPropertyValue('--animation-speed') || '1',
+  );
+}
+
 const animations = {
+  getAnimationSpeed,
   highlightGame,
   highlightGoal,
   highlightPlayPauseButtonChange,

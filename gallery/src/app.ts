@@ -5,6 +5,7 @@ import fromEvent from 'xstream/extra/fromEvent';
 
 import Game from '../../app/src/components/game';
 import type { GameDisplay, GameStats, Game as GameT, Goal } from '../../app/src/types';
+import animations from '../../app/src/utils/animations';
 import { gamesData, stateDefinitions } from './data';
 import { getSectionExpandedState, setSectionExpandedState } from './storage';
 
@@ -117,9 +118,7 @@ function model({
   //
   // Game display states
   //
-  const animationSpeed = Number(
-    getComputedStyle(document.documentElement).getPropertyValue('--animation-speed') || '1',
-  );
+  const animationSpeed = animations.getAnimationSpeed();
   const replayGameDisplayStatesPerSection = initialSectionExpandedStates.map((_, index) =>
     xs.merge(
       sectionExpandedStates$

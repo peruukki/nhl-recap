@@ -87,7 +87,7 @@ export default function app(
     const error$ = error ? xs.of(error) : xs.empty();
     const url = date ? getApiUrl(date) : getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, error$, $window, options, date), animations)),
+      DOM: view(model(intent(DOM, HTTP, error$, $window, options, animations, date), animations)),
       HTTP: error ? xs.empty() : xs.of({ url }),
     };
   };
@@ -104,6 +104,7 @@ function intent(
   error$: Stream<Error>,
   $window: Window,
   options: Options,
+  animations: Animations,
   date?: string,
 ): Actions {
   const apiResponseWithErrors$ = HTTP.select()
@@ -163,7 +164,7 @@ function intent(
     : 'Fetching latest scores';
 
   const transitioningSuccessStatus$ = xs
-    .periodic(options.fetchStatusExitDurationMs)
+    .periodic(options.fetchStatusExitDurationMs / animations.getAnimationSpeed())
     .take(1)
     .mapTo<FetchStatus>({ state: 'done' })
     .startWith({ state: 'transitioning', message: initialStatusMessage });
