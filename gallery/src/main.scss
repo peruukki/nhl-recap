@@ -1,6 +1,7 @@
 @use '../../app/src/styles/colors';
 
 button {
+  font-size: 1.2rem;
   background-color: colors.$blue-dark;
   color: colors.$white;
   padding: 0.5rem 1rem;
