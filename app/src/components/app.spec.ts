@@ -9,6 +9,11 @@ import { scoresAllRegularTime as apiResponse } from '../test/data';
 import { assertStreamValues } from '../test/test-utils';
 import app from './app';
 
+const dropCounts = {
+  finalStatusMessage: 1,
+  scores: 1,
+};
+
 describe('app', () => {
   const nhlScoreApiHost = 'https://nhl-score-api.herokuapp.com';
   const nhlScoreApiPath = '/api/scores/latest';
@@ -44,7 +49,7 @@ describe('app', () => {
       .reply(200, apiResponse);
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.scores).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
       expect(scoreListNode?.sel).toEqual('div.score-list');
 
@@ -63,7 +68,7 @@ describe('app', () => {
       .reply(200, { ...apiResponse, games: apiResponse.games.slice(0, 1) });
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.scores).take(1), (vtree) => {
       const scoreListNode = getScoreListNode(vtree);
       expect(scoreListNode?.sel).toEqual('div.score-list.score-list--single-game');
     });
@@ -76,7 +81,7 @@ describe('app', () => {
       .reply(200, apiResponse);
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.scores).take(1), (vtree) => {
       const playButtonNode = getPlayButtonNode(vtree);
       expect(playButtonNode?.sel).toEqual('button.button.play-pause-button');
     });
@@ -89,7 +94,7 @@ describe('app', () => {
       .reply(200, apiResponse);
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.scores).take(1), (vtree) => {
       expect(getDateNode(vtree)).toEqual(expectedDateVtree('Tue Oct 17'));
     });
   });
@@ -101,7 +106,7 @@ describe('app', () => {
       .reply(200, { date: {}, games: [] });
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(['No scores available.'], '.fade-in-fast.nope-animation'),
       );
@@ -115,7 +120,7 @@ describe('app', () => {
       .reply(404, 'Fake error');
 
     const sinks = run(xs.of(nhlScoreApiUrl), { isOnline: false });
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(
           ['Failed to fetch scores: the network is offline.'],
@@ -132,7 +137,7 @@ describe('app', () => {
       .reply(503, '<!DOCTYPE html><html></html>', { 'Content-Type': 'text/html; charset=utf-8' });
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(['Failed to fetch scores.'], '.fade-in-fast.nope-animation'),
       );
@@ -155,7 +160,7 @@ describe('app', () => {
       .reply(404, 'Fake error');
 
     const sinks = run(xs.of(nhlScoreApiUrl));
-    await assertStreamValues(sinks.DOM.drop(1).take(1), (vtree) => {
+    await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
         expectedStatusVtree(['Failed to fetch scores.'], '.fade-in-fast.nope-animation'),
       );
