@@ -50,8 +50,8 @@ type State = {
 };
 
 type FetchStatus = {
-  isDone: boolean;
   message?: string;
+  state: 'fetching' | 'done';
 };
 
 type ApiResponseError = { error: { expected: boolean; message?: string } };
@@ -161,15 +161,15 @@ function intent(
 
   const status$ = xs
     .merge(
-      successApiResponse$.mapTo({ isDone: true }),
+      successApiResponse$.mapTo<FetchStatus>({ state: 'done' }),
       apiResponseOrError$
         .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
         .map<FetchStatus>(({ error }) => ({
-          isDone: true,
+          state: 'done',
           message: error.message ?? getUnexpectedErrorMessage(),
         })),
     )
-    .startWith({ isDone: false, message: initialStatusMessage })
+    .startWith({ state: 'fetching', message: initialStatusMessage })
     .debug(debugFn('status$'));
 
   return {
@@ -236,7 +236,7 @@ function model(actions: Actions, animations: Animations): Stream<State> {
 
   const games$ = xs
     .combine(scores$, actions.status$, currentGoals$.startWith([]), gameDisplays$.startWith([]))
-    .filter(([scores, status]) => scores.games.length === 0 || status.isDone)
+    .filter(([scores, status]) => scores.games.length === 0 || status.state === 'done')
     .debug(debugFn('games$'));
 
   actions.isPlaying$.addListener({
@@ -283,7 +283,7 @@ function renderScores(
     '.score-list': true,
     '.score-list--single-game': state.games.length === 1,
   }).replace(/\s/g, '');
-  return state.status.isDone && state.games.length > 0
+  return state.status.state === 'done' && state.games.length > 0
     ? div(
         scoreListClass,
         state.games.map((game, index) =>
@@ -295,8 +295,8 @@ function renderScores(
           ),
         ),
       )
-    : div(`.status${state.status.isDone ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
+    : div(`.status${state.status.state === 'done' ? '.fade-in-fast.nope-animation' : '.fade-in'}`, [
         state.status.message,
-        ...(state.status.isDone ? [] : [span('.loader')]),
+        ...(state.status.state === 'done' ? [] : [span('.loader')]),
       ]);
 }
