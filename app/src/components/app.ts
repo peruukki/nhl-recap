@@ -245,8 +245,19 @@ function model(actions: Actions, animations: Animations): Stream<State> {
   const gameDisplays$ = getGameDisplays$(clock.events$, scores$);
 
   const games$ = xs
-    .combine(scores$, actions.status$, currentGoals$.startWith([]), gameDisplays$.startWith([]))
-    .filter(([scores, status]) => scores.games.length === 0 || status.state !== 'fetching')
+    .combine(scores$, currentGoals$.startWith([]), gameDisplays$.startWith([]), actions.status$)
+    // Wait until game states reach internal consistency
+    .filter(
+      ([scores, currentGoals, gameDisplays]) =>
+        scores.games.length === currentGoals.length && scores.games.length === gameDisplays.length,
+    )
+    .filter(([scores, , , status]) => scores.games.length === 0 || status.state !== 'fetching')
+    .map<[Scores, Goal[][], GameDisplay[], FetchStatus]>(
+      ([scores, currentGoals, gameDisplays, status]) =>
+        status.state === 'done'
+          ? [scores, currentGoals, gameDisplays, status]
+          : [{ games: [] }, [], [], status],
+    )
     .debug(debugFn('games$'));
 
   actions.isPlaying$.addListener({
@@ -261,11 +272,11 @@ function model(actions: Actions, animations: Animations): Stream<State> {
       clock.events$.startWith(null as unknown as GameEvent),
     )
     .map<State>(
-      ([[scores, status, currentGoals, gameDisplays], isPlaying, clockVtree, clockEvent]) => ({
+      ([[scores, currentGoals, gameDisplays, status], isPlaying, clockVtree, clockEvent]) => ({
         scores,
-        status,
         currentGoals,
         gameDisplays,
+        status,
         isPlaying,
         clockVtree,
         event: clockEvent,
@@ -279,13 +290,7 @@ function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
     ({ scores, currentGoals, isPlaying, status, clockVtree, event, gameDisplays, gameCount }) =>
       div([
-        Header({
-          clockVtree,
-          event,
-          date: status.state === 'done' ? scores.date : undefined,
-          gameCount,
-          isPlaying,
-        }),
+        Header({ clockVtree, event, date: scores.date, gameCount, isPlaying }),
         main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
       ]),
   );
@@ -304,7 +309,7 @@ function renderScores(
     '.fade-in-fast.nope-animation': state.status.state === 'done',
     '.fade-out': state.status.state === 'transitioning',
   }).replace(/\s/g, '');
-  return state.status.state === 'done' && state.games.length > 0
+  return state.games.length > 0
     ? div(
         scoreListClass,
         state.games.map((game, index) =>
