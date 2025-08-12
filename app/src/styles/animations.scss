@@ -88,7 +88,7 @@ $hover-timing-function: ease-out;
     &--#{$i} {
       // easeOutCubic for delay
       $delay: calc(
-        cubic-bezier-to-func-of-t(0.215, 0.61, 0.355, 1, math.div($i, 15)) *
+        cubic-bezier-to-func-of-t(0, 0.61, 0.355, 1, math.div($i, 15)) *
           $expand-delay-stagger /
           $animation-speed
       );
