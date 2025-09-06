@@ -124,17 +124,17 @@ function renderStreakType({ type }: TeamStreak): string {
 }
 
 function renderPlayoffSpot({ pointsFromPlayoffSpot }: { pointsFromPlayoffSpot: string }): string {
-  return pointsFromPlayoffSpot || '';
+  return pointsFromPlayoffSpot || '-';
 }
 
 function renderDivisionRank({ divisionRank }: { divisionRank: string }): string {
-  return divisionRank || '';
+  return divisionRank || '-';
 }
 
 function renderConferenceRank({ conferenceRank }: { conferenceRank: string }): string {
-  return conferenceRank || '';
+  return conferenceRank || '-';
 }
 
 function renderLeagueRank({ leagueRank }: { leagueRank: string }): string {
-  return leagueRank || '';
+  return leagueRank || '-';
 }
