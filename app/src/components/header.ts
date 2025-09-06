@@ -7,20 +7,20 @@ type Props = {
   clockVtree: VNode;
   date: Scores['date'];
   event: GameEvent | null;
-  gameCount: number;
+  haveGamesStarted: boolean;
   isPlaying: boolean;
 };
 
-export default function Header({ clockVtree, date, event, gameCount, isPlaying }: Props) {
+export default function Header({ clockVtree, date, event, haveGamesStarted, isPlaying }: Props) {
   const hasNotStarted = !event;
   const isFinished = event?.type === 'end';
   const buttonText = isPlaying ? 'Pause' : 'Play';
   const buttonType = isPlaying ? 'pause' : 'play';
-  const showIcon = gameCount > 0;
+  const showIcon = haveGamesStarted;
 
   const dynamicClassNames = {
     [`button--${buttonType}`]: showIcon,
-    'expand--last': gameCount > 0 && hasNotStarted,
+    'expand--last': haveGamesStarted && hasNotStarted,
     'button--hidden': isFinished,
   };
 

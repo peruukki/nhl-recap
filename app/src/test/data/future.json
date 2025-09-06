@@ -1,0 +1,292 @@
+[
+  {
+    "date": {
+      "pretty": "Tue Oct 7",
+      "raw": "2025-10-07"
+    },
+    "games": [
+      {
+        "currentStats": {
+          "records": {
+            "CHI": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "FLA": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "CHI": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "FLA": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "CHI": null,
+            "FLA": null
+          }
+        },
+        "goals": [],
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/chi-vs-fla/2025/10/07/2025020001"
+        },
+        "preGameStats": {
+          "records": {
+            "CHI": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "FLA": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "CHI": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "FLA": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "CHI": null,
+            "FLA": null
+          }
+        },
+        "scores": {
+          "CHI": 0,
+          "FLA": 0
+        },
+        "startTime": "2025-10-07T21:00:00Z",
+        "status": {
+          "state": "PREVIEW"
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "CHI",
+            "id": 16,
+            "locationName": "Chicago",
+            "shortName": "Chicago",
+            "teamName": "Blackhawks"
+          },
+          "home": {
+            "abbreviation": "FLA",
+            "id": 13,
+            "locationName": "Florida",
+            "shortName": "Florida",
+            "teamName": "Panthers"
+          }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "NYR": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "PIT": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "NYR": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "PIT": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "NYR": null,
+            "PIT": null
+          }
+        },
+        "goals": [],
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/pit-vs-nyr/2025/10/07/2025020002"
+        },
+        "preGameStats": {
+          "records": {
+            "NYR": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "PIT": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "NYR": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "PIT": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "NYR": null,
+            "PIT": null
+          }
+        },
+        "scores": {
+          "NYR": 0,
+          "PIT": 0
+        },
+        "startTime": "2025-10-08T00:00:00Z",
+        "status": {
+          "state": "PREVIEW"
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "PIT",
+            "id": 5,
+            "locationName": "Pittsburgh",
+            "shortName": "Pittsburgh",
+            "teamName": "Penguins"
+          },
+          "home": {
+            "abbreviation": "NYR",
+            "id": 3,
+            "locationName": "New York",
+            "shortName": "NY Rangers",
+            "teamName": "Rangers"
+          }
+        }
+      },
+      {
+        "currentStats": {
+          "records": {
+            "COL": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "LAK": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "COL": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "LAK": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "COL": null,
+            "LAK": null
+          }
+        },
+        "goals": [],
+        "links": {
+          "gameCenter": "https://www.nhl.com/gamecenter/col-vs-lak/2025/10/07/2025020003"
+        },
+        "preGameStats": {
+          "records": {
+            "COL": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            },
+            "LAK": {
+              "losses": 0,
+              "ot": 0,
+              "wins": 0
+            }
+          },
+          "standings": {
+            "COL": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            },
+            "LAK": {
+              "conferenceRank": "",
+              "divisionRank": "",
+              "leagueRank": "",
+              "pointsFromPlayoffSpot": ""
+            }
+          },
+          "streaks": {
+            "COL": null,
+            "LAK": null
+          }
+        },
+        "scores": {
+          "COL": 0,
+          "LAK": 0
+        },
+        "startTime": "2025-10-08T02:30:00Z",
+        "status": {
+          "state": "PREVIEW"
+        },
+        "teams": {
+          "away": {
+            "abbreviation": "COL",
+            "id": 21,
+            "locationName": "Colorado",
+            "shortName": "Colorado",
+            "teamName": "Avalanche"
+          },
+          "home": {
+            "abbreviation": "LAK",
+            "id": 26,
+            "locationName": "Los Angeles",
+            "shortName": "Los Angeles",
+            "teamName": "Kings"
+          }
+        }
+      }
+    ]
+  }
+]

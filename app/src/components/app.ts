@@ -46,7 +46,7 @@ type State = {
   clockVtree: VNode;
   event: GameEvent | null;
   gameDisplays: GameDisplay[];
-  gameCount: number;
+  haveGamesStarted: boolean;
 };
 
 type FetchStatus = {
@@ -280,7 +280,9 @@ function model(actions: Actions, animations: Animations): Stream<State> {
         isPlaying,
         clockVtree,
         event: clockEvent,
-        gameCount: scores.games.length,
+        haveGamesStarted: scores.games.some((game) =>
+          ['FINAL', 'LIVE'].includes(game.status.state),
+        ),
       }),
     )
     .debug(debugFn('model$'));
@@ -288,9 +290,18 @@ function model(actions: Actions, animations: Animations): Stream<State> {
 
 function view(state$: Stream<State>): Stream<VNode> {
   return state$.map(
-    ({ scores, currentGoals, isPlaying, status, clockVtree, event, gameDisplays, gameCount }) =>
+    ({
+      scores,
+      currentGoals,
+      isPlaying,
+      status,
+      clockVtree,
+      event,
+      gameDisplays,
+      haveGamesStarted,
+    }) =>
       div([
-        Header({ clockVtree, event, date: scores.date, gameCount, isPlaying }),
+        Header({ clockVtree, event, date: scores.date, haveGamesStarted, isPlaying }),
         main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
       ]),
   );

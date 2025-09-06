@@ -32,7 +32,12 @@ import {
 
 export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   const advanceClockStep = getAdvanceClockStep(scores.length);
+
   const endTime = getClockEndTime(scores);
+  if (!endTime) {
+    return [];
+  }
+
   const eventsByPeriod = getAllPeriodEvents(
     scores,
     endTime,
@@ -169,7 +174,7 @@ function getShootoutGameEvents(
     : [];
 }
 
-function getClockEndTime(scores: Game[]): GameEndTime {
+function getClockEndTime(scores: Game[]): GameEndTime | undefined {
   const gameEndTimes = scores.map(getGameEndTime);
   return _.chain(gameEndTimes)
     .filter((time): time is GameEndTime => !!time)

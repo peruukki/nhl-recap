@@ -1,5 +1,6 @@
 import type { Scores } from 'app/src/types';
 
+import future from './future.json';
 import latest from './latest.json';
 import latestLive from './latest-live.json';
 import latestLiveEndOfOT from './latest-live-end-of-ot.json';
@@ -12,6 +13,7 @@ import latestPlayoffs from './latest-playoffs.json';
 import latestPlayoffsOT from './latest-playoffs-ot.json';
 
 export const scoresAllLive = latestLive as unknown as Scores;
+export const scoresAllPreview = future[0] as unknown as Scores;
 export const scoresAllRegularTime = latest as unknown as Scores;
 export const scoresAllRegularTimePlayoffs = latestPlayoffs as unknown as Scores;
 export const scoresLiveEndOfOT = latestLiveEndOfOT as unknown as Scores;

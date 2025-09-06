@@ -6,6 +6,7 @@ import gameEvents, { getAllGoalsSorted } from './game-events';
 
 import {
   scoresAllLive,
+  scoresAllPreview,
   scoresAllRegularTime,
   scoresLiveProgressedMoreThanFinished,
   scoresLiveEndOfOT,
@@ -148,6 +149,11 @@ describe('gameEvents', () => {
   it('should have a final "end" event with inProgress flag if no games have finished', () => {
     const events = gameEvents(scoresAllLive.games);
     expect(_.last(events)).toEqual({ type: 'end', inProgress: true });
+  });
+
+  it('should generate no events if no games have started', () => {
+    const events = gameEvents(scoresAllPreview.games);
+    expect(events).toEqual([]);
   });
 
   it('should sort all goals correctly', () => {
