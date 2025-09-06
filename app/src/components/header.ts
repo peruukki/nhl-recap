@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Header({ clockVtree, date, event, haveGamesStarted, isPlaying }: Props) {
-  const hasNotStarted = !event;
+  const hasPlaybackStarted = !!event;
   const isFinished = event?.type === 'end';
   const buttonText = isPlaying ? 'Pause' : 'Play';
   const buttonType = isPlaying ? 'pause' : 'play';
@@ -20,7 +20,7 @@ export default function Header({ clockVtree, date, event, haveGamesStarted, isPl
 
   const dynamicClassNames = {
     [`button--${buttonType}`]: showIcon,
-    'expand--last': haveGamesStarted && hasNotStarted,
+    'expand--last': haveGamesStarted && !hasPlaybackStarted,
     'button--hidden': isFinished,
   };
 
@@ -38,7 +38,7 @@ export default function Header({ clockVtree, date, event, haveGamesStarted, isPl
           ]),
         ],
       ),
-      hasNotStarted && date ? span('.header__date.fade-in', date.pretty) : clockVtree,
+      !hasPlaybackStarted && date ? span('.header__date.fade-in', date.pretty) : clockVtree,
     ]),
   );
 }
