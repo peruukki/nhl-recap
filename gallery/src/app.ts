@@ -9,13 +9,9 @@ import animations from '../../app/src/utils/animations';
 import { gamesData, stateDefinitions } from './data';
 import { getSectionExpandedState, setSectionExpandedState } from './storage';
 
-type Sources = {
-  DOM: MainDOMSource;
-};
+type Sources = { DOM: MainDOMSource };
 
-type Sinks = {
-  DOM: Stream<VNode>;
-};
+type Sinks = { DOM: Stream<VNode> };
 
 type Actions = {
   expandCollapseAll$: Stream<'expand' | 'collapse'>;
@@ -32,10 +28,7 @@ type GalleryGameT = {
   currentGoals: Goal[];
   description: string;
   gameDisplay: GameDisplay;
-  gameState: GameT & {
-    status: string;
-    gameStats: GameStats;
-  };
+  gameState: GameT & { status: string; gameStats: GameStats };
 };
 
 export default function main(): (sources: Sources) => Sinks {
@@ -46,7 +39,7 @@ function intent(DOM: Sources['DOM']): Actions {
   const expandCollapseAll$ = DOM.select('.expand-collapse-all')
     .events('click')
     .map((event) => {
-      const button = event.target as HTMLButtonElement;
+      const button = event.target as Node;
       return button.textContent?.startsWith('Expand') ? 'expand' : 'collapse';
     });
 
@@ -73,11 +66,7 @@ function intent(DOM: Sources['DOM']): Actions {
     )
     .flatten();
 
-  return {
-    expandCollapseAll$,
-    expandCollapseSections$,
-    replayGameDisplayStates$,
-  };
+  return { expandCollapseAll$, expandCollapseSections$, replayGameDisplayStates$ };
 }
 
 function model({
