@@ -94,14 +94,11 @@ $hover-timing-function: ease-out;
       );
 
       animation:
-        $delay hidden,
         $expand-duration $expand-timing-function expand-and-slide $delay,
-        $fade-in-duration-fast ease-in fade-in $delay;
+        $fade-in-duration-fast ease-in fade-in $delay backwards;
 
       @media (prefers-reduced-motion) {
-        animation:
-          $delay hidden,
-          $fade-in-duration-fast ease-in fade-in $delay;
+        animation: $fade-in-duration-fast ease-in fade-in $delay backwards;
       }
     }
   }
@@ -111,14 +108,11 @@ $hover-timing-function: ease-out;
   $delay: $expand-delay-last;
 
   animation:
-    $delay hidden,
     $expand-duration $expand-timing-function expand-and-slide $delay,
-    $fade-in-duration-fast ease-in fade-in $delay;
+    $fade-in-duration-fast ease-in fade-in $delay backwards;
 
   @media (prefers-reduced-motion) {
-    animation:
-      $delay hidden,
-      $fade-in-duration-fast ease-in fade-in $delay;
+    animation: $fade-in-duration-fast ease-in fade-in $delay backwards;
   }
 }
 
@@ -137,15 +131,6 @@ $hover-timing-function: ease-out;
   }
   to {
     transform: translateY(0);
-  }
-}
-
-@keyframes hidden {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0;
   }
 }
 
