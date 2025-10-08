@@ -41,6 +41,7 @@
     @include horizontal-offset(STL, -1px);
     @include horizontal-offset(TBL, 1px);
     @include horizontal-offset(TOR, -2px);
+    @include horizontal-offset(UTA, 2px);
     @include horizontal-offset(VGK, -3px);
     @include horizontal-offset(WSH, 1px);
   }
