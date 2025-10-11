@@ -10,6 +10,7 @@
     padding-bottom: 0;
   }
 
+  .game--pre-game &,
   .game--post-game-in-progress &,
   .game--post-game-finished & {
     @include animations.fade-in-with-slide-animation;
