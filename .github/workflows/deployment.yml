@@ -30,7 +30,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: npm ci
-      - run: npm test
+      - run: npm run check
       - name: Set up Git config
         if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
         run: |

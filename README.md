@@ -66,20 +66,22 @@ but it is also run as part of the linting tasks:
 npm run format
 ```
 
+## Running all source code checks
+
+Lint SASS and JavaScript/TypeScript, type-check TypeScript, verify code formatting and run unit tests:
+
+```shell
+npm run check
+```
+
 ## Linting
 
-### Linting JavaScript
+### Linting JavaScript/TypeScript
 
 One-time lint run:
 
 ```shell
 npm run lint:js
-```
-
-Lint on file changes:
-
-```shell
-npm run watch:lint:js
 ```
 
 ### Linting SASS
@@ -103,22 +105,22 @@ npm run watch:lint:css
 
 ## Testing
 
-Lint SASS, lint JavaScript, check code formatting and run unit tests:
+Run unit tests:
 
 ```shell
 npm test
 ```
 
-Run only unit tests, including coverage:
+Run unit tests, including coverage:
 
 ```shell
-npm run spec
+npm run test:coverage
 ```
 
-Run only unit tests in watch mode:
+Run unit tests in watch mode:
 
 ```shell
-npm run spec:watch
+npm run test:watch
 ```
 
 ## Building
