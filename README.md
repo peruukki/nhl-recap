@@ -10,9 +10,9 @@ By default, the app shows the latest scores, but you can also specify a custom d
 for example https://peruukki.github.io/nhl-recap/?date=2025-06-17. The date needs to be in `YYYY-MM-DD` format.
 
 Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
-as its backed.
+as its backend.
 
-https://github.com/peruukki/nhl-recap/assets/1781172/ee217216-da23-42b3-8798-6f46e4bc23b7
+https://github.com/user-attachments/assets/57a9bfb8-0c9c-4277-b50c-17995a11269b
 
 ## Running the app
 
