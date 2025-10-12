@@ -7,6 +7,9 @@
   color: colors.$color-main;
   text-align: center;
 
+  .game--pre-game & {
+    @include animations.delayed-animation-earlier;
+  }
   .game--in-progress & {
     @include animations.delayed-animation;
   }

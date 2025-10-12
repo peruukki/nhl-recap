@@ -12,7 +12,8 @@ $focus-duration-exit: calc(1s / $animation-speed);
 $height-duration: calc(0.45s / $animation-speed);
 $hover-duration: calc(0.25s / $animation-speed);
 
-$delay-small: calc(0.3s / $animation-speed);
+$delay-small: calc(0.15s / $animation-speed);
+$delay-medium: calc(0.3s / $animation-speed);
 $delay-large: calc(0.45s / $animation-speed);
 
 // The stagger delays are used as components in calculations, so we don't apply $animation
@@ -134,9 +135,13 @@ $hover-timing-function: ease-out;
   }
 }
 
-@mixin delayed-animation {
+@mixin delayed-animation-earlier {
   animation-fill-mode: both;
   animation-delay: $delay-small;
+}
+@mixin delayed-animation {
+  animation-fill-mode: both;
+  animation-delay: $delay-medium;
 }
 @mixin delayed-animation-later {
   animation-fill-mode: both;
