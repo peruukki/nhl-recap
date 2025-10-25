@@ -3,12 +3,14 @@ import { div, span, VNode } from '@cycle/dom';
 import type { TeamRecord, Teams, TeamStats as TeamStatsT, TeamStreak } from '../../../types';
 import { renderStat } from './common';
 
-export default function TeamStats(
-  teams: Teams,
-  fadeIn: boolean,
-  isPlayoffGame: boolean,
-  stats?: TeamStatsT,
-): VNode {
+type Props = {
+  fadeIn: boolean;
+  isPlayoffGame: boolean;
+  stats?: TeamStatsT;
+  teams: Teams;
+};
+
+export default function TeamStats({ fadeIn, isPlayoffGame, stats, teams }: Props): VNode {
   return div('.stats', { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
     renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),

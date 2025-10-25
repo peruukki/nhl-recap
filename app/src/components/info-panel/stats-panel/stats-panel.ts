@@ -31,7 +31,12 @@ export default function StatsPanel({
       ? [
           showGameStats && gameStats ? GameStats(teams, gameStats) : null,
           (showPreGameStats || showAfterGameStats) && teamStats
-            ? TeamStats(teams, showProgressInfo || showAfterGameStats, isPlayoffGame, teamStats)
+            ? TeamStats({
+                fadeIn: showProgressInfo || showAfterGameStats,
+                isPlayoffGame,
+                stats: teamStats,
+                teams,
+              })
             : null,
         ]
       : null,
