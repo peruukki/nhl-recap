@@ -14,11 +14,11 @@ import {
   Teams,
   TeamStats as TeamStatsT,
 } from '../../types';
-import { truncatePlayerName } from '../../utils/utils';
+import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import PlayerLogo from './player-logo';
 import { getTeamStatCount } from './stat-counts';
-import StatsPanel from './stats-panel';
+import StatsPanel, { type TeamStatsInfo } from './stats-panel';
 
 type Props = {
   currentGoals: Goal[];
@@ -32,6 +32,37 @@ type Props = {
   status: GameStatus;
   teams: Teams;
 };
+
+function getTeamStatsInfo({
+  currentStats,
+  gameDisplay,
+  preGameStats,
+  teams,
+}: {
+  currentStats?: TeamStatsT;
+  gameDisplay: GameDisplay;
+  preGameStats?: TeamStatsT;
+  teams: Teams;
+}): TeamStatsInfo {
+  const isPreGameDisplayState = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
+  const isAfterGameDisplayState = gameDisplay === 'post-game-finished';
+
+  const showPreGameStats =
+    isPreGameDisplayState ||
+    (isAfterGameDisplayState && areTeamStatsEqual({ currentStats, preGameStats, teams }));
+  const showPostGameStats = isAfterGameDisplayState && !showPreGameStats;
+  const show = showPreGameStats || showPostGameStats;
+  const stats = showPreGameStats ? preGameStats : showPostGameStats ? currentStats : undefined;
+
+  return show && stats
+    ? {
+        isAfterGameDisplayState,
+        show: true,
+        stats,
+        type: showPreGameStats ? 'preGame' : 'afterGame',
+      }
+    : { show: false };
+}
 
 export default function InfoPanel({
   currentGoals,
@@ -54,12 +85,12 @@ export default function InfoPanel({
   ].includes(gameDisplay);
   const showGameStats =
     !!gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
-  const showPreGameStats = ['pre-game', 'post-game-in-progress'].includes(gameDisplay);
-  const showAfterGameStats = gameDisplay === 'post-game-finished';
-  const teamStats = showPreGameStats ? preGameStats : showAfterGameStats ? currentStats : undefined;
-  const teamStatLineCount = teamStats
-    ? getTeamStatCount(Object.keys(teamStats), isPlayoffGame) + 1
-    : 0;
+
+  const teamStatsInfo = getTeamStatsInfo({ currentStats, gameDisplay, preGameStats, teams });
+  const teamStatLineCount =
+    teamStatsInfo.show && teamStatsInfo.stats
+      ? getTeamStatCount(Object.keys(teamStatsInfo.stats), isPlayoffGame) + 1
+      : 0;
 
   return div(
     '.info-panel',
@@ -80,11 +111,9 @@ export default function InfoPanel({
         ? StatsPanel({
             gameStats,
             isPlayoffGame,
-            showAfterGameStats,
             showGameStats,
-            showPreGameStats,
             showProgressInfo,
-            teamStats,
+            teamStatsInfo,
             teams,
           })
         : null,

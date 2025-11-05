@@ -83,7 +83,7 @@ type StatErrorScoreAndGoalCountMismatch = {
 };
 export type StatError = StatErrorMissingAllGoals | StatErrorScoreAndGoalCountMismatch;
 
-type Team = {
+export type Team = {
   abbreviation: TeamAbbreviation;
   id: number;
   locationName: string;

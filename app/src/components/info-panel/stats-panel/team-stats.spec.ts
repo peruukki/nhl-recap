@@ -14,13 +14,13 @@ const inProgressGameProgress = {
 };
 
 const statIndexes = {
-  divisionRank: 1,
-  conferenceRank: 2,
-  leagueRank: 3,
-  pointPct: 4,
-  recordOrSeasonPts: 5,
-  playoffSpotPts: 6,
-  streak: 7,
+  divisionRank: 2,
+  conferenceRank: 3,
+  leagueRank: 4,
+  pointPct: 5,
+  recordOrSeasonPts: 6,
+  playoffSpotPts: 7,
+  streak: 8,
 };
 
 describe('team stats', () => {
@@ -57,8 +57,22 @@ describe('team stats', () => {
 
     it('should not be shown after playback has finished for finished games', () => {
       const status: GameStatus = { state: 'FINAL' };
+      const { teams, goals, preGameStats, currentStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreNotShown(
+        'post-game-finished',
+        { status, teams, preGameStats, currentStats },
+        goals,
+      );
+    });
+
+    it('should be shown after playback has finished for finished games whose current stats have not be updated', () => {
+      const status: GameStatus = { state: 'FINAL' };
       const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown('post-game-finished', { status, teams, preGameStats }, goals);
+      assertPreGameStatsAreShown(
+        'post-game-finished',
+        { status, teams, preGameStats, currentStats: preGameStats },
+        goals,
+      );
     });
 
     it('should be shown after playback has finished for in-progress games', () => {
@@ -441,11 +455,17 @@ describe('team stats', () => {
 
 function assertPreGameStatsAreShown(
   gameDisplay: GameDisplay,
-  { status, teams, preGameStats }: Partial<GameT>,
+  { status, teams, preGameStats, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (selector?: string) =>
-    expect(selector).toEqual('div.stats'),
+  assertStatsExistence(
+    gameDisplay,
+    { status, teams, preGameStats, currentStats },
+    goals,
+    (vtree?: VNode) => {
+      expect(vtree?.sel).toEqual('div.stats');
+      expect(getTeamStatsSubheading(vtree)).toEqual('before game');
+    },
   );
 }
 function assertPreGameStatsAreNotShown(
@@ -453,8 +473,8 @@ function assertPreGameStatsAreNotShown(
   { status, teams, preGameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (selector?: string) =>
-    expect(selector).not.toEqual('div.stats'),
+  assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (vtree?: VNode) =>
+    expect(vtree?.sel).not.toEqual('div.stats'),
   );
 }
 function assertAfterGameStatsAreShown(
@@ -462,29 +482,30 @@ function assertAfterGameStatsAreShown(
   { status, teams, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (selector?: string) =>
-    expect(selector).toEqual('div.stats'),
-  );
+  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (vtree?: VNode) => {
+    expect(vtree?.sel).toEqual('div.stats');
+    expect(getTeamStatsSubheading(vtree)).toEqual('after game');
+  });
 }
 function assertAfterGameStatsAreNotShown(
   gameDisplay: GameDisplay,
   { status, teams, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (selector?: string) =>
-    expect(selector).not.toEqual('div.stats'),
+  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (vtree?: VNode) =>
+    expect(vtree?.sel).not.toEqual('div.stats'),
   );
 }
 function assertStatsExistence(
   gameDisplay: GameDisplay,
   { status, teams, preGameStats, currentStats }: Partial<GameT>,
   goals: Goal[],
-  assertFn: (actual: string | undefined) => void,
+  assertFn: (actual?: VNode) => void,
 ) {
   const stats = getTeamStats(
     Game(gameDisplay, { status, teams, preGameStats, currentStats } as GameT, goals, 0),
   );
-  assertFn(stats?.sel);
+  assertFn(stats);
 }
 
 function assertTeamStats(
@@ -506,4 +527,8 @@ function assertTeamStats(
 
 function getTeamStats(vtree: VNode) {
   return getStatsPanel(vtree)?.children?.[1] as VNode | undefined;
+}
+
+function getTeamStatsSubheading(teamStatsVTree?: VNode): string | undefined {
+  return (teamStatsVTree?.children?.[1] as VNode).text;
 }

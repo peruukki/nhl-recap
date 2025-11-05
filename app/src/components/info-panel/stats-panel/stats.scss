@@ -1,5 +1,6 @@
 @use '../../../styles/animations';
 @use '../../../styles/colors';
+@use '../../../styles/sizes';
 
 .stats {
   @include animations.delayed-animation;
@@ -13,6 +14,13 @@
     color: colors.$color-accent-light;
     font-size: 1rem;
     text-transform: uppercase;
+  }
+
+  &__subheading {
+    color: colors.$color-main;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-top: sizes.$team-stats-subheading-offset;
   }
 
   .game--post-game-in-progress &,

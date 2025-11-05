@@ -19,9 +19,11 @@ $content-width: 2 * ($game-card-width + 2 * $game-card-margin) + 0.1rem;
 
 $game-stats-line-count: 9;
 $team-stats-line-count-max: 8;
+$team-stats-subheading-offset: -0.4rem;
 
 @function get-stats-section-height($line-count) {
-  @return $panel-padding-height + $line-count * $stats-line-height;
+  @return $panel-padding-height + $team-stats-subheading-offset + ($line-count + 1) *
+    $stats-line-height;
 }
 
 @function get-stats-panel-height($line-count) {

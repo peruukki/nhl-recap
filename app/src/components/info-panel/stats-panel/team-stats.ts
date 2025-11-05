@@ -7,12 +7,20 @@ type Props = {
   fadeIn: boolean;
   isPlayoffGame: boolean;
   stats?: TeamStatsT;
+  statsType: 'afterGame' | 'preGame';
   teams: Teams;
 };
 
-export default function TeamStats({ fadeIn, isPlayoffGame, stats, teams }: Props): VNode {
+export default function TeamStats({
+  fadeIn,
+  isPlayoffGame,
+  stats,
+  statsType,
+  teams,
+}: Props): VNode {
   return div('.stats', { class: { 'fade-in': fadeIn } }, [
     div('.stats__heading', 'Team stats'),
+    div('.stats__subheading', statsType === 'preGame' ? 'before game' : 'after game'),
     renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
     renderStat(
       teams,

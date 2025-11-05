@@ -1,1 +1,1 @@
-export { default } from './stats-panel';
+export { default, type TeamStatsInfo } from './stats-panel';

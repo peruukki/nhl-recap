@@ -7,34 +7,40 @@ import TeamStats from './team-stats';
 type Props = {
   gameStats?: GameStatsT;
   isPlayoffGame: boolean;
-  showAfterGameStats: boolean;
   showGameStats: boolean;
-  showPreGameStats: boolean;
   showProgressInfo: boolean;
-  teamStats?: TeamStatsT;
+  teamStatsInfo: TeamStatsInfo;
   teams: Teams;
 };
+
+export type TeamStatsInfo =
+  | { show: false }
+  | {
+      isAfterGameDisplayState: boolean;
+      show: true;
+      stats: TeamStatsT | undefined;
+      type: 'afterGame' | 'preGame';
+    };
 
 export default function StatsPanel({
   gameStats,
   isPlayoffGame,
-  showAfterGameStats,
   showGameStats,
-  showPreGameStats,
   showProgressInfo,
-  teamStats,
+  teamStatsInfo,
   teams,
 }: Props) {
   return div(
     '.stats-panel',
-    showGameStats || ((showPreGameStats || showAfterGameStats) && teamStats)
+    showGameStats || teamStatsInfo.show
       ? [
           showGameStats && gameStats ? GameStats(teams, gameStats) : null,
-          (showPreGameStats || showAfterGameStats) && teamStats
+          teamStatsInfo.show
             ? TeamStats({
-                fadeIn: showProgressInfo || showAfterGameStats,
+                fadeIn: showProgressInfo || teamStatsInfo.isAfterGameDisplayState,
                 isPlayoffGame,
-                stats: teamStats,
+                stats: teamStatsInfo.stats,
+                statsType: teamStatsInfo.type,
                 teams,
               })
             : null,
