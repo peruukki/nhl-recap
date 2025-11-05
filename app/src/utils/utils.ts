@@ -31,9 +31,5 @@ export function truncatePlayerName(name: string, maxLength = 20): string {
 }
 
 export function getGameAnimationIndexes(gameCount: number): number[] {
-  const maxGameCount = 16;
-  return _.times(gameCount, (index) => {
-    // Spread animation indexes across the whole range
-    return Math.round((maxGameCount / gameCount) * index);
-  });
+  return Array.from({ length: gameCount }, (value, index) => index);
 }

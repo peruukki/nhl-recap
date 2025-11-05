@@ -54,12 +54,8 @@ describe('utils', () => {
       expect(getGameAnimationIndexes(0)).toEqual([]);
     });
 
-    it('should return correct indexes for an even number of games', () => {
-      expect(getGameAnimationIndexes(8)).toEqual([0, 2, 4, 6, 8, 10, 12, 14]);
-    });
-
-    it('should return correct indexes for an odd number of games', () => {
-      expect(getGameAnimationIndexes(7)).toEqual([0, 2, 5, 7, 9, 11, 14]);
+    it('should return correct indexes for more than zero games', () => {
+      expect(getGameAnimationIndexes(8)).toEqual([0, 1, 2, 3, 4, 5, 6, 7]);
     });
   });
 });
