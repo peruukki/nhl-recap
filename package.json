@@ -1,6 +1,6 @@
 {
   "name": "nhl-recap",
-  "version": "1.64.25",
+  "version": "1.64.26",
   "type": "module",
   "description": "Play back the goal information from the latest NHL games.",
   "keywords": [
