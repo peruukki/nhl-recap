@@ -1,5 +1,5 @@
-import type { GameStatus } from '../../app/src/types';
-import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../app/src/test/data';
+import type { GameStatus } from '../../../app/src/types';
+import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../app/src/test/data';
 
 type GameStateDefinition = {
   gameStatus: {

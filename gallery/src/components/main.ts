@@ -1,4 +1,4 @@
-import '../../app/src/main.scss';
+import '../../../app/src/main.scss';
 import './main.scss';
 import { run } from '@cycle/run';
 import { makeDOMDriver } from '@cycle/dom';
