@@ -7,16 +7,22 @@
   }
 }
 
+@mixin vertical-offset($team-abbreviation, $offset) {
+  &--#{$team-abbreviation}#{&} {
+    top: $offset;
+  }
+}
+
 .team-logo {
   position: relative;
   flex-grow: 1;
   height: 1.25em;
+  top: -0.1em;
 
   &__image {
     position: absolute;
-    top: 1px;
-    width: 2.5em;
-    height: 1.67em;
+    width: 3em;
+    height: 2em;
 
     &--away {
       right: 0;
@@ -28,8 +34,9 @@
     @include horizontal-offset(CAR, 2px);
     @include horizontal-offset(DAL, -2px);
     @include horizontal-offset(DET, 2px);
+    @include vertical-offset(DET, -2px);
     @include horizontal-offset(FLA, -1px);
-    @include horizontal-offset(LAK, 4px);
+    @include horizontal-offset(LAK, 0);
     @include horizontal-offset(MIN, 2px);
     @include horizontal-offset(MTL, 2px);
     @include horizontal-offset(NJD, -1px);
@@ -43,6 +50,7 @@
     @include horizontal-offset(TOR, -2px);
     @include horizontal-offset(UTA, 2px);
     @include horizontal-offset(VGK, -3px);
+    @include horizontal-offset(WPG, -4px);
     @include horizontal-offset(WSH, 1px);
   }
 }

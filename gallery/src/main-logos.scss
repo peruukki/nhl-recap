@@ -1,0 +1,19 @@
+@use '../../app/src/styles/colors';
+
+.header {
+  &__title {
+    text-align: center;
+  }
+}
+
+.gallery-team-logos {
+  text-align: center;
+}
+
+.team-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin: auto;
+  gap: 1rem;
+  max-width: calc((4 * 231px) + (3 * 1rem));
+}

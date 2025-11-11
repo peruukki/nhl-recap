@@ -42,6 +42,24 @@ button {
 
 .gallery-controls {
   margin: 0.5rem 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.gallery-link {
+  font-size: 1.2rem;
+  color: colors.$blue-dark;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid colors.$blue-dark;
+  border-radius: 2rem;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: colors.$blue-dark;
+    color: colors.$white;
+  }
 }
 
 .gallery-heading {
