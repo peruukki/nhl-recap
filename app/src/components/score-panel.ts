@@ -1,7 +1,7 @@
 import { div, span, VNode } from '@cycle/dom';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
-import type { Goal, Teams } from '../types';
+import type { Goal, Team } from '../types';
 import TeamLogo from './team-logo';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   homeGoals: Goal[];
   isBeforeGame: boolean;
   latestGoalPeriod?: string;
-  teams: Teams;
+  teams: { away: Pick<Team, 'abbreviation'>; home: Pick<Team, 'abbreviation'> };
 };
 
 export default function ScorePanel({
