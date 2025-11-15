@@ -13,3 +13,6 @@ npm-debug.log
 
 # Test output
 coverage/
+
+# Logo analysis output
+tools/logo-analysis/

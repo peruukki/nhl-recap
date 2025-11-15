@@ -76,6 +76,10 @@ nhl-recap/
 
 ## Key Conventions
 
+### Documentation
+
+- Write headings in sentence case instead of title case
+
 ### CSS/SASS Naming
 
 - **BEM (Block-Element-Modifier)** naming convention is used throughout the project

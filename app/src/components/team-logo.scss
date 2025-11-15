@@ -13,6 +13,9 @@
   }
 }
 
+/**
+ * Scales a team logo, overriding the base scale in team-logo-scales.scss.
+ */
 @mixin scale($team-abbreviation, $scale) {
   &--#{$team-abbreviation}#{&} {
     transform: scale($scale);
@@ -39,7 +42,6 @@
 
     @include scale(ANA, 1.1);
     @include horizontal-offset(CAR, 2px);
-    @include scale(CGY, 1.1);
     @include scale(CHI, 1.1);
     @include vertical-offset(DAL, -1px);
     @include scale(DAL, 1.2);
@@ -53,15 +55,18 @@
     @include horizontal-offset(NSH, 2px);
     @include horizontal-offset(NYR, -1px);
     @include horizontal-offset(OTT, 1px);
+    @include horizontal-offset(PHI, 2px);
     @include scale(PHI, 1.1);
     @include horizontal-offset(SEA, -4px);
     @include horizontal-offset(SJS, 3px);
     @include horizontal-offset(STL, -1px);
-    @include scale(STL, 1.1);
     @include horizontal-offset(TBL, 1px);
     @include horizontal-offset(TOR, -2px);
+    @include vertical-offset(TOR, -1px);
     @include horizontal-offset(UTA, 2px);
+    @include horizontal-offset(VAN, -1px);
     @include horizontal-offset(VGK, -3px);
+    @include horizontal-offset(WPG, -2px);
     @include horizontal-offset(WSH, 1px);
   }
 }

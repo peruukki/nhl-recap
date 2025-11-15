@@ -59,6 +59,18 @@ access them, just run the development server locally.
 - **Team logos** at http://localhost:8008/nhl-recap/gallery/team-logos
   - shows the score panel component with all teams' logos both as an away and home team, for adjusting team logo sizes or placement
 
+## Logo visual weight tool
+
+A helper script analyzes NHL team logo SVGs and generates scale factors to balance their visual weight. Run it with:
+
+```shell
+npm run scale-team-logos
+```
+
+Outputs are written to `tools/logo-analysis/` (JSON plus CSS/SCSS snippets you can apply to team logo styles).
+
+See more details in [tools/README.md](tools/README.md).
+
 ## Formatting with Prettier
 
 JavaScript is formatted using [Prettier](https://prettier.io/). Prettier is the most convenient to run via your IDE,
