@@ -31,6 +31,13 @@ export default tseslint.config(
     languageOptions: { globals: globals.node },
   },
   {
+    files: ['tools/**/*.js', 'tools/**/*.ts'],
+    languageOptions: { globals: globals.node },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['**/*.d.ts'],
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
