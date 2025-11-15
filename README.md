@@ -49,12 +49,15 @@ npm run start:server
 
 Then you can run the app connecting to the local server with `npm run start:local` as described above.
 
-## Component gallery
+## Galleries
 
-This project has its own poor person’s component gallery that currently just shows the game component in all
-its possible states, so that you don’t need to play back games in different states to see them.
+This project has simple galleries that show components outside the app to test visual changes more easily. To
+access them, just run the development server locally.
 
-The gallery is available at http://localhost:8008/nhl-recap/gallery/components when running the development server locally. (Doesn't work with a trailing slash.)
+- **Components** at http://localhost:8008/nhl-recap/gallery/components
+  - shows the game component in all its possible states, so that you don’t need to play back games in different states to see them
+- **Team logos** at http://localhost:8008/nhl-recap/gallery/team-logos
+  - shows the score panel component with all teams' logos both as an away and home team, for adjusting team logo sizes or placement
 
 ## Formatting with Prettier
 
