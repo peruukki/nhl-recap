@@ -26,6 +26,12 @@
             "player": "Vladimir Tarasenko",
             "seasonTotal": 22
           },
+          "assists": [
+            {
+              "player": "Robby Fabbri",
+              "seasonTotal": 9
+            }
+          ],
           "period": "3"
         },
         {
@@ -36,6 +42,7 @@
             "player": "Patrice Bergeron",
             "seasonTotal": 7
           },
+          "assists": [],
           "period": "3"
         }
       ],
@@ -81,6 +88,7 @@
             "player": "Corey Perry",
             "seasonTotal": 11
           },
+          "assists": [],
           "period": "1"
         },
         {
@@ -91,6 +99,7 @@
             "player": "Derick Brassard",
             "seasonTotal": 12
           },
+          "assists": [],
           "period": "1"
         },
         {
@@ -101,6 +110,7 @@
             "player": "Derick Brassard",
             "seasonTotal": 13
           },
+          "assists": [],
           "period": "3"
         },
         {
@@ -111,6 +121,7 @@
             "player": "Rickard Rakell",
             "seasonTotal": 7
           },
+          "assists": [],
           "period": "3"
         },
         {
@@ -121,6 +132,16 @@
             "player": "Mats Zuccarello",
             "seasonTotal": 15
           },
+          "assists": [
+            {
+              "player": "Derick Brassard",
+              "seasonTotal": 24
+            },
+            {
+              "player": "Kaapo Kakko",
+              "seasonTotal": 18
+            }
+          ],
           "period": "3"
         }
       ],

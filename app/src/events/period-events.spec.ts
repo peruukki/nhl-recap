@@ -10,7 +10,7 @@ import { EVENT_COUNTS, EVENT_COUNT_PER_GOAL } from './test-utils';
 const periodLengthInMinutes = 3;
 
 const clockAdvanceStep = 3;
-const goalPauseEventCount = 50;
+const goalPauseEventCounts: [number, number, number] = [50, 52, 55];
 
 const baseGoal = {
   classModifier: 'home' as const,
@@ -26,7 +26,7 @@ describe('periodEvents', () => {
       periodLengthInMinutes,
       null,
       [],
-      goalPauseEventCount,
+      goalPauseEventCounts,
       clockAdvanceStep,
     );
     expect(clockEvents.length).toEqual(62);
@@ -41,7 +41,7 @@ describe('periodEvents', () => {
       periodLengthInMinutes,
       endTime,
       [],
-      goalPauseEventCount,
+      goalPauseEventCounts,
       clockAdvanceStep,
     );
 
@@ -60,7 +60,7 @@ describe('periodEvents', () => {
     const period = 1;
     const clockEventCount = ((periodLengthInMinutes - 1) * 60) / clockAdvanceStep + 1;
     const clockEvents = _.take(
-      periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCount, clockAdvanceStep),
+      periodEvents(period, periodLengthInMinutes, null, [], goalPauseEventCounts, clockAdvanceStep),
       clockEventCount,
     );
 
@@ -83,7 +83,7 @@ describe('periodEvents', () => {
         periodLength,
         null,
         [],
-        goalPauseEventCount,
+        goalPauseEventCounts,
         clockAdvanceStep,
       );
 
@@ -106,7 +106,7 @@ describe('periodEvents', () => {
     const periodLength = 1;
     // Take only the first second to speed up and simplify the test
     const clockEvents = _.take(
-      periodEvents(period, periodLength, null, [], goalPauseEventCount, clockAdvanceStep),
+      periodEvents(period, periodLength, null, [], goalPauseEventCounts, clockAdvanceStep),
       5,
     );
 
@@ -129,13 +129,18 @@ describe('periodEvents', () => {
     ) => {
       const period = 1;
       const periodLength = 20;
+      const goalPauseEventCounts: [number, number, number] = [
+        EVENT_COUNTS.pause,
+        EVENT_COUNTS.pause + 2,
+        EVENT_COUNTS.pause + 5,
+      ];
 
       const clockEvents = periodEvents(
         period,
         periodLength,
         null,
         allGoalsSorted,
-        EVENT_COUNTS.pause,
+        goalPauseEventCounts,
         clockAdvanceStep,
       );
 
@@ -231,7 +236,7 @@ function assertFinalSecondsGoalUpdate(
     periodLength,
     gameEndTime,
     [goal],
-    goalPauseEventCount,
+    goalPauseEventCounts,
     clockAdvanceStep,
   );
 

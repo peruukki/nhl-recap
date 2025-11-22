@@ -16,7 +16,7 @@ import {
   GAMES_START_PAUSE_EVENT_COUNT,
   GAME_PRE_SUMMARY_PAUSE_EVENT_COUNT,
   GAME_SUMMARY_PAUSE_EVENT_COUNT,
-  GOAL_PAUSE_EVENT_COUNT,
+  GOAL_PAUSE_EVENT_COUNTS,
   PERIOD_END_PAUSE_EVENT_COUNT,
   PERIOD_OVERTIME,
   PERIOD_SHOOTOUT,
@@ -41,7 +41,7 @@ export default function gameEvents(scores: Game[]): (GameEvent | PauseEvent)[] {
   const eventsByPeriod = getAllPeriodEvents(
     scores,
     endTime,
-    GOAL_PAUSE_EVENT_COUNT,
+    GOAL_PAUSE_EVENT_COUNTS,
     advanceClockStep,
   );
   const completedPeriodEvents = endTime.inProgress
@@ -86,19 +86,19 @@ function appendDelay(element: GameEvent, multiplier: number): (GameEvent | Pause
 function getAllPeriodEvents(
   scores: Game[],
   endTime: GameEndTime,
-  goalPauseEventCount: number,
+  goalPauseEventCounts: [number, number, number],
   advanceClockStep: number,
 ): PeriodGameEvents[] {
   const allGoalsSorted = getAllGoalsSorted(scores);
-  return getRegularPeriodGameEvents(endTime, allGoalsSorted, goalPauseEventCount, advanceClockStep)
-    .concat(getOvertimeGameEvents(endTime, allGoalsSorted, goalPauseEventCount, advanceClockStep))
-    .concat(getShootoutGameEvents(endTime, allGoalsSorted, goalPauseEventCount));
+  return getRegularPeriodGameEvents(endTime, allGoalsSorted, goalPauseEventCounts, advanceClockStep)
+    .concat(getOvertimeGameEvents(endTime, allGoalsSorted, goalPauseEventCounts, advanceClockStep))
+    .concat(getShootoutGameEvents(endTime, allGoalsSorted, goalPauseEventCounts[0]));
 }
 
 function getRegularPeriodGameEvents(
   endTime: GameEndTime,
   allGoalsSorted: GoalWithUpdateFields[],
-  goalPauseEventCount: number,
+  goalPauseEventCounts: [number, number, number],
   advanceClockStep: number,
 ): PeriodGameEvents[] {
   const partialPeriodNumber = getPartialPeriodNumber(endTime);
@@ -107,7 +107,7 @@ function getRegularPeriodGameEvents(
     : getLastFullPeriodNumber(endTime);
   const fullPeriods = _.range(1, lastFullPeriodNumber + 1).map((period) => ({
     period,
-    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCount, advanceClockStep),
+    events: periodEvents(period, 20, null, allGoalsSorted, goalPauseEventCounts, advanceClockStep),
   }));
 
   if (partialPeriodNumber) {
@@ -118,7 +118,7 @@ function getRegularPeriodGameEvents(
         20,
         endTime,
         allGoalsSorted,
-        goalPauseEventCount,
+        goalPauseEventCounts,
         advanceClockStep,
       ),
     };
@@ -142,7 +142,7 @@ function hasLastPeriodEnded(endTime: GameEndTime): boolean {
 function getOvertimeGameEvents(
   endTime: GameEndTime,
   allGoalsSorted: GoalWithUpdateFields[],
-  goalPauseEventCount: number,
+  goalPauseEventCounts: [number, number, number],
   advanceClockStep: number,
 ): PeriodGameEvents[] {
   if (endTime.period !== PERIOD_SHOOTOUT && endTime.period !== PERIOD_OVERTIME) {
@@ -157,7 +157,7 @@ function getOvertimeGameEvents(
         5,
         periodEnd,
         allGoalsSorted,
-        goalPauseEventCount,
+        goalPauseEventCounts,
         advanceClockStep,
       ),
     },

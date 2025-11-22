@@ -1,11 +1,12 @@
 import _ from 'lodash';
 
-import type {
-  GameEndTime,
-  GameEvent,
-  GameEventClockTime,
-  GoalWithUpdateFields,
-  PauseEvent,
+import {
+  isShootoutGoal,
+  type GameEndTime,
+  type GameEvent,
+  type GameEventClockTime,
+  type GoalWithUpdateFields,
+  type PauseEvent,
 } from '../types';
 import { getGoalEvents, hasGoalBeenScored } from './utils';
 
@@ -14,7 +15,7 @@ export default function periodEvents(
   durationInMinutes: number,
   endTime: Pick<GameEndTime, 'minute' | 'second'> | null,
   allGoalsSorted: GoalWithUpdateFields[],
-  goalPauseEventCount: number,
+  goalPauseEventCounts: [number, number, number],
   advanceClockStep: number,
 ): (GameEvent | PauseEvent)[] {
   const lastMinute = endTime?.minute ?? -1;
@@ -46,7 +47,7 @@ export default function periodEvents(
     second: 0,
   };
   const sequence = [firstEvent].concat(secondEvents, tenthOfASecondEvents);
-  return createGoalEvents(sequence, allGoalsSorted, goalPauseEventCount);
+  return createGoalEvents(sequence, allGoalsSorted, goalPauseEventCounts);
 }
 
 function generateSecondEvents(
@@ -110,7 +111,7 @@ function secondRange(
 function createGoalEvents(
   clockEvents: GameEventClockTime[],
   allGoalsSorted: GoalWithUpdateFields[],
-  goalPauseEventCount: number,
+  goalPauseEventCounts: number[],
 ): (GameEvent | PauseEvent)[] {
   return _.take<GameEvent | PauseEvent>(clockEvents).concat(
     _.flatten(
@@ -123,9 +124,10 @@ function createGoalEvents(
         return goalsScoredSincePreviousTime.length === 0
           ? [currentClock as GameEvent]
           : _.flatten(
-              goalsScoredSincePreviousTime.map((goal) =>
-                getGoalEvents(currentClock!, goal, goalPauseEventCount),
-              ),
+              goalsScoredSincePreviousTime.map((goal) => {
+                const assistCount = isShootoutGoal(goal) ? 0 : goal.assists.length;
+                return getGoalEvents(currentClock!, goal, goalPauseEventCounts[assistCount]);
+              }),
             );
       }),
     ),
