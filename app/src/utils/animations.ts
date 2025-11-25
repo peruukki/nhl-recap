@@ -100,7 +100,7 @@ const getAnimationSpeed = () =>
  * @param regularDurationMs animation duration with regular animation speed (in milliseconds)
  * @returns adjusted animation duration
  */
-export function getAnimationDuration(regularDurationMs: number): number {
+function getAnimationDuration(regularDurationMs: number): number {
   return regularDurationMs / getAnimationSpeed();
 }
 
