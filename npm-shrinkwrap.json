@@ -40,7 +40,7 @@
         "rollup": "4.53.3",
         "rollup-plugin-terser": "7.0.2",
         "rollup-plugin-workbox-inject": "2.0.0",
-        "sass": "1.92.1",
+        "sass": "1.94.2",
         "stylelint": "16.24.0",
         "stylelint-config-standard-scss": "15.0.1",
         "typescript": "5.9.3",
@@ -8225,9 +8225,9 @@
       "dev": true
     },
     "node_modules/sass": {
-      "version": "1.92.1",
-      "resolved": "https://registry.npmjs.org/sass/-/sass-1.92.1.tgz",
-      "integrity": "sha512-ffmsdbwqb3XeyR8jJR6KelIXARM9bFQe8A6Q3W4Klmwy5Ckd5gz7jgUNHo4UOqutU5Sk1DtKLbpDP0nLCg1xqQ==",
+      "version": "1.94.2",
+      "resolved": "https://registry.npmjs.org/sass/-/sass-1.94.2.tgz",
+      "integrity": "sha512-N+7WK20/wOr7CzA2snJcUSSNTCzeCGUTFY3OgeQP3mZ1aj9NMQ0mSTXwlrnd89j33zzQJGqIN52GIOmYrfq46A==",
       "dev": true,
       "license": "MIT",
       "dependencies": {
@@ -15793,9 +15793,9 @@
       "dev": true
     },
     "sass": {
-      "version": "1.92.1",
-      "resolved": "https://registry.npmjs.org/sass/-/sass-1.92.1.tgz",
-      "integrity": "sha512-ffmsdbwqb3XeyR8jJR6KelIXARM9bFQe8A6Q3W4Klmwy5Ckd5gz7jgUNHo4UOqutU5Sk1DtKLbpDP0nLCg1xqQ==",
+      "version": "1.94.2",
+      "resolved": "https://registry.npmjs.org/sass/-/sass-1.94.2.tgz",
+      "integrity": "sha512-N+7WK20/wOr7CzA2snJcUSSNTCzeCGUTFY3OgeQP3mZ1aj9NMQ0mSTXwlrnd89j33zzQJGqIN52GIOmYrfq46A==",
       "dev": true,
       "requires": {
         "@parcel/watcher": "^2.4.1",
