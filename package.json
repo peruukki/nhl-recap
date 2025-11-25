@@ -58,10 +58,10 @@
     "normalize.css": "8.0.1",
     "snabby": "6.1.1",
     "timeago.js": "4.0.2",
-    "workbox-expiration": "7.3.0",
-    "workbox-precaching": "7.3.0",
-    "workbox-routing": "7.3.0",
-    "workbox-strategies": "7.3.0",
+    "workbox-expiration": "7.4.0",
+    "workbox-precaching": "7.4.0",
+    "workbox-routing": "7.4.0",
+    "workbox-strategies": "7.4.0",
     "xstream": "11.14.0"
   },
   "devDependencies": {
