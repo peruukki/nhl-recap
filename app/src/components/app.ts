@@ -12,7 +12,7 @@ import type {
   Goal,
   Scores,
 } from '../types';
-import type { Animations } from '../utils/animations';
+import * as animations from '../utils/animations';
 import { debugFn } from '../utils/debug';
 import { delayAtLeast } from '../utils/delay';
 import { getGameAnimationIndexes } from '../utils/utils';
@@ -77,17 +77,13 @@ function parseSearchParams($window: Window) {
   };
 }
 
-export default function app(
-  animations: Animations,
-  $window: Window,
-  options: Options,
-): (sources: Sources) => Sinks {
+export default function app($window: Window, options: Options): (sources: Sources) => Sinks {
   return ({ DOM, HTTP }) => {
     const { date, error } = parseSearchParams($window);
     const error$ = error ? xs.of(error) : xs.empty();
     const url = date ? getApiUrl(date) : getApiUrl();
     return {
-      DOM: view(model(intent(DOM, HTTP, error$, $window, options, animations, date), animations)),
+      DOM: view(model(intent(DOM, HTTP, error$, $window, options, date))),
       HTTP: error ? xs.empty() : xs.of({ url }),
     };
   };
@@ -104,7 +100,6 @@ function intent(
   error$: Stream<Error>,
   $window: Window,
   options: Options,
-  animations: Animations,
   date?: string,
 ): Actions {
   const apiResponseWithErrors$ = HTTP.select()
@@ -190,7 +185,7 @@ function intent(
   };
 }
 
-function model(actions: Actions, animations: Animations): Stream<State> {
+function model(actions: Actions): Stream<State> {
   const initialState = { games: [] };
   const scores$ = actions.successApiResponse$.startWith(initialState);
 

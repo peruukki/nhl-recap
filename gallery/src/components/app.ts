@@ -5,7 +5,7 @@ import fromEvent from 'xstream/extra/fromEvent';
 
 import Game from '../../../app/src/components/game';
 import type { GameDisplay, GameStats, Game as GameT, Goal } from '../../../app/src/types';
-import animations from '../../../app/src/utils/animations';
+import * as animations from '../../../app/src/utils/animations';
 import { gamesData, stateDefinitions } from './data';
 import { getSectionExpandedState, setSectionExpandedState } from './storage';
 

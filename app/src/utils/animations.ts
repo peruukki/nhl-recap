@@ -51,17 +51,17 @@ function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight:
   element.classList.add(gameInFocusClass);
 }
 
-function highlightGame(gameIndex: number): void {
+export function highlightGame(gameIndex: number): void {
   const element = document.querySelectorAll<HTMLElement>('.game')[gameIndex];
   setGameInFocus(element, window.innerWidth, window.innerHeight);
 }
 
-function stopGameHighlight(gameIndex: number): void {
+export function stopGameHighlight(gameIndex: number): void {
   const element = document.querySelectorAll<HTMLElement>('.game')[gameIndex];
   clearGameInFocus(element);
 }
 
-function highlightGoal(classModifier: string, gameIndex: number): void {
+export function highlightGoal(classModifier: string, gameIndex: number): void {
   highlightGoalCountChange(classModifier, gameIndex);
   highlightLatestGoalChange(gameIndex);
 }
@@ -84,7 +84,7 @@ function highlightLatestGoalChange(gameIndex: number): void {
   }
 }
 
-function highlightPlayPauseButtonChange(): void {
+export function highlightPlayPauseButtonChange(): void {
   const element = document.querySelector('.play-pause-button .icon');
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250 });
@@ -100,17 +100,6 @@ const getAnimationSpeed = () =>
  * @param regularDurationMs animation duration with regular animation speed (in milliseconds)
  * @returns adjusted animation duration
  */
-function getAnimationDuration(regularDurationMs: number): number {
+export function getAnimationDuration(regularDurationMs: number): number {
   return regularDurationMs / getAnimationSpeed();
 }
-
-const animations = {
-  getAnimationDuration,
-  highlightGame,
-  highlightGoal,
-  highlightPlayPauseButtonChange,
-  stopGameHighlight,
-};
-export default animations;
-
-export type Animations = typeof animations;
