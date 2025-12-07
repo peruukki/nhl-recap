@@ -8,15 +8,13 @@
 }
 
 @mixin vertical-offset($team-abbreviation, $offset) {
-  &--#{$team-abbreviation}#{&}--away,
-  &--#{$team-abbreviation}#{&}--home {
+  &--#{$team-abbreviation}#{&} {
     top: $offset;
   }
 }
 
 @mixin scale($team-abbreviation, $scale) {
-  &--#{$team-abbreviation}#{&}--away,
-  &--#{$team-abbreviation}#{&}--home {
+  &--#{$team-abbreviation}#{&} {
     transform: scale($scale);
   }
 }
