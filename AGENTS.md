@@ -13,27 +13,32 @@ This document provides essential information for AI agents working on the nhl-re
 ## Technology Stack
 
 ### Core Framework
+
 - **Cycle.js** - Reactive framework for building user interfaces
 - **xstream** - Reactive streams library (used by Cycle.js)
 - **snabby** - Virtual DOM library (hyperscript syntax)
 
 ### Build Tools
+
 - **Vite** - Build tool and dev server
 - **TypeScript** - Type checking and compilation
 - **Rollup** - Service worker bundling
 - **SASS** - CSS preprocessing
 
 ### Testing
+
 - **Vitest** - Unit testing framework
 - **nock** - HTTP mocking for tests
 
 ### Code Quality
+
 - **ESLint** - JavaScript/TypeScript linting
 - **Stylelint** - SASS/CSS linting
 - **Prettier** - Code formatting
 - **TypeScript** - Type checking
 
 ### Dependencies
+
 - `@cycle/dom` - Cycle.js DOM driver
 - `@cycle/http` - Cycle.js HTTP driver
 - `@cycle/run` - Cycle.js runtime
@@ -72,78 +77,66 @@ nhl-recap/
 ## Key Conventions
 
 ### CSS/SASS Naming
+
 - **BEM (Block-Element-Modifier)** naming convention is used throughout the project
 - Example: `.block__element--modifier`
 - Lint scripts use `css` suffix (not `sass`) for uniformity
 
 ### Code Style
+
 - JavaScript/TypeScript formatting via **Prettier**
 - TypeScript is used for type safety
 - ES modules (`"type": "module"` in package.json)
+- Write concise code:
+  - only add comments when the implementation is non-trivial or the motivation for the code is unclear
+  - infer types when possible
+  - prefer expression body over block body
 
 ### Component Structure
+
 - Components follow Cycle.js patterns (sources and sinks)
 - Components are organized in `app/src/components/`
 - Styles are co-located with components in `*.scss` files
 
 ## Development Workflow
 
-### Running the Application
-
-**Development server** (with hot reload):
-```bash
-npm start
-```
-- Available at: http://localhost:8008/nhl-recap/
-- Auto-opens browser
-
-**Production build preview**:
-```bash
-npm run start:production
-```
-
-**Local API server** (connects to local nhl-score-api on port 8080):
-```bash
-npm run start:local
-```
-
-**Mock API server** (json-server with static data):
-```bash
-npm run start:server
-```
-- Runs on port 8080
-- Uses `server/db.json` for mock data
-- Use with `npm run start:local` to test against mock API
+**Important:** Run `nvm use` to set the correct Node.js version before running any npm commands in a new shell.
 
 ### Component Gallery
 
 Development tool for viewing components in different states:
+
 - URL: http://localhost:8008/nhl-recap/gallery/ (trailing slash required)
 - Located in `gallery/` directory
 
 ### Code Quality Checks
 
 **Run all checks** (format, lint, type-check, test):
+
 ```bash
 npm run check
 ```
 
 **Format code**:
+
 ```bash
 npm run format
 ```
 
 **Lint JavaScript/TypeScript**:
+
 ```bash
 npm run lint:js
 ```
 
 **Lint SASS**:
+
 ```bash
 npm run lint:css
 ```
 
 **Type-check TypeScript**:
+
 ```bash
 npm run ts
 ```
@@ -151,16 +144,19 @@ npm run ts
 ### Testing
 
 **Run tests**:
+
 ```bash
 npm test
 ```
 
 **Run tests with coverage**:
+
 ```bash
 npm run test:coverage
 ```
 
 **Run tests in watch mode**:
+
 ```bash
 npm run test:watch
 ```
@@ -168,20 +164,24 @@ npm run test:watch
 ### Building
 
 **Build application**:
+
 ```bash
 npm run build
 ```
+
 - Builds app to `public/` directory
 - Also builds service worker
 
 ## Important Files
 
 ### Entry Points
+
 - `app/src/main.ts` - Application entry point
 - `app/src/main.scss` - Main stylesheet
 - `index.html` - HTML entry point
 
 ### Configuration Files
+
 - `vite.config.ts` - Vite build configuration
 - `tsconfig.json` - TypeScript configuration
 - `eslint.config.mjs` - ESLint rules
@@ -189,10 +189,12 @@ npm run build
 - `rollup.config.js` - Service worker bundling config
 
 ### Environment Variables
+
 - `VITE_DEBUG` - Debug mode flag (used in `npm start`)
 - `VITE_SCORE_API_HOST` - API host override (defaults to production API, set to `http://localhost:8080` for local)
 
 ### Service Worker
+
 - `app/src/service-worker/service-worker.js` - Service worker source
 - Built to `public/service-worker.js` using Rollup
 - Uses Workbox for PWA functionality (precaching, routing, caching strategies)
@@ -258,4 +260,3 @@ npm run build
 - Component gallery available at `/gallery/` for development
 - Date parameter format: `YYYY-MM-DD` in URL query string
 - PWA functionality enabled via Workbox service worker
-
