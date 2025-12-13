@@ -53,23 +53,14 @@ $hover-timing-function: ease-out;
   from {
     opacity: 0;
   }
-  to {
-    opacity: 1;
-  }
 }
 @keyframes fade-in-fast {
   from {
     opacity: 0;
   }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes fade-out {
-  from {
-    opacity: 1;
-  }
   to {
     opacity: 0;
   }
@@ -121,17 +112,11 @@ $hover-timing-function: ease-out;
   from {
     transform: scale(0.95) translateY(-2rem);
   }
-  to {
-    transform: scale(1) translateY(0);
-  }
 }
 
 @keyframes slide-down {
   from {
     transform: translateY(-0.25rem);
-  }
-  to {
-    transform: translateY(0);
   }
 }
 
