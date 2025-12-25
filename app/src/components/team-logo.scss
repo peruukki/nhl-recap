@@ -8,7 +8,7 @@
 }
 
 @mixin vertical-offset($team-abbreviation, $offset) {
-  &--#{$team-abbreviation}#{&} {
+  &--#{$team-abbreviation} {
     top: $offset;
   }
 }
@@ -17,7 +17,7 @@
  * Scales a team logo, overriding the base scale in team-logo-scales.scss.
  */
 @mixin scale($team-abbreviation, $scale) {
-  &--#{$team-abbreviation}#{&} {
+  &--#{$team-abbreviation} {
     transform: scale($scale);
   }
 }

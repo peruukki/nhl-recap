@@ -21,8 +21,8 @@
 @use 'components/score-list';
 @use 'components/series-wins';
 @use 'components/score-panel';
+@use 'components/team-logo-scales'; // Needs to be imported before team-logo
 @use 'components/team-logo';
-@use 'components/team-logo-scales';
 @use 'components/team-panel';
 @use 'components/info-panel/info-panel';
 @use 'components/info-panel/game-description';
