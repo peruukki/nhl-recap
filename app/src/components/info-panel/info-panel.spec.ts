@@ -245,7 +245,10 @@ function expectedSummaryPanel(pointScorers: PointScorer[]) {
       '.summary__point-scorers',
       pointScorers.map(({ player, teamAbbreviation, goals, assists }) =>
         div('.summary__point-scorer', [
-          renderTeamLogoSVG(teamAbbreviation, `player-logo player-logo--${teamAbbreviation}`),
+          renderTeamLogoSVG(
+            teamAbbreviation,
+            `player-logo player-logo--${teamAbbreviation} team-logo__image--${teamAbbreviation}`,
+          ),
           span('.player', player),
           span('.points', renderPointsText(goals, assists)),
         ]),
