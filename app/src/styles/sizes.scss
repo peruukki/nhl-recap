@@ -4,8 +4,8 @@ $link-border-radius: 2rem;
 $header-height: 4rem;
 
 $game-card-line-height: 1.5rem;
-$game-card-margin: 0.25rem;
 $game-card-width: 16rem;
+$game-card-margin: clamp(0.25rem, calc((100vw - (2 * $game-card-width)) / 3 / 2), 0.75rem);
 
 $panel-padding-height: 0.75rem;
 $game-description-height: $game-card-line-height + $panel-padding-height;
@@ -15,7 +15,7 @@ $stats-line-height: $game-card-line-height;
 $latest-goal-height: 8.75rem;
 $latest-goal-padding-height: $panel-padding-height;
 
-$content-width: 2 * ($game-card-width + 2 * $game-card-margin) + 0.1rem;
+$content-width: calc(2 * ($game-card-width + 2 * $game-card-margin));
 
 $game-stats-line-count: 9;
 $team-stats-line-count-max: 8;

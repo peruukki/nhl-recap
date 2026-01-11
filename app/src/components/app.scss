@@ -1,3 +1,6 @@
+@use '../styles/sizes';
+
 main {
-  margin-top: 4.75rem;
+  margin-top: sizes.$header-height;
+  padding: sizes.$game-card-margin;
 }

@@ -6,12 +6,18 @@ html {
   --animation-speed: 1;
 
   scrollbar-gutter: stable;
-  font-size: 62.5%;
+  font-size: 56.25%;
 
-  @media (min-width: 360px) {
+  @media (min-width: 340px) {
+    font-size: 62.5%;
+  }
+  @media (min-width: 370px) {
     font-size: 68.75%;
   }
-  @media (min-width: 420px) {
+  @media (min-width: 400px) {
+    font-size: 75%;
+  }
+  @media (min-width: 440px) {
     font-size: 81.25%;
   }
   @media (min-width: 500px) {
@@ -21,7 +27,6 @@ html {
 
 body {
   margin: 0;
-  padding-bottom: 1rem;
   background-color: colors.$background-body;
   background-image: url('/ice.svg');
   color: colors.$color-main;

@@ -2,7 +2,6 @@
 
 .score-list {
   display: inline-grid;
-  max-width: sizes.$content-width;
   margin: auto;
   grid-template-columns: repeat(2, 1fr);
 
