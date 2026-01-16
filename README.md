@@ -154,15 +154,8 @@ Deployments to GitHub Pages are done by running the [Deployment workflow](https:
 The `deploy` script will build the app, clone the `gh-pages` branch to the `dist` directory, copy the build there,
 create a commit, and push the commit to the `gh-pages` branch in `origin`.
 
-Usual deployment process:
-
 ```shell
-# Bump version
-npm version <major|minor|patch>
-# Deploy to GitHub Pages
 npm run deploy
-# Push to Git
-git push origin master --tags
 ```
 
 ## License

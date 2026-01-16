@@ -2,19 +2,8 @@ name: Deployment
 
 on:
   workflow_dispatch:
-    inputs:
-      version-bump:
-        description: 'Version bump type (select none to skip version bump)'
-        default: 'none'
-        type: choice
-        options:
-          - none
-          - patch
-          - minor
-          - major
 
 permissions:
-  contents: write # for pushing version tags
   id-token: write # for deployment
   pages: write # for deployment
 
@@ -23,26 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/configure-pages@v5
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
       - run: npm ci
       - run: npm run check
-      - name: Set up Git config
-        if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      - name: Bump version
-        if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
-        run: npm version ${{ inputs.version-bump }}
       - run: npm run build
-      - name: Push version bump
-        if: github.event_name == 'workflow_dispatch' && inputs.version-bump != 'none'
-        run: git push --follow-tags
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public/
