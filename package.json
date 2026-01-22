@@ -56,7 +56,7 @@
     "@cycle/http": "15.4.0",
     "@cycle/run": "5.7.0",
     "classnames": "2.5.1",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "normalize.css": "8.0.1",
     "snabby": "6.1.1",
     "timeago.js": "4.0.2",
