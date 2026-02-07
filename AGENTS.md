@@ -79,12 +79,8 @@ nhl-recap/
 ### Documentation
 
 - Write headings in sentence case instead of title case
-
-### CSS/SASS Naming
-
-- **BEM (Block-Element-Modifier)** naming convention is used throughout the project
-- Example: `.block__element--modifier`
-- Lint scripts use `css` suffix (not `sass`) for uniformity
+- Detailed animation patterns and implementation details are in [ANIMATIONS.md](./app/src/styles/ANIMATIONS.md)
+- Detailed component hierarchy and structure are in [README.md](./app/src/components/README.md)
 
 ### Code Style
 
@@ -95,12 +91,6 @@ nhl-recap/
   - only add comments when the implementation is non-trivial or the motivation for the code is unclear
   - infer types when possible
   - prefer expression body over block body
-
-### Component Structure
-
-- Components follow Cycle.js patterns (sources and sinks)
-- Components are organized in `app/src/components/`
-- Styles are co-located with components in `*.scss` files
 
 ## Development Workflow
 

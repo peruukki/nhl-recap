@@ -52,3 +52,9 @@ graph TD
 ### Shared / UI Components
 - **[icon](./icon/icon.ts)**: A shared component for rendering SVG icons.
 - **[expandable.ts](./expandable.ts)**: A wrapper component that handles show/hide animations for panels like `LinksPanel`.
+
+## Styling
+
+- Component styles are co-located in corresponding `*.scss` files.
+- **BEM (Block-Element-Modifier)** naming convention is used throughout the project.
+    - Example: `.block__element--modifier`
