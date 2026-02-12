@@ -9,7 +9,12 @@ export function getInfoPanel(vtree: VNode): VNode | undefined {
 }
 
 export function getStatsPanel(vtree: VNode): VNode | undefined {
-  return getInfoPanel(vtree)?.children?.[2] as VNode | undefined;
+  const infoPanel = getInfoPanel(vtree);
+  const section = infoPanel?.children?.[2] as VNode | undefined;
+  const activeExpandable = (section?.children?.filter(Boolean) as VNode[] | undefined)?.find(
+    (child) => child.data?.class?.['expandable--shown'],
+  );
+  return (activeExpandable?.children?.[0] as VNode | undefined)?.children?.[0] as VNode | undefined;
 }
 
 export function expectedStat({

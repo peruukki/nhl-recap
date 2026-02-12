@@ -243,5 +243,7 @@ function assertGameStats(
 }
 
 function getGameStats(vtree: VNode) {
-  return getStatsPanel(vtree)?.children?.[0] as VNode | undefined;
+  const statsPanel = getStatsPanel(vtree);
+  const statsPanelContainer = statsPanel?.children?.[0] as VNode | undefined;
+  return statsPanelContainer?.children?.[0] as VNode | undefined;
 }

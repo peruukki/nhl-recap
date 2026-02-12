@@ -12,6 +12,8 @@ When the game list loads, cards appear with a staggered "expand and slide" effec
 
 - **Source**: [animations.scss](../styles/animations.scss)
 - **Mechanism**: SCSS `@for` loop generating classes `.expand--0` through `.expand--15`.
+- **Technique**: Uses CSS Grid with `grid-template-rows: 0fr` to `1fr` transitions for smooth height expansion without explicit pixel height calculations.
+- **Alternative**: For components with a fixed, known height, manual `height` transitions are preferred (e.g., `InfoPanel`'s top section) to ensure stable and smooth animations.
 - **Timing**: Uses a custom `cubic-bezier` function for non-linear staggering delays.
 - **Accessibility**: Replaces transforms with a simple fade-in when `prefers-reduced-motion` is detected.
 

@@ -219,7 +219,9 @@ function assertGameDescription(
 }
 
 function getLatestGoalPanel(vtree: VNode) {
-  return getInfoPanel(vtree)?.children?.[0] as VNode | undefined;
+  const infoPanel = getInfoPanel(vtree);
+  const section = (infoPanel?.children?.filter(Boolean) as VNode[] | undefined)?.[0];
+  return section?.children?.[0] as VNode | undefined;
 }
 
 function getSummaryPanel(vtree: VNode) {
@@ -227,7 +229,13 @@ function getSummaryPanel(vtree: VNode) {
 }
 
 function getGameDescription(vtree: VNode) {
-  return getInfoPanel(vtree)?.children?.[1] as VNode | undefined;
+  const infoPanel = getInfoPanel(vtree);
+  const section = infoPanel?.children?.[1] as VNode | undefined;
+  const activeExpandable = (section?.children?.filter(Boolean) as VNode[] | undefined)?.find(
+    (child) => child.data?.class?.['expandable--shown'],
+  );
+  const container = activeExpandable?.children?.[0] as VNode | undefined;
+  return container?.children?.[0] as VNode | undefined;
 }
 
 function expectedLatestGoalPanel(latestGoal: Goal | null) {

@@ -52,21 +52,25 @@ describe('links panel', () => {
   it('should be shown before playback has started', () => {
     const linksPanel = getLinksPanel(Game('pre-game', gameWithLink, [], 0));
     expect(linksPanel).toHaveProperty('data.class.expandable--shown', true);
+    expect(linksPanel).toHaveProperty('data.attrs.aria-hidden', 'false');
   });
 
   it('should be hidden during playback', () => {
     const linksPanel = getLinksPanel(Game('playback', gameWithLink, [], 0));
     expect(linksPanel).toHaveProperty('data.class.expandable--hidden', true);
+    expect(linksPanel).toHaveProperty('data.attrs.aria-hidden', 'true');
   });
 
   it('should be shown in post-game info for finished game', () => {
     const linksPanel = getLinksPanel(Game('post-game-finished', gameWithLink, [], 0));
     expect(linksPanel).toHaveProperty('data.class.expandable--shown', true);
+    expect(linksPanel).toHaveProperty('data.attrs.aria-hidden', 'false');
   });
 
   it('should be shown in post-game info for in-progress game', () => {
     const linksPanel = getLinksPanel(Game('post-game-in-progress', gameWithLink, [], 0));
     expect(linksPanel).toHaveProperty('data.class.expandable--shown', true);
+    expect(linksPanel).toHaveProperty('data.attrs.aria-hidden', 'false');
   });
 });
 

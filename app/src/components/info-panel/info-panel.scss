@@ -3,57 +3,29 @@
 
 .info-panel {
   position: relative;
-  padding-bottom: sizes.$panel-padding-height;
   font-size: 1.2rem;
   line-height: 1.5rem;
   box-sizing: border-box;
-
-  @media (prefers-reduced-motion: no-preference) {
-    transition: height animations.$height-duration animations.$height-timing-function;
-  }
 
   &:last-child > *:last-child {
     border-bottom-left-radius: sizes.$border-radius;
     border-bottom-right-radius: sizes.$border-radius;
   }
 
-  .game--playback &,
-  .game--pre-summary-finished &,
-  .game--summary-finished & {
-    height: sizes.$latest-goal-height;
-  }
+  &__section {
+    overflow: hidden;
 
-  .game--in-progress &,
-  .game--pre-summary-in-progress &,
-  .game--summary-in-progress & {
-    height: sizes.$latest-goal-height + sizes.$game-description-height;
-  }
+    &--latest-goal-or-summary {
+      height: sizes.$latest-goal-height;
+      visibility: visible;
 
-  @for $i from 1 through sizes.$team-stats-line-count-max {
-    &--team-stats-line-count-#{$i} {
+      @media (prefers-reduced-motion: no-preference) {
+        transition: height animations.$height-duration animations.$height-timing-function;
+      }
+
       .game--pre-game & {
-        height: sizes.$game-description-height + sizes.get-stats-panel-height($i);
-      }
-
-      .game--post-game-finished & {
-        height: sizes.$latest-goal-height + sizes.get-stats-panel-height($i);
-      }
-      .game--post-game-finished &.info-panel--with-game-stats {
-        height: sizes.$latest-goal-height +
-          sizes.get-stats-panel-height($i) +
-          sizes.get-stats-section-height(sizes.$game-stats-line-count);
-      }
-
-      .game--post-game-in-progress & {
-        height: sizes.$latest-goal-height +
-          sizes.$game-description-height +
-          sizes.get-stats-panel-height($i);
-      }
-      .game--post-game-in-progress &.info-panel--with-game-stats {
-        height: sizes.$latest-goal-height +
-          sizes.$game-description-height +
-          sizes.get-stats-panel-height($i) +
-          sizes.get-stats-section-height(sizes.$game-stats-line-count);
+        height: 0;
+        visibility: hidden;
       }
     }
   }

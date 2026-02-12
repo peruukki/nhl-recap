@@ -2,7 +2,7 @@
 @use '../../styles/sizes';
 
 .summary {
-  height: sizes.$latest-goal-height - sizes.$latest-goal-padding-height;
+  min-height: 0;
   padding-bottom: sizes.$latest-goal-padding-height;
 
   &__heading {

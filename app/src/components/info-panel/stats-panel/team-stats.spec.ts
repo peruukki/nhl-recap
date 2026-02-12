@@ -526,7 +526,9 @@ function assertTeamStats(
 }
 
 function getTeamStats(vtree: VNode) {
-  return getStatsPanel(vtree)?.children?.[1] as VNode | undefined;
+  const statsPanel = getStatsPanel(vtree);
+  const statsPanelContainer = statsPanel?.children?.[0] as VNode | undefined;
+  return statsPanelContainer?.children?.[1] as VNode | undefined;
 }
 
 function getTeamStatsSubheading(teamStatsVTree?: VNode): string | undefined {

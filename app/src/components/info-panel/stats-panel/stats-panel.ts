@@ -30,21 +30,18 @@ export default function StatsPanel({
   teamStatsInfo,
   teams,
 }: Props) {
-  return div(
-    '.stats-panel',
-    showGameStats || teamStatsInfo.show
-      ? [
-          showGameStats && gameStats ? GameStats(teams, gameStats) : null,
-          teamStatsInfo.show
-            ? TeamStats({
-                fadeIn: showProgressInfo || teamStatsInfo.isAfterGameDisplayState,
-                isPlayoffGame,
-                stats: teamStatsInfo.stats,
-                statsType: teamStatsInfo.type,
-                teams,
-              })
-            : null,
-        ]
-      : null,
-  );
+  return div('.stats-panel', [
+    div('.stats-panel__container', [
+      showGameStats && gameStats ? GameStats(teams, gameStats) : null,
+      teamStatsInfo.show
+        ? TeamStats({
+            fadeIn: showProgressInfo || teamStatsInfo.isAfterGameDisplayState,
+            isPlayoffGame,
+            stats: teamStatsInfo.stats,
+            statsType: teamStatsInfo.type,
+            teams,
+          })
+        : null,
+    ]),
+  ]);
 }

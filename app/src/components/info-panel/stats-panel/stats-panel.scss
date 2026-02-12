@@ -3,27 +3,15 @@
 @use '../../../styles/sizes';
 
 .stats-panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 0; // For expand animation
+  min-height: 0;
   background-color: colors.$background-stats-panel;
 
-  @media (prefers-reduced-motion: no-preference) {
-    transition: height animations.$height-duration animations.$height-timing-function;
-  }
-
-  @for $i from 1 through sizes.$team-stats-line-count-max {
-    .info-panel--team-stats-line-count-#{$i} & {
-      .game--pre-game & {
-        height: sizes.get-stats-panel-height($i);
-      }
-
-      .game--post-game-in-progress &,
-      .game--post-game-finished & {
-        height: sizes.get-stats-panel-height($i) +
-          sizes.get-stats-section-height(sizes.$game-stats-line-count);
-      }
-    }
+  &__container {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: sizes.$panel-padding-height 0;
+    gap: sizes.$panel-padding-height;
   }
 }

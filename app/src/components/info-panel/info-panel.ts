@@ -16,8 +16,8 @@ import {
 } from '../../types';
 import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
+import Expandable from '../expandable';
 import PlayerLogo from './player-logo';
-import { getTeamStatCount } from './stat-counts';
 import StatsPanel, { type TeamStatsInfo } from './stats-panel';
 
 type Props = {
@@ -87,38 +87,31 @@ export default function InfoPanel({
     !!gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
 
   const teamStatsInfo = getTeamStatsInfo({ currentStats, gameDisplay, preGameStats, teams });
-  const teamStatLineCount =
-    teamStatsInfo.show && teamStatsInfo.stats
-      ? getTeamStatCount(Object.keys(teamStatsInfo.stats), isPlayoffGame) + 1
-      : 0;
 
-  return div(
-    '.info-panel',
-    {
-      class: {
-        'info-panel--with-game-stats': gameStats,
-        [`info-panel--team-stats-line-count-${teamStatLineCount}`]: !!teamStatLineCount,
-      },
-    },
-    [
+  return div('.info-panel', { class: { 'info-panel--with-game-stats': !!gameStats } }, [
+    div('.info-panel__section.info-panel__section--latest-goal-or-summary', [
       gameDisplay !== 'pre-game'
         ? renderLatestGoalOrSummary(teams, gameDisplay, currentGoals, latestGoal)
         : null,
-      showProgressInfo
-        ? div('.game-description.fade-in', renderGameStatus(status, startTime))
-        : null,
-      gameDisplay !== 'playback'
-        ? StatsPanel({
-            gameStats,
-            isPlayoffGame,
-            showGameStats,
-            showProgressInfo,
-            teamStatsInfo,
-            teams,
-          })
-        : null,
-    ],
-  );
+    ]),
+    div('.info-panel__section.info-panel__section--game-description', [
+      Expandable({ show: showProgressInfo }, [
+        div('.game-description.fade-in', renderGameStatus(status, startTime)),
+      ]),
+    ]),
+    div('.info-panel__section.info-panel__section--stats-panel', [
+      Expandable({ show: showGameStats || teamStatsInfo.show }, [
+        StatsPanel({
+          gameStats,
+          isPlayoffGame,
+          showGameStats,
+          showProgressInfo,
+          teamStatsInfo,
+          teams,
+        }),
+      ]),
+    ]),
+  ]);
 }
 
 function renderLatestGoal(latestGoal?: Goal): VNode {

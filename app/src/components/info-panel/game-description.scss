@@ -3,6 +3,7 @@
 @use '../../styles/sizes';
 
 .game-description {
+  min-height: 0;
   padding-bottom: sizes.$panel-padding-height;
   color: colors.$color-main;
   text-align: center;
