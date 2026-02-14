@@ -141,7 +141,7 @@ function model({
             state
               ? ({
                   description: state.description,
-                  gameDisplay: state.gameDisplays[gameDisplayIndex],
+                  gameDisplay: state.gameDisplays[gameDisplayIndex] ?? 'pre-game',
                   gameState: {
                     ...gameData.data,
                     status: gameStatus.status,

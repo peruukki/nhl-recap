@@ -14,6 +14,7 @@ import {
   Teams,
   TeamStats as TeamStatsT,
 } from '../../types';
+import { showPanel } from '../../utils/ui';
 import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import Expandable from '../expandable';
@@ -76,15 +77,8 @@ export default function InfoPanel({
   status,
   teams,
 }: Props): VNode {
-  const showProgressInfo = [
-    'pre-game',
-    'in-progress',
-    'pre-summary-in-progress',
-    'summary-in-progress',
-    'post-game-in-progress',
-  ].includes(gameDisplay);
-  const showGameStats =
-    !!gameStats && ['post-game-finished', 'post-game-in-progress'].includes(gameDisplay);
+  const showProgressInfo = showPanel(gameDisplay, 'game-description');
+  const showGameStats = !!gameStats && showPanel(gameDisplay, 'game-stats');
 
   const teamStatsInfo = getTeamStatsInfo({ currentStats, gameDisplay, preGameStats, teams });
 
@@ -227,12 +221,7 @@ function renderLatestGoalOrSummary(
   goals: Goal[],
   latestGoal?: Goal,
 ) {
-  return [
-    'summary-in-progress',
-    'summary-finished',
-    'post-game-finished',
-    'post-game-in-progress',
-  ].includes(gameDisplay)
+  return showPanel(gameDisplay, 'summary')
     ? renderSummary(teams, goals)
     : renderLatestGoal(latestGoal);
 }

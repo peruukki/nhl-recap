@@ -1,6 +1,7 @@
 import { a, div, span } from '@cycle/dom';
 
 import type { GameDisplay, Links, Teams } from '../types';
+import { showPanel } from '../utils/ui';
 import Expandable from './expandable';
 import Icon from './icon';
 
@@ -38,7 +39,7 @@ export default function LinksPanel({ gameDisplay, links, teams }: Props) {
   return links?.gameCenter || links?.videoRecap
     ? Expandable(
         {
-          show: ['pre-game', 'post-game-finished', 'post-game-in-progress'].includes(gameDisplay),
+          show: showPanel(gameDisplay, 'links'),
         },
         [
           div('.links-panel', [
