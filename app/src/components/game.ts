@@ -10,7 +10,17 @@ import SeriesWinsPanel from './series-wins-panel';
 
 export default function Game(
   gameDisplay: GameDisplay,
-  { status, startTime, teams, gameStats, preGameStats, currentStats, links, errors }: GameT,
+  {
+    status,
+    startTime,
+    teams,
+    gameStats,
+    preGameStats,
+    currentStats,
+    rosters,
+    links,
+    errors,
+  }: GameT,
   currentGoals: Goal[],
   gameAnimationIndex: number,
 ): VNode {
@@ -34,6 +44,7 @@ export default function Game(
         gameStats,
         preGameStats,
         currentStats,
+        rosters,
         status,
         isPlayoffGame: !!preGameStats?.playoffSeries,
         currentGoals,

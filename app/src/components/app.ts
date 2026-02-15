@@ -91,7 +91,7 @@ export default function app($window: Window, options: Options): (sources: Source
 
 function getApiUrl(date?: string): string {
   const host = import.meta.env.VITE_SCORE_API_HOST ?? 'https://nhl-score-api.herokuapp.com';
-  return `${host}/api/scores${date ? `?startDate=${date}` : '/latest'}`;
+  return `${host}/api/scores${date ? '' : '/latest'}?include=rosters${date ? `&startDate=${date}` : ''}`;
 }
 
 function intent(

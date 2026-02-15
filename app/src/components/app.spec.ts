@@ -50,14 +50,16 @@ describe('app', () => {
   it('should fetch latest scores by default', async () => {
     const sinks = run(xs.empty());
     await assertStreamValues(sinks.HTTP, (request) => {
-      expect(request.url).toEqual(nhlScoreApiUrl);
+      expect(request.url).toEqual(`${nhlScoreApiUrl}?include=rosters`);
     });
   });
 
   it('should fetch scores for specific date when date parameter is set', async () => {
     const sinks = run(xs.empty(), { search: '?date=2024-01-15' });
     await assertStreamValues(sinks.HTTP, (request) => {
-      expect(request.url).toEqual(`${nhlScoreApiHost}/api/scores?startDate=2024-01-15`);
+      expect(request.url).toEqual(
+        `${nhlScoreApiHost}/api/scores?include=rosters&startDate=2024-01-15`,
+      );
     });
   });
 

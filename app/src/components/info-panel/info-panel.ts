@@ -11,6 +11,7 @@ import {
   Goal,
   GoalInGamePlay,
   isShootoutGoal,
+  Rosters,
   Teams,
   TeamStats as TeamStatsT,
 } from '../../types';
@@ -19,6 +20,7 @@ import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';
 import { renderPeriodNumber, renderTime } from '../clock';
 import Expandable from '../expandable';
 import PlayerLogo from './player-logo';
+import StartingGoaliesPanel from './starting-goalies-panel';
 import StatsPanel, { type TeamStatsInfo } from './stats-panel';
 
 type Props = {
@@ -29,6 +31,7 @@ type Props = {
   isPlayoffGame: boolean;
   latestGoal?: Goal;
   preGameStats?: TeamStatsT;
+  rosters?: Rosters;
   startTime: string;
   status: GameStatus;
   teams: Teams;
@@ -73,12 +76,14 @@ export default function InfoPanel({
   isPlayoffGame,
   latestGoal,
   preGameStats,
+  rosters,
   startTime,
   status,
   teams,
 }: Props): VNode {
   const showProgressInfo = showPanel(gameDisplay, 'game-description');
   const showGameStats = !!gameStats && showPanel(gameDisplay, 'game-stats');
+  const showStartingGoalies = !!rosters && showPanel(gameDisplay, 'starting-goalies');
 
   const teamStatsInfo = getTeamStatsInfo({ currentStats, gameDisplay, preGameStats, teams });
 
@@ -92,6 +97,12 @@ export default function InfoPanel({
       Expandable({ show: showProgressInfo }, [
         div('.game-description.fade-in', renderGameStatus(status, startTime)),
       ]),
+    ]),
+    div('.info-panel__section.info-panel__section--starting-goalies', [
+      Expandable(
+        { show: showStartingGoalies },
+        [rosters ? StartingGoaliesPanel({ rosters, teams }) : null].filter((vnode) => !!vnode),
+      ),
     ]),
     div('.info-panel__section.info-panel__section--stats-panel', [
       Expandable({ show: showGameStats || teamStatsInfo.show }, [

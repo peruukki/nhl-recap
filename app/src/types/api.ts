@@ -5,6 +5,7 @@ export type Game = {
   errors?: StatError[];
   links?: Links;
   preGameStats?: TeamStats;
+  rosters?: Rosters;
   startTime: string;
   status: GameStatus;
   teams: Teams;
@@ -68,6 +69,18 @@ type PointScorer = {
   seasonTotal: number;
 };
 
+export type Rosters = {
+  away: TeamRoster;
+  home: TeamRoster;
+};
+
+type RosterPlayer = {
+  name: string;
+  number: number;
+  position: 'C' | 'D' | 'G' | 'L' | 'R';
+  startingLineup?: boolean;
+};
+
 export type Scores = {
   date?: ScoresDate;
   games: Game[];
@@ -103,6 +116,11 @@ export type TeamPlayoffSeries = {
 };
 
 export type TeamRecord = { losses: number; ot?: number; wins: number };
+
+type TeamRoster = {
+  dressedPlayers: RosterPlayer[];
+  scratchedPlayers: RosterPlayer[];
+};
 
 export type TeamStats = {
   playoffSeries?: TeamPlayoffSeries;

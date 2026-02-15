@@ -11,7 +11,7 @@ import {
   renderLatestGoalScorer,
   renderLatestGoalTime,
 } from './info-panel';
-import { getInfoPanel } from './test-utils';
+import { getInfoPanel, getStartingGoaliesPanel } from './test-utils';
 
 type PointScorer = {
   player: string;
@@ -177,7 +177,59 @@ describe('info panel', () => {
       assertGameDescription('pre-game', { status, teams }, goals, 'Postponed');
     });
   });
+
+  describe('starting goalies panel', () => {
+    it('should show the starting goalies if both are available before playback has started', () => {
+      const { teams, status, rosters } = scoresAllRegularTime.games[1];
+      const goalies = [
+        { teamAbbreviation: 'ANA', number: 31, name: 'Frederik Andersen' },
+        { teamAbbreviation: 'NYR', number: 30, name: 'Henrik Lundqvist' },
+      ];
+      assertStartingGoalies('pre-game', { teams, status, rosters }, [], goalies);
+    });
+
+    it('should not show the starting goalies after playback has started', () => {
+      const { teams, status, rosters } = scoresAllRegularTime.games[1];
+      assertStartingGoalies('playback', { teams, status, rosters }, [], null);
+    });
+
+    it('should not show the starting goalies if one is missing', () => {
+      const { teams, status, rosters } = scoresAllRegularTime.games[1];
+      const rostersWithMissingStartingGoalie = {
+        ...rosters!,
+        home: {
+          ...rosters!.home,
+          dressedPlayers: rosters!.home.dressedPlayers.map((p) =>
+            p.position === 'G' ? { ...p, startingLineup: false } : p,
+          ),
+        },
+      };
+      assertStartingGoalies(
+        'pre-game',
+        { teams, status, rosters: rostersWithMissingStartingGoalie },
+        [],
+        null,
+      );
+    });
+
+    it('should not show the starting goalies if roster data is missing', () => {
+      const { teams, status } = scoresAllRegularTime.games[1];
+      assertStartingGoalies('pre-game', { teams, status }, [], null);
+    });
+  });
 });
+
+function assertStartingGoalies(
+  gameDisplay: GameDisplay,
+  { teams, status, rosters }: Partial<GameT>,
+  goals: Goal[],
+  expectedGoalies: { teamAbbreviation: string; number: number; name: string }[] | null,
+) {
+  const vtree = Game(gameDisplay, { status, teams, rosters } as GameT, goals, 0);
+  const startingGoaliesPanel = getStartingGoaliesPanel(vtree);
+  const expected = expectedStartingGoaliesPanel(expectedGoalies);
+  expect(startingGoaliesPanel).toEqual(expected);
+}
 
 function assertLatestGoal(
   gameDisplay: GameDisplay,
@@ -281,4 +333,27 @@ function expectedCurrentProgressDescription(progressTime: string) {
 
 function expectedGameDescription(description: string | (string | VNode)[]) {
   return div('.game-description.fade-in', description);
+}
+
+function expectedStartingGoaliesPanel(
+  expectedGoalies: { teamAbbreviation: string; number: number; name: string }[] | null,
+) {
+  return expectedGoalies
+    ? div('.starting-goalies', [
+        div('.starting-goalies__container.fade-in', [
+          div('.starting-goalies__heading', 'Starting goalies'),
+          div(
+            '.starting-goalies__goalies',
+            expectedGoalies.flatMap((expectedGoalie) => [
+              renderTeamLogoSVG(
+                expectedGoalie.teamAbbreviation,
+                `player-logo player-logo--${expectedGoalie.teamAbbreviation} team-logo__image--${expectedGoalie.teamAbbreviation}`,
+              ),
+              span('.number', expectedGoalie.number),
+              span('.name', expectedGoalie.name),
+            ]),
+          ),
+        ]),
+      ])
+    : undefined;
 }

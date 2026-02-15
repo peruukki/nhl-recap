@@ -1,9 +1,16 @@
 import type { GameDisplay } from '../types';
 
-type Panel = 'game-description' | 'game-stats' | 'latest-goal' | 'links' | 'summary' | 'team-stats';
+type Panel =
+  | 'game-description'
+  | 'game-stats'
+  | 'latest-goal'
+  | 'links'
+  | 'starting-goalies'
+  | 'summary'
+  | 'team-stats';
 
 const gameDisplayPanels: Record<GameDisplay, Panel[]> = {
-  'pre-game': ['game-description', 'team-stats', 'links'],
+  'pre-game': ['game-description', 'starting-goalies', 'team-stats', 'links'],
   playback: ['latest-goal'],
   'in-progress': ['latest-goal', 'game-description'],
   'pre-summary-finished': ['latest-goal'],

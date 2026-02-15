@@ -1,0 +1,39 @@
+@use '../../styles/animations';
+@use '../../styles/colors';
+@use '../../styles/sizes';
+
+.starting-goalies {
+  min-height: 0;
+  padding-top: sizes.$panel-padding-height;
+  background-color: colors.$background-stats-panel;
+
+  &__container {
+    @include animations.delayed-animation;
+  }
+
+  &__heading {
+    color: colors.$color-accent-light;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  &__goalies {
+    display: inline-grid;
+    grid-template-columns: auto 1fr auto;
+    position: relative;
+    left: -2px;
+    margin-top: 2px;
+
+    .number {
+      color: colors.$color-main;
+      margin: -2px 0.3em 0 0.2em;
+    }
+
+    .name {
+      color: colors.$color-highlight;
+      margin-top: -2px;
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+}

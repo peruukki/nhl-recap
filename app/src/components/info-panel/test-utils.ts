@@ -8,9 +8,18 @@ export function getInfoPanel(vtree: VNode): VNode | undefined {
   return getGameCard(vtree)?.children?.[1] as VNode | undefined;
 }
 
-export function getStatsPanel(vtree: VNode): VNode | undefined {
+export function getStartingGoaliesPanel(vtree: VNode): VNode | undefined {
   const infoPanel = getInfoPanel(vtree);
   const section = infoPanel?.children?.[2] as VNode | undefined;
+  const activeExpandable = (section?.children?.filter(Boolean) as VNode[] | undefined)?.find(
+    (child) => child.data?.class?.['expandable--shown'],
+  );
+  return (activeExpandable?.children?.[0] as VNode | undefined)?.children?.[0] as VNode | undefined;
+}
+
+export function getStatsPanel(vtree: VNode): VNode | undefined {
+  const infoPanel = getInfoPanel(vtree);
+  const section = infoPanel?.children?.[3] as VNode | undefined;
   const activeExpandable = (section?.children?.filter(Boolean) as VNode[] | undefined)?.find(
     (child) => child.data?.class?.['expandable--shown'],
   );
