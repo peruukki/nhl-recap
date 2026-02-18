@@ -1,4 +1,4 @@
-import type { Scores } from 'app/src/types';
+import type { Scores } from '../../../src/types';
 
 import future from './future.json';
 import latest from './latest.json';
