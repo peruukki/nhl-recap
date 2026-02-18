@@ -29,6 +29,7 @@
         "@rollup/plugin-node-resolve": "16.0.3",
         "@rollup/plugin-replace": "6.0.3",
         "@types/lodash": "4.17.21",
+        "@typescript/native-preview": "7.0.0-dev.20260218.1",
         "@vitest/coverage-v8": "4.0.13",
         "autoprefixer": "10.4.22",
         "baseline-browser-mapping": "2.9.19",
@@ -4719,6 +4720,123 @@
         "type": "opencollective",
         "url": "https://opencollective.com/typescript-eslint"
       }
+    },
+    "node_modules/@typescript/native-preview": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview/-/native-preview-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-hbGRXBk7abFvOQJk/7mc8K9q1kPkiyziyUsS8r8Hc1sLxrDFUbGgsW9p8qg67Xe1K6NUv/9UU2cdeIitUDexIQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "tsgo": "bin/tsgo.js"
+      },
+      "optionalDependencies": {
+        "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-arm": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-x64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-win32-x64": "7.0.0-dev.20260218.1"
+      }
+    },
+    "node_modules/@typescript/native-preview-darwin-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-darwin-arm64/-/native-preview-darwin-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-ybxez4ClJU12TUvX/IxGPIQfS26+Zia7kbB1L4RH+G8yzYg90RPt4njfJkU2WxP70Hp59zS2copPkaBz5gUJkQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ]
+    },
+    "node_modules/@typescript/native-preview-darwin-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-darwin-x64/-/native-preview-darwin-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-n9Ki8WTW82w6PlBTlrAQAjEUQB2V7C2oXrkN5U7ElwUH4FOostSFzZHuAdnPMbdzMx76P0pEw9FteYrLDA4m9g==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ]
+    },
+    "node_modules/@typescript/native-preview-linux-arm": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-arm/-/native-preview-linux-arm-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-WRPMvTztPatQ91UzYWSp82NT45JmjMgo/pVgZjXYEWdF2rwS4ejzR6DnHq30jXhEPnMah1bTeOzSWFF2kvXUmg==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@typescript/native-preview-linux-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-arm64/-/native-preview-linux-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-Osus82LSlwi1l3LoxLWKDuxh5E8JyWwkseBjr2n+TMaTuDPcRSzT8Jr4ywIp3NJpCUUV/LzR84i64jA6g8iVIw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@typescript/native-preview-linux-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-x64/-/native-preview-linux-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-jcDhKCvhWQyMbra4MiqSgyUoSdM9mAiSkIdc80qScpk03aZOU+BZEmHz51S+fEn+8KRWuMuIHXM3sG3oX/EJZA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@typescript/native-preview-win32-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-win32-arm64/-/native-preview-win32-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-VmWvJ+TEuTPmZrhWe+buvvUvHbMyiD4ZLgxYPdYcJ3kRQlk2mD5lOq63ZISx1pDB8kYz5/R5xYKy/8gSIU5MgQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
+    },
+    "node_modules/@typescript/native-preview-win32-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-win32-x64/-/native-preview-win32-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-9zfUrKV3xBog2tpIR9NZOags+QJZSj7v9Ek7KdSkVu978IJqF9RX7oa2xftX+eiHySfV5ZQ8r2fdhdbYBk+kMw==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
     },
     "node_modules/@vitest/coverage-v8": {
       "version": "4.0.13",
@@ -13755,6 +13873,70 @@
         "@typescript-eslint/types": "8.48.0",
         "eslint-visitor-keys": "^4.2.1"
       }
+    },
+    "@typescript/native-preview": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview/-/native-preview-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-hbGRXBk7abFvOQJk/7mc8K9q1kPkiyziyUsS8r8Hc1sLxrDFUbGgsW9p8qg67Xe1K6NUv/9UU2cdeIitUDexIQ==",
+      "dev": true,
+      "requires": {
+        "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-arm": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-linux-x64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260218.1",
+        "@typescript/native-preview-win32-x64": "7.0.0-dev.20260218.1"
+      }
+    },
+    "@typescript/native-preview-darwin-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-darwin-arm64/-/native-preview-darwin-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-ybxez4ClJU12TUvX/IxGPIQfS26+Zia7kbB1L4RH+G8yzYg90RPt4njfJkU2WxP70Hp59zS2copPkaBz5gUJkQ==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-darwin-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-darwin-x64/-/native-preview-darwin-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-n9Ki8WTW82w6PlBTlrAQAjEUQB2V7C2oXrkN5U7ElwUH4FOostSFzZHuAdnPMbdzMx76P0pEw9FteYrLDA4m9g==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-linux-arm": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-arm/-/native-preview-linux-arm-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-WRPMvTztPatQ91UzYWSp82NT45JmjMgo/pVgZjXYEWdF2rwS4ejzR6DnHq30jXhEPnMah1bTeOzSWFF2kvXUmg==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-linux-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-arm64/-/native-preview-linux-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-Osus82LSlwi1l3LoxLWKDuxh5E8JyWwkseBjr2n+TMaTuDPcRSzT8Jr4ywIp3NJpCUUV/LzR84i64jA6g8iVIw==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-linux-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-linux-x64/-/native-preview-linux-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-jcDhKCvhWQyMbra4MiqSgyUoSdM9mAiSkIdc80qScpk03aZOU+BZEmHz51S+fEn+8KRWuMuIHXM3sG3oX/EJZA==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-win32-arm64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-win32-arm64/-/native-preview-win32-arm64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-VmWvJ+TEuTPmZrhWe+buvvUvHbMyiD4ZLgxYPdYcJ3kRQlk2mD5lOq63ZISx1pDB8kYz5/R5xYKy/8gSIU5MgQ==",
+      "dev": true,
+      "optional": true
+    },
+    "@typescript/native-preview-win32-x64": {
+      "version": "7.0.0-dev.20260218.1",
+      "resolved": "https://registry.npmjs.org/@typescript/native-preview-win32-x64/-/native-preview-win32-x64-7.0.0-dev.20260218.1.tgz",
+      "integrity": "sha512-9zfUrKV3xBog2tpIR9NZOags+QJZSj7v9Ek7KdSkVu978IJqF9RX7oa2xftX+eiHySfV5ZQ8r2fdhdbYBk+kMw==",
+      "dev": true,
+      "optional": true
     },
     "@vitest/coverage-v8": {
       "version": "4.0.13",

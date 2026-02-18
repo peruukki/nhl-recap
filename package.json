@@ -23,7 +23,7 @@
   "scripts": {
     "browserify": "browserify $npm_package_config_browserify_args -g uglifyify | uglifyjs -c -o public/main.js",
     "build": "npm run build:app && npm run build:sw",
-    "build:app": "tsc && vite build",
+    "build:app": "npm run ts && vite build",
     "build:sw": "rollup $npm_package_config_rollup_sw_args",
     "check": "concurrently -n format,lint,types,test \"npm run format:check\" \"npm run lint\" \"npm run ts\" \"npm run test\"",
     "clean:dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
@@ -48,8 +48,8 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "ts": "tsc",
-    "ts:watch": "tsc -w"
+    "ts": "tsgo",
+    "ts:watch": "tsgo --watch"
   },
   "dependencies": {
     "@cycle/dom": "23.1.0",
@@ -71,6 +71,7 @@
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-replace": "6.0.3",
     "@types/lodash": "4.17.21",
+    "@typescript/native-preview": "7.0.0-dev.20260218.1",
     "@vitest/coverage-v8": "4.0.13",
     "autoprefixer": "10.4.22",
     "baseline-browser-mapping": "2.9.19",
