@@ -91,6 +91,7 @@ nhl-recap/
   - only add comments when the implementation is non-trivial or the motivation for the code is unclear
   - infer types when possible
   - prefer expression body over block body
+  - only export types that are intended to be used outside the file where they are defined
 
 ## Development Workflow
 
