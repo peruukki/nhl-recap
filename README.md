@@ -7,7 +7,7 @@ The app is running at https://peruukki.github.io/nhl-recap/. Add it to your home
 or iOS device for a more app-like, chromeless experience.
 
 By default, the app shows the latest scores, but you can also specify a custom date with the `date` URL search parameter,
-for example https://peruukki.github.io/nhl-recap/?date=2025-06-17. The date needs to be in `YYYY-MM-DD` format.
+for example https://peruukki.github.io/nhl-recap/?date=2026-02-05. The date needs to be in `YYYY-MM-DD` format.
 
 Built with [Cycle.js](https://cycle.js.org/) and `npm` scripts. Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
 as its backend.
