@@ -1,14 +1,5 @@
-@mixin horizontal-offset($team-abbreviation, $offset) {
-  &--#{$team-abbreviation} {
-    right: $offset;
-  }
-}
-
 .player-logo {
   position: relative;
   width: 1.5em;
   height: 1em;
-
-  @include horizontal-offset(ANA, 2px);
-  @include horizontal-offset(ARI, -1px);
 }
