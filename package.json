@@ -22,7 +22,7 @@
     "build": "npm run build:app && npm run build:sw",
     "build:app": "npm run ts && vite build",
     "build:sw": "rollup $npm_package_config_rollup_sw_args",
-    "check": "concurrently -n check:js,lint:css,types,test \"npm run biome check\" \"npm run lint:css\" \"npm run ts\" \"npm run test\"",
+    "check": "concurrently -n check:js,lint:css,types,test \"npm run biome ci\" \"npm run lint:css\" \"npm run ts\" \"npm run test\"",
     "clean:dist": "cd dist && git fetch origin && git reset --hard origin/gh-pages && rm -rf *",
     "clone:dist": "[ -d 'dist' ] || git clone -b gh-pages --single-branch git@github.com:peruukki/nhl-recap.git dist",
     "commit:dist": "cd dist && git add -A . && git commit -m \"Version $npm_package_version\"",
