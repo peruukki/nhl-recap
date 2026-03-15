@@ -34,7 +34,7 @@ This document provides essential information for AI agents working on the nhl-re
 
 - **ESLint** - JavaScript/TypeScript linting
 - **Stylelint** - SASS/CSS linting
-- **Prettier** - Code formatting
+- **Biome** - Code formatting
 - **TypeScript** - Type checking
 
 ### Dependencies
@@ -84,7 +84,6 @@ nhl-recap/
 
 ### Code Style
 
-- JavaScript/TypeScript formatting via **Prettier**
 - TypeScript is used for type safety
 - ES modules (`"type": "module"` in package.json)
 - Write concise code:

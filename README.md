@@ -71,10 +71,10 @@ Outputs are written to `tools/logo-analysis/` (JSON plus CSS/SCSS snippets you c
 
 See more details in [tools/README.md](tools/README.md).
 
-## Formatting with Prettier
+## Formatting with Biome
 
-JavaScript is formatted using [Prettier](https://prettier.io/). Prettier is the most convenient to run via your IDE,
-but it is also run as part of the linting tasks:
+JavaScript/TypeScript and JSON files are formatted using [Biome](https://biomejs.dev/). Biome is the most convenient
+to run via your IDE, but you can also run it with:
 
 ```shell
 npm run format
@@ -82,7 +82,7 @@ npm run format
 
 ## Running all source code checks
 
-Lint SASS and JavaScript/TypeScript, type-check TypeScript, verify code formatting and run unit tests:
+Lint SASS and JavaScript/TypeScript, type-check TypeScript, verify formatting and run unit tests:
 
 ```shell
 npm run check
