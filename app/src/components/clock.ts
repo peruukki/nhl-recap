@@ -1,5 +1,5 @@
-import { span, VNode } from '@cycle/dom';
-import xs, { Stream } from 'xstream';
+import { span, type VNode } from '@cycle/dom';
+import xs, { type Stream } from 'xstream';
 
 import { PERIOD_OVERTIME, PERIOD_SHOOTOUT } from '../events/constants';
 import gameEvents from '../events/game-events';

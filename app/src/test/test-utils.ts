@@ -1,4 +1,4 @@
-import { Stream } from 'xstream';
+import type { Stream } from 'xstream';
 
 /**
  * Calls `assertFn` for each value of `stream$`.

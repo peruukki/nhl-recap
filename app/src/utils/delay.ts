@@ -1,4 +1,4 @@
-import xs, { Stream } from 'xstream';
+import xs, { type Stream } from 'xstream';
 
 /**
  * Delays source stream emits at least by given delay.

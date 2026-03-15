@@ -1,4 +1,4 @@
-import { div, span, VNode } from '@cycle/dom';
+import { div, span, type VNode } from '@cycle/dom';
 
 import type { Rosters, Teams } from '../../types';
 import { truncatePlayerName } from '../../utils/utils';

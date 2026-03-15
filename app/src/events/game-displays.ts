@@ -1,6 +1,6 @@
-import xs, { Stream } from 'xstream';
+import xs, { type Stream } from 'xstream';
 
-import { GameDisplay, GameEvent, GameEventClockTime, Scores } from '../types';
+import type { GameDisplay, GameEvent, GameEventClockTime, Scores } from '../types';
 import {
   hasClockPassedCurrentProgress,
   hasGameFinished,

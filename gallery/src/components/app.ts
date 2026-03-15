@@ -1,5 +1,5 @@
-import { button, div, h, MainDOMSource, VNode } from '@cycle/dom';
-import xs, { Stream } from 'xstream';
+import { button, div, h, type MainDOMSource, type VNode } from '@cycle/dom';
+import xs, { type Stream } from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
 
@@ -100,7 +100,9 @@ function model({
   // Persist across page reloads
   sectionExpandedStates$.addListener({
     next: (sectionsExpanded) => {
-      sectionsExpanded.forEach((isExpanded, index) => setSectionExpandedState(index, isExpanded));
+      sectionsExpanded.forEach((isExpanded, index) => {
+        setSectionExpandedState(index, isExpanded);
+      });
     },
   });
 

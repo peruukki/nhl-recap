@@ -1,4 +1,4 @@
-import { div, span, VNode } from '@cycle/dom';
+import { div, span, type VNode } from '@cycle/dom';
 
 import type { TeamRecord, TeamStats as TeamStatsT, TeamStreak, Teams } from '../../../types';
 import { renderStat } from './common';
@@ -102,7 +102,7 @@ function getRegularSeasonPoints(record: TeamRecord): number {
 
 function renderWinPercentage(record: TeamRecord): string {
   const percentage = getPointPercentage(record);
-  if (isNaN(percentage)) {
+  if (Number.isNaN(percentage)) {
     return '-';
   }
 

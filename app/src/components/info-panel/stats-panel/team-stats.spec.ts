@@ -1,10 +1,10 @@
-import { VNode } from '@cycle/dom';
+import type { VNode } from '@cycle/dom';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
 import type { GameDisplay, GameStatus, Game as GameT, Goal } from '../../../types';
 import Game from '../../game';
-import { expectedStat, getStatsPanel, StatValue } from '../test-utils';
+import { expectedStat, getStatsPanel, type StatValue } from '../test-utils';
 import { delimiter as renderedDelimiter } from './team-stats';
 
 const inProgressGameProgress = {

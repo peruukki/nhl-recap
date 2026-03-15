@@ -1,4 +1,4 @@
-import { Goal } from './api';
+import type { Goal } from './api';
 
 export type ClockTimeElapsed = {
   period: number | string;

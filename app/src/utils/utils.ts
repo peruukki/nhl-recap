@@ -32,7 +32,7 @@ export function truncatePlayerName(name: string, maxLength = 20): string {
 }
 
 export function getGameAnimationIndexes(gameCount: number): number[] {
-  return Array.from({ length: gameCount }, (value, index) => index);
+  return Array.from({ length: gameCount }, (_value, index) => index);
 }
 
 function areTeamRecordsEqual(record1?: TeamRecord, record2?: TeamRecord): boolean {

@@ -1,4 +1,4 @@
-import { img, VNode } from '@cycle/dom';
+import { img, type VNode } from '@cycle/dom';
 
 export function renderTeamLogoSVG(teamAbbreviation: string, className: string): VNode {
   return img({

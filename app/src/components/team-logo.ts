@@ -1,4 +1,4 @@
-import { span, VNode } from '@cycle/dom';
+import { span, type VNode } from '@cycle/dom';
 import classNames from 'classnames';
 
 import { renderTeamLogoSVG } from '../utils/logos';

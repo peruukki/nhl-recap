@@ -1,4 +1,4 @@
-import { div, span, VNode } from '@cycle/dom';
+import { div, span, type VNode } from '@cycle/dom';
 import _ from 'lodash';
 
 import type { Goal, TeamAbbreviation, TeamPlayoffSeries, Teams } from '../types';

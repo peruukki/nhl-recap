@@ -1,19 +1,19 @@
-import { div, span, VNode } from '@cycle/dom';
+import { div, span, type VNode } from '@cycle/dom';
 import classNames from 'classnames';
 import { format } from 'timeago.js';
 
 import { PERIOD_SHOOTOUT } from '../../events/constants';
 import {
-  GameDisplay,
-  GameProgress,
-  GameStats as GameStatsT,
-  GameStatus,
-  Goal,
-  GoalInGamePlay,
+  type GameDisplay,
+  type GameProgress,
+  type GameStats as GameStatsT,
+  type GameStatus,
+  type Goal,
+  type GoalInGamePlay,
   isShootoutGoal,
-  Rosters,
-  TeamStats as TeamStatsT,
-  Teams,
+  type Rosters,
+  type TeamStats as TeamStatsT,
+  type Teams,
 } from '../../types';
 import { showPanel } from '../../utils/ui';
 import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';
@@ -291,7 +291,7 @@ function renderGameStatus(
     case 'LIVE':
       return renderCurrentProgress(status.progress);
     case 'PREVIEW': {
-      const isInFuture = new Date(startTime).getTime() - new Date().getTime() > 0;
+      const isInFuture = new Date(startTime).getTime() - Date.now() > 0;
       return `Starts ${isInFuture ? format(startTime) : 'soon'}`;
     }
     case 'POSTPONED':

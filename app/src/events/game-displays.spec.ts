@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import xs, { Stream } from 'xstream';
+import xs, { type Stream } from 'xstream';
 
 import { assertStreamValues } from '../test/test-utils';
 import type { Game, GameEvent, Scores } from '../types';

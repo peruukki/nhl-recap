@@ -1,4 +1,4 @@
-import { div, VNode } from '@cycle/dom';
+import { div, type VNode } from '@cycle/dom';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime } from '../test/data';

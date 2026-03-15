@@ -1,4 +1,4 @@
-import { div, VNode } from '@cycle/dom';
+import { div, type VNode } from '@cycle/dom';
 import _ from 'lodash';
 
 import type { GameDisplay, Game as GameT, Goal } from '../types';

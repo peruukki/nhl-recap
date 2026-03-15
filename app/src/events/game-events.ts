@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
 import {
-  Game,
-  GameEndTime,
-  GameEvent,
-  GameProgress,
-  Goal,
-  GoalWithUpdateFields,
+  type Game,
+  type GameEndTime,
+  type GameEvent,
+  type GameProgress,
+  type Goal,
+  type GoalWithUpdateFields,
   isShootoutGoal,
-  PauseEvent,
-  PeriodGameEvents,
-  TextualPeriod,
+  type PauseEvent,
+  type PeriodGameEvents,
+  type TextualPeriod,
 } from '../types';
 import {
   GAME_PRE_SUMMARY_PAUSE_EVENT_COUNT,

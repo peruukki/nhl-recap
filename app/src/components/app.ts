@@ -1,7 +1,7 @@
-import { div, MainDOMSource, main, span, VNode } from '@cycle/dom';
-import { HTTPSource, Response } from '@cycle/http';
+import { div, type MainDOMSource, main, span, type VNode } from '@cycle/dom';
+import type { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
-import xs, { Stream } from 'xstream';
+import xs, { type Stream } from 'xstream';
 
 import getGameDisplays$ from '../events/game-displays';
 import type {
@@ -70,7 +70,8 @@ function parseSearchParams($window: Window) {
   const searchParams = new URLSearchParams($window.location.search);
   const dateParam = searchParams.get('date') ?? undefined;
   const isDateParamValid =
-    !dateParam || (/^\d{4}-\d{2}-\d{2}$/.test(dateParam) && !isNaN(new Date(dateParam).getTime()));
+    !dateParam ||
+    (/^\d{4}-\d{2}-\d{2}$/.test(dateParam) && !Number.isNaN(new Date(dateParam).getTime()));
   return {
     date: dateParam,
     error: !isDateParamValid ? new Error(`Invalid date parameter "${dateParam}".`) : undefined,

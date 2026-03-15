@@ -1,4 +1,4 @@
-import { div, span, VNode } from '@cycle/dom';
+import { div, span, type VNode } from '@cycle/dom';
 
 import { getGameCard } from '../test-utils';
 

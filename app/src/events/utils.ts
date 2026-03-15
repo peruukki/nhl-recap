@@ -1,18 +1,18 @@
 import _ from 'lodash';
 
 import {
-  ClockTimeElapsed,
-  ClockTimeRemaining,
-  GameEvent,
-  GameEventClockTime,
-  GameEventShootout,
-  GameProgress,
-  GameState,
-  GameStatus,
-  GoalWithUpdateFields,
+  type ClockTimeElapsed,
+  type ClockTimeRemaining,
+  type GameEvent,
+  type GameEventClockTime,
+  type GameEventShootout,
+  type GameProgress,
+  type GameState,
+  type GameStatus,
+  type GoalWithUpdateFields,
   isShootoutGoal,
-  PauseEvent,
-  Period,
+  type PauseEvent,
+  type Period,
 } from '../types';
 import {
   ADVANCE_CLOCK_STEP_MAX,

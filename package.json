@@ -30,7 +30,7 @@
     "copy:normalize": "mkdir -p app/styles/vendor && cp node_modules/normalize.css/normalize.css app/styles/vendor",
     "lint": "concurrently -n css,js \"npm run lint:css\" \"npm run lint:js\"",
     "lint:css": "stylelint --cache '**/*.scss'",
-    "lint:js": "biome lint",
+    "lint:js": "biome lint --write",
     "format": "biome format --write",
     "format:check": "biome format",
     "postinstall": "npm run copy:normalize",

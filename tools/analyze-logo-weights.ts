@@ -11,12 +11,12 @@
  * 4. Outputs CSS and JSON configuration
  */
 
-import fs from 'fs';
-import https from 'https';
+import fs from 'node:fs';
+import https from 'node:https';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as convexHullModule from 'monotone-chain-convex-hull';
-import path from 'path';
 import sharp from 'sharp';
-import { fileURLToPath } from 'url';
 
 // monotone-chain-convex-hull doesn't have an exports field in its package.json, so some trickery
 // is needed to make its import and the related type correct with Node's ESM behavior.

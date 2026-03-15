@@ -1,5 +1,5 @@
-import { div, MainDOMSource, VNode } from '@cycle/dom';
-import xs, { Stream } from 'xstream';
+import { div, type MainDOMSource, type VNode } from '@cycle/dom';
+import xs, { type Stream } from 'xstream';
 
 import ScorePanel from '../../../app/src/components/score-panel';
 

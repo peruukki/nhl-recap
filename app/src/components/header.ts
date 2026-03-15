@@ -1,4 +1,4 @@
-import { button, div, h1, header, span, VNode } from '@cycle/dom';
+import { button, div, h1, header, span, type VNode } from '@cycle/dom';
 
 import type { GameEvent, Scores } from '../types';
 import Icon from './icon';
