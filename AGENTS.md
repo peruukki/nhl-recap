@@ -37,16 +37,6 @@ This document provides essential information for AI agents working on the nhl-re
 - **Biome** - Code formatting
 - **TypeScript** - Type checking
 
-### Dependencies
-
-- `@cycle/dom` - Cycle.js DOM driver
-- `@cycle/http` - Cycle.js HTTP driver
-- `@cycle/run` - Cycle.js runtime
-- `classnames` - Conditional CSS class utility
-- `lodash` - Utility functions
-- `timeago.js` - Relative time formatting
-- **Workbox** - Service worker/PWA functionality (precaching, routing, strategies, expiration)
-
 ## Project Structure
 
 ```
@@ -84,8 +74,6 @@ nhl-recap/
 
 ### Code Style
 
-- TypeScript is used for type safety
-- ES modules (`"type": "module"` in package.json)
 - Write concise code:
   - only add comments when the implementation is non-trivial or the motivation for the code is unclear
   - infer types when possible
@@ -199,15 +187,6 @@ npm run build
 - **Local API**: Set `VITE_SCORE_API_HOST=http://localhost:8080` to use local server
 - **Mock API**: Use `npm run start:server` for json-server with static `server/db.json`
 
-## Deployment
-
-- **Primary method**: GitHub Actions workflow (`.github/workflows/deployment.yml`)
-- **Alternative method**: `npm run deploy` script
-  - Builds app
-  - Clones `gh-pages` branch to `dist/`
-  - Copies build to `dist/`
-  - Commits and pushes to `gh-pages` branch
-
 ## Testing Approach
 
 - Unit tests in `app/src/test/` or `*.spec.ts` files
@@ -217,7 +196,7 @@ npm run build
 
 ## Node.js Version
 
-- Requires **Node.js >= 22.0** (specified in `package.json` engines)
+- Requires **Node.js >= 24.0** (specified in `package.json` engines)
 
 ## Common Tasks for AI Agents
 
@@ -246,11 +225,3 @@ npm run build
 5. **Service worker changes**:
    - Modify `app/src/service-worker/service-worker.js`
    - Rebuild with `npm run build:sw` or `npm run build`
-
-## Notes
-
-- The project uses ES modules (`"type": "module"`)
-- Service worker is built separately using Rollup
-- Component gallery available at `/gallery/` for development
-- Date parameter format: `YYYY-MM-DD` in URL query string
-- PWA functionality enabled via Workbox service worker
