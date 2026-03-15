@@ -12,8 +12,8 @@ import {
   GoalInGamePlay,
   isShootoutGoal,
   Rosters,
-  Teams,
   TeamStats as TeamStatsT,
+  Teams,
 } from '../../types';
 import { showPanel } from '../../utils/ui';
 import { areTeamStatsEqual, truncatePlayerName } from '../../utils/utils';

@@ -7,15 +7,15 @@ import {
   GameProgress,
   Goal,
   GoalWithUpdateFields,
+  isShootoutGoal,
   PauseEvent,
   PeriodGameEvents,
   TextualPeriod,
-  isShootoutGoal,
 } from '../types';
 import {
-  GAMES_START_PAUSE_EVENT_COUNT,
   GAME_PRE_SUMMARY_PAUSE_EVENT_COUNT,
   GAME_SUMMARY_PAUSE_EVENT_COUNT,
+  GAMES_START_PAUSE_EVENT_COUNT,
   GOAL_PAUSE_EVENT_COUNTS,
   PERIOD_END_PAUSE_EVENT_COUNT,
   PERIOD_OVERTIME,

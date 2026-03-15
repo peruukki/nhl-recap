@@ -2,7 +2,7 @@ import { VNode } from '@cycle/dom';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
-import type { Game as GameT, GameDisplay, GameStatus, Goal } from '../../../types';
+import type { GameDisplay, GameStatus, Game as GameT, Goal } from '../../../types';
 import Game from '../../game';
 import { expectedStat, getStatsPanel, StatValue } from '../test-utils';
 import { delimiter as renderedDelimiter } from './team-stats';

@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
 import {
-  isShootoutGoal,
   type GameEndTime,
   type GameEvent,
   type GameEventClockTime,
   type GoalWithUpdateFields,
+  isShootoutGoal,
   type PauseEvent,
 } from '../types';
 import { getGoalEvents, hasGoalBeenScored } from './utils';

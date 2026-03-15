@@ -1,6 +1,6 @@
 import { div, span, VNode } from '@cycle/dom';
 
-import type { TeamValues, Teams } from '../../../types';
+import type { Teams, TeamValues } from '../../../types';
 
 type Renderable = number | string | VNode;
 

@@ -1,7 +1,8 @@
 import './main.scss';
-import { run } from '@cycle/run';
+
 import { makeDOMDriver } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
+import { run } from '@cycle/run';
 
 import app from './components/app';
 import registerServiceWorker from './service-worker/register-sw';

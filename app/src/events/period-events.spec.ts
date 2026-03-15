@@ -4,7 +4,7 @@ import { describe, expect, it, test } from 'vitest';
 import type { GameEndTime, GoalWithUpdateFields } from '../types';
 import { PERIOD_OVERTIME } from './constants';
 import periodEvents from './period-events';
-import { EVENT_COUNTS, EVENT_COUNT_PER_GOAL } from './test-utils';
+import { EVENT_COUNT_PER_GOAL, EVENT_COUNTS } from './test-utils';
 
 // Use short period times to speed up the tests
 const periodLengthInMinutes = 3;

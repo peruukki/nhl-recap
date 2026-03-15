@@ -2,12 +2,12 @@ import type { Scores } from '../../../src/types';
 
 import future from './future.json';
 import latest from './latest.json';
-import latestLive from './latest-live.json';
-import latestLiveEndOfOT from './latest-live-end-of-ot.json';
-import latestLiveEndOf2OT from './latest-live-end-of-2-ot.json';
-import latestLiveSO from './latest-live-so.json';
-import latestLive2OT from './latest-live-2-ot.json';
 import latest2OT from './latest-2-ot.json';
+import latestLive from './latest-live.json';
+import latestLive2OT from './latest-live-2-ot.json';
+import latestLiveEndOf2OT from './latest-live-end-of-2-ot.json';
+import latestLiveEndOfOT from './latest-live-end-of-ot.json';
+import latestLiveSO from './latest-live-so.json';
 import latestOT2SO from './latest-ot-2-so.json';
 import latestPlayoffs from './latest-playoffs.json';
 import latestPlayoffsOT from './latest-playoffs-ot.json';

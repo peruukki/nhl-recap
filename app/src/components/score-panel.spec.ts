@@ -7,7 +7,7 @@ import {
   scoresMultipleOvertime,
   scoresOvertimeAndMultipleShootout,
 } from '../test/data';
-import type { Game as GameT, GameDisplay, GameStatus, Goal, Teams } from '../types';
+import type { GameDisplay, GameStatus, Game as GameT, Goal, Teams } from '../types';
 import { renderTeamLogoSVG } from '../utils/logos';
 import Game from './game';
 import { getGameCard } from './test-utils';

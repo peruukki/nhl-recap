@@ -1,8 +1,8 @@
 import { div, MainDOMSource, mockDOMSource, span, VNode } from '@cycle/dom';
 import { makeHTTPDriver, RequestInput } from '@cycle/http';
-import xs, { Stream } from 'xstream';
 import nock from 'nock';
 import { describe, expect, it, vi } from 'vitest';
+import xs, { Stream } from 'xstream';
 
 import { scoresAllRegularTime as apiResponse } from '../test/data';
 import { assertStreamValues } from '../test/test-utils';

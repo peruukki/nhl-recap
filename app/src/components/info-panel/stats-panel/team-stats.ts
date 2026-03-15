@@ -1,6 +1,6 @@
 import { div, span, VNode } from '@cycle/dom';
 
-import type { TeamRecord, Teams, TeamStats as TeamStatsT, TeamStreak } from '../../../types';
+import type { TeamRecord, TeamStats as TeamStatsT, TeamStreak, Teams } from '../../../types';
 import { renderStat } from './common';
 
 type Props = {

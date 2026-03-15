@@ -8,13 +8,13 @@ import {
   scoresRegularTimeAndOvertimePlayoffs,
 } from '../test/data';
 import type {
-  Game as GameT,
   GameDisplay,
   GameStatus,
+  Game as GameT,
   Goal,
   TeamAbbreviation,
-  Teams,
   TeamStats,
+  Teams,
 } from '../types';
 import Game from './game';
 import { getGameCard } from './test-utils';

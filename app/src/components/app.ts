@@ -1,4 +1,4 @@
-import { MainDOMSource, VNode, div, main, span } from '@cycle/dom';
+import { div, MainDOMSource, main, span, VNode } from '@cycle/dom';
 import { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { Stream } from 'xstream';

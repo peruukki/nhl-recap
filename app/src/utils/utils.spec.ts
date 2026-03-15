@@ -1,5 +1,6 @@
-import { areTeamStatsEqual, getGameAnimationIndexes, truncatePlayerName } from './utils';
 import { describe, expect, it } from 'vitest';
+
+import { areTeamStatsEqual, getGameAnimationIndexes, truncatePlayerName } from './utils';
 
 describe('utils', () => {
   describe('truncatePlayerName', () => {

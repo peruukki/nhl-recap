@@ -1,21 +1,20 @@
 import _ from 'lodash';
 import { describe, expect, it } from 'vitest';
 
-import type { GameEvent, PauseEvent } from '../types';
-import gameEvents, { getAllGoalsSorted } from './game-events';
-
 import {
   scoresAllLive,
   scoresAllPreview,
   scoresAllRegularTime,
-  scoresLiveProgressedMoreThanFinished,
-  scoresLiveEndOfOT,
   scoresLiveEndOf2OT,
+  scoresLiveEndOfOT,
+  scoresLiveProgressedMoreThanFinished,
   scoresLiveSO,
   scoresMultipleOvertime,
   scoresOvertimeAndMultipleShootout,
   scoresRegularTimeAndOvertimePlayoffs,
 } from '../test/data';
+import type { GameEvent, PauseEvent } from '../types';
+import gameEvents, { getAllGoalsSorted } from './game-events';
 
 const periodEndPauseEventCount = 150;
 

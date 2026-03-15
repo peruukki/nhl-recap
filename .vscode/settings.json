@@ -7,6 +7,9 @@
     "dist/": true,
     "public/": true
   },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  },
   "editor.rulers": [100],
   "editor.formatOnSave": true,
   "stylelint.validate": ["css", "postcss", "scss"],

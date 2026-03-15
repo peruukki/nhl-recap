@@ -1,4 +1,4 @@
-import { VNode, div } from '@cycle/dom';
+import { div, VNode } from '@cycle/dom';
 
 export default function Expandable({ show }: { show: boolean }, children: VNode[]) {
   const baseClassName = 'expandable';
