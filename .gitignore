@@ -18,5 +18,4 @@ coverage/
 tools/logo-analysis/
 
 # Caches
-.eslintcache
 .stylelintcache

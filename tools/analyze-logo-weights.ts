@@ -28,7 +28,6 @@ type MonotoneChainConvexHullFn = (
 ) => [number, number][];
 
 //@ts-expect-error - default property does not exist on the module
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const monotoneChainConvexHull: MonotoneChainConvexHullFn = convexHullModule.default.default;
 
 const __filename = fileURLToPath(import.meta.url);

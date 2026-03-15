@@ -108,7 +108,6 @@ function intent(
     )
     .flatten()
     .map<ApiResponse>((response) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (response.error) {
         return { error: { expected: false } };
       }

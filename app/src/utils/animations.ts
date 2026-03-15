@@ -70,7 +70,6 @@ function highlightGoalCountChange(classModifier: string, gameIndex: number): voi
   const element = document.querySelectorAll(
     `.team-panel--${classModifier} > .team-panel__team-score`,
   )[gameIndex];
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (element) {
     element.animate([{ color: 'black' }, { color: '#fac02d' }], { duration: 1000 });
   }
@@ -78,7 +77,6 @@ function highlightGoalCountChange(classModifier: string, gameIndex: number): voi
 
 function highlightLatestGoalChange(gameIndex: number): void {
   const element = document.querySelectorAll('.info-panel')[gameIndex];
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (element) {
     element.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 750 });
   }

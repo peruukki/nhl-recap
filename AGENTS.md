@@ -32,9 +32,8 @@ This document provides essential information for AI agents working on the nhl-re
 
 ### Code Quality
 
-- **ESLint** - JavaScript/TypeScript linting
+- **Biome** - JavaScript/TypeScript linting and formatting
 - **Stylelint** - SASS/CSS linting
-- **Biome** - Code formatting
 - **TypeScript** - Type checking
 
 ## Project Structure
@@ -60,7 +59,7 @@ nhl-recap/
 ├── vite.config.ts          # Vite configuration
 ├── rollup.config.js        # Rollup configuration
 ├── tsconfig.json           # TypeScript configuration
-├── eslint.config.mjs       # ESLint configuration
+├── biome.json              # Biome configuration
 └── stylelint.config.mjs    # Stylelint configuration
 ```
 
@@ -118,7 +117,7 @@ npm run build          # Build application
 
 - `vite.config.ts` - Vite build configuration
 - `tsconfig.json` - TypeScript configuration
-- `eslint.config.mjs` - ESLint rules
+- `biome.json` - Biome rules
 - `stylelint.config.mjs` - Stylelint rules
 - `rollup.config.js` - Service worker bundling config
 
