@@ -91,68 +91,20 @@ Development tool for viewing components in different states:
 - URL: http://localhost:8008/nhl-recap/gallery/ (trailing slash required)
 - Located in `gallery/` directory
 
-### Code Quality Checks
-
-**Run all checks** (format, lint, type-check, test):
+### Main Scripts
 
 ```bash
-npm run check
+npm run check          # Run all checks (format, lint, type-check, test)
+npm run format         # Format code
+npm run lint:js        # Lint JavaScript/TypeScript
+npm run lint:css       # Lint SASS
+npm run ts             # Type-check TypeScript
+npm test               # Run tests
+npm run test:coverage  # Run tests with coverage
+npm run test:watch     # Run tests in watch mode
+npm run build          # Build application
 ```
 
-**Format code**:
-
-```bash
-npm run format
-```
-
-**Lint JavaScript/TypeScript**:
-
-```bash
-npm run lint:js
-```
-
-**Lint SASS**:
-
-```bash
-npm run lint:css
-```
-
-**Type-check TypeScript**:
-
-```bash
-npm run ts
-```
-
-### Testing
-
-**Run tests**:
-
-```bash
-npm test
-```
-
-**Run tests with coverage**:
-
-```bash
-npm run test:coverage
-```
-
-**Run tests in watch mode**:
-
-```bash
-npm run test:watch
-```
-
-### Building
-
-**Build application**:
-
-```bash
-npm run build
-```
-
-- Builds app to `public/` directory
-- Also builds service worker
 
 ## Important Files
 
