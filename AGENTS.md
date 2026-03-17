@@ -36,8 +36,3 @@ nhl-recap/
 ├── server/                 # Mock API server (json-server)
 └── tsconfig.json, biome.json, etc. # Configuration files
 ```
-
-## Key Conventions
-
-### Documentation
-- Write headings in sentence case instead of title case.
