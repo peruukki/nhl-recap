@@ -7,6 +7,12 @@ description: Guidelines for API integration, environment variables, mocking, and
 
 This skill provides guidance on working with the backend API, environment variables, and utility functions in the nhl-recap project.
 
+## Technology Stack
+
+### Testing & Mocking
+- **nock**: HTTP mocking for tests.
+- **json-server**: Mock API server for local development.
+
 ## Environment Variables
 
 - `VITE_DEBUG`: Debug mode flag (as used in `npm start`).
@@ -34,4 +40,4 @@ This skill provides guidance on working with the backend API, environment variab
 
 - Unit tests are located in `app/src/test/` or alongside the source as `*.spec.ts`.
 - HTTP requests are mocked with `nock` in tests.
-- Run `npm run test` or `npm run test:watch` to verify.
+- Run `npm test` or `npm run test:watch` to verify.

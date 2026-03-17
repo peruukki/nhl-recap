@@ -14,23 +14,10 @@ This document provides essential information for AI agents working on the nhl-re
 
 For specific tasks, please refer to the specialized skills available in the `.agent/skills/` directory:
 
-- **[api-integration](.agent/skills/api-integration/SKILL.md)**: Backend API structure, environment variables, mocking with `nock`, and utility functions.
+- **[api-integration](.agent/skills/api-integration/SKILL.md)**: Backend API structure, environment variables, mocking, and utilities.
+- **[development-guidelines](.agent/skills/development-guidelines/SKILL.md)**: General code style, development workflow, and build/quality tools.
 - **[pwa-management](.agent/skills/pwa-management/SKILL.md)**: Service Worker implementation, Workbox, and PWA build process.
 - **[ui-development](.agent/skills/ui-development/SKILL.md)**: UI components, Cycle.js patterns, SASS styles, and the component gallery.
-
-## Technology Stack
-
-### Core Frameworks
-- **Cycle.js**: Reactive framework for building user interfaces.
-- **xstream**: Reactive streams library (used by Cycle.js).
-- **snabby**: Virtual DOM library (hyperscript syntax).
-
-### Build & Quality Tools
-- **Vite & Rollup**: Build tools and bundling.
-- **TypeScript**: Type checking and compilation.
-- **SASS**: CSS preprocessing.
-- **Biome & Stylelint**: Linting and formatting.
-- **Vitest**: Unit testing framework.
 
 ## Project Structure
 
@@ -54,29 +41,3 @@ nhl-recap/
 
 ### Documentation
 - Write headings in sentence case instead of title case.
-
-### Code Style
-- Write concise code:
-  - Only add comments when the implementation or motivation is non-trivial.
-  - Infer types when possible.
-  - Prefer expression body over block body.
-  - Only export types intended for use outside their defining file.
-
-## Development Workflow
-
-**Important:** Run `nvm use` to set the correct Node.js version before running any npm commands.
-
-### Main Scripts
-
-```bash
-npm run check          # Run all checks (format, lint, type-check, test)
-npm run format         # Format code
-npm run lint           # Lint JS/TS and SASS
-npm run ts             # Type-check TypeScript
-npm test               # Run tests
-npm run build          # Build application
-```
-
-## Node.js Version
-
-- Requires **Node.js >= 24.0** (specified in `package.json`).
