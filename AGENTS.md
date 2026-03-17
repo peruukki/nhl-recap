@@ -4,37 +4,33 @@ This document provides essential information for AI agents working on the nhl-re
 
 ## Project Overview
 
-**nhl-recap** is a web application that plays back goal information from the latest NHL games. It's built for viewing game recaps, particularly useful for checking scores from games played during nighttime (e.g., in Finland).
+**nhl-recap** is a web application that plays back goal information from the latest NHL games. It's built for viewing game recaps, particularly useful for checking scores from games played during nighttime.
 
 - **Live URL**: https://peruukki.github.io/nhl-recap/
 - **Backend API**: Uses [nhl-score-api](https://github.com/peruukki/nhl-score-api)
-- **Date Parameter**: Supports custom dates via URL search parameter `?date=YYYY-MM-DD` (e.g., `?date=2025-06-17`)
+- **Date Parameter**: Supports custom dates via URL search parameter `?date=YYYY-MM-DD`
+
+## AI Agent Skills
+
+For specific tasks, please refer to the specialized skills available in the `.agent/skills/` directory:
+
+- **[api-integration](.agent/skills/api-integration/SKILL.md)**: Backend API structure, environment variables, mocking with `nock`, and utility functions.
+- **[pwa-management](.agent/skills/pwa-management/SKILL.md)**: Service Worker implementation, Workbox, and PWA build process.
+- **[ui-development](.agent/skills/ui-development/SKILL.md)**: UI components, Cycle.js patterns, SASS styles, and the component gallery.
 
 ## Technology Stack
 
-### Core Framework
+### Core Frameworks
+- **Cycle.js**: Reactive framework for building user interfaces.
+- **xstream**: Reactive streams library (used by Cycle.js).
+- **snabby**: Virtual DOM library (hyperscript syntax).
 
-- **Cycle.js** - Reactive framework for building user interfaces
-- **xstream** - Reactive streams library (used by Cycle.js)
-- **snabby** - Virtual DOM library (hyperscript syntax)
-
-### Build Tools
-
-- **Vite** - Build tool and dev server
-- **TypeScript** - Type checking and compilation
-- **Rollup** - Service worker bundling
-- **SASS** - CSS preprocessing
-
-### Testing
-
-- **Vitest** - Unit testing framework
-- **nock** - HTTP mocking for tests
-
-### Code Quality
-
-- **Biome** - JavaScript/TypeScript linting and formatting
-- **Stylelint** - SASS/CSS linting
-- **TypeScript** - Type checking
+### Build & Quality Tools
+- **Vite & Rollup**: Build tools and bundling.
+- **TypeScript**: Type checking and compilation.
+- **SASS**: CSS preprocessing.
+- **Biome & Stylelint**: Linting and formatting.
+- **Vitest**: Unit testing framework.
 
 ## Project Structure
 
@@ -48,131 +44,39 @@ nhl-recap/
 │   │   ├── styles/         # Component-specific styles
 │   │   ├── types/          # TypeScript type definitions
 │   │   ├── utils/          # Utility functions
-│   │   ├── main.ts         # Application entry point
-│   │   └── main.scss       # Main stylesheet
-│   └── styles/             # Global styles
 ├── gallery/                # Component gallery (development tool)
 ├── public/                 # Build output directory
 ├── server/                 # Mock API server (json-server)
-│   └── db.json             # Mock data
-├── dist/                   # Deployment directory (gh-pages branch)
-├── vite.config.ts          # Vite configuration
-├── rollup.config.js        # Rollup configuration
-├── tsconfig.json           # TypeScript configuration
-├── biome.json              # Biome configuration
-└── stylelint.config.mjs    # Stylelint configuration
+└── tsconfig.json, biome.json, etc. # Configuration files
 ```
 
 ## Key Conventions
 
 ### Documentation
-
-- Write headings in sentence case instead of title case
-- Detailed animation patterns and implementation details are in [ANIMATIONS.md](./app/src/styles/ANIMATIONS.md)
-- Detailed component hierarchy and structure are in [README.md](./app/src/components/README.md)
+- Write headings in sentence case instead of title case.
 
 ### Code Style
-
 - Write concise code:
-  - only add comments when the implementation is non-trivial or the motivation for the code is unclear
-  - infer types when possible
-  - prefer expression body over block body
-  - only export types that are intended to be used outside the file where they are defined
+  - Only add comments when the implementation or motivation is non-trivial.
+  - Infer types when possible.
+  - Prefer expression body over block body.
+  - Only export types intended for use outside their defining file.
 
 ## Development Workflow
 
-**Important:** Run `nvm use` to set the correct Node.js version before running any npm commands in a new shell.
-
-### Component Gallery
-
-Development tool for viewing components in different states:
-
-- URL: http://localhost:8008/nhl-recap/gallery/ (trailing slash required)
-- Located in `gallery/` directory
+**Important:** Run `nvm use` to set the correct Node.js version before running any npm commands.
 
 ### Main Scripts
 
 ```bash
 npm run check          # Run all checks (format, lint, type-check, test)
 npm run format         # Format code
-npm run lint:js        # Lint JavaScript/TypeScript
-npm run lint:css       # Lint SASS
+npm run lint           # Lint JS/TS and SASS
 npm run ts             # Type-check TypeScript
 npm test               # Run tests
-npm run test:coverage  # Run tests with coverage
-npm run test:watch     # Run tests in watch mode
 npm run build          # Build application
 ```
 
-
-## Important Files
-
-### Entry Points
-
-- `app/src/main.ts` - Application entry point
-- `app/src/main.scss` - Main stylesheet
-- `index.html` - HTML entry point
-
-### Configuration Files
-
-- `vite.config.ts` - Vite build configuration
-- `tsconfig.json` - TypeScript configuration
-- `biome.json` - Biome rules
-- `stylelint.config.mjs` - Stylelint rules
-- `rollup.config.js` - Service worker bundling config
-
-### Environment Variables
-
-- `VITE_DEBUG` - Debug mode flag (used in `npm start`)
-- `VITE_SCORE_API_HOST` - API host override (defaults to production API, set to `http://localhost:8080` for local)
-
-### Service Worker
-
-- `app/src/service-worker/service-worker.js` - Service worker source
-- Built to `public/service-worker.js` using Rollup
-- Uses Workbox for PWA functionality (precaching, routing, caching strategies)
-
-## API Integration
-
-- **Default API**: Production nhl-score-api (GitHub-hosted)
-- **Local API**: Set `VITE_SCORE_API_HOST=http://localhost:8080` to use local server
-- **Mock API**: Use `npm run start:server` for json-server with static `server/db.json`
-
-## Testing Approach
-
-- Unit tests in `app/src/test/` or `*.spec.ts` files
-- Uses Vitest for testing framework
-- HTTP requests are mocked with `nock` in tests
-- Test files typically end with `.spec.ts`
-
 ## Node.js Version
 
-- Requires **Node.js >= 24.0** (specified in `package.json` engines)
-
-## Common Tasks for AI Agents
-
-1. **Adding a new component**:
-   - Create component in `app/src/components/`
-   - Follow Cycle.js patterns (sources/sinks)
-   - Add corresponding `.scss` file with BEM naming
-   - Write tests in `*.spec.ts` file
-
-2. **Modifying styles**:
-   - Use BEM naming convention
-   - Component styles in component directories
-   - Global styles in `app/src/styles/`
-   - Run `npm run lint:css` to verify
-
-3. **Adding utilities**:
-   - Add to `app/src/utils/`
-   - Write tests in `app/src/utils/*.spec.ts`
-   - Use TypeScript for type safety
-
-4. **API changes**:
-   - Update API calls in components using `@cycle/http`
-   - Mock API responses in tests using `nock`
-   - Test with local API using `npm run start:local`
-
-5. **Service worker changes**:
-   - Modify `app/src/service-worker/service-worker.js`
-   - Rebuild with `npm run build:sw` or `npm run build`
+- Requires **Node.js >= 24.0** (specified in `package.json`).
