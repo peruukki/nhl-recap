@@ -88,6 +88,30 @@
             "losses": 3,
             "ot": 3
           }
+        },
+        "standings": {
+          "STL": {
+            "divisionRank": "8",
+            "conferenceRank": "10",
+            "leagueRank": "12",
+            "pointsFromPlayoffSpot": "+2"
+          },
+          "BOS": {
+            "divisionRank": "3",
+            "conferenceRank": "4",
+            "leagueRank": "7",
+            "pointsFromPlayoffSpot": "+6"
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 1,
+            "type": "WINS"
+          },
+          "BOS": {
+            "count": 1,
+            "type": "WINS"
+          }
         }
       },
       "currentStats": {
@@ -279,6 +303,30 @@
             "wins": 7,
             "losses": 2,
             "ot": 4
+          }
+        },
+        "standings": {
+          "ANA": {
+            "divisionRank": "2",
+            "conferenceRank": "3",
+            "leagueRank": "4",
+            "pointsFromPlayoffSpot": "+4"
+          },
+          "NYR": {
+            "divisionRank": "8",
+            "conferenceRank": "15",
+            "leagueRank": "27",
+            "pointsFromPlayoffSpot": "-4"
+          }
+        },
+        "streaks": {
+          "ANA": {
+            "count": 1,
+            "type": "LOSSES"
+          },
+          "NYR": {
+            "count": 1,
+            "type": "WINS"
           }
         }
       },

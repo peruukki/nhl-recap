@@ -15,6 +15,7 @@
           "sec": 35,
           "scorer": {
             "player": "Vladimir Tarasenko",
+            "playerId": 8475765,
             "seasonTotal": 22
           },
           "assists": [],
@@ -26,12 +27,55 @@
           "sec": 50,
           "scorer": {
             "player": "Robby Fabbri",
+            "playerId": 8477952,
             "seasonTotal": 7
           },
           "assists": [],
           "period": "3"
         }
       ],
+      "gameStats": {
+        "blocked": {
+          "STL": 5,
+          "BOS": 5
+        },
+        "faceOffWinPercentage": {
+          "STL": "50.0",
+          "BOS": "50.0"
+        },
+        "giveaways": {
+          "STL": 8,
+          "BOS": 8
+        },
+        "hits": {
+          "STL": 22,
+          "BOS": 22
+        },
+        "pim": {
+          "STL": 6,
+          "BOS": 6
+        },
+        "powerPlay": {
+          "STL": {
+            "goals": 2,
+            "opportunities": 4,
+            "percentage": "50.0"
+          },
+          "BOS": {
+            "goals": 1,
+            "opportunities": 2,
+            "percentage": "50.0"
+          }
+        },
+        "shots": {
+          "STL": 25,
+          "BOS": 25
+        },
+        "takeaways": {
+          "STL": 5,
+          "BOS": 5
+        }
+      },
       "preGameStats": {
         "records": {
           "STL": {
@@ -49,12 +93,14 @@
           "STL": {
             "divisionRank": "7",
             "conferenceRank": "8",
-            "leagueRank": "11"
+            "leagueRank": "11",
+            "pointsFromPlayoffSpot": "+1"
           },
           "BOS": {
             "divisionRank": "3",
             "conferenceRank": "5",
-            "leagueRank": "8"
+            "leagueRank": "8",
+            "pointsFromPlayoffSpot": "+5"
           }
         },
         "playoffSeries": {
@@ -62,6 +108,16 @@
           "wins": {
             "STL": 1,
             "BOS": 1
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 1,
+            "type": "WINS"
+          },
+          "BOS": {
+            "count": 1,
+            "type": "LOSSES"
           }
         }
       },
@@ -82,12 +138,14 @@
           "STL": {
             "divisionRank": "7",
             "conferenceRank": "8",
-            "leagueRank": "11"
+            "leagueRank": "11",
+            "pointsFromPlayoffSpot": "+3"
           },
           "BOS": {
             "divisionRank": "3",
             "conferenceRank": "5",
-            "leagueRank": "8"
+            "leagueRank": "8",
+            "pointsFromPlayoffSpot": "+5"
           }
         },
         "playoffSeries": {
@@ -95,6 +153,16 @@
           "wins": {
             "STL": 1,
             "BOS": 1
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 2,
+            "type": "WINS"
+          },
+          "BOS": {
+            "count": 2,
+            "type": "LOSSES"
           }
         }
       },
@@ -130,6 +198,7 @@
           "sec": 16,
           "scorer": {
             "player": "Corey Perry",
+            "playerId": 8470621,
             "seasonTotal": 11
           },
           "assists": [],
@@ -141,6 +210,7 @@
           "sec": 50,
           "scorer": {
             "player": "Derick Brassard",
+            "playerId": 8473544,
             "seasonTotal": 12
           },
           "assists": [],
@@ -152,6 +222,7 @@
           "sec": 44,
           "scorer": {
             "player": "Derick Brassard",
+            "playerId": 8473544,
             "seasonTotal": 13
           },
           "assists": [],
@@ -163,6 +234,7 @@
           "sec": 6,
           "scorer": {
             "player": "Rickard Rakell",
+            "playerId": 8476483,
             "seasonTotal": 7
           },
           "assists": [],
@@ -174,15 +246,18 @@
           "sec": 37,
           "scorer": {
             "player": "Mats Zuccarello",
+            "playerId": 8475692,
             "seasonTotal": 15
           },
           "assists": [
             {
               "player": "Derick Brassard",
+              "playerId": 8473544,
               "seasonTotal": 24
             },
             {
               "player": "Kaapo Kakko",
+              "playerId": 8481554,
               "seasonTotal": 18
             }
           ],
@@ -248,12 +323,14 @@
           "ANA": {
             "divisionRank": "2",
             "conferenceRank": "3",
-            "leagueRank": "4"
+            "leagueRank": "4",
+            "pointsFromPlayoffSpot": "+4"
           },
           "NYR": {
             "divisionRank": "8",
             "conferenceRank": "14",
-            "leagueRank": "26"
+            "leagueRank": "26",
+            "pointsFromPlayoffSpot": "-4"
           }
         },
         "playoffSeries": {
@@ -261,6 +338,16 @@
           "wins": {
             "ANA": 1,
             "NYR": 2
+          }
+        },
+        "streaks": {
+          "ANA": {
+            "count": 2,
+            "type": "LOSSES"
+          },
+          "NYR": {
+            "count": 3,
+            "type": "WINS"
           }
         }
       },
@@ -281,12 +368,14 @@
           "ANA": {
             "divisionRank": "2",
             "conferenceRank": "3",
-            "leagueRank": "4"
+            "leagueRank": "4",
+            "pointsFromPlayoffSpot": "+2"
           },
           "NYR": {
             "divisionRank": "8",
             "conferenceRank": "14",
-            "leagueRank": "26"
+            "leagueRank": "26",
+            "pointsFromPlayoffSpot": "-2"
           }
         },
         "playoffSeries": {
@@ -294,6 +383,16 @@
           "wins": {
             "ANA": 1,
             "NYR": 2
+          }
+        },
+        "streaks": {
+          "ANA": {
+            "count": 3,
+            "type": "LOSSES"
+          },
+          "NYR": {
+            "count": 4,
+            "type": "WINS"
           }
         }
       },
@@ -334,6 +433,7 @@
           "sec": 35,
           "scorer": {
             "player": "Vladimir Tarasenko",
+            "playerId": 8475765,
             "seasonTotal": 22
           },
           "assists": [],
@@ -345,12 +445,55 @@
           "sec": 50,
           "scorer": {
             "player": "Robby Fabbri",
+            "playerId": 8477952,
             "seasonTotal": 7
           },
           "assists": [],
           "period": "3"
         }
       ],
+      "gameStats": {
+        "blocked": {
+          "STL": 5,
+          "BOS": 5
+        },
+        "faceOffWinPercentage": {
+          "STL": "50.0",
+          "BOS": "50.0"
+        },
+        "giveaways": {
+          "STL": 8,
+          "BOS": 8
+        },
+        "hits": {
+          "STL": 22,
+          "BOS": 22
+        },
+        "pim": {
+          "STL": 6,
+          "BOS": 6
+        },
+        "powerPlay": {
+          "STL": {
+            "goals": 2,
+            "opportunities": 4,
+            "percentage": "50.0"
+          },
+          "BOS": {
+            "goals": 1,
+            "opportunities": 2,
+            "percentage": "50.0"
+          }
+        },
+        "shots": {
+          "STL": 25,
+          "BOS": 25
+        },
+        "takeaways": {
+          "STL": 5,
+          "BOS": 5
+        }
+      },
       "preGameStats": {
         "records": {
           "STL": {
@@ -368,12 +511,14 @@
           "STL": {
             "divisionRank": "7",
             "conferenceRank": "8",
-            "leagueRank": "11"
+            "leagueRank": "11",
+            "pointsFromPlayoffSpot": "-2"
           },
           "BOS": {
             "divisionRank": "3",
             "conferenceRank": "5",
-            "leagueRank": "8"
+            "leagueRank": "8",
+            "pointsFromPlayoffSpot": "+8"
           }
         },
         "playoffSeries": {
@@ -381,6 +526,16 @@
           "wins": {
             "STL": 0,
             "BOS": 0
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 1,
+            "type": "LOSSES"
+          },
+          "BOS": {
+            "count": 1,
+            "type": "WINS"
           }
         }
       },
@@ -401,12 +556,14 @@
           "STL": {
             "divisionRank": "7",
             "conferenceRank": "8",
-            "leagueRank": "11"
+            "leagueRank": "11",
+            "pointsFromPlayoffSpot": "0"
           },
           "BOS": {
             "divisionRank": "3",
             "conferenceRank": "5",
-            "leagueRank": "8"
+            "leagueRank": "8",
+            "pointsFromPlayoffSpot": "+6"
           }
         },
         "playoffSeries": {
@@ -414,6 +571,16 @@
           "wins": {
             "STL": 1,
             "BOS": 0
+          }
+        },
+        "streaks": {
+          "STL": {
+            "count": 1,
+            "type": "WINS"
+          },
+          "BOS": {
+            "count": 1,
+            "type": "LOSSES"
           }
         }
       },
