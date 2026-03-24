@@ -40,5 +40,7 @@ npm test               # Run tests
 npm run build          # Build application
 ```
 
+**Use `npm run check` by default; use individual scripts only when you have a specific reason to.**
+
 ## Related Resources
 - [AGENTS.md](../../AGENTS.md) - Project overview and structure.
