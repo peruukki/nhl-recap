@@ -21,7 +21,7 @@ This skill provides guidance on working with the Cycle.js based UI and SASS styl
 
 The component gallery is a development tool for viewing components in different states.
 
-- **URL**: http://localhost:8008/nhl-recap/gallery/ (trailing slash required)
+- **URL**: http://localhost:8009/nhl-recap/gallery/ (trailing slash required)
 - **Location**: `gallery/` directory
 
 ## Common Tasks

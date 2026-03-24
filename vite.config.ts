@@ -16,13 +16,13 @@ export default defineConfig({
   preview: {
     host: '0.0.0.0',
     open: true,
-    port: 8008,
+    port: 8009,
   },
   publicDir: 'app/assets',
   server: {
     host: '0.0.0.0',
     open: true,
-    port: 8008,
+    port: 8009,
   },
   test: {
     coverage: {

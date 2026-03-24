@@ -357,7 +357,7 @@ async function main(): Promise<void> {
   console.log('\nNext steps:');
   console.log('1. Review the scale factors in logo-scales.json if interested');
   console.log('2. The app team-logo-scales.scss file should be automatically up to date');
-  console.log('3. Visit http://localhost:8008/nhl-recap/gallery/team-logos to see the logos');
+  console.log('3. Visit http://localhost:8009/nhl-recap/gallery/team-logos to see the logos');
   console.log('4. Adjust if needed by modifying the app team-logo.scss file');
 }
 
