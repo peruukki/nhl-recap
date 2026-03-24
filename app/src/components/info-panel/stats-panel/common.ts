@@ -10,17 +10,30 @@ export function renderStat<T>(
   label: string,
   ratingFn: (value: T) => number | string,
   renderFn: (value: T) => Renderable | Renderable[],
+  classFn?: (value: T) => string,
 ): VNode {
   const valueClassName = '.stat__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
+  const getExtraClasses = (value: T | undefined) => {
+    if (!value || !classFn) {
+      return '';
+    }
+    const extra = classFn(value);
+    return extra ? valueClassName + extra : '';
+  };
+
   return div('.stat', [
     span(
-      `${valueClassName}${valueClassName}--away${highlightClassNames.away}`,
+      `${valueClassName}${valueClassName}--away${highlightClassNames.away}${getExtraClasses(
+        values?.[teams.away.abbreviation],
+      )}`,
       values ? renderFn(values[teams.away.abbreviation]) : '',
     ),
     span('.stat__label', values ? label : ''),
     span(
-      `${valueClassName}${valueClassName}--home${highlightClassNames.home}`,
+      `${valueClassName}${valueClassName}--home${highlightClassNames.home}${getExtraClasses(
+        values?.[teams.home.abbreviation],
+      )}`,
       values ? renderFn(values[teams.home.abbreviation]) : '',
     ),
   ]);

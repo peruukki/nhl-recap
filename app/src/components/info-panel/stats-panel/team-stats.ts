@@ -51,7 +51,14 @@ export default function TeamStats({
       getPlayoffSpotRating,
       renderPlayoffSpot,
     ),
-    renderStat(teams, stats?.streaks ?? undefined, 'Streak', getStreakRating, renderStreak),
+    renderStat(
+      teams,
+      stats?.streaks ?? undefined,
+      'Streak',
+      getStreakRating,
+      renderStreak,
+      getStreakClass,
+    ),
   ]);
 }
 
@@ -118,6 +125,13 @@ function renderRecord({ wins, losses, ot }: TeamRecord): (VNode | number)[] {
 
 function renderStreak(streak?: TeamStreak): string {
   return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
+}
+
+function getStreakClass(streak?: TeamStreak): string {
+  if (!streak || streak.count < 3 || streak.type === 'OT') {
+    return '';
+  }
+  return streak.type === 'WINS' ? '--streak-win' : '--streak-loss';
 }
 
 function renderStreakType({ type }: TeamStreak): string {

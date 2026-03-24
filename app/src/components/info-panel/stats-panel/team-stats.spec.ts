@@ -428,10 +428,61 @@ describe('team stats', () => {
       });
 
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
-        away: { value: '2 L' },
+        away: { value: '4 L', className: '--streak-loss' },
         home: { value: '2 W', className: '--highlight' },
         label,
       });
+    });
+
+    it("should show teams' streaks with CSS classes for emojis", () => {
+      const gameDisplay = 'post-game-finished';
+      const label = 'Streak';
+
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            streaks: {
+              STL: { count: 3, type: 'WINS' },
+              BOS: { count: 6, type: 'WINS' },
+            },
+          },
+        } as GameT,
+        statIndexes.streak,
+        {
+          away: { value: '3 W', className: '--streak-win' },
+          home: {
+            value: '6 W',
+            className: '--highlight.stat__value--streak-win',
+          },
+          label,
+        },
+      );
+
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            streaks: {
+              STL: { count: 10, type: 'LOSSES' },
+              BOS: { count: 3, type: 'LOSSES' },
+            },
+          },
+        } as GameT,
+        statIndexes.streak,
+        {
+          away: { value: '10 L', className: '--streak-loss' },
+          home: {
+            value: '3 L',
+            className: '--highlight.stat__value--streak-loss',
+          },
+          label,
+        },
+      );
     });
 
     it("should show teams' playoff spot point differences, highlighting the better one", () => {

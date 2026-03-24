@@ -17,6 +17,44 @@
     &--highlight {
       color: colors.$color-highlight;
     }
+
+    &--streak-win,
+    &--streak-loss {
+      &::before,
+      &::after {
+        display: inline-block;
+        position: relative;
+        font-size: 1rem;
+      }
+    }
+    &--streak-win {
+      &::before,
+      &::after {
+        bottom: 2px;
+      }
+      &[class*="--away"]::before {
+        content: '🔥';
+        margin-right: 0.25rem;
+      }
+      &[class*="--home"]::after {
+        content: '🔥';
+        margin-left: 0.25rem;
+      }
+    }
+    &--streak-loss {
+      &::before,
+      &::after {
+        bottom: 1px;
+      }
+      &[class*="--away"]::before {
+        content: '❄️';
+        margin-right: 0.25rem;
+      }
+      &[class*="--home"]::after {
+        content: '❄️';
+        margin-left: 0.25rem;
+      }
+    }
   }
 
   &__label {
