@@ -23,6 +23,13 @@ This skill provides general guidance on the code style, development workflow, an
   - Prefer expression body over block body.
   - Only export types intended for use outside their defining file.
 
+## Ordering & Sorting
+
+- **Always sort properties and list items alphabetically** whenever it makes sense and doesn't change behavior. This applies to:
+  - Source code (e.g., object properties, import members).
+  - Configuration files (e.g., `package.json` scripts/dependencies, `tsconfig.json` options).
+  - Documentation (e.g., lists of features or tools).
+
 ## Development Workflow
 
 ### Node.js Version
