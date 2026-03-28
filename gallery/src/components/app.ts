@@ -1,11 +1,10 @@
+import Game from '@app/src/components/game';
+import type { GameDisplay, GameStats, Game as GameT, Goal } from '@app/src/types';
+import * as animations from '@app/src/utils/animations';
 import { button, div, h, type MainDOMSource, type VNode } from '@cycle/dom';
 import xs, { type Stream } from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
-
-import Game from '../../../app/src/components/game';
-import type { GameDisplay, GameStats, Game as GameT, Goal } from '../../../app/src/types';
-import * as animations from '../../../app/src/utils/animations';
 import { gamesData, stateDefinitions } from './data';
 import { getSectionExpandedState, setSectionExpandedState } from './storage';
 

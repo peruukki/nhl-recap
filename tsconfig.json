@@ -6,6 +6,9 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
+    "paths": {
+      "@app/*": ["./app/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

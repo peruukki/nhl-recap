@@ -1,7 +1,6 @@
+import ScorePanel from '@app/src/components/score-panel';
 import { div, type MainDOMSource, type VNode } from '@cycle/dom';
 import xs, { type Stream } from 'xstream';
-
-import ScorePanel from '../../../app/src/components/score-panel';
 
 type Sources = { DOM: MainDOMSource };
 
