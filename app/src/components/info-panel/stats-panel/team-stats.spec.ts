@@ -1,9 +1,10 @@
-import type { VNode } from '@cycle/dom';
+import { span, type VNode } from '@cycle/dom';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime, scoresAllRegularTimePlayoffs } from '../../../test/data';
 import type { GameDisplay, GameStatus, Game as GameT, Goal } from '../../../types';
 import Game from '../../game';
+import Icon from '../../icon';
 import { expectedStat, getStatsPanel, type StatValue } from '../test-utils';
 import { delimiter as renderedDelimiter } from './team-stats';
 
@@ -428,7 +429,10 @@ describe('team stats', () => {
       });
 
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.streak, {
-        away: { value: '4 L', className: '--streak-loss' },
+        away: {
+          value: [Icon('cold1'), span('4 L')],
+          className: '--streak-loss-1',
+        },
         home: { value: '2 W', className: '--highlight' },
         label,
       });
@@ -452,10 +456,13 @@ describe('team stats', () => {
         } as GameT,
         statIndexes.streak,
         {
-          away: { value: '3 W', className: '--streak-win' },
+          away: {
+            value: [Icon('hot1'), span('3 W')],
+            className: '--streak-win-1',
+          },
           home: {
-            value: '6 W',
-            className: '--highlight.stat__value--streak-win',
+            value: [span('6 W'), Icon('hot2')],
+            className: '--highlight.stat__value--streak-win-2',
           },
           label,
         },
@@ -475,10 +482,13 @@ describe('team stats', () => {
         } as GameT,
         statIndexes.streak,
         {
-          away: { value: '10 L', className: '--streak-loss' },
+          away: {
+            value: [Icon('cold3'), span('10 L')],
+            className: '--streak-loss-3',
+          },
           home: {
-            value: '3 L',
-            className: '--highlight.stat__value--streak-loss',
+            value: [span('3 L'), Icon('cold1')],
+            className: '--highlight.stat__value--streak-loss-1',
           },
           label,
         },

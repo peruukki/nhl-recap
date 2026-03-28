@@ -2,7 +2,10 @@ import { div, span, type VNode } from '@cycle/dom';
 
 import { getGameCard } from '../test-utils';
 
-export type StatValue = { className?: string; value: number | string | (VNode | number)[] };
+export type StatValue = {
+  className?: string;
+  value: number | string | (VNode | number | string)[];
+};
 
 export function getInfoPanel(vtree: VNode): VNode | undefined {
   return getGameCard(vtree)?.children?.[1] as VNode | undefined;

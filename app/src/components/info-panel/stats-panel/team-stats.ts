@@ -1,6 +1,7 @@
 import { div, span, type VNode } from '@cycle/dom';
 
 import type { TeamRecord, TeamStats as TeamStatsT, TeamStreak, Teams } from '../../../types';
+import Icon from '../../icon';
 import { renderStat } from './common';
 
 type Props = {
@@ -107,7 +108,7 @@ function getRegularSeasonPoints(record: TeamRecord): number {
   return 2 * record.wins + (record.ot ?? 0);
 }
 
-function renderWinPercentage(record: TeamRecord): string {
+function renderWinPercentage(record: TeamRecord, _side?: 'away' | 'home'): string {
   const percentage = getPointPercentage(record);
   if (Number.isNaN(percentage)) {
     return '-';
@@ -119,19 +120,45 @@ function renderWinPercentage(record: TeamRecord): string {
 
 export const delimiter = span('.stat__delimiter', ['-']);
 
-function renderRecord({ wins, losses, ot }: TeamRecord): (VNode | number)[] {
+function renderRecord(
+  { wins, losses, ot }: TeamRecord,
+  _side?: 'away' | 'home',
+): (VNode | number)[] {
   return ot !== undefined ? [wins, delimiter, losses, delimiter, ot] : [wins, delimiter, losses];
 }
 
-function renderStreak(streak?: TeamStreak): string {
-  return streak ? `${streak.count} ${renderStreakType(streak)}` : '-';
+function renderStreak(
+  streak: TeamStreak | undefined,
+  side: 'away' | 'home',
+): string | (VNode | string)[] {
+  if (!streak) {
+    return '-';
+  }
+  const text = `${streak.count} ${renderStreakType(streak)}`;
+  const icon = renderStreakIcon(streak);
+  if (!icon) {
+    return text;
+  }
+
+  return side === 'away' ? [icon, span(text)] : [span(text), icon];
+}
+
+function renderStreakIcon(streak: TeamStreak): VNode | null {
+  if (streak.count < 3 || streak.type === 'OT') {
+    return null;
+  }
+  const type = streak.type === 'WINS' ? 'hot' : 'cold';
+  const level = streak.count >= 10 ? 3 : streak.count >= 6 ? 2 : 1;
+  return Icon(`${type}${level}`);
 }
 
 function getStreakClass(streak?: TeamStreak): string {
   if (!streak || streak.count < 3 || streak.type === 'OT') {
     return '';
   }
-  return streak.type === 'WINS' ? '--streak-win' : '--streak-loss';
+  const type = streak.type === 'WINS' ? 'win' : 'loss';
+  const level = streak.count >= 10 ? 3 : streak.count >= 6 ? 2 : 1;
+  return `--streak-${type}-${level}`;
 }
 
 function renderStreakType({ type }: TeamStreak): string {
@@ -147,18 +174,27 @@ function renderStreakType({ type }: TeamStreak): string {
   }
 }
 
-function renderPlayoffSpot({ pointsFromPlayoffSpot }: { pointsFromPlayoffSpot: string }): string {
+function renderPlayoffSpot(
+  { pointsFromPlayoffSpot }: { pointsFromPlayoffSpot: string },
+  _side?: 'away' | 'home',
+): string {
   return pointsFromPlayoffSpot || '-';
 }
 
-function renderDivisionRank({ divisionRank }: { divisionRank: string }): string {
+function renderDivisionRank(
+  { divisionRank }: { divisionRank: string },
+  _side?: 'away' | 'home',
+): string {
   return divisionRank || '-';
 }
 
-function renderConferenceRank({ conferenceRank }: { conferenceRank: string }): string {
+function renderConferenceRank(
+  { conferenceRank }: { conferenceRank: string },
+  _side?: 'away' | 'home',
+): string {
   return conferenceRank || '-';
 }
 
-function renderLeagueRank({ leagueRank }: { leagueRank: string }): string {
+function renderLeagueRank({ leagueRank }: { leagueRank: string }, _side?: 'away' | 'home'): string {
   return leagueRank || '-';
 }

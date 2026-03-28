@@ -35,11 +35,11 @@
           },
           "streaks": {
             "BOS": {
-              "count": 2,
+              "count": 7,
               "type": "WINS"
             },
             "PHI": {
-              "count": 3,
+              "count": 4,
               "type": "LOSSES"
             }
           }
@@ -315,11 +315,11 @@
           },
           "streaks": {
             "BOS": {
-              "count": 1,
+              "count": 6,
               "type": "WINS"
             },
             "PHI": {
-              "count": 2,
+              "count": 3,
               "type": "LOSSES"
             }
           }
@@ -635,11 +635,11 @@
           },
           "streaks": {
             "BUF": {
-              "count": 5,
+              "count": 11,
               "type": "WINS"
             },
             "LAK": {
-              "count": 1,
+              "count": 8,
               "type": "LOSSES"
             }
           }
@@ -839,12 +839,12 @@
           },
           "streaks": {
             "BUF": {
-              "count": 4,
+              "count": 10,
               "type": "WINS"
             },
             "LAK": {
-              "count": 3,
-              "type": "WINS"
+              "count": 7,
+              "type": "LOSSES"
             }
           }
         },
@@ -1159,11 +1159,11 @@
           },
           "streaks": {
             "COL": {
-              "count": 2,
+              "count": 12,
               "type": "LOSSES"
             },
             "MTL": {
-              "count": 2,
+              "count": 5,
               "type": "WINS"
             }
           }
@@ -1467,11 +1467,11 @@
           },
           "streaks": {
             "COL": {
-              "count": 1,
+              "count": 11,
               "type": "LOSSES"
             },
             "MTL": {
-              "count": 1,
+              "count": 4,
               "type": "WINS"
             }
           }

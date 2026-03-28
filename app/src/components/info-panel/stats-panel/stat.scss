@@ -6,55 +6,33 @@
   width: 100%;
 
   &__value {
+    display: flex;
+    align-items: center;
     @include base.stretch;
 
     &--away {
-      text-align: right;
+      justify-content: flex-end;
     }
     &--home {
-      text-align: left;
+      justify-content: flex-start;
     }
     &--highlight {
       color: colors.$color-highlight;
     }
 
-    &--streak-win,
-    &--streak-loss {
-      &::before,
-      &::after {
-        display: inline-block;
-        position: relative;
-        font-size: 1rem;
-      }
+    &--away .icon {
+      margin-right: 0.5ch;
     }
-    &--streak-win {
-      &::before,
-      &::after {
-        bottom: 2px;
-      }
-      &[class*="--away"]::before {
-        content: '🔥';
-        margin-right: 0.25rem;
-      }
-      &[class*="--home"]::after {
-        content: '🔥';
-        margin-left: 0.25rem;
-      }
+    &--home .icon {
+      margin-left: 0.5ch;
     }
-    &--streak-loss {
-      &::before,
-      &::after {
-        bottom: 1px;
-      }
-      &[class*="--away"]::before {
-        content: '❄️';
-        margin-right: 0.25rem;
-      }
-      &[class*="--home"]::after {
-        content: '❄️';
-        margin-left: 0.25rem;
-      }
-    }
+  }
+
+  .icon {
+    display: flex;
+    height: 1rem;
+    width: 1rem;
+    margin-bottom: 1px;
   }
 
   &__label {
