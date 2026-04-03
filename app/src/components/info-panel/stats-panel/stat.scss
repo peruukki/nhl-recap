@@ -23,8 +23,8 @@
 
   .icon {
     display: flex;
-    height: 1rem;
-    width: 1rem;
+    height: calc(1rem - 1px);
+    width: calc(1rem - 1px);
   }
 
   &__value--away .icon {
@@ -33,14 +33,9 @@
   &__value--home .icon {
     margin-left: 5px;
   }
-
-  &__value[class*="--playoff-spot-"] .icon {
-    margin-top: 1px;
-  }
   &__value[class*="--streak-"] .icon {
     margin-bottom: 1px;
   }
-
   &__value--away[class*="--positive"] .icon {
     margin-right: 4px;
   }
