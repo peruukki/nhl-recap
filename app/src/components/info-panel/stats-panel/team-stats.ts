@@ -51,6 +51,7 @@ export default function TeamStats({
       'PO spot pts',
       getPlayoffSpotRating,
       renderPlayoffSpot,
+      getPlayoffSpotClass,
     ),
     renderStat(
       teams,
@@ -176,9 +177,53 @@ function renderStreakType({ type }: TeamStreak): string {
 
 function renderPlayoffSpot(
   { pointsFromPlayoffSpot }: { pointsFromPlayoffSpot: string },
-  _side?: 'away' | 'home',
-): string {
-  return pointsFromPlayoffSpot || '-';
+  side: 'away' | 'home',
+): string | (VNode | string)[] {
+  if (!pointsFromPlayoffSpot) {
+    return '-';
+  }
+  const text = pointsFromPlayoffSpot;
+  const icon = renderPlayoffSpotIcon(parseInt(pointsFromPlayoffSpot, 10));
+  if (!icon) {
+    return text;
+  }
+  return side === 'away' ? [icon, span(text)] : [span(text), icon];
+}
+
+function renderPlayoffSpotIcon(pointDiff: number): VNode | null {
+  if (pointDiff >= -5 && pointDiff <= -3) {
+    return Icon('playoffSpotFar');
+  }
+  if (pointDiff >= -2 && pointDiff <= -1) {
+    return Icon('playoffSpotClose');
+  }
+  if (pointDiff >= 0 && pointDiff <= 2) {
+    return Icon('playoffSpotIn');
+  }
+  if (pointDiff >= 3 && pointDiff <= 5) {
+    return Icon('playoffSpotSafe');
+  }
+  return null;
+}
+
+function getPlayoffSpotClass(standing?: { pointsFromPlayoffSpot: string }): string {
+  if (!standing) {
+    return '';
+  }
+  const pointDiff = parseInt(standing.pointsFromPlayoffSpot, 10);
+  if (pointDiff >= -5 && pointDiff <= -3) {
+    return '--playoff-spot-far';
+  }
+  if (pointDiff >= -2 && pointDiff <= -1) {
+    return '--playoff-spot-close';
+  }
+  if (pointDiff >= 0 && pointDiff <= 2) {
+    return '--playoff-spot-in';
+  }
+  if (pointDiff >= 3 && pointDiff <= 5) {
+    return '--playoff-spot-safe';
+  }
+  return '';
 }
 
 function renderDivisionRank(

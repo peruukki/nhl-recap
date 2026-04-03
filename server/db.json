@@ -24,13 +24,13 @@
               "conferenceRank": "6",
               "divisionRank": "5",
               "leagueRank": "9",
-              "pointsFromPlayoffSpot": "+8"
+              "pointsFromPlayoffSpot": "+4"
             },
             "PHI": {
               "conferenceRank": "14",
               "divisionRank": "7",
               "leagueRank": "24",
-              "pointsFromPlayoffSpot": "-8"
+              "pointsFromPlayoffSpot": "-4"
             }
           },
           "streaks": {
@@ -304,13 +304,13 @@
               "conferenceRank": "6",
               "divisionRank": "5",
               "leagueRank": "9",
-              "pointsFromPlayoffSpot": "+6"
+              "pointsFromPlayoffSpot": "+5"
             },
             "PHI": {
               "conferenceRank": "10",
               "divisionRank": "4",
               "leagueRank": "20",
-              "pointsFromPlayoffSpot": "-6"
+              "pointsFromPlayoffSpot": "-2"
             }
           },
           "streaks": {
@@ -624,7 +624,7 @@
               "conferenceRank": "4",
               "divisionRank": "3",
               "leagueRank": "7",
-              "pointsFromPlayoffSpot": "+8"
+              "pointsFromPlayoffSpot": "+1"
             },
             "LAK": {
               "conferenceRank": "10",

@@ -500,16 +500,192 @@ describe('team stats', () => {
       const label = 'PO spot pts';
 
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
-        away: { value: '+4' },
-        home: { value: '+4' },
+        away: {
+          value: [Icon('playoffSpotSafe'), span('+4')],
+          className: '--playoff-spot-safe',
+        },
+        home: {
+          value: [span('+4'), Icon('playoffSpotSafe')],
+          className: '--playoff-spot-safe',
+        },
         label,
       });
 
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
-        away: { value: '+2', className: '--highlight' },
-        home: { value: '-2' },
+        away: {
+          value: [Icon('playoffSpotIn'), span('+2')],
+          className: '--highlight.stat__value--playoff-spot-in',
+        },
+        home: {
+          value: [span('-2'), Icon('playoffSpotClose')],
+          className: '--playoff-spot-close',
+        },
         label,
       });
+    });
+
+    it("should show teams' playoff spot icons for all categories", () => {
+      const gameDisplay = 'post-game-finished';
+      const label = 'PO spot pts';
+
+      // Far: -5 to -3
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            standings: {
+              STL: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.STL,
+                pointsFromPlayoffSpot: '-4',
+              },
+              BOS: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.BOS,
+                pointsFromPlayoffSpot: '-3',
+              },
+            },
+          },
+        } as GameT,
+        statIndexes.playoffSpotPts,
+        {
+          away: {
+            value: [Icon('playoffSpotFar'), span('-4')],
+            className: '--playoff-spot-far',
+          },
+          home: {
+            value: [span('-3'), Icon('playoffSpotFar')],
+            className: '--highlight.stat__value--playoff-spot-far',
+          },
+          label,
+        },
+      );
+
+      // Close: -2 to -1
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            standings: {
+              STL: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.STL,
+                pointsFromPlayoffSpot: '-2',
+              },
+              BOS: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.BOS,
+                pointsFromPlayoffSpot: '-1',
+              },
+            },
+          },
+        } as GameT,
+        statIndexes.playoffSpotPts,
+        {
+          away: {
+            value: [Icon('playoffSpotClose'), span('-2')],
+            className: '--playoff-spot-close',
+          },
+          home: {
+            value: [span('-1'), Icon('playoffSpotClose')],
+            className: '--highlight.stat__value--playoff-spot-close',
+          },
+          label,
+        },
+      );
+
+      // In: 0 to +2
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            standings: {
+              STL: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.STL,
+                pointsFromPlayoffSpot: '0',
+              },
+              BOS: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.BOS,
+                pointsFromPlayoffSpot: '+2',
+              },
+            },
+          },
+        } as GameT,
+        statIndexes.playoffSpotPts,
+        {
+          away: {
+            value: [Icon('playoffSpotIn'), span('0')],
+            className: '--playoff-spot-in',
+          },
+          home: {
+            value: [span('+2'), Icon('playoffSpotIn')],
+            className: '--highlight.stat__value--playoff-spot-in',
+          },
+          label,
+        },
+      );
+
+      // Safe: +3 to +5
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            standings: {
+              STL: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.STL,
+                pointsFromPlayoffSpot: '+3',
+              },
+              BOS: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.BOS,
+                pointsFromPlayoffSpot: '+5',
+              },
+            },
+          },
+        } as GameT,
+        statIndexes.playoffSpotPts,
+        {
+          away: {
+            value: [Icon('playoffSpotSafe'), span('+3')],
+            className: '--playoff-spot-safe',
+          },
+          home: {
+            value: [span('+5'), Icon('playoffSpotSafe')],
+            className: '--highlight.stat__value--playoff-spot-safe',
+          },
+          label,
+        },
+      );
+
+      // No icon: outside -5..+5
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          currentStats: {
+            ...scoresAllRegularTime.games[0].currentStats,
+            standings: {
+              STL: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.STL,
+                pointsFromPlayoffSpot: '-8',
+              },
+              BOS: {
+                ...scoresAllRegularTime.games[0].currentStats!.standings!.BOS,
+                pointsFromPlayoffSpot: '+10',
+              },
+            },
+          },
+        } as GameT,
+        statIndexes.playoffSpotPts,
+        {
+          away: { value: '-8' },
+          home: { value: '+10', className: '--highlight' },
+          label,
+        },
+      );
     });
   });
 });
