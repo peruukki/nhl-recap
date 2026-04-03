@@ -502,11 +502,11 @@ describe('team stats', () => {
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.playoffSpotPts, {
         away: {
           value: [Icon('playoffSpotSafe'), span('+4')],
-          className: '--playoff-spot-safe',
+          className: '--playoff-spot-safe.stat__value--positive',
         },
         home: {
           value: [span('+4'), Icon('playoffSpotSafe')],
-          className: '--playoff-spot-safe',
+          className: '--playoff-spot-safe.stat__value--positive',
         },
         label,
       });
@@ -514,11 +514,11 @@ describe('team stats', () => {
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.playoffSpotPts, {
         away: {
           value: [Icon('playoffSpotIn'), span('+2')],
-          className: '--highlight.stat__value--playoff-spot-in',
+          className: '--highlight.stat__value--playoff-spot-in.stat__value--positive',
         },
         home: {
           value: [span('-2'), Icon('playoffSpotClose')],
-          className: '--playoff-spot-close',
+          className: '--playoff-spot-close.stat__value--negative',
         },
         label,
       });
@@ -551,11 +551,11 @@ describe('team stats', () => {
         {
           away: {
             value: [Icon('playoffSpotFar'), span('-4')],
-            className: '--playoff-spot-far',
+            className: '--playoff-spot-far.stat__value--negative',
           },
           home: {
             value: [span('-3'), Icon('playoffSpotFar')],
-            className: '--highlight.stat__value--playoff-spot-far',
+            className: '--highlight.stat__value--playoff-spot-far.stat__value--negative',
           },
           label,
         },
@@ -584,11 +584,11 @@ describe('team stats', () => {
         {
           away: {
             value: [Icon('playoffSpotClose'), span('-2')],
-            className: '--playoff-spot-close',
+            className: '--playoff-spot-close.stat__value--negative',
           },
           home: {
             value: [span('-1'), Icon('playoffSpotClose')],
-            className: '--highlight.stat__value--playoff-spot-close',
+            className: '--highlight.stat__value--playoff-spot-close.stat__value--negative',
           },
           label,
         },
@@ -621,7 +621,7 @@ describe('team stats', () => {
           },
           home: {
             value: [span('+2'), Icon('playoffSpotIn')],
-            className: '--highlight.stat__value--playoff-spot-in',
+            className: '--highlight.stat__value--playoff-spot-in.stat__value--positive',
           },
           label,
         },
@@ -650,11 +650,11 @@ describe('team stats', () => {
         {
           away: {
             value: [Icon('playoffSpotSafe'), span('+3')],
-            className: '--playoff-spot-safe',
+            className: '--playoff-spot-safe.stat__value--positive',
           },
           home: {
             value: [span('+5'), Icon('playoffSpotSafe')],
-            className: '--highlight.stat__value--playoff-spot-safe',
+            className: '--highlight.stat__value--playoff-spot-safe.stat__value--positive',
           },
           label,
         },

@@ -19,13 +19,6 @@
     &--highlight {
       color: colors.$color-highlight;
     }
-
-    &--away .icon {
-      margin-right: 0.5ch;
-    }
-    &--home .icon {
-      margin-left: 0.5ch;
-    }
   }
 
   .icon {
@@ -34,11 +27,22 @@
     width: 1rem;
   }
 
+  &__value--away .icon {
+    margin-right: 5px;
+  }
+  &__value--home .icon {
+    margin-left: 5px;
+  }
+
   &__value[class*="--playoff-spot-"] .icon {
     margin-top: 1px;
   }
   &__value[class*="--streak-"] .icon {
     margin-bottom: 1px;
+  }
+
+  &__value--away[class*="--positive"] .icon {
+    margin-right: 4px;
   }
 
   &__label {

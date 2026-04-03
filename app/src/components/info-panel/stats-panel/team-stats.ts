@@ -211,19 +211,27 @@ function getPlayoffSpotClass(standing?: { pointsFromPlayoffSpot: string }): stri
     return '';
   }
   const pointDiff = parseInt(standing.pointsFromPlayoffSpot, 10);
+
+  const classes = [];
   if (pointDiff >= -5 && pointDiff <= -3) {
-    return '--playoff-spot-far';
+    classes.push('--playoff-spot-far');
+  } else if (pointDiff >= -2 && pointDiff <= -1) {
+    classes.push('--playoff-spot-close');
+  } else if (pointDiff >= 0 && pointDiff <= 2) {
+    classes.push('--playoff-spot-in');
+  } else if (pointDiff >= 3 && pointDiff <= 5) {
+    classes.push('--playoff-spot-safe');
   }
-  if (pointDiff >= -2 && pointDiff <= -1) {
-    return '--playoff-spot-close';
+
+  if (classes.length > 0) {
+    if (standing.pointsFromPlayoffSpot.startsWith('+')) {
+      classes.push('--positive');
+    } else if (standing.pointsFromPlayoffSpot.startsWith('-')) {
+      classes.push('--negative');
+    }
   }
-  if (pointDiff >= 0 && pointDiff <= 2) {
-    return '--playoff-spot-in';
-  }
-  if (pointDiff >= 3 && pointDiff <= 5) {
-    return '--playoff-spot-safe';
-  }
-  return '';
+
+  return classes.join('.stat__value');
 }
 
 function renderDivisionRank(
