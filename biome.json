@@ -27,6 +27,7 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "correctness": { "noUnusedImports": "error" },
       "recommended": true,
       "style": { "noNonNullAssertion": "off" }
     }
