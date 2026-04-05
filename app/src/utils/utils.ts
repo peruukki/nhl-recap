@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import type { Team, TeamRecord, TeamStats } from '../types';
+import type { Game as GameT, Team, TeamRecord, TeamStats } from '../types';
 
 const narrowCharacters = ['i', 'j', 'l', 'I', 'J', '-', '.'];
 const wideCharacters = ['m', 'w', 'M', 'W'];
+
+export const REGULAR_SEASON_GAME_COUNT = 82;
 
 function getNameLength(name: string) {
   return (
@@ -65,5 +67,25 @@ export function areTeamStatsEqual({
       currentStats?.records[teams.home.abbreviation],
       preGameStats?.records[teams.home.abbreviation],
     )
+  );
+}
+
+export function getGamesPlayed({ wins, losses, ot = 0 }: TeamRecord): number {
+  return wins + losses + ot;
+}
+
+export function shouldShowGamesLeft(
+  games: Pick<GameT, 'preGameStats' | 'currentStats'>[],
+): boolean {
+  return (
+    games.length > 0 &&
+    games.every((game) => !game.preGameStats?.playoffSeries) &&
+    games.some((game) => {
+      const stats = game.currentStats ?? game.preGameStats;
+      return (
+        !!stats?.records &&
+        Object.values(stats.records).some((record) => getGamesPlayed(record) >= 60)
+      );
+    })
   );
 }

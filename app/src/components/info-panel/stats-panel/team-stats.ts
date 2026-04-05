@@ -1,12 +1,14 @@
 import { div, span, type VNode } from '@cycle/dom';
 
 import type { TeamRecord, TeamStats as TeamStatsT, TeamStreak, Teams } from '../../../types';
+import { getGamesPlayed, REGULAR_SEASON_GAME_COUNT } from '../../../utils/utils';
 import Icon from '../../icon';
 import { renderStat } from './common';
 
 type Props = {
   fadeIn: boolean;
   isPlayoffGame: boolean;
+  showGamesLeft: boolean;
   stats?: TeamStatsT;
   statsType: 'afterGame' | 'preGame';
   teams: Teams;
@@ -15,53 +17,61 @@ type Props = {
 export default function TeamStats({
   fadeIn,
   isPlayoffGame,
+  showGamesLeft,
   stats,
   statsType,
   teams,
 }: Props): VNode {
-  return div('.stats', { class: { 'fade-in': fadeIn } }, [
-    div('.stats__heading', 'Team stats'),
-    div('.stats__subheading', statsType === 'preGame' ? 'before game' : 'after game'),
-    renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
-    renderStat(
-      teams,
-      stats?.standings,
-      'Conf. rank',
-      getConferenceRankRating,
-      renderConferenceRank,
-    ),
-    renderStat(teams, stats?.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-    renderStat(
-      teams,
-      isPlayoffGame ? undefined : stats?.records,
-      'Point-%',
-      renderWinPercentage,
-      renderWinPercentage,
-    ),
-    renderStat(
-      teams,
-      stats?.records,
-      isPlayoffGame ? 'Season pts' : 'Record',
-      isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
-      isPlayoffGame ? getRegularSeasonPoints : renderRecord,
-    ),
-    renderStat(
-      teams,
-      isPlayoffGame ? undefined : stats?.standings,
-      'PO spot pts',
-      getPlayoffSpotRating,
-      renderPlayoffSpot,
-      getPlayoffSpotClass,
-    ),
-    renderStat(
-      teams,
-      stats?.streaks ?? undefined,
-      'Streak',
-      getStreakRating,
-      renderStreak,
-      getStreakClass,
-    ),
-  ]);
+  return div(
+    '.stats',
+    { class: { 'fade-in': fadeIn } },
+    [
+      div('.stats__heading', 'Team stats'),
+      div('.stats__subheading', statsType === 'preGame' ? 'before game' : 'after game'),
+      renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
+      renderStat(
+        teams,
+        stats?.standings,
+        'Conf. rank',
+        getConferenceRankRating,
+        renderConferenceRank,
+      ),
+      renderStat(teams, stats?.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
+      renderStat(
+        teams,
+        isPlayoffGame ? undefined : stats?.records,
+        'Point-%',
+        renderWinPercentage,
+        renderWinPercentage,
+      ),
+      renderStat(
+        teams,
+        stats?.records,
+        isPlayoffGame ? 'Season pts' : 'Record',
+        isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
+        isPlayoffGame ? getRegularSeasonPoints : renderRecord,
+      ),
+      showGamesLeft && !isPlayoffGame
+        ? renderStat(teams, stats?.records, 'Games left', getGamesRemaining, getGamesRemaining)
+        : null,
+      renderStat(
+        teams,
+        isPlayoffGame ? undefined : stats?.standings,
+        'PO spot pts',
+        getPlayoffSpotRating,
+        renderPlayoffSpot,
+        getPlayoffSpotClass,
+      ),
+      renderStat(
+        teams,
+        stats?.streaks ?? undefined,
+        'Streak',
+        getStreakRating,
+        renderStreak,
+        getStreakClass,
+      ),
+    ].filter((vnode): vnode is VNode => !!vnode),
+  );
 }
 
 function getPointPercentage({ wins, losses, ot = 0 }: TeamRecord): number {
@@ -107,6 +117,10 @@ function getLeagueRankRating({ leagueRank }: { leagueRank: string }): number {
 
 function getRegularSeasonPoints(record: TeamRecord): number {
   return 2 * record.wins + (record.ot ?? 0);
+}
+
+function getGamesRemaining(record: TeamRecord): number {
+  return REGULAR_SEASON_GAME_COUNT - getGamesPlayed(record);
 }
 
 function renderWinPercentage(record: TeamRecord, _side?: 'away' | 'home'): string {

@@ -32,6 +32,7 @@ type Props = {
   latestGoal?: Goal;
   preGameStats?: TeamStatsT;
   rosters?: Rosters;
+  showGamesLeft: boolean;
   startTime: string;
   status: GameStatus;
   teams: Teams;
@@ -77,6 +78,7 @@ export default function InfoPanel({
   latestGoal,
   preGameStats,
   rosters,
+  showGamesLeft,
   startTime,
   status,
   teams,
@@ -109,10 +111,11 @@ export default function InfoPanel({
         StatsPanel({
           gameStats,
           isPlayoffGame,
+          showGamesLeft,
           showGameStats,
           showProgressInfo,
-          teamStatsInfo,
           teams,
+          teamStatsInfo,
         }),
       ]),
     ]),

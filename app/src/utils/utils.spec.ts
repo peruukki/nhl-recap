@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { areTeamStatsEqual, getGameAnimationIndexes, truncatePlayerName } from './utils';
+import {
+  areTeamStatsEqual,
+  getGameAnimationIndexes,
+  getGamesPlayed,
+  shouldShowGamesLeft,
+  truncatePlayerName,
+} from './utils';
 
 describe('utils', () => {
   describe('truncatePlayerName', () => {
@@ -244,5 +250,54 @@ describe('utils', () => {
 
       expect(areTeamStatsEqual({ currentStats, preGameStats, teams })).toBe(true);
     });
+  });
+
+  describe('getGamesPlayed', () => {
+    it('should calculate games played with wins and losses', () => {
+      expect(getGamesPlayed({ wins: 10, losses: 5 })).toEqual(15);
+    });
+
+    it('should calculate games played with wins, losses and overtime losses', () => {
+      expect(getGamesPlayed({ wins: 10, losses: 5, ot: 2 })).toEqual(17);
+    });
+
+    it('should return 0 for zero wins and losses', () => {
+      expect(getGamesPlayed({ wins: 0, losses: 0 })).toEqual(0);
+    });
+  });
+});
+
+describe('shouldShowGamesLeft', () => {
+  it('should return false when there are no games', () => {
+    expect(shouldShowGamesLeft([])).toBe(false);
+  });
+
+  it('should return false during playoffs', () => {
+    const games = [
+      { preGameStats: { playoffSeries: { round: 1, wins: {} }, records: {}, standings: {} } },
+      { currentStats: { records: { PHI: { wins: 60, losses: 10 } }, standings: {} } },
+    ];
+    expect(shouldShowGamesLeft(games)).toBe(false);
+  });
+
+  it('should return false when no team has played 60 games', () => {
+    const games = [
+      { preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} } },
+      { currentStats: { records: { BOS: { wins: 30, losses: 10 } }, standings: {} } },
+    ];
+    expect(shouldShowGamesLeft(games)).toBe(false);
+  });
+
+  it('should return true when at least one team has played 60 games and it is regular season', () => {
+    const games = [
+      { preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} } },
+      { currentStats: { records: { BOS: { wins: 50, losses: 10 } }, standings: {} } }, // 60 games
+    ];
+    expect(shouldShowGamesLeft(games)).toBe(true);
+  });
+
+  it('should handle missing records or stats gracefully', () => {
+    const games = [{}];
+    expect(shouldShowGamesLeft(games)).toBe(false);
   });
 });

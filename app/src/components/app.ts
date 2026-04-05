@@ -15,7 +15,7 @@ import type {
 import * as animations from '../utils/animations';
 import { debugFn } from '../utils/debug';
 import { delayAtLeast } from '../utils/delay';
-import { getGameAnimationIndexes } from '../utils/utils';
+import { getGameAnimationIndexes, shouldShowGamesLeft } from '../utils/utils';
 import Clock from './clock';
 import Game from './game';
 import Header from './header';
@@ -294,16 +294,30 @@ function view(state$: Stream<State>): Stream<VNode> {
       event,
       gameDisplays,
       haveGamesStarted,
-    }) =>
-      div([
+    }) => {
+      const showGamesLeft = shouldShowGamesLeft(scores.games);
+
+      return div([
         Header({ clockVtree, event, date: scores.date, haveGamesStarted, isPlaying }),
-        main(renderScores({ games: scores.games, currentGoals, status, gameDisplays })),
-      ]),
+        main(
+          renderScores({
+            currentGoals,
+            gameDisplays,
+            games: scores.games,
+            showGamesLeft,
+            status,
+          }),
+        ),
+      ]);
+    },
   );
 }
 
 function renderScores(
-  state: Pick<State, 'currentGoals' | 'gameDisplays' | 'status'> & { games: Scores['games'] },
+  state: Pick<State, 'currentGoals' | 'gameDisplays' | 'status'> & {
+    games: Scores['games'];
+    showGamesLeft: boolean;
+  },
 ): VNode {
   const gameAnimationIndexes = getGameAnimationIndexes(state.games.length);
   const scoreListClass = classNames({
@@ -324,6 +338,7 @@ function renderScores(
             game,
             state.currentGoals[index] || [],
             gameAnimationIndexes[index],
+            { showGamesLeft: state.showGamesLeft },
           ),
         ),
       )

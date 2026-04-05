@@ -23,6 +23,7 @@ export default function Game(
   }: GameT,
   currentGoals: Goal[],
   gameAnimationIndex: number,
+  { showGamesLeft = false }: { showGamesLeft?: boolean } = {},
 ): VNode {
   const latestGoal = _.last(currentGoals);
   const awayGoals = currentGoals.filter((goal) => goal.team === teams.away.abbreviation);
@@ -38,17 +39,18 @@ export default function Game(
         isBeforeGame: gameDisplay === 'pre-game',
       }),
       InfoPanel({
-        gameDisplay,
-        startTime,
-        teams,
-        gameStats,
-        preGameStats,
-        currentStats,
-        rosters,
-        status,
-        isPlayoffGame: !!preGameStats?.playoffSeries,
         currentGoals,
+        currentStats,
+        gameDisplay,
+        gameStats,
+        isPlayoffGame: !!preGameStats?.playoffSeries,
         latestGoal,
+        preGameStats,
+        rosters,
+        showGamesLeft,
+        startTime,
+        status,
+        teams,
       }),
       div('.game__secondary-panel', [
         LinksPanel({ gameDisplay, links, teams }),

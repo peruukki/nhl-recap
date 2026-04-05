@@ -20,8 +20,9 @@ const statIndexes = {
   leagueRank: 4,
   pointPct: 5,
   recordOrSeasonPts: 6,
-  playoffSpotPts: 7,
-  streak: 8,
+  gamesLeft: 7,
+  playoffSpotPts: 8,
+  streak: 9,
 };
 
 describe('team stats', () => {
@@ -688,6 +689,78 @@ describe('team stats', () => {
       );
     });
   });
+
+  describe('games left team stat', () => {
+    const gameDisplay = 'pre-game';
+    const label = 'Games left';
+
+    it('should be shown when showGamesLeft prop is true', () => {
+      const game = scoresAllRegularTime.games[0];
+      assertTeamStats(
+        gameDisplay,
+        game,
+        statIndexes.gamesLeft,
+        {
+          away: { value: 69 }, // 82 - (8+4+1)
+          home: { value: 69 }, // 82 - (7+3+3)
+          label,
+        },
+        { showGamesLeft: true },
+      );
+    });
+
+    it('should highlight the team with more games left', () => {
+      const game = {
+        ...scoresAllRegularTime.games[0],
+        preGameStats: {
+          ...scoresAllRegularTime.games[0].preGameStats,
+          records: {
+            STL: { wins: 10, losses: 5, ot: 2 }, // 17 games played, 65 left
+            BOS: { wins: 8, losses: 7, ot: 1 }, // 16 games played, 66 left
+          },
+        },
+      } as GameT;
+      assertTeamStats(
+        gameDisplay,
+        game,
+        statIndexes.gamesLeft,
+        {
+          away: { value: 65 },
+          home: { value: 66, className: '--highlight' },
+          label,
+        },
+        { showGamesLeft: true },
+      );
+    });
+
+    it('should not be shown when showGamesLeft prop is false', () => {
+      const game = scoresAllRegularTime.games[0];
+      const teamStats = getTeamStats(
+        Game(gameDisplay, game, game.goals, 0, { showGamesLeft: false }),
+      );
+      const labels = teamStats?.children
+        ?.filter((c): c is VNode => !!c)
+        .map(
+          (c) => c.children?.find((child) => (child as VNode).sel === 'span.stat__label') as VNode,
+        )
+        .map((span) => span?.text);
+      expect(labels).not.toContain(label);
+    });
+
+    it('should not be shown during playoff games even if showGamesLeft is true', () => {
+      const game = scoresAllRegularTimePlayoffs.games[0];
+      const teamStats = getTeamStats(
+        Game(gameDisplay, game, game.goals, 0, { showGamesLeft: true }),
+      );
+      const labels = teamStats?.children
+        ?.filter((c): c is VNode => !!c)
+        .map(
+          (c) => c.children?.find((child) => (child as VNode).sel === 'span.stat__label') as VNode,
+        )
+        .map((span) => span?.text);
+      expect(labels).not.toContain(label);
+    });
+  });
 });
 
 function assertPreGameStatsAreShown(
@@ -740,7 +813,9 @@ function assertStatsExistence(
   assertFn: (actual?: VNode) => void,
 ) {
   const stats = getTeamStats(
-    Game(gameDisplay, { status, teams, preGameStats, currentStats } as GameT, goals, 0),
+    Game(gameDisplay, { status, teams, preGameStats, currentStats } as GameT, goals, 0, {
+      showGamesLeft: false,
+    }),
   );
   assertFn(stats);
 }
@@ -754,10 +829,15 @@ function assertTeamStats(
     home: StatValue;
     label: string;
   },
+  { showGamesLeft = false }: { showGamesLeft?: boolean } = {},
 ) {
+  const adjustedIndex =
+    !showGamesLeft && statIndex > statIndexes.recordOrSeasonPts ? statIndex - 1 : statIndex;
   const renderedStats = getTeamStats(
-    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats } as GameT, goals, 0),
-  )?.children?.[statIndex];
+    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats } as GameT, goals, 0, {
+      showGamesLeft,
+    }),
+  )?.children?.[adjustedIndex];
   const expected = expectedStat(renderedRecords);
   expect(renderedStats).toEqual(expected);
 }

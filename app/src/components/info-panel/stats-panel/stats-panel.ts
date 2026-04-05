@@ -7,10 +7,11 @@ import TeamStats from './team-stats';
 type Props = {
   gameStats?: GameStatsT;
   isPlayoffGame: boolean;
+  showGamesLeft: boolean;
   showGameStats: boolean;
   showProgressInfo: boolean;
-  teamStatsInfo: TeamStatsInfo;
   teams: Teams;
+  teamStatsInfo: TeamStatsInfo;
 };
 
 export type TeamStatsInfo =
@@ -25,10 +26,11 @@ export type TeamStatsInfo =
 export default function StatsPanel({
   gameStats,
   isPlayoffGame,
+  showGamesLeft,
   showGameStats,
   showProgressInfo,
-  teamStatsInfo,
   teams,
+  teamStatsInfo,
 }: Props) {
   return div('.stats-panel', [
     div('.stats-panel__container', [
@@ -37,6 +39,7 @@ export default function StatsPanel({
         ? TeamStats({
             fadeIn: showProgressInfo || teamStatsInfo.isAfterGameDisplayState,
             isPlayoffGame,
+            showGamesLeft,
             stats: teamStatsInfo.stats,
             statsType: teamStatsInfo.type,
             teams,
