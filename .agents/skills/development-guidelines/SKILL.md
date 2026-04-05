@@ -15,6 +15,11 @@ This skill provides general guidance on the code style, development workflow, an
 - **Biome & Stylelint**: Linting and formatting.
 - **Vitest**: Unit testing framework.
 
+## Testing
+
+- **Avoid ALL_CAPS in test descriptions**:
+  - Do not capitalize words like "NOT" (e.g., use "should not" instead of "should NOT"). Use regular capitalization throughout.
+
 ## Code Style
 
 - **Write concise code**:
