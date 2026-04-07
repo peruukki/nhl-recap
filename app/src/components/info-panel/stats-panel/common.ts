@@ -4,14 +4,23 @@ import type { Teams, TeamValues } from '../../../types';
 
 type Renderable = number | string | VNode;
 
-export function renderStat<T>(
-  teams: Teams,
-  values: TeamValues<T> | undefined,
-  label: string,
-  ratingFn: (value: T) => number | string,
-  renderFn: (value: T, side: 'away' | 'home') => Renderable | Renderable[],
-  classFn?: (value: T) => string,
-): VNode {
+interface StatProps<T> {
+  classFn?: (value: T) => string;
+  label: string;
+  ratingFn: (value: T) => number | string;
+  renderFn: (value: T, side: 'away' | 'home') => Renderable | Renderable[];
+  teams: Teams;
+  values: TeamValues<T> | undefined;
+}
+
+export function renderStat<T>({
+  classFn,
+  label,
+  ratingFn,
+  renderFn,
+  teams,
+  values,
+}: StatProps<T>): VNode {
   const valueClassName = '.stat__value';
   const highlightClassNames = getHighlightClassNames(valueClassName, teams, values, ratingFn);
   const getExtraClasses = (value: T | undefined) => {
