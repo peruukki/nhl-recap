@@ -28,48 +28,66 @@ export default function TeamStats({
     [
       div('.stats__heading', 'Team stats'),
       div('.stats__subheading', statsType === 'preGame' ? 'before game' : 'after game'),
-      renderStat(teams, stats?.standings, 'Div. rank', getDivisionRankRating, renderDivisionRank),
-      renderStat(
+      renderStat({
+        label: 'Div. rank',
+        ratingFn: getDivisionRankRating,
+        renderFn: renderDivisionRank,
         teams,
-        stats?.standings,
-        'Conf. rank',
-        getConferenceRankRating,
-        renderConferenceRank,
-      ),
-      renderStat(teams, stats?.standings, 'NHL rank', getLeagueRankRating, renderLeagueRank),
-      renderStat(
+        values: stats?.standings,
+      }),
+      renderStat({
+        label: 'Conf. rank',
+        ratingFn: getConferenceRankRating,
+        renderFn: renderConferenceRank,
         teams,
-        isPlayoffGame ? undefined : stats?.records,
-        'Point-%',
-        renderWinPercentage,
-        renderWinPercentage,
-      ),
-      renderStat(
+        values: stats?.standings,
+      }),
+      renderStat({
+        label: 'NHL rank',
+        ratingFn: getLeagueRankRating,
+        renderFn: renderLeagueRank,
         teams,
-        stats?.records,
-        isPlayoffGame ? 'Season pts' : 'Record',
-        isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
-        isPlayoffGame ? getRegularSeasonPoints : renderRecord,
-      ),
+        values: stats?.standings,
+      }),
+      renderStat({
+        label: 'Point-%',
+        ratingFn: renderWinPercentage,
+        renderFn: renderWinPercentage,
+        teams,
+        values: isPlayoffGame ? undefined : stats?.records,
+      }),
+      renderStat({
+        label: isPlayoffGame ? 'Season pts' : 'Record',
+        ratingFn: isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
+        renderFn: isPlayoffGame ? getRegularSeasonPoints : renderRecord,
+        teams,
+        values: stats?.records,
+      }),
       showGamesLeft && !isPlayoffGame
-        ? renderStat(teams, stats?.records, 'Games left', getGamesRemaining, getGamesRemaining)
+        ? renderStat({
+            label: 'Games left',
+            ratingFn: getGamesRemaining,
+            renderFn: getGamesRemaining,
+            teams,
+            values: stats?.records,
+          })
         : null,
-      renderStat(
+      renderStat({
+        classFn: getPlayoffSpotClass,
+        label: 'PO spot pts',
+        ratingFn: getPlayoffSpotRating,
+        renderFn: renderPlayoffSpot,
         teams,
-        isPlayoffGame ? undefined : stats?.standings,
-        'PO spot pts',
-        getPlayoffSpotRating,
-        renderPlayoffSpot,
-        getPlayoffSpotClass,
-      ),
-      renderStat(
+        values: isPlayoffGame ? undefined : stats?.standings,
+      }),
+      renderStat({
+        classFn: getStreakClass,
+        label: 'Streak',
+        ratingFn: getStreakRating,
+        renderFn: renderStreak,
         teams,
-        stats?.streaks ?? undefined,
-        'Streak',
-        getStreakRating,
-        renderStreak,
-        getStreakClass,
-      ),
+        values: stats?.streaks ?? undefined,
+      }),
     ].filter((vnode): vnode is VNode => !!vnode),
   );
 }
