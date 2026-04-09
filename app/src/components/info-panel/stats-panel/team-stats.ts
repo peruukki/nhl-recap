@@ -58,7 +58,7 @@ export default function TeamStats({
       }),
       renderStat({
         label: isPlayoffGame ? 'Season pts' : 'Record',
-        ratingFn: isPlayoffGame ? getRegularSeasonPoints : renderWinPercentage,
+        ratingFn: isPlayoffGame ? getRegularSeasonPoints : getRecordRating,
         renderFn: isPlayoffGame ? getRegularSeasonPoints : renderRecord,
         teams,
         values: stats?.records,
@@ -139,6 +139,14 @@ function getRegularSeasonPoints(record: TeamRecord): number {
 
 function getGamesRemaining(record: TeamRecord): number {
   return REGULAR_SEASON_GAME_COUNT - getGamesPlayed(record);
+}
+
+function getRecordRating(record: TeamRecord): string {
+  const percentage = getPointPercentage(record);
+  if (Number.isNaN(percentage)) {
+    return '';
+  }
+  return `${percentage.toFixed(3)}-${record.wins.toString().padStart(3, '0')}`;
 }
 
 function renderWinPercentage(record: TeamRecord, _side?: 'away' | 'home'): string {
