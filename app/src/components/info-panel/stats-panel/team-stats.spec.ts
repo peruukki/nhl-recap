@@ -191,12 +191,14 @@ describe('team stats', () => {
       const gameDisplay = 'pre-game';
       const label = 'Record';
 
+      // Better win percentage
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[0], statIndexes.recordOrSeasonPts, {
-        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+        away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1], className: '--highlight' },
         home: { value: [7, renderedDelimiter, 3, renderedDelimiter, 3] },
         label,
       });
 
+      // Equal win percentage, more regulation wins
       assertTeamStats(gameDisplay, scoresAllRegularTime.games[1], statIndexes.recordOrSeasonPts, {
         away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
         home: {
@@ -205,6 +207,27 @@ describe('team stats', () => {
         },
         label,
       });
+
+      // Equal records, no highlight
+      assertTeamStats(
+        gameDisplay,
+        {
+          ...scoresAllRegularTime.games[0],
+          preGameStats: {
+            ...scoresAllRegularTime.games[0].preGameStats!,
+            records: {
+              BOS: { wins: 8, losses: 4, ot: 1 },
+              STL: { wins: 8, losses: 4, ot: 1 },
+            },
+          },
+        },
+        statIndexes.recordOrSeasonPts,
+        {
+          away: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+          home: { value: [8, renderedDelimiter, 4, renderedDelimiter, 1] },
+          label,
+        },
+      );
     });
 
     it("should show teams' regular season points in playoff games, highlighting the better one", () => {
