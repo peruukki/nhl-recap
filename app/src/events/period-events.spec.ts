@@ -14,7 +14,7 @@ const goalPauseEventCounts: [number, number, number] = [50, 52, 55];
 
 const baseGoal = {
   classModifier: 'home' as const,
-  team: 'TOR',
+  team: 'TOR' as const,
   scorer: { player: 'Auston Matthews', playerId: 8479318, seasonTotal: 60 },
   assists: [],
 };

@@ -84,7 +84,7 @@ export function shouldShowGamesLeft(
       const stats = game.currentStats ?? game.preGameStats;
       return (
         !!stats?.records &&
-        Object.values(stats.records).some((record) => getGamesPlayed(record) >= 60)
+        Object.values(stats.records).some((record) => record && getGamesPlayed(record) >= 60)
       );
     })
   );

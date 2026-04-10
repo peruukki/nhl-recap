@@ -68,8 +68,8 @@ describe('utils', () => {
 
   describe('areTeamStatsEqual', () => {
     const teams = {
-      away: { abbreviation: 'TOR' },
-      home: { abbreviation: 'MTL' },
+      away: { abbreviation: 'TOR' as const },
+      home: { abbreviation: 'MTL' as const },
     };
 
     it('should return true when both stats are equal', () => {

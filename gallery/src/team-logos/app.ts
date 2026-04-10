@@ -1,4 +1,5 @@
 import ScorePanel from '@app/src/components/score-panel';
+import type { TeamAbbreviation } from '@app/src/types';
 import { div, type MainDOMSource, type VNode } from '@cycle/dom';
 import xs, { type Stream } from 'xstream';
 
@@ -6,49 +7,48 @@ type Sources = { DOM: MainDOMSource };
 
 type Sinks = { DOM: Stream<VNode> };
 
-type State = { teams$: Stream<string[]> };
+type State = { teams$: Stream<TeamAbbreviation[]> };
 
 export default function main(): (sources: Sources) => Sinks {
   return () => ({ DOM: view(model()) });
 }
 
 function model(): State {
-  return {
-    teams$: xs.of([
-      'ANA',
-      'BOS',
-      'BUF',
-      'CGY',
-      'CAR',
-      'CHI',
-      'COL',
-      'CBJ',
-      'DAL',
-      'DET',
-      'EDM',
-      'FLA',
-      'LAK',
-      'MIN',
-      'MTL',
-      'NSH',
-      'NJD',
-      'NYI',
-      'NYR',
-      'OTT',
-      'PHI',
-      'PIT',
-      'SJS',
-      'SEA',
-      'STL',
-      'TBL',
-      'TOR',
-      'UTA',
-      'VAN',
-      'VGK',
-      'WSH',
-      'WPG',
-    ]),
-  };
+  const teams: TeamAbbreviation[] = [
+    'ANA',
+    'BOS',
+    'BUF',
+    'CGY',
+    'CAR',
+    'CHI',
+    'COL',
+    'CBJ',
+    'DAL',
+    'DET',
+    'EDM',
+    'FLA',
+    'LAK',
+    'MIN',
+    'MTL',
+    'NSH',
+    'NJD',
+    'NYI',
+    'NYR',
+    'OTT',
+    'PHI',
+    'PIT',
+    'SJS',
+    'SEA',
+    'STL',
+    'TBL',
+    'TOR',
+    'UTA',
+    'VAN',
+    'VGK',
+    'WSH',
+    'WPG',
+  ];
+  return { teams$: xs.of(teams) };
 }
 
 function view(state: State): Stream<VNode> {

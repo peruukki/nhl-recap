@@ -108,7 +108,40 @@ export type Teams = {
   home: Team;
 };
 
-export type TeamAbbreviation = string;
+export type TeamAbbreviation =
+  | 'ANA'
+  | 'ARI'
+  | 'BOS'
+  | 'BUF'
+  | 'CGY'
+  | 'CAR'
+  | 'CHI'
+  | 'COL'
+  | 'CBJ'
+  | 'DAL'
+  | 'DET'
+  | 'EDM'
+  | 'FLA'
+  | 'LAK'
+  | 'MIN'
+  | 'MTL'
+  | 'NSH'
+  | 'NJD'
+  | 'NYI'
+  | 'NYR'
+  | 'OTT'
+  | 'PHI'
+  | 'PIT'
+  | 'SJS'
+  | 'SEA'
+  | 'STL'
+  | 'TBL'
+  | 'TOR'
+  | 'UTA'
+  | 'VAN'
+  | 'VGK'
+  | 'WSH'
+  | 'WPG';
 
 export type TeamPlayoffSeries = {
   round: number;
@@ -136,7 +169,7 @@ export type TeamStats = {
 
 export type TeamStreak = { count: number; type: 'WINS' | 'LOSSES' | 'OT' };
 
-export type TeamValues<T> = Record<TeamAbbreviation, T>;
+export type TeamValues<T> = { [K in TeamAbbreviation]?: T };
 
 type TimeElapsed = {
   period: string;

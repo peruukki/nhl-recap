@@ -31,19 +31,22 @@ export function renderStat<T>({
     return extra ? valueClassName + extra : '';
   };
 
+  const awayValue = values?.[teams.away.abbreviation];
+  const homeValue = values?.[teams.home.abbreviation];
+
   return div('.stat', [
     span(
       `${valueClassName}${valueClassName}--away${highlightClassNames.away}${getExtraClasses(
-        values?.[teams.away.abbreviation],
+        awayValue,
       )}`,
-      values ? renderFn(values[teams.away.abbreviation], 'away') : '',
+      awayValue !== undefined ? renderFn(awayValue, 'away') : '',
     ),
     span('.stat__label', values ? label : ''),
     span(
       `${valueClassName}${valueClassName}--home${highlightClassNames.home}${getExtraClasses(
-        values?.[teams.home.abbreviation],
+        homeValue,
       )}`,
-      values ? renderFn(values[teams.home.abbreviation], 'home') : '',
+      homeValue !== undefined ? renderFn(homeValue, 'home') : '',
     ),
   ]);
 }
@@ -54,12 +57,15 @@ function getHighlightClassNames<T>(
   values: TeamValues<T> | undefined,
   ratingFn: (value: T) => number | string,
 ): { away: string; home: string } {
-  if (!values) {
+  const awayValue = values?.[teams.away.abbreviation];
+  const homeValue = values?.[teams.home.abbreviation];
+
+  if (awayValue === undefined || homeValue === undefined) {
     return { away: '', home: '' };
   }
 
-  const awayRating = ratingFn(values[teams.away.abbreviation]);
-  const homeRating = ratingFn(values[teams.home.abbreviation]);
+  const awayRating = ratingFn(awayValue);
+  const homeRating = ratingFn(homeValue);
 
   if (awayRating > homeRating) {
     return { away: `${baseClassName}--highlight`, home: '' };

@@ -1,7 +1,7 @@
 import { div, span, type VNode } from '@cycle/dom';
 import _ from 'lodash';
 
-import type { Goal, TeamAbbreviation, TeamPlayoffSeries, Teams } from '../types';
+import type { Goal, TeamPlayoffSeries, Teams } from '../types';
 
 type Props = {
   addCurrentGameToWins: boolean;
@@ -38,7 +38,7 @@ export default function SeriesWinsPanel({
 }
 
 function getSeriesWinsDescription(
-  seriesWins: Record<TeamAbbreviation, number>,
+  seriesWins: TeamPlayoffSeries['wins'],
   playoffRound: number,
 ): string | (VNode | string)[] {
   const teamsWithWins = _.map(seriesWins, (wins, team) => ({ team, wins }));
@@ -79,7 +79,7 @@ function getPlayoffSeriesWins(
   homeGoals: Goal[],
   playoffSeries: TeamPlayoffSeries,
   addCurrentGameToWins: boolean,
-): Record<TeamAbbreviation, number> {
+): TeamPlayoffSeries['wins'] {
   return addCurrentGameToWins
     ? getPlayoffSeriesWinsAfterGame(playoffSeries.wins, teams, awayGoals, homeGoals)
     : playoffSeries.wins;
@@ -90,10 +90,10 @@ function getPlayoffSeriesWinsAfterGame(
   teams: Props['teams'],
   awayGoals: Props['awayGoals'],
   homeGoals: Props['homeGoals'],
-): Record<TeamAbbreviation, number> {
+): TeamPlayoffSeries['wins'] {
   const updatedWinCount =
     awayGoals.length > homeGoals.length
-      ? { [teams.away.abbreviation]: seriesWins[teams.away.abbreviation] + 1 }
-      : { [teams.home.abbreviation]: seriesWins[teams.home.abbreviation] + 1 };
+      ? { [teams.away.abbreviation]: (seriesWins[teams.away.abbreviation] ?? 0) + 1 }
+      : { [teams.home.abbreviation]: (seriesWins[teams.home.abbreviation] ?? 0) + 1 };
   return _.merge({}, seriesWins, updatedWinCount);
 }
