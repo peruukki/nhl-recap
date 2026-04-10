@@ -4,11 +4,18 @@ export type Game = {
   goals: Goal[];
   errors?: StatError[];
   links?: Links;
+  meta: GameMeta;
   preGameStats?: TeamStats;
   rosters?: Rosters;
   startTime: string;
   status: GameStatus;
   teams: Teams;
+};
+
+export type GameMeta = {
+  gameId: number;
+  gameType: 'REGULAR_SEASON' | 'PLAYOFF';
+  seasonId: number; // YYYYYYYY format, e.g. 20232024
 };
 
 export type GameProgress = {
