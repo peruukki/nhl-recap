@@ -1,5 +1,7 @@
 import _ from 'lodash';
+
 import type { Game as GameT, Team, TeamRecord, TeamStats } from '../types';
+import { getSeasonGameCount } from './seasons';
 
 const narrowCharacters = ['i', 'j', 'l', 'I', 'J', '-', '.'];
 const wideCharacters = ['m', 'w', 'M', 'W'];
@@ -73,16 +75,19 @@ export function getGamesPlayed({ wins, losses, ot = 0 }: TeamRecord): number {
 }
 
 export function shouldShowGamesLeft(
-  games: Pick<GameT, 'preGameStats' | 'currentStats'>[],
+  games: Pick<GameT, 'meta' | 'preGameStats' | 'currentStats'>[],
 ): boolean {
   return (
     games.length > 0 &&
     games.every((game) => !game.preGameStats?.playoffSeries) &&
     games.some((game) => {
       const stats = game.currentStats ?? game.preGameStats;
+      const seasonGameCount = getSeasonGameCount(game.meta.seasonId ?? 0);
       return (
         !!stats?.records &&
-        Object.values(stats.records).some((record) => record && getGamesPlayed(record) >= 60)
+        Object.values(stats.records).some(
+          (record) => record && getGamesPlayed(record) >= seasonGameCount * 0.75,
+        )
       );
     })
   );

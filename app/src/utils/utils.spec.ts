@@ -274,30 +274,50 @@ describe('shouldShowGamesLeft', () => {
 
   it('should return false during playoffs', () => {
     const games = [
-      { preGameStats: { playoffSeries: { round: 1, wins: {} }, records: {}, standings: {} } },
-      { currentStats: { records: { PHI: { wins: 60, losses: 10 } }, standings: {} } },
+      {
+        preGameStats: { playoffSeries: { round: 1, wins: {} }, records: {}, standings: {} },
+        meta: { gameId: 1, gameType: 'PLAYOFF' as const, seasonId: 20232024 },
+      },
+      {
+        currentStats: { records: { PHI: { wins: 60, losses: 10 } }, standings: {} },
+        meta: { gameId: 2, gameType: 'PLAYOFF' as const, seasonId: 20232024 },
+      },
     ];
     expect(shouldShowGamesLeft(games)).toBe(false);
   });
 
-  it('should return false when no team has played 60 games', () => {
+  it("should return false when no team has played 75% of a season's games", () => {
     const games = [
-      { preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} } },
-      { currentStats: { records: { BOS: { wins: 30, losses: 10 } }, standings: {} } },
+      {
+        preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} },
+        meta: { gameId: 1, gameType: 'REGULAR_SEASON' as const, seasonId: 20232024 },
+      },
+      {
+        currentStats: { records: { BOS: { wins: 30, losses: 10 } }, standings: {} },
+        meta: { gameId: 2, gameType: 'REGULAR_SEASON' as const, seasonId: 20232024 },
+      },
     ];
     expect(shouldShowGamesLeft(games)).toBe(false);
   });
 
-  it('should return true when at least one team has played 60 games and it is regular season', () => {
+  it("should return true when at least one team has played 75% of a season's games and it is regular season", () => {
     const games = [
-      { preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} } },
-      { currentStats: { records: { BOS: { wins: 50, losses: 10 } }, standings: {} } }, // 60 games
+      {
+        preGameStats: { records: { PHI: { wins: 30, losses: 10 } }, standings: {} },
+        meta: { gameId: 1, gameType: 'REGULAR_SEASON' as const, seasonId: 20232024 },
+      },
+      {
+        currentStats: { records: { BOS: { wins: 52, losses: 10 } }, standings: {} },
+        meta: { gameId: 2, gameType: 'REGULAR_SEASON' as const, seasonId: 20232024 }, // 62 games
+      },
     ];
     expect(shouldShowGamesLeft(games)).toBe(true);
   });
 
   it('should handle missing records or stats gracefully', () => {
-    const games = [{}];
+    const games = [
+      { meta: { gameId: 1, gameType: 'REGULAR_SEASON' as const, seasonId: 20232024 } },
+    ];
     expect(shouldShowGamesLeft(games)).toBe(false);
   });
 });
