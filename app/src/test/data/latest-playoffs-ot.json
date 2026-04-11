@@ -71,6 +71,11 @@
           "shortName": "Boston",
           "teamName": "Bruins"
         }
+      },
+      "meta": {
+        "gameId": 2023020001,
+        "gameType": "PLAYOFF",
+        "seasonId": 20232024
       }
     },
     {
@@ -174,6 +179,11 @@
           "shortName": "NY Rangers",
           "teamName": "Rangers"
         }
+      },
+      "meta": {
+        "gameId": 2023020002,
+        "gameType": "PLAYOFF",
+        "seasonId": 20232024
       }
     }
   ]

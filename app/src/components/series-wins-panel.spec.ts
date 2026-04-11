@@ -9,6 +9,7 @@ import {
 } from '../test/data';
 import type {
   GameDisplay,
+  GameMeta,
   GameStatus,
   Game as GameT,
   Goal,
@@ -21,14 +22,15 @@ import { getGameCard } from './test-utils';
 
 describe('playoff series wins panel', () => {
   it('should not exist if there is no playoff series information', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-    assertPlayoffSeriesWins('playback', teams, goals, preGameStats, 'FINAL', undefined, null);
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+    assertPlayoffSeriesWins('playback', meta, teams, goals, preGameStats, 'FINAL', undefined, null);
   });
 
   it('should show "<Round> - Game 1" for first game of the series', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[2];
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[2];
     assertPlayoffSeriesWins(
       'playback',
+      meta,
       teams,
       goals,
       preGameStats,
@@ -39,22 +41,23 @@ describe('playoff series wins panel', () => {
   });
 
   it('should show the series tied when teams have the same amount of wins', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
-    assertPlayoffSeriesTied('playback', teams, goals, preGameStats, 'FINAL', 1);
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[0];
+    assertPlayoffSeriesTied('playback', meta, teams, goals, preGameStats, 'FINAL', 1);
   });
 
   it('should show the team that has more wins leading the series', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
-    assertPlayoffSeriesLead('playback', teams, goals, preGameStats, 'FINAL', 'NYR', 2, 1);
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
+    assertPlayoffSeriesLead('playback', meta, teams, goals, preGameStats, 'FINAL', 'NYR', 2, 1);
   });
 
   it('should show the team that has reached 3 wins winning the series in round 0', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
     const modifiedPreGameStats = _.cloneDeep(preGameStats);
     modifiedPreGameStats!.playoffSeries!.round = 0;
     modifiedPreGameStats!.playoffSeries!.wins.NYR = 3;
     assertPlayoffSeriesLead(
       'playback',
+      meta,
       teams,
       goals,
       modifiedPreGameStats,
@@ -68,12 +71,13 @@ describe('playoff series wins panel', () => {
   });
 
   it('should show the team that has reached 4 wins winning the series in round 1', () => {
-    const { teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
+    const { meta, teams, goals, preGameStats } = scoresAllRegularTimePlayoffs.games[1];
     const modifiedPreGameStats = _.cloneDeep(preGameStats);
     modifiedPreGameStats!.playoffSeries!.round = 1;
     modifiedPreGameStats!.playoffSeries!.wins.NYR = 4;
     assertPlayoffSeriesLead(
       'playback',
+      meta,
       teams,
       goals,
       modifiedPreGameStats,
@@ -89,11 +93,20 @@ describe('playoff series wins panel', () => {
   it("should not increase the winning teams' win counts until all games have ended", () => {
     const gameDisplay = 'playback';
     const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
-    assertPlayoffSeriesTied(gameDisplay, game1.teams, game1.goals, game1.preGameStats, 'FINAL', 1);
+    assertPlayoffSeriesTied(
+      gameDisplay,
+      game1.meta,
+      game1.teams,
+      game1.goals,
+      game1.preGameStats,
+      'FINAL',
+      1,
+    );
 
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
     assertPlayoffSeriesLead(
       gameDisplay,
+      game2.meta,
       game2.teams,
       game2.goals,
       game2.preGameStats,
@@ -106,11 +119,20 @@ describe('playoff series wins panel', () => {
 
   it('should not increase win counts for "not started" or "in progress" games after all finished games have ended', () => {
     const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
-    assertPlayoffSeriesTied('in-progress', game1.teams, game1.goals, game1.preGameStats, 'LIVE', 1);
+    assertPlayoffSeriesTied(
+      'in-progress',
+      game1.meta,
+      game1.teams,
+      game1.goals,
+      game1.preGameStats,
+      'LIVE',
+      1,
+    );
 
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
     assertPlayoffSeriesLead(
       'pre-game',
+      game2.meta,
       game2.teams,
       game2.goals,
       game2.preGameStats,
@@ -126,6 +148,7 @@ describe('playoff series wins panel', () => {
     const game1 = scoresRegularTimeAndOvertimePlayoffs.games[0];
     assertPlayoffSeriesLead(
       gameDisplay,
+      game1.meta,
       game1.teams,
       game1.goals,
       game1.preGameStats,
@@ -139,6 +162,7 @@ describe('playoff series wins panel', () => {
     const game2 = scoresRegularTimeAndOvertimePlayoffs.games[1];
     assertPlayoffSeriesTied(
       gameDisplay,
+      game2.meta,
       game2.teams,
       game2.goals,
       game2.preGameStats,
@@ -151,6 +175,7 @@ describe('playoff series wins panel', () => {
 
 function assertPlayoffSeriesLead(
   gameDisplay: GameDisplay,
+  meta: GameMeta,
   teams: Teams,
   goals: Goal[],
   preGameStats: TeamStats | undefined,
@@ -161,7 +186,7 @@ function assertPlayoffSeriesLead(
   animationClass?: string,
   leadingText = 'leads',
 ) {
-  assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
+  assertPlayoffSeriesWins(gameDisplay, meta, teams, goals, preGameStats, state, animationClass, [
     span('.series-wins__leading-team', leadingTeam),
     ` ${leadingText} `,
     span('.series-wins__leading-count', String(leadingWins)),
@@ -172,6 +197,7 @@ function assertPlayoffSeriesLead(
 
 function assertPlayoffSeriesTied(
   gameDisplay: GameDisplay,
+  meta: GameMeta,
   teams: Teams,
   goals: Goal[],
   preGameStats: TeamStats | undefined,
@@ -179,7 +205,7 @@ function assertPlayoffSeriesTied(
   wins: number,
   animationClass?: string,
 ) {
-  assertPlayoffSeriesWins(gameDisplay, teams, goals, preGameStats, state, animationClass, [
+  assertPlayoffSeriesWins(gameDisplay, meta, teams, goals, preGameStats, state, animationClass, [
     'Series ',
     span('.series-wins__tied', 'tied'),
     ' ',
@@ -191,6 +217,7 @@ function assertPlayoffSeriesTied(
 
 function assertPlayoffSeriesWins(
   gameDisplay: GameDisplay,
+  meta: GameMeta,
   teams: Teams,
   goals: Goal[],
   preGameStats: TeamStats | undefined,
@@ -199,7 +226,7 @@ function assertPlayoffSeriesWins(
   expectedSeriesWinsVtree: (VNode | string)[] | string | null,
 ) {
   const playoffSeriesWinsPanel = getPlayoffSeriesWinsPanel(
-    Game(gameDisplay, { status: { state }, teams, preGameStats } as GameT, goals, 0),
+    Game(gameDisplay, { meta, status: { state }, teams, preGameStats } as GameT, goals, 0),
   );
   const expected = expectedPlayoffSeriesWinsPanel(expectedSeriesWinsVtree, animationClass);
   expect(playoffSeriesWinsPanel).toEqual(expected);

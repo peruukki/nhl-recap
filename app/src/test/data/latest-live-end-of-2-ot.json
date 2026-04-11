@@ -79,6 +79,11 @@
           "STL": 1,
           "BOS": 1
         }
+      },
+      "meta": {
+        "gameId": 2023020001,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     },
     {
@@ -184,6 +189,11 @@
           "ANA": 2,
           "NYR": 1
         }
+      },
+      "meta": {
+        "gameId": 2023020002,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     }
   ]

@@ -1,13 +1,15 @@
 import { div, span, type VNode } from '@cycle/dom';
 
 import type { TeamRecord, TeamStats as TeamStatsT, TeamStreak, Teams } from '../../../types';
-import { getGamesPlayed, REGULAR_SEASON_GAME_COUNT } from '../../../utils/utils';
+import { getSeasonGameCount } from '../../../utils/seasons';
+import { getGamesPlayed } from '../../../utils/utils';
 import Icon from '../../icon';
 import { renderStat } from './common';
 
 type Props = {
   fadeIn: boolean;
   isPlayoffGame: boolean;
+  seasonId: number;
   showGamesLeft: boolean;
   stats?: TeamStatsT;
   statsType: 'afterGame' | 'preGame';
@@ -17,11 +19,15 @@ type Props = {
 export default function TeamStats({
   fadeIn,
   isPlayoffGame,
+  seasonId,
   showGamesLeft,
   stats,
   statsType,
   teams,
 }: Props): VNode {
+  const seasonGameCount = getSeasonGameCount(seasonId);
+  const getGamesRemaining = (record: TeamRecord) => seasonGameCount - getGamesPlayed(record);
+
   return div(
     '.stats',
     { class: { 'fade-in': fadeIn } },
@@ -135,10 +141,6 @@ function getLeagueRankRating({ leagueRank }: { leagueRank: string }): number {
 
 function getRegularSeasonPoints(record: TeamRecord): number {
   return 2 * record.wins + (record.ot ?? 0);
-}
-
-function getGamesRemaining(record: TeamRecord): number {
-  return REGULAR_SEASON_GAME_COUNT - getGamesPlayed(record);
 }
 
 function getRecordRating(record: TeamRecord): string {

@@ -55,6 +55,11 @@
           "shortName": "Boston",
           "teamName": "Bruins"
         }
+      },
+      "meta": {
+        "gameId": 2023020001,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     },
     {
@@ -162,6 +167,11 @@
           "shortName": "NY Rangers",
           "teamName": "Rangers"
         }
+      },
+      "meta": {
+        "gameId": 2023020002,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     },
     {
@@ -233,6 +243,11 @@
           "shortName": "Tampa Bay",
           "teamName": "Lightning"
         }
+      },
+      "meta": {
+        "gameId": 2023020003,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     }
   ]

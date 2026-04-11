@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime, scoresMultipleOvertime } from '../../test/data';
-import type { GameDisplay, GameStatus, Game as GameT, Goal, Teams } from '../../types';
+import type { GameDisplay, GameMeta, GameStatus, Game as GameT, Goal, Teams } from '../../types';
 import { renderTeamLogoSVG } from '../../utils/logos';
 import Game from '../game';
 import {
@@ -23,62 +23,62 @@ type PointScorer = {
 describe('info panel', () => {
   describe('latest goal / summary panel', () => {
     it('should show nothing before the playback has reached the first goal scoring time', () => {
-      const { teams } = scoresAllRegularTime.games[1];
-      assertLatestGoal('playback', teams, [], null);
+      const { meta, teams } = scoresAllRegularTime.games[1];
+      assertLatestGoal('playback', meta, teams, [], null);
     });
 
     it('should show the latest goal when the playback reaches a goal scoring time', () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('playback', teams, _.take(goals, 1), _.first(goals)!);
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
+      assertLatestGoal('playback', meta, teams, _.take(goals, 1), _.first(goals)!);
     });
 
     it('should show the summary when the playback reaches the end of the game', () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
         { player: 'Derick Brassard', teamAbbreviation: 'NYR', goals: 2, assists: 1 },
         { player: 'Mats Zuccarello', teamAbbreviation: 'NYR', goals: 1, assists: 0 },
         { player: 'Corey Perry', teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
-      assertSummary('summary-finished', teams, goals, pointScorers);
-      assertSummary('post-game-finished', teams, goals, pointScorers);
+      assertSummary('summary-finished', meta, teams, goals, pointScorers);
+      assertSummary('post-game-finished', meta, teams, goals, pointScorers);
     });
 
     it('should show the last goal of the game after playback has reached current progress in in-progress games', () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
-      assertLatestGoal('in-progress', teams, goals, _.last(goals)!);
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
+      assertLatestGoal('in-progress', meta, teams, goals, _.last(goals)!);
     });
 
     it('should show the summary of an in-progress game when playback has finished', () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const pointScorers = [
         { player: 'Derick Brassard', teamAbbreviation: 'NYR', goals: 2, assists: 1 },
         { player: 'Mats Zuccarello', teamAbbreviation: 'NYR', goals: 1, assists: 0 },
         { player: 'Corey Perry', teamAbbreviation: 'ANA', goals: 1, assists: 0 },
       ];
-      assertSummary('summary-in-progress', teams, goals, pointScorers);
-      assertSummary('post-game-in-progress', teams, goals, pointScorers);
+      assertSummary('summary-in-progress', meta, teams, goals, pointScorers);
+      assertSummary('post-game-in-progress', meta, teams, goals, pointScorers);
     });
 
     it('should show goals scored in overtime', () => {
-      const { teams, goals } = scoresMultipleOvertime.games[0];
-      assertLatestGoal('playback', teams, goals, _.last(goals)!);
+      const { meta, teams, goals } = scoresMultipleOvertime.games[0];
+      assertLatestGoal('playback', meta, teams, goals, _.last(goals)!);
     });
   });
 
   describe('game description', () => {
     it(`should show "Finished" description for game in FINAL state`, () => {
-      const { teams, goals, status } = scoresAllRegularTime.games[1];
-      assertGameDescription('pre-game', { status, teams }, goals, 'Finished');
+      const { meta, teams, goals, status } = scoresAllRegularTime.games[1];
+      assertGameDescription('pre-game', { meta, status, teams }, goals, 'Finished');
     });
 
     it(`should show game without progress information in LIVE state as in progress`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status = { state: 'LIVE' } as GameStatus;
-      assertGameDescription('pre-game', { status, teams }, goals, 'In progress');
+      assertGameDescription('pre-game', { meta, status, teams }, goals, 'In progress');
     });
 
     it(`should show time remaining progress for game in LIVE state`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
         state: 'LIVE',
         progress: {
@@ -89,7 +89,7 @@ describe('info panel', () => {
       };
       assertGameDescription(
         'pre-game',
-        { status, teams },
+        { meta, status, teams },
         goals,
         expectedCurrentProgressDescription(
           `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`,
@@ -98,7 +98,7 @@ describe('info panel', () => {
     });
 
     it(`should show time remaining progress for game in LIVE state after playback has reached current progress`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
         state: 'LIVE',
         progress: {
@@ -109,7 +109,7 @@ describe('info panel', () => {
       };
       assertGameDescription(
         'in-progress',
-        { status, teams },
+        { meta, status, teams },
         goals,
         expectedCurrentProgressDescription(
           `${status.progress.currentPeriodOrdinal} ${status.progress.currentPeriodTimeRemaining.pretty}`,
@@ -118,7 +118,7 @@ describe('info panel', () => {
     });
 
     it(`should show end of period progress for game in LIVE state`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
         state: 'LIVE',
         progress: {
@@ -129,14 +129,14 @@ describe('info panel', () => {
       };
       assertGameDescription(
         'pre-game',
-        { status, teams },
+        { meta, status, teams },
         goals,
         expectedCurrentProgressDescription(`End of ${status.progress.currentPeriodOrdinal}`),
       );
     });
 
     it(`should not show remaining time for SO game in LIVE state`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = {
         state: 'LIVE',
         progress: {
@@ -147,20 +147,20 @@ describe('info panel', () => {
       };
       assertGameDescription(
         'pre-game',
-        { status, teams },
+        { meta, status, teams },
         goals,
         expectedCurrentProgressDescription('In shootout'),
       );
     });
 
     it(`should show game in PREVIEW state and start time in the past as starting soon`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = { state: 'PREVIEW' };
-      assertGameDescription('pre-game', { status, teams }, goals, 'Starts soon');
+      assertGameDescription('pre-game', { meta, status, teams }, goals, 'Starts soon');
     });
 
     it(`should show game in PREVIEW state and start time in the future as starting in some time`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = { state: 'PREVIEW' };
 
       const time = new Date();
@@ -168,33 +168,38 @@ describe('info panel', () => {
       time.setMinutes(time.getMinutes() + 1);
       const startTime = time.toISOString();
 
-      assertGameDescription('pre-game', { status, startTime, teams }, goals, 'Starts in 3 hours');
+      assertGameDescription(
+        'pre-game',
+        { meta, status, startTime, teams },
+        goals,
+        'Starts in 3 hours',
+      );
     });
 
     it(`should show game in POSTPONED state as postponed`, () => {
-      const { teams, goals } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals } = scoresAllRegularTime.games[1];
       const status: GameStatus = { state: 'POSTPONED' };
-      assertGameDescription('pre-game', { status, teams }, goals, 'Postponed');
+      assertGameDescription('pre-game', { meta, status, teams }, goals, 'Postponed');
     });
   });
 
   describe('starting goalies panel', () => {
     it('should show the starting goalies if both are available before playback has started', () => {
-      const { teams, status, rosters } = scoresAllRegularTime.games[1];
+      const { teams, status, rosters, meta } = scoresAllRegularTime.games[1];
       const goalies = [
         { teamAbbreviation: 'ANA', number: 31, name: 'Frederik Andersen' },
         { teamAbbreviation: 'NYR', number: 30, name: 'Henrik Lundqvist' },
       ];
-      assertStartingGoalies('pre-game', { teams, status, rosters }, [], goalies);
+      assertStartingGoalies('pre-game', { teams, status, rosters, meta }, [], goalies);
     });
 
     it('should not show the starting goalies after playback has started', () => {
-      const { teams, status, rosters } = scoresAllRegularTime.games[1];
-      assertStartingGoalies('playback', { teams, status, rosters }, [], null);
+      const { teams, status, rosters, meta } = scoresAllRegularTime.games[1];
+      assertStartingGoalies('playback', { teams, status, rosters, meta }, [], null);
     });
 
     it('should not show the starting goalies if one is missing', () => {
-      const { teams, status, rosters } = scoresAllRegularTime.games[1];
+      const { teams, status, rosters, meta } = scoresAllRegularTime.games[1];
       const rostersWithMissingStartingGoalie = {
         ...rosters!,
         home: {
@@ -206,26 +211,26 @@ describe('info panel', () => {
       };
       assertStartingGoalies(
         'pre-game',
-        { teams, status, rosters: rostersWithMissingStartingGoalie },
+        { teams, status, rosters: rostersWithMissingStartingGoalie, meta },
         [],
         null,
       );
     });
 
     it('should not show the starting goalies if roster data is missing', () => {
-      const { teams, status } = scoresAllRegularTime.games[1];
-      assertStartingGoalies('pre-game', { teams, status }, [], null);
+      const { teams, status, meta } = scoresAllRegularTime.games[1];
+      assertStartingGoalies('pre-game', { teams, status, meta }, [], null);
     });
   });
 });
 
 function assertStartingGoalies(
   gameDisplay: GameDisplay,
-  { teams, status, rosters }: Partial<GameT>,
+  { teams, status, rosters, meta }: Partial<GameT>,
   goals: Goal[],
   expectedGoalies: { teamAbbreviation: string; number: number; name: string }[] | null,
 ) {
-  const vtree = Game(gameDisplay, { status, teams, rosters } as GameT, goals, 0);
+  const vtree = Game(gameDisplay, { status, teams, rosters, meta } as GameT, goals, 0);
   const startingGoaliesPanel = getStartingGoaliesPanel(vtree);
   const expected = expectedStartingGoaliesPanel(expectedGoalies);
   expect(startingGoaliesPanel).toEqual(expected);
@@ -233,12 +238,13 @@ function assertStartingGoalies(
 
 function assertLatestGoal(
   gameDisplay: GameDisplay,
+  meta: GameMeta,
   teams: Teams,
   goals: Goal[],
   expectedLatestGoal: Goal | null,
 ) {
   const latestGoalPanel = getLatestGoalPanel(
-    Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
+    Game(gameDisplay, { meta, status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedLatestGoalPanel(expectedLatestGoal);
   expect(latestGoalPanel).toEqual(expected);
@@ -246,12 +252,13 @@ function assertLatestGoal(
 
 function assertSummary(
   gameDisplay: GameDisplay,
+  meta: GameMeta,
   teams: Teams,
   goals: Goal[],
   pointScorers: PointScorer[],
 ) {
   const summaryPanel = getSummaryPanel(
-    Game(gameDisplay, { status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
+    Game(gameDisplay, { meta, status: { state: 'FINAL' }, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedSummaryPanel(pointScorers);
   expect(summaryPanel).toEqual(expected);
@@ -259,12 +266,12 @@ function assertSummary(
 
 function assertGameDescription(
   gameDisplay: GameDisplay,
-  { status, startTime, teams }: Partial<GameT>,
+  { meta, status, startTime, teams }: Partial<GameT>,
   goals: Goal[],
   description: string | (string | VNode)[],
 ) {
   const gameDescription = getGameDescription(
-    Game(gameDisplay, { status, startTime, teams } as unknown as GameT, goals, 0),
+    Game(gameDisplay, { meta, status, startTime, teams } as unknown as GameT, goals, 0),
   );
   const expected = expectedGameDescription(description);
   expect(gameDescription).toEqual(expected);

@@ -28,38 +28,38 @@ describe('game stats', () => {
 
   it('should not be shown when game display state is pre-game', () => {
     const status: GameStatus = { state: 'FINAL' };
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreNotShown('pre-game', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreNotShown('pre-game', { meta, status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has started for in-progress games', () => {
     const status = { state: 'LIVE' } as GameStatus;
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreNotShown('playback', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreNotShown('playback', { meta, status, teams, gameStats }, goals);
   });
 
   it('should not be shown when playback has not reached current progress in in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreNotShown('playback', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreNotShown('playback', { meta, status, teams, gameStats }, goals);
   });
 
   it('should not be shown after playback has reached current progress in in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreNotShown('in-progress', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreNotShown('in-progress', { meta, status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for finished games', () => {
     const status: GameStatus = { state: 'FINAL' };
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreShown('post-game-finished', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreShown('post-game-finished', { meta, status, teams, gameStats }, goals);
   });
 
   it('should be shown after playback has finished for in-progress games', () => {
     const status: GameStatus = { state: 'LIVE', progress: inProgressGameProgress };
-    const { teams, goals, gameStats } = scoresAllRegularTime.games[1];
-    assertGameStatsAreShown('post-game-in-progress', { status, teams, gameStats }, goals);
+    const { meta, teams, goals, gameStats } = scoresAllRegularTime.games[1];
+    assertGameStatsAreShown('post-game-in-progress', { meta, status, teams, gameStats }, goals);
   });
 
   it('should show shots, highlighting the larger one', () => {
@@ -199,35 +199,43 @@ describe('game stats', () => {
 
 function assertGameStatsAreShown(
   gameDisplay: GameDisplay,
-  { status, teams, gameStats }: Partial<GameT>,
+  { meta, status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertGameStatsExistence(gameDisplay, { status, teams, gameStats }, goals, (selector?: string) =>
-    expect(selector).toEqual('div.stats.stats--game-stats'),
+  assertGameStatsExistence(
+    gameDisplay,
+    { meta, status, teams, gameStats },
+    goals,
+    (selector?: string) => expect(selector).toEqual('div.stats.stats--game-stats'),
   );
 }
 function assertGameStatsAreNotShown(
   gameDisplay: GameDisplay,
-  { status, teams, gameStats }: Partial<GameT>,
+  { meta, status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertGameStatsExistence(gameDisplay, { status, teams, gameStats }, goals, (selector?: string) =>
-    expect(selector).not.toEqual('div.stats.stats--game-stats'),
+  assertGameStatsExistence(
+    gameDisplay,
+    { meta, status, teams, gameStats },
+    goals,
+    (selector?: string) => expect(selector).not.toEqual('div.stats.stats--game-stats'),
   );
 }
 function assertGameStatsExistence(
   gameDisplay: GameDisplay,
-  { status, teams, gameStats }: Partial<GameT>,
+  { meta, status, teams, gameStats }: Partial<GameT>,
   goals: Goal[],
   assertFn: (actual: string | undefined) => void,
 ) {
-  const stats = getGameStats(Game(gameDisplay, { status, teams, gameStats } as GameT, goals, 0));
+  const stats = getGameStats(
+    Game(gameDisplay, { meta, status, teams, gameStats } as GameT, goals, 0),
+  );
   assertFn(stats?.sel);
 }
 
 function assertGameStats(
   gameDisplay: GameDisplay,
-  { state = 'FINAL', teams, goals, gameStats }: GameT & Partial<GameStatus>,
+  { meta, state = 'FINAL', teams, goals, gameStats }: GameT & Partial<GameStatus>,
   statIndex: number,
   renderedRecords: {
     away: StatValue;
@@ -236,7 +244,7 @@ function assertGameStats(
   },
 ) {
   const renderedStats = getGameStats(
-    Game(gameDisplay, { status: { state }, teams, gameStats } as GameT, goals, 0),
+    Game(gameDisplay, { meta, status: { state }, teams, gameStats } as GameT, goals, 0),
   )?.children?.[statIndex];
   const expected = expectedStat(renderedRecords);
   expect(renderedStats).toEqual(expected);

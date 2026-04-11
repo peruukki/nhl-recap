@@ -97,6 +97,11 @@
             "shortName": "Florida",
             "teamName": "Panthers"
           }
+        },
+        "meta": {
+          "gameId": 2023020001,
+          "gameType": "REGULAR_SEASON",
+          "seasonId": 20232024
         }
       },
       {
@@ -191,6 +196,11 @@
             "shortName": "NY Rangers",
             "teamName": "Rangers"
           }
+        },
+        "meta": {
+          "gameId": 2023020002,
+          "gameType": "REGULAR_SEASON",
+          "seasonId": 20232024
         }
       },
       {
@@ -285,6 +295,11 @@
             "shortName": "Los Angeles",
             "teamName": "Kings"
           }
+        },
+        "meta": {
+          "gameId": 2023020003,
+          "gameType": "REGULAR_SEASON",
+          "seasonId": 20232024
         }
       }
     ]

@@ -73,6 +73,11 @@
           "abbreviation": "BOS",
           "id": 6
         }
+      },
+      "meta": {
+        "gameId": 2023020001,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     },
     {
@@ -172,6 +177,11 @@
           "abbreviation": "NYR",
           "id": 3
         }
+      },
+      "meta": {
+        "gameId": 2023020002,
+        "gameType": "REGULAR_SEASON",
+        "seasonId": 20232024
       }
     }
   ]

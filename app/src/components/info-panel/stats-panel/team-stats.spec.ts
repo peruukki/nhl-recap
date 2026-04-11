@@ -29,14 +29,14 @@ describe('team stats', () => {
   describe('pre-game team stats', () => {
     it('should be shown when game display state is pre-game', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown('pre-game', { status, teams, preGameStats }, goals);
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreShown('pre-game', { meta, status, teams, preGameStats }, goals);
     });
 
     it('should not be shown after playback has started for in-progress games', () => {
       const status = { state: 'LIVE' } as GameStatus;
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown('playback', { status, teams, preGameStats }, goals);
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreNotShown('playback', { meta, status, teams, preGameStats }, goals);
     });
 
     it('should not be shown when playback has not reached current progress in in-progress games', () => {
@@ -44,8 +44,8 @@ describe('team stats', () => {
         state: 'LIVE',
         progress: inProgressGameProgress,
       };
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown('playback', { status, teams, preGameStats }, goals);
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreNotShown('playback', { meta, status, teams, preGameStats }, goals);
     });
 
     it('should not be shown after playback has reached current progress in in-progress games', () => {
@@ -53,26 +53,26 @@ describe('team stats', () => {
         state: 'LIVE',
         progress: inProgressGameProgress,
       };
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreNotShown('in-progress', { status, teams, preGameStats }, goals);
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreNotShown('in-progress', { meta, status, teams, preGameStats }, goals);
     });
 
     it('should not be shown after playback has finished for finished games', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, preGameStats, currentStats } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals, preGameStats, currentStats } = scoresAllRegularTime.games[1];
       assertPreGameStatsAreNotShown(
         'post-game-finished',
-        { status, teams, preGameStats, currentStats },
+        { meta, status, teams, preGameStats, currentStats },
         goals,
       );
     });
 
     it('should be shown after playback has finished for finished games whose current stats have not be updated', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
       assertPreGameStatsAreShown(
         'post-game-finished',
-        { status, teams, preGameStats, currentStats: preGameStats },
+        { meta, status, teams, preGameStats, currentStats: preGameStats },
         goals,
       );
     });
@@ -82,8 +82,12 @@ describe('team stats', () => {
         state: 'LIVE',
         progress: inProgressGameProgress,
       };
-      const { teams, goals, preGameStats } = scoresAllRegularTime.games[1];
-      assertPreGameStatsAreShown('post-game-in-progress', { status, teams, preGameStats }, goals);
+      const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
+      assertPreGameStatsAreShown(
+        'post-game-in-progress',
+        { meta, status, teams, preGameStats },
+        goals,
+      );
     });
 
     it("should show teams' division ranks, highlighting the better one", () => {
@@ -261,20 +265,20 @@ describe('team stats', () => {
   describe('after-game team stats', () => {
     it('should not be shown before playback has started', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown('pre-game', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown('pre-game', { meta, status, teams, currentStats }, goals);
     });
 
     it('should not be shown after playback has started for not started games', () => {
       const status: GameStatus = { state: 'PREVIEW' };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown('playback', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown('playback', { meta, status, teams, currentStats }, goals);
     });
 
     it('should not be shown after playback has started for in-progress games', () => {
       const status = { state: 'LIVE' } as GameStatus;
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown('playback', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown('playback', { meta, status, teams, currentStats }, goals);
     });
 
     it('should not be shown after playback has reached current progress in in-progress games', () => {
@@ -282,20 +286,24 @@ describe('team stats', () => {
         state: 'LIVE',
         progress: inProgressGameProgress,
       };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown('in-progress', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown('in-progress', { meta, status, teams, currentStats }, goals);
     });
 
     it('should not be shown after playback has started for finished games', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreNotShown('playback', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreNotShown('playback', { meta, status, teams, currentStats }, goals);
     });
 
     it('should be shown after playback has finished for finished games', () => {
       const status: GameStatus = { state: 'FINAL' };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
-      assertAfterGameStatsAreShown('post-game-finished', { status, teams, currentStats }, goals);
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      assertAfterGameStatsAreShown(
+        'post-game-finished',
+        { meta, status, teams, currentStats },
+        goals,
+      );
     });
 
     it('should not be shown after playback has finished for in-progress games', () => {
@@ -303,10 +311,10 @@ describe('team stats', () => {
         state: 'LIVE',
         progress: inProgressGameProgress,
       };
-      const { teams, goals, currentStats } = scoresAllRegularTime.games[1];
+      const { meta, teams, goals, currentStats } = scoresAllRegularTime.games[1];
       assertAfterGameStatsAreNotShown(
         'post-game-in-progress',
-        { status, teams, currentStats },
+        { meta, status, teams, currentStats },
         goals,
       );
     });
@@ -783,17 +791,42 @@ describe('team stats', () => {
         .map((span) => span?.text);
       expect(labels).not.toContain(label);
     });
+
+    it('should use correct game count for different seasons', () => {
+      const game = {
+        ...scoresAllRegularTime.games[0],
+        meta: { ...scoresAllRegularTime.games[0].meta, seasonId: 20202021 }, // 56 games
+        preGameStats: {
+          ...scoresAllRegularTime.games[0].preGameStats,
+          records: {
+            STL: { wins: 8, losses: 4, ot: 1 }, // 13 games played, 43 left
+            BOS: { wins: 7, losses: 3, ot: 3 }, // 13 games played, 43 left
+          },
+        },
+      } as GameT;
+      assertTeamStats(
+        gameDisplay,
+        game,
+        statIndexes.gamesLeft,
+        {
+          away: { value: 43 },
+          home: { value: 43 },
+          label,
+        },
+        { showGamesLeft: true },
+      );
+    });
   });
 });
 
 function assertPreGameStatsAreShown(
   gameDisplay: GameDisplay,
-  { status, teams, preGameStats, currentStats }: Partial<GameT>,
+  { meta, status, teams, preGameStats, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
   assertStatsExistence(
     gameDisplay,
-    { status, teams, preGameStats, currentStats },
+    { meta, status, teams, preGameStats, currentStats },
     goals,
     (vtree?: VNode) => {
       expect(vtree?.sel).toEqual('div.stats');
@@ -803,40 +836,45 @@ function assertPreGameStatsAreShown(
 }
 function assertPreGameStatsAreNotShown(
   gameDisplay: GameDisplay,
-  { status, teams, preGameStats }: Partial<GameT>,
+  { meta, status, teams, preGameStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, preGameStats }, goals, (vtree?: VNode) =>
+  assertStatsExistence(gameDisplay, { meta, status, teams, preGameStats }, goals, (vtree?: VNode) =>
     expect(vtree?.sel).not.toEqual('div.stats'),
   );
 }
 function assertAfterGameStatsAreShown(
   gameDisplay: GameDisplay,
-  { status, teams, currentStats }: Partial<GameT>,
+  { meta, status, teams, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (vtree?: VNode) => {
-    expect(vtree?.sel).toEqual('div.stats');
-    expect(getTeamStatsSubheading(vtree)).toEqual('after game');
-  });
+  assertStatsExistence(
+    gameDisplay,
+    { meta, status, teams, currentStats },
+    goals,
+    (vtree?: VNode) => {
+      expect(vtree?.sel).toEqual('div.stats');
+      expect(getTeamStatsSubheading(vtree)).toEqual('after game');
+    },
+  );
 }
 function assertAfterGameStatsAreNotShown(
   gameDisplay: GameDisplay,
-  { status, teams, currentStats }: Partial<GameT>,
+  { meta, status, teams, currentStats }: Partial<GameT>,
   goals: Goal[],
 ) {
-  assertStatsExistence(gameDisplay, { status, teams, currentStats }, goals, (vtree?: VNode) =>
+  assertStatsExistence(gameDisplay, { meta, status, teams, currentStats }, goals, (vtree?: VNode) =>
     expect(vtree?.sel).not.toEqual('div.stats'),
   );
 }
 function assertStatsExistence(
   gameDisplay: GameDisplay,
-  { status, teams, preGameStats, currentStats }: Partial<GameT>,
+  { meta, status, teams, preGameStats, currentStats }: Partial<GameT>,
   goals: Goal[],
   assertFn: (actual?: VNode) => void,
 ) {
   const stats = getTeamStats(
-    Game(gameDisplay, { status, teams, preGameStats, currentStats } as GameT, goals, 0, {
+    Game(gameDisplay, { meta, status, teams, preGameStats, currentStats } as GameT, goals, 0, {
       showGamesLeft: false,
     }),
   );
@@ -845,7 +883,7 @@ function assertStatsExistence(
 
 function assertTeamStats(
   gameDisplay: GameDisplay,
-  { state = 'FINAL', teams, goals, preGameStats, currentStats }: GameT & Partial<GameStatus>,
+  { meta, state = 'FINAL', teams, goals, preGameStats, currentStats }: GameT & Partial<GameStatus>,
   statIndex: number,
   renderedRecords: {
     away: StatValue;
@@ -857,9 +895,13 @@ function assertTeamStats(
   const adjustedIndex =
     !showGamesLeft && statIndex > statIndexes.recordOrSeasonPts ? statIndex - 1 : statIndex;
   const renderedStats = getTeamStats(
-    Game(gameDisplay, { status: { state }, teams, preGameStats, currentStats } as GameT, goals, 0, {
-      showGamesLeft,
-    }),
+    Game(
+      gameDisplay,
+      { meta, status: { state }, teams, preGameStats, currentStats } as GameT,
+      goals,
+      0,
+      { showGamesLeft },
+    ),
   )?.children?.[adjustedIndex];
   const expected = expectedStat(renderedRecords);
   expect(renderedStats).toEqual(expected);

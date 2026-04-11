@@ -4,8 +4,6 @@ import type { Game as GameT, Team, TeamRecord, TeamStats } from '../types';
 const narrowCharacters = ['i', 'j', 'l', 'I', 'J', '-', '.'];
 const wideCharacters = ['m', 'w', 'M', 'W'];
 
-export const REGULAR_SEASON_GAME_COUNT = 82;
-
 function getNameLength(name: string) {
   return (
     name.split('').reduce((sum, c) => {

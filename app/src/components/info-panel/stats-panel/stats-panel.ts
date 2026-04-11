@@ -7,6 +7,7 @@ import TeamStats from './team-stats';
 type Props = {
   gameStats?: GameStatsT;
   isPlayoffGame: boolean;
+  seasonId: number;
   showGamesLeft: boolean;
   showGameStats: boolean;
   showProgressInfo: boolean;
@@ -26,6 +27,7 @@ export type TeamStatsInfo =
 export default function StatsPanel({
   gameStats,
   isPlayoffGame,
+  seasonId,
   showGamesLeft,
   showGameStats,
   showProgressInfo,
@@ -39,6 +41,7 @@ export default function StatsPanel({
         ? TeamStats({
             fadeIn: showProgressInfo || teamStatsInfo.isAfterGameDisplayState,
             isPlayoffGame,
+            seasonId,
             showGamesLeft,
             stats: teamStatsInfo.stats,
             statsType: teamStatsInfo.type,
