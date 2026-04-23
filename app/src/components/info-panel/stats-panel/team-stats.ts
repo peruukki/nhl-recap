@@ -33,7 +33,10 @@ export default function TeamStats({
     { class: { 'fade-in': fadeIn } },
     [
       div('.stats__heading', 'Team stats'),
-      div('.stats__subheading', statsType === 'preGame' ? 'before game' : 'after game'),
+      div(
+        '.stats__subheading',
+        isPlayoffGame ? 'regular season' : statsType === 'preGame' ? 'before game' : 'after game',
+      ),
       renderStat({
         label: 'Div. rank',
         ratingFn: getDivisionRankRating,

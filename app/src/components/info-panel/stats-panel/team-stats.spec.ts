@@ -67,6 +67,21 @@ describe('team stats', () => {
       );
     });
 
+    it('should show "regular season" instead of "before game" during playoffs', () => {
+      const status: GameStatus = { state: 'FINAL' };
+      const { meta, teams, goals, preGameStats, currentStats } =
+        scoresAllRegularTimePlayoffs.games[0];
+      assertStatsExistence(
+        'pre-game',
+        { meta, status, teams, preGameStats, currentStats },
+        goals,
+        (vtree?: VNode) => {
+          expect(vtree?.sel).toEqual('div.stats');
+          expect(getTeamStatsSubheading(vtree)).toEqual('regular season');
+        },
+      );
+    });
+
     it('should be shown after playback has finished for finished games whose current stats have not be updated', () => {
       const status: GameStatus = { state: 'FINAL' };
       const { meta, teams, goals, preGameStats } = scoresAllRegularTime.games[1];
@@ -303,6 +318,21 @@ describe('team stats', () => {
         'post-game-finished',
         { meta, status, teams, currentStats },
         goals,
+      );
+    });
+
+    it('should show "regular season" instead of "after game" during playoffs', () => {
+      const status: GameStatus = { state: 'FINAL' };
+      const { meta, teams, goals, preGameStats, currentStats } =
+        scoresAllRegularTimePlayoffs.games[0];
+      assertStatsExistence(
+        'post-game-finished',
+        { meta, status, teams, preGameStats, currentStats },
+        goals,
+        (vtree?: VNode) => {
+          expect(vtree?.sel).toEqual('div.stats');
+          expect(getTeamStatsSubheading(vtree)).toEqual('regular season');
+        },
       );
     });
 
