@@ -4,6 +4,7 @@
 
 See [.agents/skills/](./.agents/skills) for project-specific skills:
 - [api-integration](./.agents/skills/api-integration)
+- [deployment-management](./.agents/skills/deployment-management)
 - [development-guidelines](./.agents/skills/development-guidelines)
 - [documentation-guidelines](./.agents/skills/documentation-guidelines)
 - [pwa-management](./.agents/skills/pwa-management)
