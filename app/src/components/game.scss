@@ -36,6 +36,9 @@
   }
 
   &__series-wins {
+    @include animations.fade-in-with-slide-animation;
+    @include animations.delayed-animation-later;
+
     padding: sizes.$panel-padding-height 0;
     color: colors.$color-main;
     font-size: 1rem;
