@@ -1,13 +1,16 @@
 import { div, type VNode } from '@cycle/dom';
 
 import type { StatError } from '../types';
+import Expandable from './expandable';
 
-export default function ErrorsPanel(errors?: StatError[]): VNode | null {
+export default function ErrorsPanel(errors: StatError[] | undefined, show: boolean): VNode | null {
   return errors
-    ? div(
-        '.game__errors',
-        errors.map((error) => div(getErrorText(error))),
-      )
+    ? Expandable({ show }, [
+        div(
+          '.game__errors',
+          errors.map((error) => div(getErrorText(error))),
+        ),
+      ])
     : null;
 }
 

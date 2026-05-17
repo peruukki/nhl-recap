@@ -2,6 +2,7 @@ import { div, type VNode } from '@cycle/dom';
 import _ from 'lodash';
 
 import type { GameDisplay, Game as GameT, Goal } from '../types';
+import { showPanel } from '../utils/ui';
 import ErrorsPanel from './errors-panel';
 import InfoPanel from './info-panel';
 import LinksPanel from './links-panel';
@@ -64,7 +65,7 @@ export default function Game(
           addCurrentGameToWins: gameDisplay === 'post-game-finished',
         }),
       ]),
-      ErrorsPanel(errors),
+      ErrorsPanel(errors, showPanel(gameDisplay, 'errors')),
     ]),
   ]);
 }

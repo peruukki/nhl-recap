@@ -1,6 +1,7 @@
 import type { GameDisplay } from '../types';
 
 type Panel =
+  | 'errors'
   | 'game-description'
   | 'game-stats'
   | 'latest-goal'
@@ -17,8 +18,15 @@ const gameDisplayPanels: Record<GameDisplay, Panel[]> = {
   'pre-summary-in-progress': ['latest-goal', 'game-description'],
   'summary-finished': ['summary'],
   'summary-in-progress': ['summary', 'game-description'],
-  'post-game-finished': ['summary', 'game-stats', 'team-stats', 'links'],
-  'post-game-in-progress': ['summary', 'game-description', 'game-stats', 'team-stats', 'links'],
+  'post-game-finished': ['summary', 'game-stats', 'team-stats', 'links', 'errors'],
+  'post-game-in-progress': [
+    'summary',
+    'game-description',
+    'game-stats',
+    'team-stats',
+    'links',
+    'errors',
+  ],
 };
 
 export function showPanel(gameDisplay: GameDisplay, panel: Panel): boolean {
