@@ -47,6 +47,14 @@ This skill provides general guidance on the code style, development workflow, an
   - Configuration files (e.g., `package.json` scripts/dependencies, `tsconfig.json` options).
   - Documentation (e.g., lists of features or tools).
 
+## Commit Messages
+
+- **Avoid conventional commits**: Do not use prefixes like `feat:`, `refactor:`, or `fix:`.
+- **Use sentence case**: Write the commit title and body as regular sentences without conventional commit formatting.
+- **Focus on the primary change**: The first line (commit title) should concisely describe the most relevant or impactful change.
+- **Include secondary details in the body**: Mention other important but supplementary details in the commit body, separated by an empty line from the title.
+- **Limit line length**: Keep all lines in the commit message (both the title and body lines) to a maximum of 80 characters.
+
 ## Development Workflow
 
 ### Node.js Version
