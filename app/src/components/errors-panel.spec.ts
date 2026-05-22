@@ -2,7 +2,7 @@ import { div, type VNode } from '@cycle/dom';
 import { describe, expect, it } from 'vitest';
 
 import { scoresAllRegularTime } from '../test/data';
-import type { StatError } from '../types';
+import type { GameState, GameStatus, StatError } from '../types';
 import Expandable from './expandable';
 import Game from './game';
 import { getGameCard } from './test-utils';
@@ -26,6 +26,27 @@ describe('errors panel', () => {
     assertErrors([
       { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 2, scoreCount: 1 } },
     ]);
+  });
+
+  it('should show appropriate pending goal error when game state is live', () => {
+    assertErrors(
+      [{ error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 2 } }],
+      'LIVE',
+    );
+  });
+
+  it('should show appropriate unconfirmed goal error when game state is live', () => {
+    assertErrors(
+      [{ error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 2, scoreCount: 3 } }],
+      'LIVE',
+    );
+  });
+
+  it('should show regular goal count mismatch error when game state is live and difference is greater than 1', () => {
+    assertErrors(
+      [{ error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 4, scoreCount: 2 } }],
+      'LIVE',
+    );
   });
 
   it('should not show errors during playback', () => {
@@ -53,11 +74,31 @@ describe('errors panel', () => {
   });
 });
 
-function assertErrors(gameErrors: StatError[] | undefined) {
+function assertErrors(gameErrors: StatError[] | undefined, state: GameState = 'FINAL') {
+  const status: GameStatus =
+    state === 'LIVE'
+      ? {
+          progress: {
+            currentPeriod: 3,
+            currentPeriodOrdinal: '3rd',
+            currentPeriodTimeRemaining: { min: 0, pretty: '00:00', sec: 0 },
+          },
+          state,
+        }
+      : { state };
   const errorsPanel = getErrorsPanel(
-    Game('post-game-finished', { ...scoresAllRegularTime.games[0], errors: gameErrors }, [], 0),
+    Game(
+      'post-game-finished',
+      {
+        ...scoresAllRegularTime.games[0],
+        errors: gameErrors,
+        status,
+      },
+      [],
+      0,
+    ),
   );
-  const expected = expectedErrorsPanel(gameErrors, true);
+  const expected = expectedErrorsPanel(gameErrors, state, true);
   expect(errorsPanel).toEqual(expected);
 }
 
@@ -65,23 +106,31 @@ function getErrorsPanel(vtree: VNode) {
   return getGameCard(vtree)?.children?.[3];
 }
 
-function expectedErrorsPanel(errors: StatError[] | undefined, show: boolean) {
+function expectedErrorsPanel(errors: StatError[] | undefined, state: GameState, show: boolean) {
   return errors
     ? Expandable({ show }, [
         div(
           '.game__errors',
-          errors.map((error) => div(getErrorText(error))),
+          errors.map((error) => div(getErrorText(error, state))),
         ),
       ])
     : null;
 }
 
-function getErrorText(error: StatError): string {
+function getErrorText(error: StatError, state: GameState): string {
   switch (error.error) {
     case 'MISSING-ALL-GOALS':
       return 'Missing all goal data';
     case 'SCORE-AND-GOAL-COUNT-MISMATCH': {
       const { goalCount, scoreCount } = error.details;
+      if (state === 'LIVE') {
+        if (goalCount === scoreCount + 1) {
+          return 'One goal pending';
+        }
+        if (scoreCount === goalCount + 1) {
+          return 'Last goal unconfirmed';
+        }
+      }
       const difference = Math.abs(goalCount - scoreCount);
       const pluralSuffix = difference === 1 ? '' : 's';
       return goalCount < scoreCount

@@ -116,7 +116,7 @@ export const gamesData = [
     data: {
       ...scoresAllRegularTimePlayoffs.games[1],
       errors: [
-        { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 3, scoreCount: 5 } },
+        { error: 'SCORE-AND-GOAL-COUNT-MISMATCH', details: { goalCount: 4, scoreCount: 5 } },
       ],
     },
   },

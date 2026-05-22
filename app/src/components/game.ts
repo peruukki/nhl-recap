@@ -65,7 +65,7 @@ export default function Game(
           addCurrentGameToWins: gameDisplay === 'post-game-finished',
         }),
       ]),
-      ErrorsPanel(errors, showPanel(gameDisplay, 'errors')),
+      ErrorsPanel(errors, status.state, showPanel(gameDisplay, 'errors')),
     ]),
   ]);
 }
