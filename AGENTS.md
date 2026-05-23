@@ -7,6 +7,7 @@ See [.agents/skills/](./.agents/skills) for project-specific skills:
 - [deployment-management](./.agents/skills/deployment-management)
 - [development-guidelines](./.agents/skills/development-guidelines)
 - [documentation-guidelines](./.agents/skills/documentation-guidelines)
+- [git-guidelines](./.agents/skills/git-guidelines)
 - [pwa-management](./.agents/skills/pwa-management)
 - [ui-development](./.agents/skills/ui-development)
 - [url-discovery](./.agents/skills/url-discovery)
