@@ -205,7 +205,10 @@ function run(
 }
 
 function expectedStatusVtree(status: (string | VNode)[], animationClass: string) {
-  return div(`.status${animationClass}`, status);
+  return div(
+    `.status${animationClass}`,
+    status.map((item) => (typeof item === 'string' ? span(item) : item)),
+  );
 }
 
 function expectedDateVtree(date: string) {

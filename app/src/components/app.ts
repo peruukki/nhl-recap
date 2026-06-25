@@ -50,11 +50,11 @@ type State = {
 };
 
 type FetchStatus = {
-  message?: string;
+  messages?: string[];
   state: 'done' | 'fetching' | 'transitioning';
 };
 
-type ApiResponseError = { error: { expected: boolean; message?: string } };
+type ApiResponseError = { error: { expected: boolean; messages?: string[] } };
 type ApiResponseSuccess = { success: Scores };
 type ApiResponse = ApiResponseError | ApiResponseSuccess;
 function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuccess {
@@ -117,7 +117,7 @@ function intent(
         const scores = Array.isArray(responseJson) ? responseJson[0] : responseJson;
         return scores.games.length > 0
           ? { success: scores }
-          : { error: { message: 'No scores available.', expected: true } };
+          : { error: { messages: ['No scores available.'], expected: true } };
       } catch (error) {
         console.error(error);
         return { error: { expected: false } };
@@ -131,7 +131,7 @@ function intent(
     .map((response) => response.success);
 
   const nonApiError$ = error$.map((error) => ({
-    error: { message: error.message, expected: true },
+    error: { messages: [error.message], expected: true },
   }));
 
   const apiResponseOrError$ = xs
@@ -146,23 +146,25 @@ function intent(
   const getUnexpectedErrorMessage = () => {
     const baseMessage = 'Failed to fetch scores';
     const details = !$window.navigator.onLine ? ': the network is offline' : '';
-    return `${baseMessage}${details}.`;
+    return [`${baseMessage}${details}.`];
   };
 
-  const initialStatusMessage = date
-    ? `Fetching scores for ${new Date(date).toLocaleDateString('en-US', {
-        weekday: 'long',
-      })} ${new Date(date).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-      })}`
-    : 'Fetching latest scores';
+  const initialStatusMessages = date
+    ? [
+        `Fetching scores for ${new Date(date).toLocaleDateString('en-US', {
+          weekday: 'long',
+        })} ${new Date(date).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+        })}`,
+      ]
+    : ['Fetching latest scores'];
 
   const transitioningSuccessStatus$ = xs
     .periodic(animations.getAnimationDuration(options.fetchStatusExitDurationMs))
     .take(1)
     .mapTo<FetchStatus>({ state: 'done' })
-    .startWith({ state: 'transitioning', message: initialStatusMessage });
+    .startWith({ state: 'transitioning', messages: initialStatusMessages });
 
   const status$ = xs
     .merge(
@@ -171,10 +173,10 @@ function intent(
         .filter((response): response is ApiResponseError => !isSuccessApiResponse(response))
         .map<FetchStatus>(({ error }) => ({
           state: 'done',
-          message: error.message ?? getUnexpectedErrorMessage(),
+          messages: error.messages ?? getUnexpectedErrorMessage(),
         })),
     )
-    .startWith({ state: 'fetching', message: initialStatusMessage })
+    .startWith({ state: 'fetching', messages: initialStatusMessages })
     .debug(debugFn('status$'));
 
   return {
@@ -343,7 +345,7 @@ function renderScores(
         ),
       )
     : div(`.status${statusClass}`, [
-        state.status.message,
+        ...(state.status.messages || []).map((message) => span(message)),
         ...(state.status.state === 'done' ? [] : [span('.loader')]),
       ]);
 }
