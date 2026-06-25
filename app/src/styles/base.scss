@@ -1,3 +1,4 @@
+@use 'animations';
 @use 'colors';
 
 @import url('https://indestructibletype.com/fonts/Jost.css');
@@ -34,6 +35,16 @@ body {
   font-family: 'Jost', sans-serif;
   font-size: 1.6em;
   text-align: center;
+}
+
+a {
+  color: colors.$color-main;
+  transition: color animations.$hover-duration animations.$hover-timing-function;
+
+  &:active,
+  &:hover {
+    color: colors.$color-accent-light;
+  }
 }
 
 .visually-hidden {

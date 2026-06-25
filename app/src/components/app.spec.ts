@@ -1,4 +1,4 @@
-import { div, type MainDOMSource, mockDOMSource, span, type VNode } from '@cycle/dom';
+import { a, div, type MainDOMSource, mockDOMSource, span, type VNode } from '@cycle/dom';
 import { makeHTTPDriver, type RequestInput } from '@cycle/http';
 import nock from 'nock';
 import { describe, expect, it, vi } from 'vitest';
@@ -129,7 +129,14 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree(['No scores available.'], '.fade-in-fast.nope-animation'),
+        expectedStatusVtree(
+          [
+            'No scores available.',
+            'You can reminisce',
+            span([a({ attrs: { href: '?date=2026-06-14' } }, 'the last game of last season'), '.']),
+          ],
+          '.fade-in-fast.nope-animation',
+        ),
       );
     });
   });
@@ -205,9 +212,28 @@ function run(
 }
 
 function expectedStatusVtree(status: (string | VNode)[], animationClass: string) {
+  const messages = status.filter(
+    (item) => typeof item === 'string' || (typeof item === 'object' && item.sel !== 'span.loader'),
+  );
+  const loader = status.find((item) => typeof item === 'object' && item.sel === 'span.loader') as
+    | VNode
+    | undefined;
+
   return div(
     `.status${animationClass}`,
-    status.map((item) => (typeof item === 'string' ? span(item) : item)),
+    messages.length > 0
+      ? messages.map((item, index) => {
+          const classModifier = index > 0 ? '.additional-message' : '';
+          const isLast = index === messages.length - 1;
+
+          return div(
+            `.status__message${classModifier}`,
+            isLast && loader ? [item, loader] : [item],
+          );
+        })
+      : loader
+        ? [loader]
+        : [],
   );
 }
 

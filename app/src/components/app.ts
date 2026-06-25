@@ -1,4 +1,4 @@
-import { div, type MainDOMSource, main, span, type VNode } from '@cycle/dom';
+import { a, div, type MainDOMSource, main, span, type VNode } from '@cycle/dom';
 import type { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { type Stream } from 'xstream';
@@ -50,11 +50,11 @@ type State = {
 };
 
 type FetchStatus = {
-  messages?: string[];
+  messages?: (string | VNode)[];
   state: 'done' | 'fetching' | 'transitioning';
 };
 
-type ApiResponseError = { error: { expected: boolean; messages?: string[] } };
+type ApiResponseError = { error: { expected: boolean; messages?: (string | VNode)[] } };
 type ApiResponseSuccess = { success: Scores };
 type ApiResponse = ApiResponseError | ApiResponseSuccess;
 function isSuccessApiResponse(response: ApiResponse): response is ApiResponseSuccess {
@@ -117,7 +117,19 @@ function intent(
         const scores = Array.isArray(responseJson) ? responseJson[0] : responseJson;
         return scores.games.length > 0
           ? { success: scores }
-          : { error: { messages: ['No scores available.'], expected: true } };
+          : {
+              error: {
+                messages: [
+                  'No scores available.',
+                  'You can reminisce',
+                  span([
+                    a({ attrs: { href: '?date=2026-06-14' } }, 'the last game of last season'),
+                    '.',
+                  ]),
+                ],
+                expected: true,
+              },
+            };
       } catch (error) {
         console.error(error);
         return { error: { expected: false } };
@@ -344,8 +356,20 @@ function renderScores(
           ),
         ),
       )
-    : div(`.status${statusClass}`, [
-        ...(state.status.messages || []).map((message) => span(message)),
-        ...(state.status.state === 'done' ? [] : [span('.loader')]),
-      ]);
+    : div(
+        `.status${statusClass}`,
+        state.status.messages && state.status.messages.length > 0
+          ? state.status.messages.map((message, index, messages) => {
+              const classModifier = index > 0 ? '.additional-message' : '';
+              const isLast = index === messages.length - 1;
+              const loaderNode = isLast && state.status.state !== 'done' ? span('.loader') : null;
+              return div(
+                `.status__message${classModifier}`,
+                loaderNode ? [message, loaderNode] : [message],
+              );
+            })
+          : state.status.state === 'done'
+            ? []
+            : [span('.loader')],
+      );
 }
