@@ -121,7 +121,7 @@ function intent(
               error: {
                 messages: [
                   'No scores available.',
-                  'You can reminisce',
+                  'You can reminisce about',
                   span([
                     a({ attrs: { href: '?date=2026-06-14' } }, 'the last game of last season'),
                     '.',
