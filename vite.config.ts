@@ -23,6 +23,11 @@ export default defineConfig({
     open: true,
     port: 8009,
   },
+  // xstream sets `__esModule: true` in its CJS output, which Vite 8 (Rolldown) ignores,
+  // causing `import xs from 'xstream'` to return the full module object instead of `xs`.
+  legacy: {
+    inconsistentCjsInterop: true,
+  },
   publicDir: 'app/assets',
   resolve: {
     alias: {
