@@ -16,6 +16,7 @@ import https from 'node:https';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as convexHullModule from 'monotone-chain-convex-hull';
+// @ts-expect-error - sharp 0.35.0 package.json exports missing types declaration export
 import sharp from 'sharp';
 
 // monotone-chain-convex-hull doesn't have an exports field in its package.json, so some trickery
