@@ -215,9 +215,9 @@ function expectedStatusVtree(status: (string | VNode)[], animationClass: string)
   const messages = status.filter(
     (item) => typeof item === 'string' || (typeof item === 'object' && item.sel !== 'span.loader'),
   );
-  const loader = status.find((item) => typeof item === 'object' && item.sel === 'span.loader') as
-    | VNode
-    | undefined;
+  const loader = !animationClass.includes('nope-animation')
+    ? span('.loader', [span('', '.'), span('', '.'), span('', '.')])
+    : undefined;
 
   return div(
     `.status${animationClass}`,

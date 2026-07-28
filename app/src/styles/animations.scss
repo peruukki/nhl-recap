@@ -16,6 +16,11 @@ $delay-small: calc(0.15s / $animation-speed);
 $delay-medium: calc(0.3s / $animation-speed);
 $delay-large: calc(0.45s / $animation-speed);
 
+$text-color-duration: calc(1.5s / $animation-speed);
+$text-color-delay-1: $delay-small;
+$text-color-delay-2: $delay-medium;
+$text-color-delay-3: $delay-large;
+
 // The stagger delays are used as components in calculations, so we don't apply $animation
 // on them directly, but on the calculated values
 $expand-delay-stagger: 1s;

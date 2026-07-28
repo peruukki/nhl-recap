@@ -343,6 +343,11 @@ function renderScores(
     '.fade-in-fast.nope-animation': state.status.state === 'done',
     '.fade-out': state.status.state === 'transitioning',
   }).replace(/\s/g, '');
+  const loader = span(
+    '.loader',
+    '...'.split('').map((c) => span('', c)),
+  );
+
   return state.games.length > 0
     ? div(
         scoreListClass,
@@ -362,14 +367,13 @@ function renderScores(
           ? state.status.messages.map((message, index, messages) => {
               const classModifier = index > 0 ? '.additional-message' : '';
               const isLast = index === messages.length - 1;
-              const loaderNode = isLast && state.status.state !== 'done' ? span('.loader') : null;
               return div(
                 `.status__message${classModifier}`,
-                loaderNode ? [message, loaderNode] : [message],
+                isLast && state.status.state !== 'done' ? [message, loader] : [message],
               );
             })
           : state.status.state === 'done'
             ? []
-            : [span('.loader')],
+            : [loader],
       );
 }
