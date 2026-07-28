@@ -12,6 +12,9 @@
   },
   "editor.rulers": [100],
   "editor.formatOnSave": true,
+  "[scss]": {
+    "editor.formatOnSave": false
+  },
   "stylelint.validate": ["css", "postcss", "scss"],
   "stylelint.snippet": ["css", "postcss", "scss"]
 }
