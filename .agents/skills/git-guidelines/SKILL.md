@@ -14,4 +14,5 @@ This skill provides guidance on Git commit messages and version control workflow
 - **Do not end the title with a period**: The first line is a title, so it should not finish with a period.
 - **Focus on the primary change**: The first line (commit title) should concisely describe the most relevant or impactful change.
 - **Include secondary details in the body**: Mention other important but supplementary details in the commit body, separated by an empty line from the title.
+- **Do not mention test updates**: Test updates supporting application changes are self-evident.
 - **Limit line length**: Keep all lines in the commit message (both the title and body lines) to a maximum of 80 characters.
