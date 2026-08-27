@@ -133,7 +133,10 @@ describe('app', () => {
           [
             'No scores available.',
             'You can reminisce about',
-            span([a({ attrs: { href: '?date=2026-06-14' } }, 'the last game of last season'), '.']),
+            span([
+              a({ attrs: { href: '?date=2025-10-07' } }, 'the first games of last season'),
+              '.',
+            ]),
           ],
           '.fade-in-fast.nope-animation',
         ),
