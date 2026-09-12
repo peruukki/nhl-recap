@@ -52,7 +52,7 @@ This skill provides general guidance on the code style, development workflow, an
 
 ### Node.js Version
 - Requires **Node.js >= 24.0** (specified in `package.json`).
-- Run `nvm use` to set the correct version before running npm commands.
+- Run `fnm use` to set the correct version before running npm commands.
 
 ### Main Scripts
 
