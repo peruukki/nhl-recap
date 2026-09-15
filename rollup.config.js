@@ -11,6 +11,7 @@ export default {
     }),
     workbox({
       globDirectory: 'public',
+      globIgnores: ['gallery/**'],
       globPatterns: ['**/*.{css,html,ico,js,png,svg,ttf,xml}'],
     }),
     nodeResolve(),

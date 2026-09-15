@@ -12,6 +12,13 @@ export default defineConfig({
     assetsDir: '',
     emptyOutDir: true,
     outDir: 'public',
+    rollupOptions: {
+      input: {
+        components: resolve(__dirname, 'gallery/components.html'),
+        main: resolve(__dirname, 'index.html'),
+        'team-logos': resolve(__dirname, 'gallery/team-logos.html'),
+      },
+    },
   },
   css: {
     postcss: {

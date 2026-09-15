@@ -5,7 +5,7 @@ description: Guidelines for triggering and managing deployments using GitHub Act
 
 # Deployment Management Skill
 
-This skill provides instructions for deploying the nhl-recap application to GitHub Pages.
+This skill provides instructions for deploying the nhl-recap application and galleries to GitHub Pages.
 
 ## Deployment Methods
 
@@ -42,7 +42,7 @@ A local script is available for emergency or manual deployments that bypass the 
 npm run deploy
 ```
 This script:
-1. Builds the app.
+1. Builds the app and galleries.
 2. Clones the `gh-pages` branch.
 3. Cleans and copies the new build.
 4. Commits and pushes to `origin gh-pages`.

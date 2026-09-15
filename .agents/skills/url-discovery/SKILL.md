@@ -9,9 +9,17 @@ Use these URLs for viewing the application and its component gallery in the brow
 
 ## Application URLs
 
+### Local Development
+
 - **Main Application**: `http://localhost:8009/nhl-recap/`
 - **Component Gallery**: `http://localhost:8009/nhl-recap/gallery/components`
 - **Team Logos Gallery**: `http://localhost:8009/nhl-recap/gallery/team-logos`
+
+### Production
+
+- **Main Application**: `https://peruukki.github.io/nhl-recap/`
+- **Component Gallery**: `https://peruukki.github.io/nhl-recap/gallery/components`
+- **Team Logos Gallery**: `https://peruukki.github.io/nhl-recap/gallery/team-logos`
 
 ## API URLs
 
