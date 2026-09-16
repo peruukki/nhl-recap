@@ -53,10 +53,12 @@ Then you can run the app connecting to the local server with `npm run start:loca
 
 This project has simple galleries that show components outside the app to test visual changes more easily.
 
-- **Components** at https://peruukki.github.io/nhl-recap/gallery/components (or http://localhost:8009/nhl-recap/gallery/components locally)
+- **[Components](https://peruukki.github.io/nhl-recap/gallery/components)**
   - shows the game component in all its possible states, so that you don’t need to play back games in different states to see them
-- **Team logos** at https://peruukki.github.io/nhl-recap/gallery/team-logos (or http://localhost:8009/nhl-recap/gallery/team-logos locally)
+  - locally at http://localhost:8009/nhl-recap/gallery/components
+- **[Team logos](https://peruukki.github.io/nhl-recap/gallery/team-logos)**
   - shows the score panel component with all teams' logos both as an away and home team, for adjusting team logo sizes or placement
+  - locally at http://localhost:8009/nhl-recap/gallery/team-logos
 
 ## Logo visual weight tool
 
