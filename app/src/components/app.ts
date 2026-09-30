@@ -1,4 +1,4 @@
-import { a, div, type MainDOMSource, main, span, type VNode } from '@cycle/dom';
+import { div, type MainDOMSource, main, span, type VNode } from '@cycle/dom';
 import type { HTTPSource, Response } from '@cycle/http';
 import classNames from 'classnames';
 import xs, { type Stream } from 'xstream';
@@ -119,14 +119,7 @@ function intent(
           ? { success: scores }
           : {
               error: {
-                messages: [
-                  'No scores available.',
-                  'You can reminisce about',
-                  span([
-                    a({ attrs: { href: '?date=2025-10-07' } }, 'the first games of last season'),
-                    '.',
-                  ]),
-                ],
+                messages: ['No scores available.'],
                 expected: true,
               },
             };

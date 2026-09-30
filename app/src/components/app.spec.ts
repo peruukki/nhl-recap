@@ -1,4 +1,4 @@
-import { a, div, type MainDOMSource, mockDOMSource, span, type VNode } from '@cycle/dom';
+import { div, type MainDOMSource, mockDOMSource, span, type VNode } from '@cycle/dom';
 import { makeHTTPDriver, type RequestInput } from '@cycle/http';
 import nock from 'nock';
 import { describe, expect, it, vi } from 'vitest';
@@ -129,17 +129,7 @@ describe('app', () => {
     const sinks = run(xs.of(nhlScoreApiUrl));
     await assertStreamValues(sinks.DOM.drop(dropCounts.finalStatusMessage).take(1), (vtree) => {
       expect(getStatusNode(vtree)).toEqual(
-        expectedStatusVtree(
-          [
-            'No scores available.',
-            'You can reminisce about',
-            span([
-              a({ attrs: { href: '?date=2025-10-07' } }, 'the first games of last season'),
-              '.',
-            ]),
-          ],
-          '.fade-in-fast.nope-animation',
-        ),
+        expectedStatusVtree(['No scores available.'], '.fade-in-fast.nope-animation'),
       );
     });
   });
