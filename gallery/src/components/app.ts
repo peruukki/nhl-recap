@@ -1,24 +1,37 @@
 import Game from '@app/src/components/game';
 import type { GameDisplay, GameStats, Game as GameT, Goal } from '@app/src/types';
 import * as animations from '@app/src/utils/animations';
-import { button, div, h, type MainDOMSource, type VNode } from '@cycle/dom';
+import { button, div, h, input, label, type MainDOMSource, type VNode } from '@cycle/dom';
 import xs, { type Stream } from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
 import { gamesData, stateDefinitions } from './data';
 import { getSectionExpandedState, setSectionExpandedState } from './storage';
 
+const animationSpeedOptions = [
+  { label: '100%', value: '1' },
+  { label: '50%', value: '0.5' },
+  { label: '25%', value: '0.25' },
+  { label: '10%', value: '0.1' },
+] as const;
+
+type AnimationSpeed = (typeof animationSpeedOptions)[number]['value'];
+
+const defaultAnimationSpeed: AnimationSpeed = '1';
+
 type Sources = { DOM: MainDOMSource };
 
 type Sinks = { DOM: Stream<VNode> };
 
 type Actions = {
+  animationSpeed$: Stream<AnimationSpeed>;
   expandCollapseAll$: Stream<'expand' | 'collapse'>;
   expandCollapseSections$: Stream<{ action: 'expand' | 'collapse'; index: number }>;
   replayGameDisplayStates$: Stream<{ index: number }>;
 };
 
 type State = {
+  animationSpeed$: Stream<AnimationSpeed>;
   gameStates$: Stream<{ gameDescription: string; games: (GalleryGameT | null)[] }[]>;
   sectionExpandedStates$: Stream<boolean[]>;
 };
@@ -34,7 +47,19 @@ export default function main(): (sources: Sources) => Sinks {
   return ({ DOM }) => ({ DOM: view(model(intent(DOM))) });
 }
 
+function isAnimationSpeed(value: string): value is AnimationSpeed {
+  return animationSpeedOptions.some((option) => option.value === value);
+}
+
 function intent(DOM: Sources['DOM']): Actions {
+  const animationSpeed$ = DOM.select('.animation-speed input')
+    .events('change')
+    .map((event) => {
+      const target = event.target;
+      return target instanceof HTMLInputElement ? target.value : '';
+    })
+    .filter(isAnimationSpeed);
+
   const expandCollapseAll$ = DOM.select('.expand-collapse-all')
     .events('click')
     .map((event) => {
@@ -65,14 +90,23 @@ function intent(DOM: Sources['DOM']): Actions {
     )
     .flatten();
 
-  return { expandCollapseAll$, expandCollapseSections$, replayGameDisplayStates$ };
+  return { animationSpeed$, expandCollapseAll$, expandCollapseSections$, replayGameDisplayStates$ };
 }
 
 function model({
+  animationSpeed$,
   expandCollapseAll$,
   expandCollapseSections$,
   replayGameDisplayStates$,
 }: Actions): State {
+  const selectedAnimationSpeed$ = animationSpeed$.startWith(defaultAnimationSpeed);
+
+  selectedAnimationSpeed$.addListener({
+    next: (speed) => {
+      document.documentElement.style.setProperty('--animation-speed', speed);
+    },
+  });
+
   //
   // Section expanded/collapsed state
   //
@@ -158,13 +192,17 @@ function model({
     ),
   );
 
-  return { sectionExpandedStates$, gameStates$: transitionedGameStates$ };
+  return {
+    animationSpeed$: selectedAnimationSpeed$,
+    gameStates$: transitionedGameStates$,
+    sectionExpandedStates$,
+  };
 }
 
-function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
+function view({ animationSpeed$, sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
   return xs
-    .combine(sectionExpandedStates$, gameStates$)
-    .map(([sectionExpandedStates, gameStates]) => {
+    .combine(animationSpeed$, sectionExpandedStates$, gameStates$)
+    .map(([animationSpeed, sectionExpandedStates, gameStates]) => {
       const isAllExpanded = sectionExpandedStates.every((isExpanded) => isExpanded);
 
       return div('.gallery', [
@@ -174,6 +212,21 @@ function view({ sectionExpandedStates$, gameStates$ }: State): Stream<VNode> {
             { attrs: { type: 'button' } },
             isAllExpanded ? 'Collapse all' : 'Expand all',
           ),
+          h('fieldset.animation-speed', [
+            h('legend.animation-speed__legend', 'Animation speed'),
+            div(
+              '.animation-speed__options',
+              animationSpeedOptions.map(({ label: optionLabel, value }) =>
+                label('.animation-speed__option', [
+                  input({
+                    attrs: { name: 'animation-speed', type: 'radio', value },
+                    props: { checked: animationSpeed === value },
+                  }),
+                  optionLabel,
+                ]),
+              ),
+            ),
+          ]),
         ]),
         ...gameStates.flatMap(({ gameDescription, games }, index) => [
           h('details.gallery-game-state', { attrs: { open: sectionExpandedStates[index] } }, [
