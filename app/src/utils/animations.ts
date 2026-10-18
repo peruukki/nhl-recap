@@ -2,7 +2,6 @@ const gameInFocusClass = 'in-focus';
 const gameInFrontClass = 'in-front';
 
 function clearGameInFocus(element: HTMLElement): void {
-  element.style.transform = '';
   element.classList.remove(gameInFocusClass);
   // Keep element's "in front" styling until it's close to its normal position
   // Use setTimeout instead of ontransitionend due to much better browser support
@@ -17,7 +16,7 @@ function clearGameInFocus(element: HTMLElement): void {
     // get correct values if the viewport dimensions change
     element.dataset.initialCenterX = '';
     element.dataset.initialCenterY = '';
-  }, 250);
+  }, 500);
 }
 
 function storeGameInitialPosition(element: HTMLElement): void {
@@ -38,8 +37,8 @@ function animateGame(element: HTMLElement, windowWidth: number, windowHeight: nu
 
   const translateX = windowCenterX - elementCenterX;
   const translateY = windowCenterY - elementCenterY;
-  const scale = 1.2;
-  element.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  element.style.setProperty('--translate-x', `${translateX}px`);
+  element.style.setProperty('--translate-y', `${translateY}px`);
 }
 
 function setGameInFocus(element: HTMLElement, windowWidth: number, windowHeight: number): void {
