@@ -12,6 +12,8 @@
   transition-duration: animations.$focus-duration-exit, animations.$focus-duration-exit;
   border-radius: sizes.$border-radius;
   background: colors.$background-game;
+  outline: 1px solid colors.$border-color-dark;
+  outline-offset: -1px;
   font-size: 1.4rem;
   box-sizing: border-box;
   overflow: hidden;
@@ -19,6 +21,7 @@
   &.in-front {
     position: relative;
     box-shadow: colors.$color-shadow 0 5px 10px;
+    outline-color: colors.$border-color-light;
     z-index: 1;
   }
 

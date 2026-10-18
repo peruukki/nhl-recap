@@ -2,6 +2,7 @@
 $blue-dark: hsl(227deg, 77%, 25%);
 $blue-dark-semi-transparent: hsl(227deg, 77%, 25%, 0.5);
 $blue-light: hsl(226deg, 47%, 49%);
+$blue-light-semi-transparent: hsl(226deg, 47%, 49%, 0.5);
 $blue-medium: hsl(227deg, 51%, 38%);
 $gray: hsl(198deg, 16%, 84%);
 $gray-semi-transparent: rgb(0, 0, 0, 0.5);
@@ -30,4 +31,6 @@ $color-score-panel: $white;
 $color-shadow: $gray-semi-transparent;
 
 // Border colors
+$border-color-dark: $blue-dark-semi-transparent;
+$border-color-light: $blue-light-semi-transparent;
 $border-color-link: $blue-medium;
