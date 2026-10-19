@@ -16,7 +16,7 @@ function clearGameInFocus(element: HTMLElement): void {
     // get correct values if the viewport dimensions change
     element.dataset.initialCenterX = '';
     element.dataset.initialCenterY = '';
-  }, 500);
+  }, getAnimationDuration(500));
 }
 
 function storeGameInitialPosition(element: HTMLElement): void {
