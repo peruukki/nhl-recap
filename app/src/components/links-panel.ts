@@ -30,7 +30,10 @@ function Link({
         target: '_blank',
       },
     },
-    [label, span('.links-panel__link-icon-container', Icon('externalLink'))],
+    [
+      label,
+      span('.links-panel__link-icon-container', Icon('externalLink', { isDecorative: true })),
+    ],
   );
 }
 

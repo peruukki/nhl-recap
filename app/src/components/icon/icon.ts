@@ -31,6 +31,16 @@ const icons = {
   playoffSpotSafe,
 };
 
-export function Icon(name: keyof typeof icons) {
-  return div(`.icon.icon--${name}`, html([icons[name]]));
+/**
+ * Renders an icon.
+ *
+ * @param name Supported icon name
+ * @param options Set `isDecorative: true` if the icon should be hidden from assistive technology
+ */
+export function Icon(name: keyof typeof icons, options?: { isDecorative: boolean }) {
+  return div(
+    `.icon.icon--${name}`,
+    options?.isDecorative ? { attrs: { 'aria-hidden': 'true' } } : {},
+    [html([icons[name]])],
+  );
 }

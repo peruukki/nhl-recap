@@ -944,5 +944,6 @@ function getTeamStats(vtree: VNode) {
 }
 
 function getTeamStatsSubheading(teamStatsVTree?: VNode): string | undefined {
-  return (teamStatsVTree?.children?.[1] as VNode).text;
+  const subheading = teamStatsVTree?.children?.[1] as VNode | undefined;
+  return subheading?.text;
 }

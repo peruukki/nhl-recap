@@ -1,3 +1,4 @@
 <svg viewBox="0 0 20 20">
+  <title>Yellow circle</title>
   <circle fill="hsl(50deg 100% 50%)" cx="10" cy="10" r="8" />
 </svg>

@@ -33,7 +33,7 @@ export default function Header({ clockVtree, date, event, haveGamesStarted, isPl
         { props: { ariaLive: 'polite' }, class: dynamicClassNames },
         [
           span('.visible-button', [
-            showIcon ? Icon(buttonType) : null,
+            showIcon ? Icon(buttonType, { isDecorative: true }) : null,
             span('.visually-hidden', buttonText),
           ]),
         ],
