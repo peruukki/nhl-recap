@@ -1,4 +1,3 @@
-<svg viewBox="0 0 20 20">
-  <title>Red circle</title>
+<svg viewBox="0 0 20 20" aria-label="Red circle">
   <circle fill="hsl(0deg 90% 70%)" cx="10" cy="10" r="8" />
 </svg>
