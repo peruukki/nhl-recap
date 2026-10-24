@@ -71,7 +71,7 @@
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "@vitest/coverage-v8": "4.1.12",
     "autoprefixer": "10.6.1",
-    "concurrently": "9.2.5",
+    "concurrently": "10.0.6",
     "globals": "16.5.0",
     "json-server": "0.17.4",
     "monotone-chain-convex-hull": "1.1.0",
