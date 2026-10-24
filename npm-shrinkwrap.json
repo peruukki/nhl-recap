@@ -16,7 +16,7 @@
         "classnames": "2.5.1",
         "lodash": "4.18.1",
         "normalize.css": "8.0.1",
-        "snabby": "6.1.1",
+        "snabby": "7.0.0",
         "timeago.js": "4.0.2",
         "workbox-expiration": "7.4.1",
         "workbox-precaching": "7.4.1",
@@ -8692,16 +8692,17 @@
       }
     },
     "node_modules/snabby": {
-      "version": "6.1.1",
-      "resolved": "https://registry.npmjs.org/snabby/-/snabby-6.1.1.tgz",
-      "integrity": "sha512-PF0iHW9TPv0n35ZquImnzw9iQytXHBjT8y6YVL9/BeboguCZmK0kvA8tISVjkuq2JC2HRig80Sgnn58xUcoCNw==",
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/snabby/-/snabby-7.0.0.tgz",
+      "integrity": "sha512-UtgKMpEMqv/iQez+/d2ScJcCHKgpkYQI8z+UMXz+aGo5ELT8UGqmXdpEVD+Dx865MVSRtjVFPfCrOMMij2U9EQ==",
+      "license": "MIT",
       "dependencies": {
         "hyperx": "^3.0.0",
         "is-boolean-attribute": "^0.0.1",
         "snabbdom": "^3.0.3"
       },
       "engines": {
-        "node": ">=12.17"
+        "node": ">=20"
       }
     },
     "node_modules/source-map-js": {
@@ -15756,9 +15757,9 @@
       }
     },
     "snabby": {
-      "version": "6.1.1",
-      "resolved": "https://registry.npmjs.org/snabby/-/snabby-6.1.1.tgz",
-      "integrity": "sha512-PF0iHW9TPv0n35ZquImnzw9iQytXHBjT8y6YVL9/BeboguCZmK0kvA8tISVjkuq2JC2HRig80Sgnn58xUcoCNw==",
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/snabby/-/snabby-7.0.0.tgz",
+      "integrity": "sha512-UtgKMpEMqv/iQez+/d2ScJcCHKgpkYQI8z+UMXz+aGo5ELT8UGqmXdpEVD+Dx865MVSRtjVFPfCrOMMij2U9EQ==",
       "requires": {
         "hyperx": "^3.0.0",
         "is-boolean-attribute": "^0.0.1",

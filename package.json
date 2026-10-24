@@ -55,7 +55,7 @@
     "classnames": "2.5.1",
     "lodash": "4.18.1",
     "normalize.css": "8.0.1",
-    "snabby": "6.1.1",
+    "snabby": "7.0.0",
     "timeago.js": "4.0.2",
     "workbox-expiration": "7.4.1",
     "workbox-precaching": "7.4.1",
