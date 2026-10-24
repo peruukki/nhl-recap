@@ -45,8 +45,8 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "ts": "tsgo",
-    "ts:watch": "tsgo --watch"
+    "ts": "tsc",
+    "ts:watch": "tsc --watch"
   },
   "dependencies": {
     "@cycle/dom": "23.1.0",
@@ -83,7 +83,7 @@
     "sharp": "0.35.5",
     "stylelint": "17.16.0",
     "stylelint-config-standard-scss": "17.0.0",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "8.3.5",
     "vitest": "5.0.5"
   },
