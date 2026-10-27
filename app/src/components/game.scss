@@ -8,8 +8,12 @@
   float: left;
   transition:
     transform animations.$focus-timing-function,
-    background-color animations.$focus-timing-function;
-  transition-duration: animations.$focus-duration-exit, animations.$focus-duration-exit;
+    background-color animations.$focus-timing-function,
+    box-shadow animations.$shadow-timing-function;
+  transition-duration:
+    animations.$focus-duration-exit,
+    animations.$focus-duration-exit,
+    animations.$focus-duration-exit;
   border-radius: sizes.$border-radius;
   background: colors.$background-game;
   outline: 1px solid colors.$border-color-dark;
@@ -27,7 +31,10 @@
 
   &.in-focus {
     background: colors.$background-game-in-focus;
-    transition-duration: animations.$focus-duration-enter, animations.$focus-duration-enter;
+    transition-duration:
+      animations.$focus-duration-enter,
+      animations.$focus-duration-enter,
+      animations.$focus-duration-enter;
     transform: translate(var(--translate-x), var(--translate-y)) scale(1.2);
   }
 

@@ -32,6 +32,7 @@ $focus-timing-function: cubic-bezier(0.14, 0.97, 0.29, 0.97);
 $expand-timing-function: $focus-timing-function;
 $height-timing-function: $focus-timing-function;
 $hover-timing-function: ease-out;
+$shadow-timing-function: ease-out;
 
 .fade-in {
   animation: $fade-in-duration $fade-timing-function fade-in;
