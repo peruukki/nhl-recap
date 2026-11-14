@@ -1,3 +1,4 @@
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
@@ -26,18 +27,31 @@ registerRoute(
   new StaleWhileRevalidate({ cacheName: 'assets' }),
 );
 
-// Cache First strategy: fonts
+// Cache First strategy: external fonts
 registerRoute(
-  ({ request: { destination } }) => destination === 'font',
+  ({ url }) => url.hostname === 'indestructibletype.com',
   new CacheFirst({
-    cacheName: 'fonts',
+    cacheName: 'external-fonts',
     plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
       new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 /* 30 days */ }),
     ],
   }),
 );
 
-// Cache First strategy: images
+// Cache First strategy: external assets
+registerRoute(
+  ({ url }) => url.hostname === 'assets.nhle.com',
+  new CacheFirst({
+    cacheName: 'external-assets',
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 /* 7 days */ }),
+    ],
+  }),
+);
+
+// Cache First strategy: internal images
 registerRoute(
   ({ request: { destination }, url }) => destination === 'image' || url.pathname.endsWith('.svg'),
   new CacheFirst({
