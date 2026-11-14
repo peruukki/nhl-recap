@@ -16,3 +16,4 @@ This skill provides guidance on Git commit messages and version control workflow
 - **Include secondary details in the body**: Mention other important but supplementary details in the commit body, separated by an empty line from the title.
 - **Do not mention test updates**: Test updates supporting application changes are self-evident.
 - **Limit line length**: Keep all lines in the commit message (both the title and body lines) to a maximum of 80 characters.
+- **Do not add a `Co-authored-by` trailer**: Leave commit messages without `Co-authored-by` lines.
