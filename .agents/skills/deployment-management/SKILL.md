@@ -13,7 +13,7 @@ This skill provides instructions for deploying the nhl-recap application and gal
 Deployments are managed via the **Deployment** workflow (`deployment.yml`). This is the standard way to deploy and ensures all checks pass in a clean environment.
 
 - **Triggering the workflow:**
-  Use the GitHub CLI (`gh`) to trigger the workflow from the `master` branch:
+  A push to `master` starts the workflow automatically. To start it manually from `master`:
   ```bash
   gh workflow run Deployment --ref master
   ```

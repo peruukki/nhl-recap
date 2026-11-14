@@ -148,7 +148,7 @@ npm run build
 
 ## Deployment
 
-Deployments to GitHub Pages are done by running the [Deployment workflow](https://github.com/peruukki/nhl-recap/actions/workflows/deployment.yml).
+Pushes to `master` deploy to GitHub Pages through the [Deployment workflow](https://github.com/peruukki/nhl-recap/actions/workflows/deployment.yml). The same workflow can also be started manually.
 
 ### Alternative deployment method
 
