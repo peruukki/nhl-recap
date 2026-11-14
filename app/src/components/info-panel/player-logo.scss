@@ -1,5 +1,10 @@
+// The Safari/Webkit related optimizations are added to prevent logo rendering from being delayed
+// on iPhone Safari
 .player-logo {
-  position: relative;
-  width: 1.5em;
+  flex-shrink: 0; // Prevent flexbox sizing stalls in Safari
   height: 1em;
+  position: relative;
+  transform: translateZ(0); // Force immediate GPU composite layer in Safari without waiting for later animations
+  width: 1.5em;
+  will-change: transform; // Hint to WebKit to prepare and commit composite layer immediately
 }
