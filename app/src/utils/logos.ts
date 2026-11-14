@@ -5,7 +5,6 @@ export function renderTeamLogoSVG(teamAbbreviation: string, className: string): 
     attrs: {
       alt: '',
       class: className,
-      decoding: 'sync', // Prevent initial empty images in player logos
       src: `https://assets.nhle.com/logos/nhl/svg/${teamAbbreviation}_dark.svg`,
     },
   });
