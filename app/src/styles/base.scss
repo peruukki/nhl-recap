@@ -1,7 +1,38 @@
 @use 'animations';
 @use 'colors';
 
-@import url('https://indestructibletype.com/fonts/Jost.css');
+// Jost typeface: https://indestructibletype.com/Jost.html
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-600.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 html {
   --animation-speed: 1;

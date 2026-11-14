@@ -27,18 +27,6 @@ registerRoute(
   new StaleWhileRevalidate({ cacheName: 'assets' }),
 );
 
-// Cache First strategy: external fonts
-registerRoute(
-  ({ url }) => url.hostname === 'indestructibletype.com',
-  new CacheFirst({
-    cacheName: 'external-fonts',
-    plugins: [
-      new CacheableResponsePlugin({ statuses: [0, 200] }),
-      new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 /* 30 days */ }),
-    ],
-  }),
-);
-
 // Cache First strategy: external assets
 registerRoute(
   ({ url }) => url.hostname === 'assets.nhle.com',
